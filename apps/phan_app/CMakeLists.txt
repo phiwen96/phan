@@ -18,9 +18,9 @@ add_executable(${self} MACOSX_BUNDLE main.cpp)
 
 target_include_directories (${self} PRIVATE ${CMAKE_CURRENT_BINARY_DIR}) 
 
-target_sources (${self} PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/app.hpp)
+# target_sources (${self} PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/app.hpp)
 # target_sources (${self} PRIVATE app.hpp.in)
-target_sources (${self} PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/app_2.hpp)
+# target_sources (${self} PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/app_2.hpp)
 # target_sources (${self} PRIVATE app_2_.hpp)
 
 ph_boost (${self})
