@@ -31,6 +31,26 @@ ph_get_property (root_name root_name)
 
 add_library (${root_name} STATIC ${SOURCE_LIST} ${HEADER_LIST})
 
+
+# set ( PROJ_SOURCES
+# ${SOURCE_LIST}
+# )
+# set ( PROJ_HEADERS
+#     ${HEADER_LIST}
+# )
+
+# source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" FILES ${HEADER_LIST})
+# source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" FILES ${SOURCE_LIST})
+
+# source_group(TREE "${CMAKE_CURRENT_LIST_DIR}" PREFIX "ExtraFolderName" FILES ${PROJ_SOURCES})
+
+ph_parent (s dir)
+
+source_group(TREE   ${s}
+               PREFIX "src\\include"
+               FILES  ${sources}
+)
+
 target_compile_features (${root_name} PRIVATE cxx_std_20)
 
 get_property(ResultVariable TARGET ${root_name} PROPERTY CXX_STANDARD)

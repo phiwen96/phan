@@ -1,6 +1,5 @@
 cmake_minimum_required (VERSION 3.19.4)
-include (cmake/functions.cmake)
-include (cmake/libs.cmake)
+include (cmake/phake/phake.cmake)
 ph_dont_build_here ()
 ph_git ()
 
