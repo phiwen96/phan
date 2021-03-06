@@ -37,6 +37,13 @@ get_property(ResultVariable TARGET ${root_name} PROPERTY CXX_STANDARD)
 
 add_library(ph::${root_name} ALIAS ${root_name})
 
+# Only suitable if SOURCES does not contain generated files in this example
+get_target_property(sources ${root_name} SOURCES)
+source_group(TREE   ${CMAKE_CURRENT_SOURCE_DIR}
+             PREFIX "Magic\\Sources"
+             FILES  ${sources}
+)
+
 set(ENABLE_ALGO_BETA 0 CACHE BOOL "")
 
 # get_directory_property(subdir_list DIRECTORY ${CMAKE_CURRENT_LIST_DIR} SUBDIRECTORIES)
