@@ -13,15 +13,15 @@ source_group(TREE   ${CMAKE_CURRENT_SOURCE_DIR}
              FILES  ${sources}
 )
 
-configure_file (app.hpp.in app.hpp @ONLY)
-configure_file (app_2_.hpp app_2.hpp @ONLY)
+# configure_file (app.hpp.in app.hpp @ONLY)
+# configure_file (app_2_.hpp app_2.hpp @ONLY)
 
 target_include_directories (${self} PRIVATE ${CMAKE_CURRENT_BINARY_DIR}) 
 
 target_sources (${self} PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/app.hpp)
-target_sources (${self} PRIVATE app.hpp.in)
+# target_sources (${self} PRIVATE app.hpp.in)
 target_sources (${self} PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/app_2.hpp)
-target_sources (${self} PRIVATE app_2_.hpp)
+# target_sources (${self} PRIVATE app_2_.hpp)
 
 ph_boost (${self})
 

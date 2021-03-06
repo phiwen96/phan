@@ -60,13 +60,11 @@ int main() {
     
     
     string str = PH(
-               
-               
                template <>
                struct gpdu <${0 i 3}>
                {
-        int count fp${i}
-    };
+                int count fp${i}
+            };
                
                );
     cout << str << endl;
