@@ -4,7 +4,8 @@ struct a {
     
 };
 
-struct a {
+
+
     
     
 

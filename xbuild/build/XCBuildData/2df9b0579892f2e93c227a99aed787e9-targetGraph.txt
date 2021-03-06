@@ -1,0 +1,30 @@
+Target dependency graph (13 targets)
+ZERO_CHECK in Phan
+Phan in Phan, depends on:
+ZERO_CHECK in Phan (explicit)
+app1 in Phan, depends on:
+ZERO_CHECK in Phan (explicit)
+Phan in Phan (explicit)
+testlib in Phan, depends on:
+ZERO_CHECK in Phan (explicit)
+Phan in Phan (explicit)
+ALL_BUILD in Phan, depends on:
+app1 in Phan (explicit)
+testlib in Phan (explicit)
+ZERO_CHECK in Phan (explicit)
+Phan in Phan (explicit)
+Continuous in Phan, depends on:
+ZERO_CHECK in Phan (explicit)
+Docs in Phan, depends on:
+ZERO_CHECK in Phan (explicit)
+Experimental in Phan, depends on:
+ZERO_CHECK in Phan (explicit)
+Nightly in Phan, depends on:
+ZERO_CHECK in Phan (explicit)
+NightlyMemoryCheck in Phan, depends on:
+ZERO_CHECK in Phan (explicit)
+RUN_TESTS in Phan
+install in Phan, depends on:
+ALL_BUILD in Phan (explicit)
+package in Phan, depends on:
+ALL_BUILD in Phan (explicit)
