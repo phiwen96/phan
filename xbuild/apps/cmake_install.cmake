@@ -41,11 +41,11 @@ set(CMAKE_BINARY_DIR "/Users/philipwenkel/GitHub/Phan/xbuild")
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/Users/philipwenkel/GitHub/Phan/xbuild/apps/app1/cmake_install.cmake")
+  include("/Users/philipwenkel/GitHub/Phan/xbuild/apps/app2/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/Users/philipwenkel/GitHub/Phan/xbuild/apps/app2/cmake_install.cmake")
+  include("/Users/philipwenkel/GitHub/Phan/xbuild/apps/phan_app/cmake_install.cmake")
 endif()
 

@@ -4,7 +4,7 @@ find_package (Boost 1.75 REQUIRED)
 
 # target_precompile_headers(<target> REUSE_FROM <other_target>)
 
-add_executable(${self} MACOSX_BUNDLE app.cpp)
+add_executable(${self} MACOSX_BUNDLE main.cpp)
 
 # Only suitable if SOURCES does not contain generated files in this example
 get_target_property(sources ${self} SOURCES)
@@ -31,8 +31,8 @@ set(APP_NAME ${self})
 
 set_target_properties(${self} PROPERTIES CXX_STANDARD 20)
 
-target_link_libraries(${self} PRIVATE ${CMAKE_PROJECT_NAME} ${Boost_LIBRARIES})
-target_include_directories (${self} PRIVATE ${Boost_INCLUDE_DIRS})
+target_link_libraries(${self} PRIVATE ${root_name} ${Boost_LIBRARIES})
+target_include_directories (${self} PRIVATE ${root_name} ${Boost_INCLUDE_DIRS})
 
 add_custom_target(Docs SOURCES ${PROJECT_SOURCE_DIR}/README.md ${PROJECT_SOURCE_DIR}/.gitignore ${PROJECT_SOURCE_DIR}/LICENSE)
 

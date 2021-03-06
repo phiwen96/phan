@@ -28,7 +28,7 @@ get_filename_component(root_dir ${CMAKE_CURRENT_LIST_DIR} ABSOLUTE CACHE "")
 # variable_watch(myVar [command])
 # set_property(GLOBAL PROPERTY source_list_property "bajs")
 ph_define_self (self)
-ph_define_property (root_name ${self})
+ph_define_property (root_name phan_lib)
 
 set(PACKAGE_VERSION 1)
 

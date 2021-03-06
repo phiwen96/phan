@@ -22,8 +22,8 @@ set_target_properties (testlib PROPERTIES CXX_STANDARD 20)
 target_compile_features(testlib PRIVATE cxx_std_20)
 
 # Should be linked to the main library, as well as the Catch2 testing library
-target_link_libraries (testlib PRIVATE ph::${CMAKE_PROJECT_NAME} Catch2::Catch2)
-target_include_directories (testlib PRIVATE ph::${CMAKE_PROJECT_NAME} Catch2::Catch2)
+target_link_libraries (testlib PRIVATE ${root_name} Catch2::Catch2)
+target_include_directories (testlib PRIVATE ${root_name} Catch2::Catch2)
 
 # If you register a test, then ctest and make test will run it.
 # You can also run examples and check the output, as well.

@@ -26,7 +26,7 @@ CMAKE_INSTALL_NAME_TOOL:FILEPATH=/usr/bin/install_name_tool
 CMAKE_INSTALL_PREFIX:PATH=/usr/local
 
 //No help, variable specified on the command line.
-CMAKE_MAKE_PROGRAM:FILEPATH=/Applications/Xcode-beta.app/Contents/Developer/usr/bin/xcodebuild
+CMAKE_MAKE_PROGRAM:FILEPATH=/usr/bin/xcodebuild
 
 //Build architectures for OSX
 CMAKE_OSX_ARCHITECTURES:STRING=

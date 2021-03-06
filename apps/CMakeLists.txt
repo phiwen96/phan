@@ -3,8 +3,8 @@
 # message("${this}")
 
 # ph_define_self (this dir)
-add_subdirectory (app1)
-add_subdirectory(app2)
+add_subdirectory (app2)
+add_subdirectory(phan_app)
 
 
 
