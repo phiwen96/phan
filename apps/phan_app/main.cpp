@@ -23,36 +23,69 @@ auto parse = [](string str){
 
 
 
-#define PH(...)
+#define PH(...) BOOST_PP_STRINGIZE (__VA_ARGS__)
 
 
 
+string first_signature (string str, auto&& fun)
+{
+    auto a1 = str.find("${");
+    
+    while (a1 != string::npos)
+    {
+        if (int a2 = str.find ("}"); a2 != string::npos)
+        {
+//            for (int i = 0; i < max; ++i)
+//            {
+//
+            string replac = fun (string (str.begin() + a1, str.begin() + a2 + 1));
+                str.replace (str.begin() + a1, str.begin() + a2 + 1, replac);
+//            }
+        }
+        a1 = str.find ("${");
+    }
+    
+//    string res;
+    
+//    for (auto const& i : str)
+//        res += i;
+    
+    return str;
+}
 
 int main() {
-
     
     
-
     
-    PH(
-
-          
-           template <>
-           struct gpdu <${0 i 3}>
-           {
+    
+    
+    string str = PH(
+               
+               
+               template <>
+               struct gpdu <${0 i 3}>
+               {
         int count fp${i}
-        };
-
-    )
+    };
+               
+               );
+    cout << str << endl;
     
-    string str = "hej kuk$(x, y) snopp";
-    cout << parse (str) << endl;
+    auto first_parser = [](string const& str) -> string {
+        // cannot return same!!!!
+        
+        cout << str << endl;
+        return str;
+    };
+    
+   
+    cout << first_signature (str, first_parser) << endl;
     
     
     
-
+    
     std::vector<double> input = {1.2, 2.3, 3.4, 4.5};
-
+    
     cout << "hello world" << endl;
     return 0;
 }
