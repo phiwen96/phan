@@ -1,11 +1,47 @@
 {
-  "buildCommand" : "build",
+  "buildCommand" : "prepareForIndexing",
   "configuredTargets" : [
     {
-      "guid" : "55ecf8b0cb0718e625e115367303be1b99eb354a7053f4ba8ee4ace56789b920"
+      "guid" : "55ecf8b0cb0718e625e115367303be1bcdaf471435f42d9bfa56b79cd9c310bb"
+    },
+    {
+      "guid" : "55ecf8b0cb0718e625e115367303be1b1463cb75f854b21ede800ad635edd87a"
+    },
+    {
+      "guid" : "55ecf8b0cb0718e625e115367303be1be8441b6b68907d96e797228cd2d5a430"
+    },
+    {
+      "guid" : "55ecf8b0cb0718e625e115367303be1b84d2401162b6382480d055ebae7f14a6"
+    },
+    {
+      "guid" : "55ecf8b0cb0718e625e115367303be1b644aa64b7ab7112215d5ee6803c9a08b"
+    },
+    {
+      "guid" : "55ecf8b0cb0718e625e115367303be1b5bacc4be925a362ae25654ecb910b8a7"
+    },
+    {
+      "guid" : "55ecf8b0cb0718e625e115367303be1b8c92db44a35f4fe2ba4b427cbf59fe67"
+    },
+    {
+      "guid" : "55ecf8b0cb0718e625e115367303be1bb2fc698a093d423946a23ef341c34f81"
+    },
+    {
+      "guid" : "55ecf8b0cb0718e625e115367303be1b8ed2aa1659cc92585a236be5369cda62"
+    },
+    {
+      "guid" : "55ecf8b0cb0718e625e115367303be1b134d94cc187fa047f6ab67549cbbf2f9"
+    },
+    {
+      "guid" : "55ecf8b0cb0718e625e115367303be1bae6a52f07e16b17ce1acc537032df2b9"
+    },
+    {
+      "guid" : "55ecf8b0cb0718e625e115367303be1ba8c035968cbc52a426409dbd00818086"
+    },
+    {
+      "guid" : "55ecf8b0cb0718e625e115367303be1be8601dabed1d06d00639fd42ea346d70"
     }
   ],
-  "continueBuildingAfterErrors" : false,
+  "continueBuildingAfterErrors" : true,
   "enableIndexBuildArena" : false,
   "hideShellScriptEnvironment" : false,
   "parameters" : {
@@ -40,10 +76,11 @@
       }
     }
   },
+  "qos" : "default",
   "schemeCommand" : "launch",
   "shouldCollectMetrics" : false,
   "showNonLoggedProgress" : true,
-  "useDryRun" : false,
+  "useDryRun" : true,
   "useImplicitDependencies" : true,
   "useLegacyBuildLocations" : false,
   "useParallelTargets" : true

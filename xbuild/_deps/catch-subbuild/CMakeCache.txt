@@ -26,7 +26,7 @@ CMAKE_INSTALL_NAME_TOOL:FILEPATH=/usr/bin/install_name_tool
 CMAKE_INSTALL_PREFIX:PATH=/usr/local
 
 //No help, variable specified on the command line.
-CMAKE_MAKE_PROGRAM:FILEPATH=/usr/bin/xcodebuild
+CMAKE_MAKE_PROGRAM:FILEPATH=/Applications/Xcode-beta.app/Contents/Developer/usr/bin/xcodebuild
 
 //Build architectures for OSX
 CMAKE_OSX_ARCHITECTURES:STRING=
@@ -76,7 +76,7 @@ catch-populate_SOURCE_DIR:STATIC=/Users/philipwenkel/GitHub/Phan/xbuild/_deps/ca
 ########################
 
 //Stored Xcode object GUID
-ALL_BUILD_GUID_CMAKE:INTERNAL=0D6193ABF4F347F681D7E527
+ALL_BUILD_GUID_CMAKE:INTERNAL=097AAAA3738941128D85533C
 //This is the directory where this CMakeCache.txt was created
 CMAKE_CACHEFILE_DIR:INTERNAL=/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild
 //Major version of cmake used to create the current loaded cache
@@ -123,9 +123,9 @@ CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: GIT_EXECUTABLE
 GIT_EXECUTABLE-ADVANCED:INTERNAL=1
 //Stored Xcode object GUID
-PROJECT_catch-populate_GUID_CMAKE:INTERNAL=15CBD11940724571841196EC
+PROJECT_catch-populate_GUID_CMAKE:INTERNAL=2E36944B68F2498CB3BD846F
 //Stored Xcode object GUID
-ZERO_CHECK_GUID_CMAKE:INTERNAL=91A1726F6C414C7CAF99BF90
+ZERO_CHECK_GUID_CMAKE:INTERNAL=3C5FEA6FFA9441848DAFCD65
 //Stored Xcode object GUID
-catch-populate_GUID_CMAKE:INTERNAL=AF83DD59E36A498EA5120A0E
+catch-populate_GUID_CMAKE:INTERNAL=84B3F1A9E6984365AC74C16B
 

@@ -7,32 +7,71 @@
 	objects = {
 
 /* Begin PBXAggregateTarget section */
-		45F92787364D4F9F910B1A1B /* Docs */ = {
+		0C4E204E13084A689F8450D0 /* Experimental */ = {
 			isa = PBXAggregateTarget;
-			buildConfigurationList = 7D2039391DF54C72BBBC1A5F /* Build configuration list for PBXAggregateTarget "Docs" */;
+			buildConfigurationList = 4F3A3051C0004C859D30981C /* Build configuration list for PBXAggregateTarget "Experimental" */;
+			buildPhases = (
+				8554F67ABD61F9FF68E881B7 /* Generate CMakeFiles/Experimental */,
+			);
+			dependencies = (
+				C215834596D141D7AF822A97 /* PBXTargetDependency */,
+			);
+			name = Experimental;
+			productName = Experimental;
+		};
+		1321667014FB4EA4BD81070E /* Continuous */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 764F4EE4A70C4DF19D54C596 /* Build configuration list for PBXAggregateTarget "Continuous" */;
+			buildPhases = (
+				B3E69C575AF9B5D687E10508 /* Generate CMakeFiles/Continuous */,
+			);
+			dependencies = (
+				CEE1A3383EB940F382D7821A /* PBXTargetDependency */,
+			);
+			name = Continuous;
+			productName = Continuous;
+		};
+		38B528765A074591A48DDA2F /* ALL_BUILD */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = F7963A0F331B4D3E8C4B880E /* Build configuration list for PBXAggregateTarget "ALL_BUILD" */;
+			buildPhases = (
+				0E5DF4BCF808ADBA9D3ED0CD /* Generate CMakeFiles/ALL_BUILD */,
+			);
+			dependencies = (
+				30D7698B1E8849BE978BE9F3 /* PBXTargetDependency */,
+				3BBC63A4B0BB4E00B97671D3 /* PBXTargetDependency */,
+				A2BCFB988C7444AF8F9020F8 /* PBXTargetDependency */,
+				D1E1325C5F854DD3AD3BDFE1 /* PBXTargetDependency */,
+			);
+			name = ALL_BUILD;
+			productName = ALL_BUILD;
+		};
+		44D4D1B85FCD4D9A9F804EBB /* package */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 1F838D3FB11344D2A0877B7A /* Build configuration list for PBXAggregateTarget "package" */;
+			buildPhases = (
+				571234464C2A5D0D43F1AB42 /* CMake PostBuild Rules */,
+			);
+			dependencies = (
+				C1AB550AF05B440FAEC02586 /* PBXTargetDependency */,
+			);
+			name = package;
+			productName = package;
+		};
+		8ABA8092DB90496E822A7854 /* Docs */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = C5D0B867ED7347298EBE6708 /* Build configuration list for PBXAggregateTarget "Docs" */;
 			buildPhases = (
 			);
 			dependencies = (
-				190CA7451FC140BDB77D8C81 /* PBXTargetDependency */,
+				97BADD60EDD045EBA4FC4297 /* PBXTargetDependency */,
 			);
 			name = Docs;
 			productName = Docs;
 		};
-		5E2CB7D44EEF4D5BBCEF4953 /* install */ = {
+		992A9D089369466CADA7E1CA /* RUN_TESTS */ = {
 			isa = PBXAggregateTarget;
-			buildConfigurationList = 3EC550BA73E34F14B6BA0256 /* Build configuration list for PBXAggregateTarget "install" */;
-			buildPhases = (
-				93426DA6A4AC2C2AC9CE883C /* CMake PostBuild Rules */,
-			);
-			dependencies = (
-				4755EDF0CCAD415395622576 /* PBXTargetDependency */,
-			);
-			name = install;
-			productName = install;
-		};
-		6366D57333D740488173BD6A /* RUN_TESTS */ = {
-			isa = PBXAggregateTarget;
-			buildConfigurationList = 92EAF74002AF4D27B894BA12 /* Build configuration list for PBXAggregateTarget "RUN_TESTS" */;
+			buildConfigurationList = E5D92C539103458992929008 /* Build configuration list for PBXAggregateTarget "RUN_TESTS" */;
 			buildPhases = (
 				003C8D08B0008F35F218E126 /* CMake PostBuild Rules */,
 			);
@@ -41,45 +80,21 @@
 			name = RUN_TESTS;
 			productName = RUN_TESTS;
 		};
-		6CA71F81FC12429E90D48B11 /* Continuous */ = {
+		B4658C4E12DF42B288AEF0C1 /* Nightly */ = {
 			isa = PBXAggregateTarget;
-			buildConfigurationList = 3194024D208545268B5FA0C9 /* Build configuration list for PBXAggregateTarget "Continuous" */;
+			buildConfigurationList = 7FD22E5602F54DB7977B7271 /* Build configuration list for PBXAggregateTarget "Nightly" */;
 			buildPhases = (
-				B3E69C575AF9B5D687E10508 /* Generate CMakeFiles/Continuous */,
+				9AC0F5DFA0CAC6D10F3C0B68 /* Generate CMakeFiles/Nightly */,
 			);
 			dependencies = (
-				0E3D26089AC141C3944D2908 /* PBXTargetDependency */,
+				22B155094CF84D759F7BA55C /* PBXTargetDependency */,
 			);
-			name = Continuous;
-			productName = Continuous;
+			name = Nightly;
+			productName = Nightly;
 		};
-		704F04DA7AB348D383B876D1 /* Experimental */ = {
+		C2D0B8040ED347DCA78ACDB2 /* ZERO_CHECK */ = {
 			isa = PBXAggregateTarget;
-			buildConfigurationList = DFCF0B64E7CB44D4B84336F7 /* Build configuration list for PBXAggregateTarget "Experimental" */;
-			buildPhases = (
-				8554F67ABD61F9FF68E881B7 /* Generate CMakeFiles/Experimental */,
-			);
-			dependencies = (
-				2905290A122947E5970ADE41 /* PBXTargetDependency */,
-			);
-			name = Experimental;
-			productName = Experimental;
-		};
-		8AFDCD1716B043DF953092B2 /* package */ = {
-			isa = PBXAggregateTarget;
-			buildConfigurationList = E48BF568ADDD4085ADD96365 /* Build configuration list for PBXAggregateTarget "package" */;
-			buildPhases = (
-				571234464C2A5D0D43F1AB42 /* CMake PostBuild Rules */,
-			);
-			dependencies = (
-				2E060B7E92C3434F87CF3775 /* PBXTargetDependency */,
-			);
-			name = package;
-			productName = package;
-		};
-		8FADF47C6B244CB083E9A741 /* ZERO_CHECK */ = {
-			isa = PBXAggregateTarget;
-			buildConfigurationList = CC287E8F803F4824AED90013 /* Build configuration list for PBXAggregateTarget "ZERO_CHECK" */;
+			buildConfigurationList = A1139CCC9F764375A730A136 /* Build configuration list for PBXAggregateTarget "ZERO_CHECK" */;
 			buildPhases = (
 				CBDFEAAEADD63B56FDE42167 /* Generate CMakeFiles/ZERO_CHECK */,
 			);
@@ -88,257 +103,242 @@
 			name = ZERO_CHECK;
 			productName = ZERO_CHECK;
 		};
-		97F3D6901D7A4DF8A029B91C /* Nightly */ = {
+		CD106D9BC7A44C18B97A87CA /* NightlyMemoryCheck */ = {
 			isa = PBXAggregateTarget;
-			buildConfigurationList = A7946A7F99F5472AB2EC8685 /* Build configuration list for PBXAggregateTarget "Nightly" */;
-			buildPhases = (
-				9AC0F5DFA0CAC6D10F3C0B68 /* Generate CMakeFiles/Nightly */,
-			);
-			dependencies = (
-				3EA9E0E8C9C0424BBD9ED991 /* PBXTargetDependency */,
-			);
-			name = Nightly;
-			productName = Nightly;
-		};
-		D3D99784C6B64CAA96AE1ED0 /* NightlyMemoryCheck */ = {
-			isa = PBXAggregateTarget;
-			buildConfigurationList = 94D0B694AE6E46E4B6935684 /* Build configuration list for PBXAggregateTarget "NightlyMemoryCheck" */;
+			buildConfigurationList = 8DE8E50D60294D93B9C7C100 /* Build configuration list for PBXAggregateTarget "NightlyMemoryCheck" */;
 			buildPhases = (
 				A2A67200E11F9A9FFC70FC4F /* Generate CMakeFiles/NightlyMemoryCheck */,
 			);
 			dependencies = (
-				046120F6131C4B05A18B211B /* PBXTargetDependency */,
+				163216C30D5E4394924042C7 /* PBXTargetDependency */,
 			);
 			name = NightlyMemoryCheck;
 			productName = NightlyMemoryCheck;
 		};
-		D5FC32BDE1794409B65F4670 /* ALL_BUILD */ = {
+		F623797255A8483BA2C6F8BF /* install */ = {
 			isa = PBXAggregateTarget;
-			buildConfigurationList = 2AEDFBAABC184D89B0C0C7EB /* Build configuration list for PBXAggregateTarget "ALL_BUILD" */;
+			buildConfigurationList = 3BAA4B3EF7CD4700BD977982 /* Build configuration list for PBXAggregateTarget "install" */;
 			buildPhases = (
-				0E5DF4BCF808ADBA9D3ED0CD /* Generate CMakeFiles/ALL_BUILD */,
+				93426DA6A4AC2C2AC9CE883C /* CMake PostBuild Rules */,
 			);
 			dependencies = (
-				49E8296098054ACA8EFF7675 /* PBXTargetDependency */,
-				3271078D8773456C8A49B37D /* PBXTargetDependency */,
-				D30D13CACA95401096CCE8D2 /* PBXTargetDependency */,
-				6F1F6ABC8E93496E8AE038DE /* PBXTargetDependency */,
+				847A2F363F5946A1B2F29EB0 /* PBXTargetDependency */,
 			);
-			name = ALL_BUILD;
-			productName = ALL_BUILD;
+			name = install;
+			productName = install;
 		};
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		0B0AA6E5E62648B4B64D1BC1 /* /Users/philipwenkel/GitHub/Phan/xbuild/apps/app1/app.hpp */ = {isa = PBXBuildFile; fileRef = E4DBD418DB0B406685E88257 /* /Users/philipwenkel/GitHub/Phan/xbuild/apps/app1/app.hpp */; };
-		12BE08DF4A3E419982D0256C /* /Users/philipwenkel/GitHub/Phan/include/template_library/template_library.hpp */ = {isa = PBXBuildFile; fileRef = D2C2B05345494598AF77D5AC /* /Users/philipwenkel/GitHub/Phan/include/template_library/template_library.hpp */; };
-		33B65136E4774399B7053A75 /* /Users/philipwenkel/GitHub/Phan/src/CMakeLists.txt */ = {isa = PBXBuildFile; fileRef = 9BC898C38DA1419CA59E0999 /* /Users/philipwenkel/GitHub/Phan/src/CMakeLists.txt */; };
-		3F5B10AB31FA4919BD71F3B8 /* /Users/philipwenkel/GitHub/Phan/src/template_library.cpp */ = {isa = PBXBuildFile; fileRef = B53B902C3356477BAA8FACB9 /* /Users/philipwenkel/GitHub/Phan/src/template_library.cpp */; };
-		4335A2FFAA504212AAAEA93D /* /Users/philipwenkel/GitHub/Phan/xbuild/apps/app1/app_2.hpp */ = {isa = PBXBuildFile; fileRef = C46C7ACC187A4567ADED1ADB /* /Users/philipwenkel/GitHub/Phan/xbuild/apps/app1/app_2.hpp */; };
-		5E2558AFADDC4728B0687134 /* /Users/philipwenkel/GitHub/Phan/tests/CMakeLists.txt */ = {isa = PBXBuildFile; fileRef = AF35CC28F4FC4143AAEFBD86 /* /Users/philipwenkel/GitHub/Phan/tests/CMakeLists.txt */; };
-		6989AADD5E414BA28697B510 /* /Users/philipwenkel/GitHub/Phan/apps/app1/CMakeLists.txt */ = {isa = PBXBuildFile; fileRef = 767D262D7F3C4512B01EBAE0 /* /Users/philipwenkel/GitHub/Phan/apps/app1/CMakeLists.txt */; };
-		6E1B9399F3184DC8AF60B63D /* /Users/philipwenkel/GitHub/Phan/src/generators/generatorA/src/generator.cpp */ = {isa = PBXBuildFile; fileRef = D16FD9E6BADF4277AC23416A /* /Users/philipwenkel/GitHub/Phan/src/generators/generatorA/src/generator.cpp */; };
-		7FB1DF00B02B4A67BDCD1896 /* /Users/philipwenkel/GitHub/Phan/include/test.hpp */ = {isa = PBXBuildFile; fileRef = 0AD891721A2247039ED610F4 /* /Users/philipwenkel/GitHub/Phan/include/test.hpp */; };
-		92ABEC8F182C4B7A8CADED95 /* /Users/philipwenkel/GitHub/Phan/apps/app1/app.hpp.in */ = {isa = PBXBuildFile; fileRef = 0136E94AEE104B80BED5A7C6 /* /Users/philipwenkel/GitHub/Phan/apps/app1/app.hpp.in */; };
-		9C19536FF03F4A7C968C90E0 /* /Users/philipwenkel/GitHub/Phan/apps/app1/app.cpp */ = {isa = PBXBuildFile; fileRef = A9A83754FDFC4991B265DF24 /* /Users/philipwenkel/GitHub/Phan/apps/app1/app.cpp */; };
-		9D028DFE66154F00B4A5C044 /* /Users/philipwenkel/GitHub/Phan/xbuild/apps/app1/CMakeFiles/app1.dir/Info.plist */ = {isa = PBXBuildFile; fileRef = 467EF525F20B439A8E05993D /* /Users/philipwenkel/GitHub/Phan/xbuild/apps/app1/CMakeFiles/app1.dir/Info.plist */; };
-		B35362CDD1F946E38DFB4A56 /* /Users/philipwenkel/GitHub/Phan/apps/app1/app_2_.hpp */ = {isa = PBXBuildFile; fileRef = A243CCE8008246FB9E95518C /* /Users/philipwenkel/GitHub/Phan/apps/app1/app_2_.hpp */; };
-		DB48DE833D954D01BB5EE8FA /* /Users/philipwenkel/GitHub/Phan/tests/testlib.cpp */ = {isa = PBXBuildFile; fileRef = A74C0F438D554C4EA4112F07 /* /Users/philipwenkel/GitHub/Phan/tests/testlib.cpp */; };
-		F69EA9691FBB42C8A3C17A40 /* /Users/philipwenkel/GitHub/Phan/include/version.hpp */ = {isa = PBXBuildFile; fileRef = A6093B70599A42CD8F23C8CB /* /Users/philipwenkel/GitHub/Phan/include/version.hpp */; };
+		1FCE2235D1884E468CB7E2C4 /* /Users/philipwenkel/GitHub/Phan/src/CMakeLists.txt */ = {isa = PBXBuildFile; fileRef = B3E6C48CB4FF4369B6BC91AA /* /Users/philipwenkel/GitHub/Phan/src/CMakeLists.txt */; };
+		2741E4219C5443769EDB3E38 /* /Users/philipwenkel/GitHub/Phan/include/test.hpp */ = {isa = PBXBuildFile; fileRef = 6164282103C24B20841E77AB /* /Users/philipwenkel/GitHub/Phan/include/test.hpp */; };
+		332CB11DE4264FE690B01773 /* /Users/philipwenkel/GitHub/Phan/apps/app1/app.cpp */ = {isa = PBXBuildFile; fileRef = 81DB1A3644DA4389AA8A34B9 /* /Users/philipwenkel/GitHub/Phan/apps/app1/app.cpp */; };
+		397036DD40AF4FD19BE13AFE /* /Users/philipwenkel/GitHub/Phan/src/phan.cpp */ = {isa = PBXBuildFile; fileRef = A38653043CF74E159E79FC2E /* /Users/philipwenkel/GitHub/Phan/src/phan.cpp */; };
+		3A6CAD5D5D8A44809FCF4B5E /* /Users/philipwenkel/GitHub/Phan/apps/app1/app.hpp.in */ = {isa = PBXBuildFile; fileRef = 8F8AA429A6D54800BB550DC2 /* /Users/philipwenkel/GitHub/Phan/apps/app1/app.hpp.in */; };
+		5659F8F52E13466B8EC5514E /* /Users/philipwenkel/GitHub/Phan/tests/CMakeLists.txt */ = {isa = PBXBuildFile; fileRef = 9F88CDE2760A4B40A70AF62E /* /Users/philipwenkel/GitHub/Phan/tests/CMakeLists.txt */; };
+		6BC3335893C44F54936E693B /* /Users/philipwenkel/GitHub/Phan/apps/app1/app_2_.hpp */ = {isa = PBXBuildFile; fileRef = 1489A1D6834944C29E013F45 /* /Users/philipwenkel/GitHub/Phan/apps/app1/app_2_.hpp */; };
+		7F9B3E852FAC4B3290B03D92 /* /Users/philipwenkel/GitHub/Phan/src/generators/generatorA/src/generator.cpp */ = {isa = PBXBuildFile; fileRef = D5FB53A0034442E19F58E161 /* /Users/philipwenkel/GitHub/Phan/src/generators/generatorA/src/generator.cpp */; };
+		9B18792752804B4984B7D2BA /* /Users/philipwenkel/GitHub/Phan/xbuild/apps/app1/app_2.hpp */ = {isa = PBXBuildFile; fileRef = 0FB8940571474638838E5705 /* /Users/philipwenkel/GitHub/Phan/xbuild/apps/app1/app_2.hpp */; };
+		9D654D1DAD1B49B1B9BF9118 /* /Users/philipwenkel/GitHub/Phan/tests/testlib.cpp */ = {isa = PBXBuildFile; fileRef = 6DCEB33DA626438F96D43E7E /* /Users/philipwenkel/GitHub/Phan/tests/testlib.cpp */; };
+		A582C0B099B443FE9CE3F371 /* /Users/philipwenkel/GitHub/Phan/include/phan/phan.hpp */ = {isa = PBXBuildFile; fileRef = 82D206177F994CE2BB12EFD5 /* /Users/philipwenkel/GitHub/Phan/include/phan/phan.hpp */; };
+		AEB02E0EA8374FC9A2ADF323 /* /Users/philipwenkel/GitHub/Phan/include/version.hpp */ = {isa = PBXBuildFile; fileRef = 42522C1B1FE945D69D0DB254 /* /Users/philipwenkel/GitHub/Phan/include/version.hpp */; };
+		B3D0F49170CE442BBDA41D94 /* /Users/philipwenkel/GitHub/Phan/apps/app1/CMakeLists.txt */ = {isa = PBXBuildFile; fileRef = 018620EA7A3643E999481300 /* /Users/philipwenkel/GitHub/Phan/apps/app1/CMakeLists.txt */; };
+		C5A3B568386C4099B593AF85 /* /Users/philipwenkel/GitHub/Phan/xbuild/apps/app1/CMakeFiles/app1.dir/Info.plist */ = {isa = PBXBuildFile; fileRef = EA9AC9D17C7E43F88C7D27F9 /* /Users/philipwenkel/GitHub/Phan/xbuild/apps/app1/CMakeFiles/app1.dir/Info.plist */; };
+		D227A2417D9D4420A90FD987 /* /Users/philipwenkel/GitHub/Phan/xbuild/apps/app1/app.hpp */ = {isa = PBXBuildFile; fileRef = 2714A6DF63C04C229558A44C /* /Users/philipwenkel/GitHub/Phan/xbuild/apps/app1/app.hpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXBuildStyle section */
-		138B31CA88CE4DF78C3FFE51 /* Debug */ = {
+		34F87D2F393F43D09E529C67 /* Debug */ = {
 			isa = PBXBuildStyle;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
 			};
 			name = Debug;
 		};
-		A6A6A0823DF1489A9333FCB5 /* MinSizeRel */ = {
-			isa = PBXBuildStyle;
-			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-			};
-			name = MinSizeRel;
-		};
-		B69DF24473CB4FBA85A25827 /* RelWithDebInfo */ = {
+		37B796CDD09549DA9E134631 /* RelWithDebInfo */ = {
 			isa = PBXBuildStyle;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
 			};
 			name = RelWithDebInfo;
 		};
-		F96BAA5112A74A1EB02FE2C4 /* Release */ = {
+		6127ECA923F14C14A986C09F /* Release */ = {
 			isa = PBXBuildStyle;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
 			};
 			name = Release;
 		};
+		FC33C7130DEB4BD9A14D0035 /* MinSizeRel */ = {
+			isa = PBXBuildStyle;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+			};
+			name = MinSizeRel;
+		};
 /* End PBXBuildStyle section */
 
 /* Begin PBXContainerItemProxy section */
-		0E08011297CD4E3C966142FF /* PBXContainerItemProxy */ = {
+		2B2B1D18D14A48C08B992AE4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 09CB6898608D4005ACC2E495 /* Project object */;
+			containerPortal = 848A09FA28694514AB1184E9 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 8FADF47C6B244CB083E9A741;
+			remoteGlobalIDString = 38B528765A074591A48DDA2F;
+			remoteInfo = ALL_BUILD;
+		};
+		3A1994A03DF646ABB79AA5F3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 848A09FA28694514AB1184E9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C2D0B8040ED347DCA78ACDB2;
 			remoteInfo = ZERO_CHECK;
 		};
-		1194017B223648C7B1387108 /* PBXContainerItemProxy */ = {
+		478AD7492FDD4692B92E7690 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 09CB6898608D4005ACC2E495 /* Project object */;
+			containerPortal = 848A09FA28694514AB1184E9 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 9BA90879046B4C0CB4BEDDD4;
+			remoteGlobalIDString = C2D0B8040ED347DCA78ACDB2;
+			remoteInfo = ZERO_CHECK;
+		};
+		48A102AEE8BE4CD787F8CB12 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 848A09FA28694514AB1184E9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 38B528765A074591A48DDA2F;
+			remoteInfo = ALL_BUILD;
+		};
+		72CCE9E6A4F6441EAB297324 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 848A09FA28694514AB1184E9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B0703287CA8D4A53BC1C775A;
 			remoteInfo = Phan;
 		};
-		1A1F553F778246EE9BC9C858 /* PBXContainerItemProxy */ = {
+		8B8DE98675F34142B1B74FA6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 09CB6898608D4005ACC2E495 /* Project object */;
+			containerPortal = 848A09FA28694514AB1184E9 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 8FADF47C6B244CB083E9A741;
+			remoteGlobalIDString = C2D0B8040ED347DCA78ACDB2;
 			remoteInfo = ZERO_CHECK;
 		};
-		34A33C061BB443219757C352 /* PBXContainerItemProxy */ = {
+		98D74ABD949B4DCABE0A2712 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 09CB6898608D4005ACC2E495 /* Project object */;
+			containerPortal = 848A09FA28694514AB1184E9 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 8FADF47C6B244CB083E9A741;
+			remoteGlobalIDString = B0703287CA8D4A53BC1C775A;
+			remoteInfo = Phan;
+		};
+		991E7469247841DDA73C0CF1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 848A09FA28694514AB1184E9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C2D0B8040ED347DCA78ACDB2;
 			remoteInfo = ZERO_CHECK;
 		};
-		3E607B848F68495587DA2F84 /* PBXContainerItemProxy */ = {
+		A8B7B397B71F4C8B984F9F2C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 09CB6898608D4005ACC2E495 /* Project object */;
+			containerPortal = 848A09FA28694514AB1184E9 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = A968013829354478813C5271;
+			remoteGlobalIDString = C2D0B8040ED347DCA78ACDB2;
+			remoteInfo = ZERO_CHECK;
+		};
+		B96BFD9AD7A24C8782A6DAE4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 848A09FA28694514AB1184E9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C2D0B8040ED347DCA78ACDB2;
+			remoteInfo = ZERO_CHECK;
+		};
+		C6E89C5CC4094559A91474FF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 848A09FA28694514AB1184E9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C2D0B8040ED347DCA78ACDB2;
+			remoteInfo = ZERO_CHECK;
+		};
+		C9E2C9246B8549ADAAE39FE8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 848A09FA28694514AB1184E9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C2D0B8040ED347DCA78ACDB2;
+			remoteInfo = ZERO_CHECK;
+		};
+		CE8EA77DB4204F678CA4E5DE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 848A09FA28694514AB1184E9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6207BAEE15954BAE9F19E581;
 			remoteInfo = testlib;
 		};
-		3E881FF683384839AF27F422 /* PBXContainerItemProxy */ = {
+		E062306B1BC84629B3F24C42 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 09CB6898608D4005ACC2E495 /* Project object */;
+			containerPortal = 848A09FA28694514AB1184E9 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 8FADF47C6B244CB083E9A741;
-			remoteInfo = ZERO_CHECK;
-		};
-		57F982E19B7E48B7A253CD9B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 09CB6898608D4005ACC2E495 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = D5FC32BDE1794409B65F4670;
-			remoteInfo = ALL_BUILD;
-		};
-		5AE4049EB7AC476A85AAFA18 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 09CB6898608D4005ACC2E495 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 9BA90879046B4C0CB4BEDDD4;
+			remoteGlobalIDString = B0703287CA8D4A53BC1C775A;
 			remoteInfo = Phan;
 		};
-		61F443D024DF4A87803A6A29 /* PBXContainerItemProxy */ = {
+		EB854E3834B04D799008CC96 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 09CB6898608D4005ACC2E495 /* Project object */;
+			containerPortal = 848A09FA28694514AB1184E9 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 9BA90879046B4C0CB4BEDDD4;
-			remoteInfo = Phan;
-		};
-		6E0BDBE098474DF8AEBB02FE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 09CB6898608D4005ACC2E495 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = D963DD3D95CF40AAB536E6C0;
+			remoteGlobalIDString = 7C9FECB275F84E85957C51DF;
 			remoteInfo = app1;
 		};
-		A108FA212C94496A90574F8E /* PBXContainerItemProxy */ = {
+		F3BA58988B4048979BA6037B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 09CB6898608D4005ACC2E495 /* Project object */;
+			containerPortal = 848A09FA28694514AB1184E9 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = D5FC32BDE1794409B65F4670;
-			remoteInfo = ALL_BUILD;
-		};
-		B02DE46FB77840509673D812 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 09CB6898608D4005ACC2E495 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 8FADF47C6B244CB083E9A741;
-			remoteInfo = ZERO_CHECK;
-		};
-		C7F95506811B4D35B902BD31 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 09CB6898608D4005ACC2E495 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 8FADF47C6B244CB083E9A741;
-			remoteInfo = ZERO_CHECK;
-		};
-		D8F9BE8FE0874B2CA44BB16D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 09CB6898608D4005ACC2E495 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 8FADF47C6B244CB083E9A741;
-			remoteInfo = ZERO_CHECK;
-		};
-		DC57B501B63242309122CCE8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 09CB6898608D4005ACC2E495 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 8FADF47C6B244CB083E9A741;
-			remoteInfo = ZERO_CHECK;
-		};
-		EF9081D2263447079DAF0459 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 09CB6898608D4005ACC2E495 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 8FADF47C6B244CB083E9A741;
+			remoteGlobalIDString = C2D0B8040ED347DCA78ACDB2;
 			remoteInfo = ZERO_CHECK;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0136E94AEE104B80BED5A7C6 /* /Users/philipwenkel/GitHub/Phan/apps/app1/app.hpp.in */ = {isa = PBXFileReference; explicitFileType = sourcecode; fileEncoding = 4; name = app.hpp.in; path = apps/app1/app.hpp.in; sourceTree = SOURCE_ROOT; };
-		0525A891D5EA43B581F2EA26 /* /Users/philipwenkel/GitHub/Phan/CMakeLists.txt */ = {isa = PBXFileReference; explicitFileType = sourcecode.text; fileEncoding = 4; name = CMakeLists.txt; path = CMakeLists.txt; sourceTree = SOURCE_ROOT; };
-		08A1690606BE4760ADB5D12D /* /Users/philipwenkel/GitHub/Phan/CMakeLists.txt */ = {isa = PBXFileReference; explicitFileType = sourcecode.text; fileEncoding = 4; name = CMakeLists.txt; path = CMakeLists.txt; sourceTree = SOURCE_ROOT; };
-		0AD891721A2247039ED610F4 /* /Users/philipwenkel/GitHub/Phan/include/test.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = test.hpp; path = include/test.hpp; sourceTree = SOURCE_ROOT; };
-		225C60AA35BC46399F104826 /* Phan */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libPhan.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		377895A8068F4ACFA9E152DF /* /Users/philipwenkel/GitHub/Phan/CMakeLists.txt */ = {isa = PBXFileReference; explicitFileType = sourcecode.text; fileEncoding = 4; name = CMakeLists.txt; path = CMakeLists.txt; sourceTree = SOURCE_ROOT; };
-		441751E09DE1462D8483797B /* /Users/philipwenkel/GitHub/Phan/CMakeLists.txt */ = {isa = PBXFileReference; explicitFileType = sourcecode.text; fileEncoding = 4; name = CMakeLists.txt; path = CMakeLists.txt; sourceTree = SOURCE_ROOT; };
-		467EF525F20B439A8E05993D /* /Users/philipwenkel/GitHub/Phan/xbuild/apps/app1/CMakeFiles/app1.dir/Info.plist */ = {isa = PBXFileReference; explicitFileType = sourcecode.text.plist; fileEncoding = 4; name = Info.plist; path = xbuild/apps/app1/CMakeFiles/app1.dir/Info.plist; sourceTree = SOURCE_ROOT; };
-		47F61A59D4FD48C49D587257 /* /Users/philipwenkel/GitHub/Phan/.gitignore */ = {isa = PBXFileReference; explicitFileType = sourcecode; fileEncoding = 4; name = .gitignore; path = .gitignore; sourceTree = SOURCE_ROOT; };
-		57BEE3630BB14AA9B7B60043 /* app1 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; path = app1; sourceTree = BUILT_PRODUCTS_DIR; };
-		7104F3170D7F4FF386E22F9F /* /Users/philipwenkel/GitHub/Phan/README.md */ = {isa = PBXFileReference; explicitFileType = sourcecode; fileEncoding = 4; name = README.md; path = README.md; sourceTree = SOURCE_ROOT; };
-		7407832427A34B3FA2BC9BF2 /* /Users/philipwenkel/GitHub/Phan/apps/app1/CMakeLists.txt */ = {isa = PBXFileReference; explicitFileType = sourcecode.text; fileEncoding = 4; name = CMakeLists.txt; path = apps/app1/CMakeLists.txt; sourceTree = SOURCE_ROOT; };
-		767D262D7F3C4512B01EBAE0 /* /Users/philipwenkel/GitHub/Phan/apps/app1/CMakeLists.txt */ = {isa = PBXFileReference; explicitFileType = sourcecode.text; fileEncoding = 4; name = CMakeLists.txt; path = apps/app1/CMakeLists.txt; sourceTree = SOURCE_ROOT; };
-		8AC6B592CF794EEEBB056980 /* testlib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; path = testlib; sourceTree = BUILT_PRODUCTS_DIR; };
-		9BC898C38DA1419CA59E0999 /* /Users/philipwenkel/GitHub/Phan/src/CMakeLists.txt */ = {isa = PBXFileReference; explicitFileType = sourcecode.text; fileEncoding = 4; name = CMakeLists.txt; path = src/CMakeLists.txt; sourceTree = SOURCE_ROOT; };
-		A243CCE8008246FB9E95518C /* /Users/philipwenkel/GitHub/Phan/apps/app1/app_2_.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = app_2_.hpp; path = apps/app1/app_2_.hpp; sourceTree = SOURCE_ROOT; };
-		A6093B70599A42CD8F23C8CB /* /Users/philipwenkel/GitHub/Phan/include/version.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = version.hpp; path = include/version.hpp; sourceTree = SOURCE_ROOT; };
-		A74C0F438D554C4EA4112F07 /* /Users/philipwenkel/GitHub/Phan/tests/testlib.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = testlib.cpp; path = tests/testlib.cpp; sourceTree = SOURCE_ROOT; };
-		A9A83754FDFC4991B265DF24 /* /Users/philipwenkel/GitHub/Phan/apps/app1/app.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = app.cpp; path = apps/app1/app.cpp; sourceTree = SOURCE_ROOT; };
-		AF35CC28F4FC4143AAEFBD86 /* /Users/philipwenkel/GitHub/Phan/tests/CMakeLists.txt */ = {isa = PBXFileReference; explicitFileType = sourcecode.text; fileEncoding = 4; name = CMakeLists.txt; path = tests/CMakeLists.txt; sourceTree = SOURCE_ROOT; };
-		B53B902C3356477BAA8FACB9 /* /Users/philipwenkel/GitHub/Phan/src/template_library.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = template_library.cpp; path = src/template_library.cpp; sourceTree = SOURCE_ROOT; };
-		C46C7ACC187A4567ADED1ADB /* /Users/philipwenkel/GitHub/Phan/xbuild/apps/app1/app_2.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = app_2.hpp; path = xbuild/apps/app1/app_2.hpp; sourceTree = SOURCE_ROOT; };
-		C61E7AF0C261479DB2A3E365 /* /Users/philipwenkel/GitHub/Phan/CMakeLists.txt */ = {isa = PBXFileReference; explicitFileType = sourcecode.text; fileEncoding = 4; name = CMakeLists.txt; path = CMakeLists.txt; sourceTree = SOURCE_ROOT; };
-		D16FD9E6BADF4277AC23416A /* /Users/philipwenkel/GitHub/Phan/src/generators/generatorA/src/generator.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = generator.cpp; path = src/generators/generatorA/src/generator.cpp; sourceTree = SOURCE_ROOT; };
-		D2C2B05345494598AF77D5AC /* /Users/philipwenkel/GitHub/Phan/include/template_library/template_library.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = template_library.hpp; path = include/template_library/template_library.hpp; sourceTree = SOURCE_ROOT; };
-		E4DBD418DB0B406685E88257 /* /Users/philipwenkel/GitHub/Phan/xbuild/apps/app1/app.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = app.hpp; path = xbuild/apps/app1/app.hpp; sourceTree = SOURCE_ROOT; };
-		FAB4729F3F7F4721A35B4126 /* /Users/philipwenkel/GitHub/Phan/LICENSE */ = {isa = PBXFileReference; explicitFileType = sourcecode; fileEncoding = 4; name = LICENSE; path = LICENSE; sourceTree = SOURCE_ROOT; };
+		018620EA7A3643E999481300 /* /Users/philipwenkel/GitHub/Phan/apps/app1/CMakeLists.txt */ = {isa = PBXFileReference; explicitFileType = sourcecode.text; fileEncoding = 4; name = CMakeLists.txt; path = apps/app1/CMakeLists.txt; sourceTree = SOURCE_ROOT; };
+		0FB8940571474638838E5705 /* /Users/philipwenkel/GitHub/Phan/xbuild/apps/app1/app_2.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = app_2.hpp; path = xbuild/apps/app1/app_2.hpp; sourceTree = SOURCE_ROOT; };
+		1489A1D6834944C29E013F45 /* /Users/philipwenkel/GitHub/Phan/apps/app1/app_2_.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = app_2_.hpp; path = apps/app1/app_2_.hpp; sourceTree = SOURCE_ROOT; };
+		2714A6DF63C04C229558A44C /* /Users/philipwenkel/GitHub/Phan/xbuild/apps/app1/app.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = app.hpp; path = xbuild/apps/app1/app.hpp; sourceTree = SOURCE_ROOT; };
+		30F3E3BA41684DCF920DA601 /* /Users/philipwenkel/GitHub/Phan/.gitignore */ = {isa = PBXFileReference; explicitFileType = sourcecode; fileEncoding = 4; name = .gitignore; path = .gitignore; sourceTree = SOURCE_ROOT; };
+		42522C1B1FE945D69D0DB254 /* /Users/philipwenkel/GitHub/Phan/include/version.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = version.hpp; path = include/version.hpp; sourceTree = SOURCE_ROOT; };
+		4E19BCD50898459CA02BB06C /* /Users/philipwenkel/GitHub/Phan/README.md */ = {isa = PBXFileReference; explicitFileType = sourcecode; fileEncoding = 4; name = README.md; path = README.md; sourceTree = SOURCE_ROOT; };
+		506698204E1C442B95CB55E9 /* Phan */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libPhan.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		60AB2EF39DB5484FB662C303 /* /Users/philipwenkel/GitHub/Phan/CMakeLists.txt */ = {isa = PBXFileReference; explicitFileType = sourcecode.text; fileEncoding = 4; name = CMakeLists.txt; path = CMakeLists.txt; sourceTree = SOURCE_ROOT; };
+		6164282103C24B20841E77AB /* /Users/philipwenkel/GitHub/Phan/include/test.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = test.hpp; path = include/test.hpp; sourceTree = SOURCE_ROOT; };
+		638D1CAC021145F0ABE3BDE8 /* /Users/philipwenkel/GitHub/Phan/CMakeLists.txt */ = {isa = PBXFileReference; explicitFileType = sourcecode.text; fileEncoding = 4; name = CMakeLists.txt; path = CMakeLists.txt; sourceTree = SOURCE_ROOT; };
+		6D5BA6B963054D65A73C8981 /* /Users/philipwenkel/GitHub/Phan/apps/app1/CMakeLists.txt */ = {isa = PBXFileReference; explicitFileType = sourcecode.text; fileEncoding = 4; name = CMakeLists.txt; path = apps/app1/CMakeLists.txt; sourceTree = SOURCE_ROOT; };
+		6DCEB33DA626438F96D43E7E /* /Users/philipwenkel/GitHub/Phan/tests/testlib.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = testlib.cpp; path = tests/testlib.cpp; sourceTree = SOURCE_ROOT; };
+		81DB1A3644DA4389AA8A34B9 /* /Users/philipwenkel/GitHub/Phan/apps/app1/app.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = app.cpp; path = apps/app1/app.cpp; sourceTree = SOURCE_ROOT; };
+		82D206177F994CE2BB12EFD5 /* /Users/philipwenkel/GitHub/Phan/include/phan/phan.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = phan.hpp; path = include/phan/phan.hpp; sourceTree = SOURCE_ROOT; };
+		8F8AA429A6D54800BB550DC2 /* /Users/philipwenkel/GitHub/Phan/apps/app1/app.hpp.in */ = {isa = PBXFileReference; explicitFileType = sourcecode; fileEncoding = 4; name = app.hpp.in; path = apps/app1/app.hpp.in; sourceTree = SOURCE_ROOT; };
+		987293F7138E4802BAB137F9 /* /Users/philipwenkel/GitHub/Phan/CMakeLists.txt */ = {isa = PBXFileReference; explicitFileType = sourcecode.text; fileEncoding = 4; name = CMakeLists.txt; path = CMakeLists.txt; sourceTree = SOURCE_ROOT; };
+		9F88CDE2760A4B40A70AF62E /* /Users/philipwenkel/GitHub/Phan/tests/CMakeLists.txt */ = {isa = PBXFileReference; explicitFileType = sourcecode.text; fileEncoding = 4; name = CMakeLists.txt; path = tests/CMakeLists.txt; sourceTree = SOURCE_ROOT; };
+		A38653043CF74E159E79FC2E /* /Users/philipwenkel/GitHub/Phan/src/phan.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = phan.cpp; path = src/phan.cpp; sourceTree = SOURCE_ROOT; };
+		A7AD914AC2E54C8597E60E17 /* /Users/philipwenkel/GitHub/Phan/LICENSE */ = {isa = PBXFileReference; explicitFileType = sourcecode; fileEncoding = 4; name = LICENSE; path = LICENSE; sourceTree = SOURCE_ROOT; };
+		B3E6C48CB4FF4369B6BC91AA /* /Users/philipwenkel/GitHub/Phan/src/CMakeLists.txt */ = {isa = PBXFileReference; explicitFileType = sourcecode.text; fileEncoding = 4; name = CMakeLists.txt; path = src/CMakeLists.txt; sourceTree = SOURCE_ROOT; };
+		BC4FBBF634AE4E8680FB891E /* /Users/philipwenkel/GitHub/Phan/CMakeLists.txt */ = {isa = PBXFileReference; explicitFileType = sourcecode.text; fileEncoding = 4; name = CMakeLists.txt; path = CMakeLists.txt; sourceTree = SOURCE_ROOT; };
+		C6AAFC135A9E464FAA8DF1D5 /* /Users/philipwenkel/GitHub/Phan/CMakeLists.txt */ = {isa = PBXFileReference; explicitFileType = sourcecode.text; fileEncoding = 4; name = CMakeLists.txt; path = CMakeLists.txt; sourceTree = SOURCE_ROOT; };
+		C8559F555B484D959D819FA7 /* testlib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; path = testlib; sourceTree = BUILT_PRODUCTS_DIR; };
+		D227E55EC6B046B3B9B2AB93 /* app1 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; path = app1; sourceTree = BUILT_PRODUCTS_DIR; };
+		D5FB53A0034442E19F58E161 /* /Users/philipwenkel/GitHub/Phan/src/generators/generatorA/src/generator.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = generator.cpp; path = src/generators/generatorA/src/generator.cpp; sourceTree = SOURCE_ROOT; };
+		EA9AC9D17C7E43F88C7D27F9 /* /Users/philipwenkel/GitHub/Phan/xbuild/apps/app1/CMakeFiles/app1.dir/Info.plist */ = {isa = PBXFileReference; explicitFileType = sourcecode.text.plist; fileEncoding = 4; name = Info.plist; path = xbuild/apps/app1/CMakeFiles/app1.dir/Info.plist; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		93D3A5DD66F444959414EDE1 /* Frameworks */ = {
+		1F807B90A21F4EA391E20160 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B5F9FDDE290545ED9D48FA5C /* Frameworks */ = {
+		691CFC2BEDD642E89C2CD899 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		FABF39B563E64AB683BC5AE4 /* Frameworks */ = {
+		99E2DB4588A54577B41AE8A9 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -348,316 +348,316 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		043F477264914E0EB23C6C25 /* Header Files */ = {
+		0ADBCC56271A46ECA58A2D64 /* Source Files */ = {
 			isa = PBXGroup;
 			children = (
-				D2C2B05345494598AF77D5AC /* /Users/philipwenkel/GitHub/Phan/include/template_library/template_library.hpp */,
-				0AD891721A2247039ED610F4 /* /Users/philipwenkel/GitHub/Phan/include/test.hpp */,
-				A6093B70599A42CD8F23C8CB /* /Users/philipwenkel/GitHub/Phan/include/version.hpp */,
+				6DCEB33DA626438F96D43E7E /* /Users/philipwenkel/GitHub/Phan/tests/testlib.cpp */,
 			);
-			name = "Header Files";
+			name = "Source Files";
 			sourceTree = "<group>";
 		};
-		084D5709A13C4830B179540F /* Frameworks */ = {
+		0B2639471A2846589DB1FE20 /* Continuous */ = {
+			isa = PBXGroup;
+			children = (
+				239341C3C962489590012273 /* CMake Rules */,
+				987293F7138E4802BAB137F9 /* /Users/philipwenkel/GitHub/Phan/CMakeLists.txt */,
+			);
+			name = Continuous;
+			sourceTree = "<group>";
+		};
+		0CF13F5CF7F64D69B400B3F0 /* CMake Rules */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "CMake Rules";
+			sourceTree = "<group>";
+		};
+		1D65A1C48FD2403E9B4241C4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		0F225F31FFC1466F8682C44E /* Source Files */ = {
-			isa = PBXGroup;
-			children = (
-				A74C0F438D554C4EA4112F07 /* /Users/philipwenkel/GitHub/Phan/tests/testlib.cpp */,
-			);
-			name = "Source Files";
-			sourceTree = "<group>";
-		};
-		151B5524A30346F1BFC83281 /* CTestDashboardTargets */ = {
-			isa = PBXGroup;
-			children = (
-				544D11D02E894520BF5F1EEE /* NightlyMemoryCheck */,
-				2F71B0F2B5554B91A17B9AB4 /* Nightly */,
-				301B9520F86C4C2295CAF083 /* Continuous */,
-				4647EEFCC7B94CCCBBDDA71B /* Experimental */,
-			);
-			name = CTestDashboardTargets;
-			sourceTree = "<group>";
-		};
-		2F71B0F2B5554B91A17B9AB4 /* Nightly */ = {
-			isa = PBXGroup;
-			children = (
-				9C61FB813C134503BC9617EB /* CMake Rules */,
-				0525A891D5EA43B581F2EA26 /* /Users/philipwenkel/GitHub/Phan/CMakeLists.txt */,
-			);
-			name = Nightly;
-			sourceTree = "<group>";
-		};
-		301B9520F86C4C2295CAF083 /* Continuous */ = {
-			isa = PBXGroup;
-			children = (
-				7E046931A5F14560856DF9D0 /* CMake Rules */,
-				08A1690606BE4760ADB5D12D /* /Users/philipwenkel/GitHub/Phan/CMakeLists.txt */,
-			);
-			name = Continuous;
-			sourceTree = "<group>";
-		};
-		4647EEFCC7B94CCCBBDDA71B /* Experimental */ = {
-			isa = PBXGroup;
-			children = (
-				663C5DC315964AD08CB2AA0A /* CMake Rules */,
-				C61E7AF0C261479DB2A3E365 /* /Users/philipwenkel/GitHub/Phan/CMakeLists.txt */,
-			);
-			name = Experimental;
-			sourceTree = "<group>";
-		};
-		47D33A394891443B86FA1364 /* Source Files */ = {
-			isa = PBXGroup;
-			children = (
-				D16FD9E6BADF4277AC23416A /* /Users/philipwenkel/GitHub/Phan/src/generators/generatorA/src/generator.cpp */,
-				B53B902C3356477BAA8FACB9 /* /Users/philipwenkel/GitHub/Phan/src/template_library.cpp */,
-			);
-			name = "Source Files";
-			sourceTree = "<group>";
-		};
-		544D11D02E894520BF5F1EEE /* NightlyMemoryCheck */ = {
-			isa = PBXGroup;
-			children = (
-				C9F6E70ABDF64F6B95C2E918 /* CMake Rules */,
-				377895A8068F4ACFA9E152DF /* /Users/philipwenkel/GitHub/Phan/CMakeLists.txt */,
-			);
-			name = NightlyMemoryCheck;
-			sourceTree = "<group>";
-		};
-		566B7E1B3A914B99B9530B4D /* Docs */ = {
-			isa = PBXGroup;
-			children = (
-				7104F3170D7F4FF386E22F9F /* /Users/philipwenkel/GitHub/Phan/README.md */,
-				47F61A59D4FD48C49D587257 /* /Users/philipwenkel/GitHub/Phan/.gitignore */,
-				FAB4729F3F7F4721A35B4126 /* /Users/philipwenkel/GitHub/Phan/LICENSE */,
-				7407832427A34B3FA2BC9BF2 /* /Users/philipwenkel/GitHub/Phan/apps/app1/CMakeLists.txt */,
-			);
-			name = Docs;
-			sourceTree = "<group>";
-		};
-		65BAACE5EBEF444FB5FCD0D6 /* Header Files */ = {
-			isa = PBXGroup;
-			children = (
-				0136E94AEE104B80BED5A7C6 /* /Users/philipwenkel/GitHub/Phan/apps/app1/app.hpp.in */,
-				A243CCE8008246FB9E95518C /* /Users/philipwenkel/GitHub/Phan/apps/app1/app_2_.hpp */,
-				E4DBD418DB0B406685E88257 /* /Users/philipwenkel/GitHub/Phan/xbuild/apps/app1/app.hpp */,
-				C46C7ACC187A4567ADED1ADB /* /Users/philipwenkel/GitHub/Phan/xbuild/apps/app1/app_2.hpp */,
-			);
-			name = "Header Files";
-			sourceTree = "<group>";
-		};
-		663C5DC315964AD08CB2AA0A /* CMake Rules */ = {
+		239341C3C962489590012273 /* CMake Rules */ = {
 			isa = PBXGroup;
 			children = (
 			);
 			name = "CMake Rules";
 			sourceTree = "<group>";
 		};
-		6EC993E64D6D4A5E913A9FDF /* Resources */ = {
+		406AD39F41F243DCA4165304 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				467EF525F20B439A8E05993D /* /Users/philipwenkel/GitHub/Phan/xbuild/apps/app1/CMakeFiles/app1.dir/Info.plist */,
+				EA9AC9D17C7E43F88C7D27F9 /* /Users/philipwenkel/GitHub/Phan/xbuild/apps/app1/CMakeFiles/app1.dir/Info.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
 		};
-		706F786D9D7B4EAD8737E5AD /* Phan */ = {
-			isa = PBXGroup;
-			children = (
-				47D33A394891443B86FA1364 /* Source Files */,
-				043F477264914E0EB23C6C25 /* Header Files */,
-				9BC898C38DA1419CA59E0999 /* /Users/philipwenkel/GitHub/Phan/src/CMakeLists.txt */,
-			);
-			name = Phan;
-			sourceTree = "<group>";
-		};
-		70B04C6D8199412C8597E0D8 /* CMake Rules */ = {
+		5869EC29253F4DCF89A9D877 /* CMake Rules */ = {
 			isa = PBXGroup;
 			children = (
 			);
 			name = "CMake Rules";
 			sourceTree = "<group>";
 		};
-		710C6F6A1A2C4C828233B4BB = {
+		590B770D9AC44C9985946BD0 /* Header Files */ = {
 			isa = PBXGroup;
 			children = (
-				151B5524A30346F1BFC83281 /* CTestDashboardTargets */,
-				88748670ECCC464C8CD9AC01 /* ALL_BUILD */,
-				706F786D9D7B4EAD8737E5AD /* Phan */,
-				566B7E1B3A914B99B9530B4D /* Docs */,
-				CEDA441EF1264625BF107FF1 /* app1 */,
-				B009F332B44C41E9A900C69D /* testlib */,
-				D30E6CE6DD464208B99FBC3E /* Products */,
-				084D5709A13C4830B179540F /* Frameworks */,
+				82D206177F994CE2BB12EFD5 /* /Users/philipwenkel/GitHub/Phan/include/phan/phan.hpp */,
+				6164282103C24B20841E77AB /* /Users/philipwenkel/GitHub/Phan/include/test.hpp */,
+				42522C1B1FE945D69D0DB254 /* /Users/philipwenkel/GitHub/Phan/include/version.hpp */,
 			);
+			name = "Header Files";
 			sourceTree = "<group>";
 		};
-		7E046931A5F14560856DF9D0 /* CMake Rules */ = {
+		72896625804F49F3BDBD5469 /* app1 */ = {
 			isa = PBXGroup;
 			children = (
-			);
-			name = "CMake Rules";
-			sourceTree = "<group>";
-		};
-		88748670ECCC464C8CD9AC01 /* ALL_BUILD */ = {
-			isa = PBXGroup;
-			children = (
-				70B04C6D8199412C8597E0D8 /* CMake Rules */,
-				441751E09DE1462D8483797B /* /Users/philipwenkel/GitHub/Phan/CMakeLists.txt */,
-			);
-			name = ALL_BUILD;
-			sourceTree = "<group>";
-		};
-		9C61FB813C134503BC9617EB /* CMake Rules */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "CMake Rules";
-			sourceTree = "<group>";
-		};
-		B009F332B44C41E9A900C69D /* testlib */ = {
-			isa = PBXGroup;
-			children = (
-				0F225F31FFC1466F8682C44E /* Source Files */,
-				AF35CC28F4FC4143AAEFBD86 /* /Users/philipwenkel/GitHub/Phan/tests/CMakeLists.txt */,
-			);
-			name = testlib;
-			sourceTree = "<group>";
-		};
-		C9F6E70ABDF64F6B95C2E918 /* CMake Rules */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "CMake Rules";
-			sourceTree = "<group>";
-		};
-		CEDA441EF1264625BF107FF1 /* app1 */ = {
-			isa = PBXGroup;
-			children = (
-				EFBDAD1F00F6486AB4DB1397 /* Source Files */,
-				65BAACE5EBEF444FB5FCD0D6 /* Header Files */,
-				6EC993E64D6D4A5E913A9FDF /* Resources */,
-				767D262D7F3C4512B01EBAE0 /* /Users/philipwenkel/GitHub/Phan/apps/app1/CMakeLists.txt */,
+				D0802587720043DCBEFDB02B /* Sourcess */,
+				786B18303C4C45FAB31E1AA8 /* Header Files */,
+				406AD39F41F243DCA4165304 /* Resources */,
+				018620EA7A3643E999481300 /* /Users/philipwenkel/GitHub/Phan/apps/app1/CMakeLists.txt */,
 			);
 			name = app1;
 			sourceTree = "<group>";
 		};
-		D30E6CE6DD464208B99FBC3E /* Products */ = {
+		76AC2E285FAA46F897E5658F /* CMake Rules */ = {
 			isa = PBXGroup;
 			children = (
-				225C60AA35BC46399F104826 /* Phan */,
-				57BEE3630BB14AA9B7B60043 /* app1 */,
-				8AC6B592CF794EEEBB056980 /* testlib */,
 			);
-			name = Products;
+			name = "CMake Rules";
 			sourceTree = "<group>";
 		};
-		EFBDAD1F00F6486AB4DB1397 /* Source Files */ = {
+		786B18303C4C45FAB31E1AA8 /* Header Files */ = {
 			isa = PBXGroup;
 			children = (
-				A9A83754FDFC4991B265DF24 /* /Users/philipwenkel/GitHub/Phan/apps/app1/app.cpp */,
+				8F8AA429A6D54800BB550DC2 /* /Users/philipwenkel/GitHub/Phan/apps/app1/app.hpp.in */,
+				1489A1D6834944C29E013F45 /* /Users/philipwenkel/GitHub/Phan/apps/app1/app_2_.hpp */,
+				2714A6DF63C04C229558A44C /* /Users/philipwenkel/GitHub/Phan/xbuild/apps/app1/app.hpp */,
+				0FB8940571474638838E5705 /* /Users/philipwenkel/GitHub/Phan/xbuild/apps/app1/app_2.hpp */,
+			);
+			name = "Header Files";
+			sourceTree = "<group>";
+		};
+		79651232BFAE4C32A41C7B33 /* Docs */ = {
+			isa = PBXGroup;
+			children = (
+				4E19BCD50898459CA02BB06C /* /Users/philipwenkel/GitHub/Phan/README.md */,
+				30F3E3BA41684DCF920DA601 /* /Users/philipwenkel/GitHub/Phan/.gitignore */,
+				A7AD914AC2E54C8597E60E17 /* /Users/philipwenkel/GitHub/Phan/LICENSE */,
+				6D5BA6B963054D65A73C8981 /* /Users/philipwenkel/GitHub/Phan/apps/app1/CMakeLists.txt */,
+			);
+			name = Docs;
+			sourceTree = "<group>";
+		};
+		8B10B2ABFDFD45BC9A9CB86F /* Experimental */ = {
+			isa = PBXGroup;
+			children = (
+				97355A809E1947A2BDD3F989 /* CMake Rules */,
+				C6AAFC135A9E464FAA8DF1D5 /* /Users/philipwenkel/GitHub/Phan/CMakeLists.txt */,
+			);
+			name = Experimental;
+			sourceTree = "<group>";
+		};
+		8E47087323B84016B860BB38 /* ALL_BUILD */ = {
+			isa = PBXGroup;
+			children = (
+				0CF13F5CF7F64D69B400B3F0 /* CMake Rules */,
+				60AB2EF39DB5484FB662C303 /* /Users/philipwenkel/GitHub/Phan/CMakeLists.txt */,
+			);
+			name = ALL_BUILD;
+			sourceTree = "<group>";
+		};
+		97355A809E1947A2BDD3F989 /* CMake Rules */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "CMake Rules";
+			sourceTree = "<group>";
+		};
+		9B3176CC528D422ABE339268 /* Source Files */ = {
+			isa = PBXGroup;
+			children = (
+				D5FB53A0034442E19F58E161 /* /Users/philipwenkel/GitHub/Phan/src/generators/generatorA/src/generator.cpp */,
+				A38653043CF74E159E79FC2E /* /Users/philipwenkel/GitHub/Phan/src/phan.cpp */,
 			);
 			name = "Source Files";
+			sourceTree = "<group>";
+		};
+		A24AD3B067164F009BE77A57 /* Phan */ = {
+			isa = PBXGroup;
+			children = (
+				9B3176CC528D422ABE339268 /* Source Files */,
+				590B770D9AC44C9985946BD0 /* Header Files */,
+				B3E6C48CB4FF4369B6BC91AA /* /Users/philipwenkel/GitHub/Phan/src/CMakeLists.txt */,
+			);
+			name = Phan;
+			sourceTree = "<group>";
+		};
+		A92608C9E2A84EF19811F458 /* Nightly */ = {
+			isa = PBXGroup;
+			children = (
+				5869EC29253F4DCF89A9D877 /* CMake Rules */,
+				638D1CAC021145F0ABE3BDE8 /* /Users/philipwenkel/GitHub/Phan/CMakeLists.txt */,
+			);
+			name = Nightly;
+			sourceTree = "<group>";
+		};
+		AD571EF1CD784850B6B5D7D5 /* testlib */ = {
+			isa = PBXGroup;
+			children = (
+				0ADBCC56271A46ECA58A2D64 /* Source Files */,
+				9F88CDE2760A4B40A70AF62E /* /Users/philipwenkel/GitHub/Phan/tests/CMakeLists.txt */,
+			);
+			name = testlib;
+			sourceTree = "<group>";
+		};
+		AEDD9DA34060421F87F47754 = {
+			isa = PBXGroup;
+			children = (
+				EE41DBE88114493B87EA60B7 /* CTestDashboardTargets */,
+				8E47087323B84016B860BB38 /* ALL_BUILD */,
+				A24AD3B067164F009BE77A57 /* Phan */,
+				79651232BFAE4C32A41C7B33 /* Docs */,
+				72896625804F49F3BDBD5469 /* app1 */,
+				AD571EF1CD784850B6B5D7D5 /* testlib */,
+				F7D9880972E441BDBF2091BE /* Products */,
+				1D65A1C48FD2403E9B4241C4 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		D0802587720043DCBEFDB02B /* Sourcess */ = {
+			isa = PBXGroup;
+			children = (
+				81DB1A3644DA4389AA8A34B9 /* /Users/philipwenkel/GitHub/Phan/apps/app1/app.cpp */,
+			);
+			name = Sourcess;
+			sourceTree = "<group>";
+		};
+		E61F197D729E4E7FABE5BAC8 /* NightlyMemoryCheck */ = {
+			isa = PBXGroup;
+			children = (
+				76AC2E285FAA46F897E5658F /* CMake Rules */,
+				BC4FBBF634AE4E8680FB891E /* /Users/philipwenkel/GitHub/Phan/CMakeLists.txt */,
+			);
+			name = NightlyMemoryCheck;
+			sourceTree = "<group>";
+		};
+		EE41DBE88114493B87EA60B7 /* CTestDashboardTargets */ = {
+			isa = PBXGroup;
+			children = (
+				E61F197D729E4E7FABE5BAC8 /* NightlyMemoryCheck */,
+				A92608C9E2A84EF19811F458 /* Nightly */,
+				0B2639471A2846589DB1FE20 /* Continuous */,
+				8B10B2ABFDFD45BC9A9CB86F /* Experimental */,
+			);
+			name = CTestDashboardTargets;
+			sourceTree = "<group>";
+		};
+		F7D9880972E441BDBF2091BE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				506698204E1C442B95CB55E9 /* Phan */,
+				D227E55EC6B046B3B9B2AB93 /* app1 */,
+				C8559F555B484D959D819FA7 /* testlib */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		9BA90879046B4C0CB4BEDDD4 /* Phan */ = {
+		6207BAEE15954BAE9F19E581 /* testlib */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1B81241313184F138057D0EA /* Build configuration list for PBXNativeTarget "Phan" */;
+			buildConfigurationList = 58267FDD7F504802BEAE26D7 /* Build configuration list for PBXNativeTarget "testlib" */;
 			buildPhases = (
-				641EBBCEAFBA488CA6B95A3C /* Sources */,
-				FABF39B563E64AB683BC5AE4 /* Frameworks */,
+				5452BFC020E047059AFE5552 /* Sources */,
+				691CFC2BEDD642E89C2CD899 /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				706B9BDEE6144D87B0F285F4 /* PBXTargetDependency */,
-			);
-			name = Phan;
-			productName = Phan;
-			productReference = 225C60AA35BC46399F104826 /* Phan */;
-			productType = "com.apple.product-type.library.static";
-		};
-		A968013829354478813C5271 /* testlib */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = B0607B30A2CB4A988D8D0528 /* Build configuration list for PBXNativeTarget "testlib" */;
-			buildPhases = (
-				9100F9E53E084A9D984BDEC5 /* Sources */,
-				93D3A5DD66F444959414EDE1 /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				04B09EB3807B45FBA28469BD /* PBXTargetDependency */,
-				0D68B5254EC247D680DA487E /* PBXTargetDependency */,
+				CCF3BEF4E88149CD8A705629 /* PBXTargetDependency */,
+				861811D4C34B4533ACCAB491 /* PBXTargetDependency */,
 			);
 			name = testlib;
 			productName = testlib;
-			productReference = 8AC6B592CF794EEEBB056980 /* testlib */;
+			productReference = C8559F555B484D959D819FA7 /* testlib */;
 			productType = "com.apple.product-type.tool";
 		};
-		D963DD3D95CF40AAB536E6C0 /* app1 */ = {
+		7C9FECB275F84E85957C51DF /* app1 */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = EF1425C98EB54E6A93FE7C64 /* Build configuration list for PBXNativeTarget "app1" */;
+			buildConfigurationList = AA33E56F2BA74DA89762D735 /* Build configuration list for PBXNativeTarget "app1" */;
 			buildPhases = (
-				9FB736C4210D49CBAC07E25D /* Sources */,
-				B5F9FDDE290545ED9D48FA5C /* Frameworks */,
+				5BD581654AF743EB8B122A69 /* Sources */,
+				1F807B90A21F4EA391E20160 /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				001DE8EADF8F476A9A2FBDC4 /* PBXTargetDependency */,
-				F8C6B0F6ED064937B5E1FA73 /* PBXTargetDependency */,
+				3736BE45DE7A44BB853722BF /* PBXTargetDependency */,
+				839E3F6277404C00BBC963E9 /* PBXTargetDependency */,
 			);
 			name = app1;
 			productName = app1;
-			productReference = 57BEE3630BB14AA9B7B60043 /* app1 */;
+			productReference = D227E55EC6B046B3B9B2AB93 /* app1 */;
 			productType = "com.apple.product-type.application";
+		};
+		B0703287CA8D4A53BC1C775A /* Phan */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6C47473E5587499C94602459 /* Build configuration list for PBXNativeTarget "Phan" */;
+			buildPhases = (
+				4661645048004D8E91F1366B /* Sources */,
+				99E2DB4588A54577B41AE8A9 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				04639D4949434BEF93CEBB0A /* PBXTargetDependency */,
+			);
+			name = Phan;
+			productName = Phan;
+			productReference = 506698204E1C442B95CB55E9 /* Phan */;
+			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		09CB6898608D4005ACC2E495 /* Project object */ = {
+		848A09FA28694514AB1184E9 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1250;
 			};
-			buildConfigurationList = 3B4087EA0D604515866AAD6F /* Build configuration list for PBXProject "Phan" */;
+			buildConfigurationList = 28A2747A422E47E4A17129AA /* Build configuration list for PBXProject "Phan" */;
 			buildSettings = {
 			};
 			buildStyles = (
-				138B31CA88CE4DF78C3FFE51 /* Debug */,
-				F96BAA5112A74A1EB02FE2C4 /* Release */,
-				A6A6A0823DF1489A9333FCB5 /* MinSizeRel */,
-				B69DF24473CB4FBA85A25827 /* RelWithDebInfo */,
+				34F87D2F393F43D09E529C67 /* Debug */,
+				6127ECA923F14C14A986C09F /* Release */,
+				FC33C7130DEB4BD9A14D0035 /* MinSizeRel */,
+				37B796CDD09549DA9E134631 /* RelWithDebInfo */,
 			);
 			compatibilityVersion = "Xcode 3.2";
 			hasScannedForEncodings = 0;
-			mainGroup = 710C6F6A1A2C4C828233B4BB;
+			mainGroup = AEDD9DA34060421F87F47754;
 			projectDirPath = ../;
 			projectRoot = "";
 			targets = (
-				D5FC32BDE1794409B65F4670 /* ALL_BUILD */,
-				6CA71F81FC12429E90D48B11 /* Continuous */,
-				45F92787364D4F9F910B1A1B /* Docs */,
-				704F04DA7AB348D383B876D1 /* Experimental */,
-				97F3D6901D7A4DF8A029B91C /* Nightly */,
-				D3D99784C6B64CAA96AE1ED0 /* NightlyMemoryCheck */,
-				9BA90879046B4C0CB4BEDDD4 /* Phan */,
-				6366D57333D740488173BD6A /* RUN_TESTS */,
-				8FADF47C6B244CB083E9A741 /* ZERO_CHECK */,
-				D963DD3D95CF40AAB536E6C0 /* app1 */,
-				5E2CB7D44EEF4D5BBCEF4953 /* install */,
-				8AFDCD1716B043DF953092B2 /* package */,
-				A968013829354478813C5271 /* testlib */,
+				38B528765A074591A48DDA2F /* ALL_BUILD */,
+				1321667014FB4EA4BD81070E /* Continuous */,
+				8ABA8092DB90496E822A7854 /* Docs */,
+				0C4E204E13084A689F8450D0 /* Experimental */,
+				B4658C4E12DF42B288AEF0C1 /* Nightly */,
+				CD106D9BC7A44C18B97A87CA /* NightlyMemoryCheck */,
+				B0703287CA8D4A53BC1C775A /* Phan */,
+				992A9D089369466CADA7E1CA /* RUN_TESTS */,
+				C2D0B8040ED347DCA78ACDB2 /* ZERO_CHECK */,
+				7C9FECB275F84E85957C51DF /* app1 */,
+				F623797255A8483BA2C6F8BF /* install */,
+				44D4D1B85FCD4D9A9F804EBB /* package */,
+				6207BAEE15954BAE9F19E581 /* testlib */,
 			);
 		};
 /* End PBXProject section */
@@ -1107,118 +1107,443 @@ fi
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		641EBBCEAFBA488CA6B95A3C /* Sources */ = {
+		4661645048004D8E91F1366B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6E1B9399F3184DC8AF60B63D /* /Users/philipwenkel/GitHub/Phan/src/generators/generatorA/src/generator.cpp */,
-				3F5B10AB31FA4919BD71F3B8 /* /Users/philipwenkel/GitHub/Phan/src/template_library.cpp */,
+				7F9B3E852FAC4B3290B03D92 /* /Users/philipwenkel/GitHub/Phan/src/generators/generatorA/src/generator.cpp */,
+				397036DD40AF4FD19BE13AFE /* /Users/philipwenkel/GitHub/Phan/src/phan.cpp */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		9100F9E53E084A9D984BDEC5 /* Sources */ = {
+		5452BFC020E047059AFE5552 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DB48DE833D954D01BB5EE8FA /* /Users/philipwenkel/GitHub/Phan/tests/testlib.cpp */,
+				9D654D1DAD1B49B1B9BF9118 /* /Users/philipwenkel/GitHub/Phan/tests/testlib.cpp */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		9FB736C4210D49CBAC07E25D /* Sources */ = {
+		5BD581654AF743EB8B122A69 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9C19536FF03F4A7C968C90E0 /* /Users/philipwenkel/GitHub/Phan/apps/app1/app.cpp */,
+				332CB11DE4264FE690B01773 /* /Users/philipwenkel/GitHub/Phan/apps/app1/app.cpp */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		001DE8EADF8F476A9A2FBDC4 /* PBXTargetDependency */ = {
+		04639D4949434BEF93CEBB0A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 8FADF47C6B244CB083E9A741 /* ZERO_CHECK */;
-			targetProxy = 34A33C061BB443219757C352 /* PBXContainerItemProxy */;
+			target = C2D0B8040ED347DCA78ACDB2 /* ZERO_CHECK */;
+			targetProxy = 3A1994A03DF646ABB79AA5F3 /* PBXContainerItemProxy */;
 		};
-		046120F6131C4B05A18B211B /* PBXTargetDependency */ = {
+		163216C30D5E4394924042C7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 8FADF47C6B244CB083E9A741 /* ZERO_CHECK */;
-			targetProxy = B02DE46FB77840509673D812 /* PBXContainerItemProxy */;
+			target = C2D0B8040ED347DCA78ACDB2 /* ZERO_CHECK */;
+			targetProxy = F3BA58988B4048979BA6037B /* PBXContainerItemProxy */;
 		};
-		04B09EB3807B45FBA28469BD /* PBXTargetDependency */ = {
+		22B155094CF84D759F7BA55C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 8FADF47C6B244CB083E9A741 /* ZERO_CHECK */;
-			targetProxy = 0E08011297CD4E3C966142FF /* PBXContainerItemProxy */;
+			target = C2D0B8040ED347DCA78ACDB2 /* ZERO_CHECK */;
+			targetProxy = 8B8DE98675F34142B1B74FA6 /* PBXContainerItemProxy */;
 		};
-		0D68B5254EC247D680DA487E /* PBXTargetDependency */ = {
+		30D7698B1E8849BE978BE9F3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 9BA90879046B4C0CB4BEDDD4 /* Phan */;
-			targetProxy = 1194017B223648C7B1387108 /* PBXContainerItemProxy */;
+			target = C2D0B8040ED347DCA78ACDB2 /* ZERO_CHECK */;
+			targetProxy = 991E7469247841DDA73C0CF1 /* PBXContainerItemProxy */;
 		};
-		0E3D26089AC141C3944D2908 /* PBXTargetDependency */ = {
+		3736BE45DE7A44BB853722BF /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 8FADF47C6B244CB083E9A741 /* ZERO_CHECK */;
-			targetProxy = DC57B501B63242309122CCE8 /* PBXContainerItemProxy */;
+			target = C2D0B8040ED347DCA78ACDB2 /* ZERO_CHECK */;
+			targetProxy = A8B7B397B71F4C8B984F9F2C /* PBXContainerItemProxy */;
 		};
-		190CA7451FC140BDB77D8C81 /* PBXTargetDependency */ = {
+		3BBC63A4B0BB4E00B97671D3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 8FADF47C6B244CB083E9A741 /* ZERO_CHECK */;
-			targetProxy = 1A1F553F778246EE9BC9C858 /* PBXContainerItemProxy */;
+			target = B0703287CA8D4A53BC1C775A /* Phan */;
+			targetProxy = E062306B1BC84629B3F24C42 /* PBXContainerItemProxy */;
 		};
-		2905290A122947E5970ADE41 /* PBXTargetDependency */ = {
+		839E3F6277404C00BBC963E9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 8FADF47C6B244CB083E9A741 /* ZERO_CHECK */;
-			targetProxy = 3E881FF683384839AF27F422 /* PBXContainerItemProxy */;
+			target = B0703287CA8D4A53BC1C775A /* Phan */;
+			targetProxy = 72CCE9E6A4F6441EAB297324 /* PBXContainerItemProxy */;
 		};
-		2E060B7E92C3434F87CF3775 /* PBXTargetDependency */ = {
+		847A2F363F5946A1B2F29EB0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = D5FC32BDE1794409B65F4670 /* ALL_BUILD */;
-			targetProxy = A108FA212C94496A90574F8E /* PBXContainerItemProxy */;
+			target = 38B528765A074591A48DDA2F /* ALL_BUILD */;
+			targetProxy = 2B2B1D18D14A48C08B992AE4 /* PBXContainerItemProxy */;
 		};
-		3271078D8773456C8A49B37D /* PBXTargetDependency */ = {
+		861811D4C34B4533ACCAB491 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 9BA90879046B4C0CB4BEDDD4 /* Phan */;
-			targetProxy = 5AE4049EB7AC476A85AAFA18 /* PBXContainerItemProxy */;
+			target = B0703287CA8D4A53BC1C775A /* Phan */;
+			targetProxy = 98D74ABD949B4DCABE0A2712 /* PBXContainerItemProxy */;
 		};
-		3EA9E0E8C9C0424BBD9ED991 /* PBXTargetDependency */ = {
+		97BADD60EDD045EBA4FC4297 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 8FADF47C6B244CB083E9A741 /* ZERO_CHECK */;
-			targetProxy = EF9081D2263447079DAF0459 /* PBXContainerItemProxy */;
+			target = C2D0B8040ED347DCA78ACDB2 /* ZERO_CHECK */;
+			targetProxy = 478AD7492FDD4692B92E7690 /* PBXContainerItemProxy */;
 		};
-		4755EDF0CCAD415395622576 /* PBXTargetDependency */ = {
+		A2BCFB988C7444AF8F9020F8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = D5FC32BDE1794409B65F4670 /* ALL_BUILD */;
-			targetProxy = 57F982E19B7E48B7A253CD9B /* PBXContainerItemProxy */;
+			target = 7C9FECB275F84E85957C51DF /* app1 */;
+			targetProxy = EB854E3834B04D799008CC96 /* PBXContainerItemProxy */;
 		};
-		49E8296098054ACA8EFF7675 /* PBXTargetDependency */ = {
+		C1AB550AF05B440FAEC02586 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 8FADF47C6B244CB083E9A741 /* ZERO_CHECK */;
-			targetProxy = C7F95506811B4D35B902BD31 /* PBXContainerItemProxy */;
+			target = 38B528765A074591A48DDA2F /* ALL_BUILD */;
+			targetProxy = 48A102AEE8BE4CD787F8CB12 /* PBXContainerItemProxy */;
 		};
-		6F1F6ABC8E93496E8AE038DE /* PBXTargetDependency */ = {
+		C215834596D141D7AF822A97 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A968013829354478813C5271 /* testlib */;
-			targetProxy = 3E607B848F68495587DA2F84 /* PBXContainerItemProxy */;
+			target = C2D0B8040ED347DCA78ACDB2 /* ZERO_CHECK */;
+			targetProxy = C6E89C5CC4094559A91474FF /* PBXContainerItemProxy */;
 		};
-		706B9BDEE6144D87B0F285F4 /* PBXTargetDependency */ = {
+		CCF3BEF4E88149CD8A705629 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 8FADF47C6B244CB083E9A741 /* ZERO_CHECK */;
-			targetProxy = D8F9BE8FE0874B2CA44BB16D /* PBXContainerItemProxy */;
+			target = C2D0B8040ED347DCA78ACDB2 /* ZERO_CHECK */;
+			targetProxy = B96BFD9AD7A24C8782A6DAE4 /* PBXContainerItemProxy */;
 		};
-		D30D13CACA95401096CCE8D2 /* PBXTargetDependency */ = {
+		CEE1A3383EB940F382D7821A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = D963DD3D95CF40AAB536E6C0 /* app1 */;
-			targetProxy = 6E0BDBE098474DF8AEBB02FE /* PBXContainerItemProxy */;
+			target = C2D0B8040ED347DCA78ACDB2 /* ZERO_CHECK */;
+			targetProxy = C9E2C9246B8549ADAAE39FE8 /* PBXContainerItemProxy */;
 		};
-		F8C6B0F6ED064937B5E1FA73 /* PBXTargetDependency */ = {
+		D1E1325C5F854DD3AD3BDFE1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 9BA90879046B4C0CB4BEDDD4 /* Phan */;
-			targetProxy = 61F443D024DF4A87803A6A29 /* PBXContainerItemProxy */;
+			target = 6207BAEE15954BAE9F19E581 /* testlib */;
+			targetProxy = CE8EA77DB4204F678CA4E5DE /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		0C0AF1818F5749B2A32CCC81 /* Debug */ = {
+		005E7579C1EF4332BED09502 /* RelWithDebInfo */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Continuous;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = RelWithDebInfo;
+		};
+		02928A0497574779B9F64DEB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ZERO_CHECK;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Release;
+		};
+		033FEA4C74A145E6A46C6142 /* MinSizeRel */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = install;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = MinSizeRel;
+		};
+		0BC88EEBE8154D9986A43B42 /* MinSizeRel */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ALL_BUILD;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = MinSizeRel;
+		};
+		0D9062F62AAA4750B4B8C95E /* RelWithDebInfo */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Nightly;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = RelWithDebInfo;
+		};
+		10FFF0DA1A0E47CF8B7B1182 /* RelWithDebInfo */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = RUN_TESTS;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = RelWithDebInfo;
+		};
+		139626E2DFBA418AB83B2724 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Nightly;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Debug;
+		};
+		171162DF330C452A96BB3FC5 /* RelWithDebInfo */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = NightlyMemoryCheck;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = RelWithDebInfo;
+		};
+		1AEF6D2201674BD0AABF3976 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = install;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Debug;
+		};
+		1E795510F11D4B199617BB90 /* MinSizeRel */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = package;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = MinSizeRel;
+		};
+		1FF403B9502E48DF9B09C977 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Docs;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild/apps/app1;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Debug;
+		};
+		254BEBFF8E424082B0F31BB9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = NightlyMemoryCheck;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Debug;
+		};
+		2BEE5B195C9B4F0497346B69 /* RelWithDebInfo */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				EXECUTABLE_PREFIX = lib;
+				EXECUTABLE_SUFFIX = .a;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 2;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = (/Users/philipwenkel/GitHub/Phan/include,/Users/philipwenkel/GitHub/Phan/xbuild/src,/Users/philipwenkel/GitHub/Phan/include/Phan);
+				INSTALL_PATH = "";
+				LIBRARY_STYLE = STATIC;
+				OTHER_CPLUSPLUSFLAGS = "       -DNDEBUG '-std=gnu++2a' ";
+				OTHER_LIBTOOLFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Phan;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild/src;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = RelWithDebInfo;
+		};
+		3158D244A16848CB87A8C10F /* MinSizeRel */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ZERO_CHECK;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = MinSizeRel;
+		};
+		32FC76CCBA7D4325BEBE3AE2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = NightlyMemoryCheck;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Release;
+		};
+		35CDC71240BE4D28BEF97A22 /* RelWithDebInfo */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ZERO_CHECK;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = RelWithDebInfo;
+		};
+		387E2F390C254BC08024AD8B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
@@ -1247,7 +1572,7 @@ fi
 			};
 			name = Debug;
 		};
-		15058AC436614A09A8AB8423 /* Release */ = {
+		3C27AFF38CFE4F6BA1BFD4F1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
@@ -1259,55 +1584,15 @@ fi
 				INSTALL_PATH = "";
 				OTHER_LDFLAGS = ("");
 				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = Experimental;
+				PRODUCT_NAME = Continuous;
 				SECTORDER_FLAGS = "";
 				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild;
 				USE_HEADERMAP = NO;
 				WARNING_CFLAGS = ("$(inherited)");
 			};
-			name = Release;
+			name = Debug;
 		};
-		1692106F05004777BD1EF769 /* RelWithDebInfo */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				INSTALL_PATH = "";
-				OTHER_LDFLAGS = ("");
-				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = Experimental;
-				SECTORDER_FLAGS = "";
-				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild;
-				USE_HEADERMAP = NO;
-				WARNING_CFLAGS = ("$(inherited)");
-			};
-			name = RelWithDebInfo;
-		};
-		192233EB62C0481BAF7F8F75 /* MinSizeRel */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				INSTALL_PATH = "";
-				OTHER_LDFLAGS = ("");
-				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = Nightly;
-				SECTORDER_FLAGS = "";
-				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild;
-				USE_HEADERMAP = NO;
-				WARNING_CFLAGS = ("$(inherited)");
-			};
-			name = MinSizeRel;
-		};
-		1B31D8698F104B67B9F8BF0A /* RelWithDebInfo */ = {
+		3EFA3A1FF73F4CDCB0E0A51C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
@@ -1325,568 +1610,9 @@ fi
 				USE_HEADERMAP = NO;
 				WARNING_CFLAGS = ("$(inherited)");
 			};
-			name = RelWithDebInfo;
-		};
-		1CAB39266FAE4F1389128485 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				EXECUTABLE_PREFIX = "";
-				EXECUTABLE_SUFFIX = "";
-				FRAMEWORK_SEARCH_PATHS = ("$(inherited)");
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
-				GCC_OPTIMIZATION_LEVEL = 3;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = /Users/philipwenkel/GitHub/Phan/xbuild/apps/app1/CMakeFiles/app1.dir/Release/cmake_pch.hxx;
-				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (/Users/philipwenkel/GitHub/Phan/xbuild/apps/app1,/usr/local/include,/Users/philipwenkel/GitHub/Phan/include);
-				INFOPLIST_FILE = /Users/philipwenkel/GitHub/Phan/xbuild/apps/app1/CMakeFiles/app1.dir/Info.plist;
-				INSTALL_PATH = "";
-				LIBRARY_SEARCH_PATHS = ("$(inherited)");
-				OTHER_CPLUSPLUSFLAGS = "    -DNDEBUG '-std=gnu++2a' ";
-				OTHER_LDFLAGS = (" -Wl,-search_paths_first -Wl,-headerpad_max_install_names",/Users/philipwenkel/GitHub/Phan/xbuild/src/Release/libPhan.a);
-				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = app1;
-				SECTORDER_FLAGS = "";
-				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild/apps/app1;
-				USE_HEADERMAP = NO;
-				WARNING_CFLAGS = ("$(inherited)");
-			};
 			name = Release;
 		};
-		21DB89D3F58D463395DB671A /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				INSTALL_PATH = "";
-				OTHER_LDFLAGS = ("");
-				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = RUN_TESTS;
-				SECTORDER_FLAGS = "";
-				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild;
-				USE_HEADERMAP = NO;
-				WARNING_CFLAGS = ("$(inherited)");
-			};
-			name = Debug;
-		};
-		2EB42C446DF3491BBEDE0A9D /* MinSizeRel */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				INSTALL_PATH = "";
-				OTHER_LDFLAGS = ("");
-				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = package;
-				SECTORDER_FLAGS = "";
-				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild;
-				USE_HEADERMAP = NO;
-				WARNING_CFLAGS = ("$(inherited)");
-			};
-			name = MinSizeRel;
-		};
-		351F5516984E4C13A2511AA6 /* MinSizeRel */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				INSTALL_PATH = "";
-				OTHER_LDFLAGS = ("");
-				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = NightlyMemoryCheck;
-				SECTORDER_FLAGS = "";
-				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild;
-				USE_HEADERMAP = NO;
-				WARNING_CFLAGS = ("$(inherited)");
-			};
-			name = MinSizeRel;
-		};
-		3978DF0BFADF491EB89F8176 /* MinSizeRel */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				INSTALL_PATH = "";
-				OTHER_LDFLAGS = ("");
-				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = RUN_TESTS;
-				SECTORDER_FLAGS = "";
-				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild;
-				USE_HEADERMAP = NO;
-				WARNING_CFLAGS = ("$(inherited)");
-			};
-			name = MinSizeRel;
-		};
-		3ABC656D06CC4E0989F972F1 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				INSTALL_PATH = "";
-				OTHER_LDFLAGS = ("");
-				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = ALL_BUILD;
-				SECTORDER_FLAGS = "";
-				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild;
-				USE_HEADERMAP = NO;
-				WARNING_CFLAGS = ("$(inherited)");
-			};
-			name = Release;
-		};
-		474649F590E240C8A1F0A394 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				INSTALL_PATH = "";
-				OTHER_LDFLAGS = ("");
-				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = ALL_BUILD;
-				SECTORDER_FLAGS = "";
-				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild;
-				USE_HEADERMAP = NO;
-				WARNING_CFLAGS = ("$(inherited)");
-			};
-			name = Debug;
-		};
-		4F5CBD1342D74F228A4A2F48 /* MinSizeRel */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				INSTALL_PATH = "";
-				OTHER_LDFLAGS = ("");
-				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = Continuous;
-				SECTORDER_FLAGS = "";
-				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild;
-				USE_HEADERMAP = NO;
-				WARNING_CFLAGS = ("$(inherited)");
-			};
-			name = MinSizeRel;
-		};
-		51801B01EB1B483FA6738959 /* RelWithDebInfo */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				INSTALL_PATH = "";
-				OTHER_LDFLAGS = ("");
-				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = Continuous;
-				SECTORDER_FLAGS = "";
-				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild;
-				USE_HEADERMAP = NO;
-				WARNING_CFLAGS = ("$(inherited)");
-			};
-			name = RelWithDebInfo;
-		};
-		5A73620800294251B8908CE5 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				INSTALL_PATH = "";
-				OTHER_LDFLAGS = ("");
-				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = NightlyMemoryCheck;
-				SECTORDER_FLAGS = "";
-				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild;
-				USE_HEADERMAP = NO;
-				WARNING_CFLAGS = ("$(inherited)");
-			};
-			name = Debug;
-		};
-		64367A42C4AB4C76A1D99EB2 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				INSTALL_PATH = "";
-				OTHER_LDFLAGS = ("");
-				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = package;
-				SECTORDER_FLAGS = "";
-				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild;
-				USE_HEADERMAP = NO;
-				WARNING_CFLAGS = ("$(inherited)");
-			};
-			name = Debug;
-		};
-		69A7F209333B48EF9ECB25F2 /* MinSizeRel */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
-				MACOSX_DEPLOYMENT_TARGET = 11.2;
-				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = "/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.3.sdk";
-				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild/build;
-			};
-			name = MinSizeRel;
-		};
-		6D7BFC935EE84017BDF5BFB8 /* MinSizeRel */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				INSTALL_PATH = "";
-				OTHER_LDFLAGS = ("");
-				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = Docs;
-				SECTORDER_FLAGS = "";
-				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild/apps/app1;
-				USE_HEADERMAP = NO;
-				WARNING_CFLAGS = ("$(inherited)");
-			};
-			name = MinSizeRel;
-		};
-		6DFD6732FC984E97AB14A7C9 /* MinSizeRel */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				INSTALL_PATH = "";
-				OTHER_LDFLAGS = ("");
-				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = ALL_BUILD;
-				SECTORDER_FLAGS = "";
-				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild;
-				USE_HEADERMAP = NO;
-				WARNING_CFLAGS = ("$(inherited)");
-			};
-			name = MinSizeRel;
-		};
-		72EBC6B0B3C64396ADBA6C6D /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				INSTALL_PATH = "";
-				OTHER_LDFLAGS = ("");
-				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = RUN_TESTS;
-				SECTORDER_FLAGS = "";
-				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild;
-				USE_HEADERMAP = NO;
-				WARNING_CFLAGS = ("$(inherited)");
-			};
-			name = Release;
-		};
-		79E9B94244D04EAC923E8F25 /* RelWithDebInfo */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				INSTALL_PATH = "";
-				OTHER_LDFLAGS = ("");
-				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = Nightly;
-				SECTORDER_FLAGS = "";
-				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild;
-				USE_HEADERMAP = NO;
-				WARNING_CFLAGS = ("$(inherited)");
-			};
-			name = RelWithDebInfo;
-		};
-		7AC5756EA1E14DE4BA5CC955 /* RelWithDebInfo */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				INSTALL_PATH = "";
-				OTHER_LDFLAGS = ("");
-				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = ZERO_CHECK;
-				SECTORDER_FLAGS = "";
-				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild;
-				USE_HEADERMAP = NO;
-				WARNING_CFLAGS = ("$(inherited)");
-			};
-			name = RelWithDebInfo;
-		};
-		8281353DB413457E84589767 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				EXECUTABLE_PREFIX = "";
-				EXECUTABLE_SUFFIX = "";
-				FRAMEWORK_SEARCH_PATHS = ("$(inherited)");
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = ("/Users/philipwenkel/GitHub/Phan/tests/ph::Phan","/Users/philipwenkel/GitHub/Phan/tests/Catch2::Catch2",/Users/philipwenkel/GitHub/Phan/include,"/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-src/single_include");
-				INSTALL_PATH = "";
-				LIBRARY_SEARCH_PATHS = ("$(inherited)");
-				OTHER_CPLUSPLUSFLAGS = "   '-std=gnu++2a' ";
-				OTHER_LDFLAGS = (" -Wl,-search_paths_first -Wl,-headerpad_max_install_names",/Users/philipwenkel/GitHub/Phan/xbuild/src/Debug/libPhan.a);
-				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = testlib;
-				SECTORDER_FLAGS = "";
-				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild/tests;
-				USE_HEADERMAP = NO;
-				WARNING_CFLAGS = ("$(inherited)");
-			};
-			name = Debug;
-		};
-		85CB711B2A0D4707BFA71DDE /* MinSizeRel */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				INSTALL_PATH = "";
-				OTHER_LDFLAGS = ("");
-				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = Experimental;
-				SECTORDER_FLAGS = "";
-				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild;
-				USE_HEADERMAP = NO;
-				WARNING_CFLAGS = ("$(inherited)");
-			};
-			name = MinSizeRel;
-		};
-		86C0719D8C5F48C38EFC0766 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				INSTALL_PATH = "";
-				OTHER_LDFLAGS = ("");
-				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = install;
-				SECTORDER_FLAGS = "";
-				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild;
-				USE_HEADERMAP = NO;
-				WARNING_CFLAGS = ("$(inherited)");
-			};
-			name = Release;
-		};
-		895A4D6BD65E4BE09C309BCD /* RelWithDebInfo */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				INSTALL_PATH = "";
-				OTHER_LDFLAGS = ("");
-				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = install;
-				SECTORDER_FLAGS = "";
-				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild;
-				USE_HEADERMAP = NO;
-				WARNING_CFLAGS = ("$(inherited)");
-			};
-			name = RelWithDebInfo;
-		};
-		8B85A6F44659458292E1E805 /* RelWithDebInfo */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				INSTALL_PATH = "";
-				OTHER_LDFLAGS = ("");
-				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = NightlyMemoryCheck;
-				SECTORDER_FLAGS = "";
-				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild;
-				USE_HEADERMAP = NO;
-				WARNING_CFLAGS = ("$(inherited)");
-			};
-			name = RelWithDebInfo;
-		};
-		938DF031F0104CC38B8EF257 /* MinSizeRel */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				EXECUTABLE_PREFIX = lib;
-				EXECUTABLE_SUFFIX = .a;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
-				GCC_OPTIMIZATION_LEVEL = s;
-				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (/Users/philipwenkel/GitHub/Phan/include,/Users/philipwenkel/GitHub/Phan/xbuild/src,/Users/philipwenkel/GitHub/Phan/include/Phan);
-				INSTALL_PATH = "";
-				LIBRARY_STYLE = STATIC;
-				OTHER_CPLUSPLUSFLAGS = "    -DNDEBUG '-std=gnu++2a' ";
-				OTHER_LIBTOOLFLAGS = ("");
-				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = Phan;
-				SECTORDER_FLAGS = "";
-				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild/src;
-				USE_HEADERMAP = NO;
-				WARNING_CFLAGS = ("$(inherited)");
-			};
-			name = MinSizeRel;
-		};
-		9486417921004E5CA5EB811D /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
-				MACOSX_DEPLOYMENT_TARGET = 11.2;
-				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = "/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.3.sdk";
-				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild/build;
-			};
-			name = Debug;
-		};
-		95339755AF604DC89A496064 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				INSTALL_PATH = "";
-				OTHER_LDFLAGS = ("");
-				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = ZERO_CHECK;
-				SECTORDER_FLAGS = "";
-				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild;
-				USE_HEADERMAP = NO;
-				WARNING_CFLAGS = ("$(inherited)");
-			};
-			name = Debug;
-		};
-		986C00975EDE42CDB28FFC35 /* RelWithDebInfo */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
-				MACOSX_DEPLOYMENT_TARGET = 11.2;
-				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = "/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.3.sdk";
-				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild/build;
-			};
-			name = RelWithDebInfo;
-		};
-		9CD1AF0B4A4D4839850B93C2 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				EXECUTABLE_PREFIX = "";
-				EXECUTABLE_SUFFIX = "";
-				FRAMEWORK_SEARCH_PATHS = ("$(inherited)");
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
-				GCC_OPTIMIZATION_LEVEL = 3;
-				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = ("/Users/philipwenkel/GitHub/Phan/tests/ph::Phan","/Users/philipwenkel/GitHub/Phan/tests/Catch2::Catch2",/Users/philipwenkel/GitHub/Phan/include,"/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-src/single_include");
-				INSTALL_PATH = "";
-				LIBRARY_SEARCH_PATHS = ("$(inherited)");
-				OTHER_CPLUSPLUSFLAGS = "    -DNDEBUG '-std=gnu++2a' ";
-				OTHER_LDFLAGS = (" -Wl,-search_paths_first -Wl,-headerpad_max_install_names",/Users/philipwenkel/GitHub/Phan/xbuild/src/Release/libPhan.a);
-				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = testlib;
-				SECTORDER_FLAGS = "";
-				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild/tests;
-				USE_HEADERMAP = NO;
-				WARNING_CFLAGS = ("$(inherited)");
-			};
-			name = Release;
-		};
-		A037F574CB594D5BA1007439 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				INSTALL_PATH = "";
-				OTHER_LDFLAGS = ("");
-				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = Continuous;
-				SECTORDER_FLAGS = "";
-				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild;
-				USE_HEADERMAP = NO;
-				WARNING_CFLAGS = ("$(inherited)");
-			};
-			name = Debug;
-		};
-		A696A10683A746CAA73D8106 /* Release */ = {
+		43AFD8A0CB5447B999A27342 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
@@ -1911,7 +1637,27 @@ fi
 			};
 			name = Release;
 		};
-		A80CC46CA95D411AAFE4A237 /* RelWithDebInfo */ = {
+		4586F6C8DFF944AE9DF3DAF6 /* RelWithDebInfo */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Docs;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild/apps/app1;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = RelWithDebInfo;
+		};
+		4886A78F435B4499A6CFEB82 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
@@ -1929,20 +1675,9 @@ fi
 				USE_HEADERMAP = NO;
 				WARNING_CFLAGS = ("$(inherited)");
 			};
-			name = RelWithDebInfo;
-		};
-		AC0BCC0E73E6493CA281B6B0 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
-				MACOSX_DEPLOYMENT_TARGET = 11.2;
-				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = "/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.3.sdk";
-				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild/build;
-			};
 			name = Release;
 		};
-		AF599EE3A95740149420751C /* MinSizeRel */ = {
+		4C6052D1263940DD9AD9DC30 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
@@ -1954,87 +1689,7 @@ fi
 				INSTALL_PATH = "";
 				OTHER_LDFLAGS = ("");
 				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = ZERO_CHECK;
-				SECTORDER_FLAGS = "";
-				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild;
-				USE_HEADERMAP = NO;
-				WARNING_CFLAGS = ("$(inherited)");
-			};
-			name = MinSizeRel;
-		};
-		B08C257DBD204049814DC519 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				INSTALL_PATH = "";
-				OTHER_LDFLAGS = ("");
-				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = Nightly;
-				SECTORDER_FLAGS = "";
-				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild;
-				USE_HEADERMAP = NO;
-				WARNING_CFLAGS = ("$(inherited)");
-			};
-			name = Release;
-		};
-		B1ABE621B38D41759A3F57B4 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				INSTALL_PATH = "";
-				OTHER_LDFLAGS = ("");
-				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = Docs;
-				SECTORDER_FLAGS = "";
-				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild/apps/app1;
-				USE_HEADERMAP = NO;
-				WARNING_CFLAGS = ("$(inherited)");
-			};
-			name = Debug;
-		};
-		B2F7A97148774A4D8FB7C84E /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				INSTALL_PATH = "";
-				OTHER_LDFLAGS = ("");
-				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = NightlyMemoryCheck;
-				SECTORDER_FLAGS = "";
-				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild;
-				USE_HEADERMAP = NO;
-				WARNING_CFLAGS = ("$(inherited)");
-			};
-			name = Release;
-		};
-		C7704DA7C8B146569538A8F3 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				INSTALL_PATH = "";
-				OTHER_LDFLAGS = ("");
-				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = Nightly;
+				PRODUCT_NAME = package;
 				SECTORDER_FLAGS = "";
 				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild;
 				USE_HEADERMAP = NO;
@@ -2042,7 +1697,7 @@ fi
 			};
 			name = Debug;
 		};
-		D3BF836E79334619B9B126E8 /* Release */ = {
+		51C50B17F85647A9861FDF8E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
@@ -2054,101 +1709,15 @@ fi
 				INSTALL_PATH = "";
 				OTHER_LDFLAGS = ("");
 				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = Continuous;
+				PRODUCT_NAME = ALL_BUILD;
 				SECTORDER_FLAGS = "";
 				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild;
 				USE_HEADERMAP = NO;
 				WARNING_CFLAGS = ("$(inherited)");
 			};
-			name = Release;
+			name = Debug;
 		};
-		D6FA2AD6221844E9A5A9ACAA /* MinSizeRel */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				INSTALL_PATH = "";
-				OTHER_LDFLAGS = ("");
-				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = install;
-				SECTORDER_FLAGS = "";
-				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild;
-				USE_HEADERMAP = NO;
-				WARNING_CFLAGS = ("$(inherited)");
-			};
-			name = MinSizeRel;
-		};
-		D892C021E96C4FF39E5230ED /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				INSTALL_PATH = "";
-				OTHER_LDFLAGS = ("");
-				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = Docs;
-				SECTORDER_FLAGS = "";
-				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild/apps/app1;
-				USE_HEADERMAP = NO;
-				WARNING_CFLAGS = ("$(inherited)");
-			};
-			name = Release;
-		};
-		E2D75094A4904A9C95432711 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				INSTALL_PATH = "";
-				OTHER_LDFLAGS = ("");
-				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = ZERO_CHECK;
-				SECTORDER_FLAGS = "";
-				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild;
-				USE_HEADERMAP = NO;
-				WARNING_CFLAGS = ("$(inherited)");
-			};
-			name = Release;
-		};
-		E4BBA56045014A5FB961A6D2 /* MinSizeRel */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				EXECUTABLE_PREFIX = "";
-				EXECUTABLE_SUFFIX = "";
-				FRAMEWORK_SEARCH_PATHS = ("$(inherited)");
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
-				GCC_OPTIMIZATION_LEVEL = s;
-				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = ("/Users/philipwenkel/GitHub/Phan/tests/ph::Phan","/Users/philipwenkel/GitHub/Phan/tests/Catch2::Catch2",/Users/philipwenkel/GitHub/Phan/include,"/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-src/single_include");
-				INSTALL_PATH = "";
-				LIBRARY_SEARCH_PATHS = ("$(inherited)");
-				OTHER_CPLUSPLUSFLAGS = "    -DNDEBUG '-std=gnu++2a' ";
-				OTHER_LDFLAGS = (" -Wl,-search_paths_first -Wl,-headerpad_max_install_names",/Users/philipwenkel/GitHub/Phan/xbuild/src/MinSizeRel/libPhan.a);
-				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = testlib;
-				SECTORDER_FLAGS = "";
-				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild/tests;
-				USE_HEADERMAP = NO;
-				WARNING_CFLAGS = ("$(inherited)");
-			};
-			name = MinSizeRel;
-		};
-		E72AF8089CA5487C8B2DBA89 /* RelWithDebInfo */ = {
+		529153DF831641DDB56574AA /* RelWithDebInfo */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
@@ -2168,7 +1737,7 @@ fi
 			};
 			name = RelWithDebInfo;
 		};
-		E79D96B093E747A1B2867BCF /* Debug */ = {
+		6A00C5374015443BB885199E /* MinSizeRel */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
@@ -2180,15 +1749,35 @@ fi
 				INSTALL_PATH = "";
 				OTHER_LDFLAGS = ("");
 				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = install;
+				PRODUCT_NAME = Docs;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild/apps/app1;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = MinSizeRel;
+		};
+		6CA10FADCA4649D5A8243D29 /* MinSizeRel */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = NightlyMemoryCheck;
 				SECTORDER_FLAGS = "";
 				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild;
 				USE_HEADERMAP = NO;
 				WARNING_CFLAGS = ("$(inherited)");
 			};
-			name = Debug;
+			name = MinSizeRel;
 		};
-		EAC6C74ECD1243579FCB8FFD /* Debug */ = {
+		765B765CEA264C53B3C7040F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
@@ -2213,27 +1802,7 @@ fi
 			};
 			name = Debug;
 		};
-		F1B04F5A89E14CF3A205CED9 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				INSTALL_PATH = "";
-				OTHER_LDFLAGS = ("");
-				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = Experimental;
-				SECTORDER_FLAGS = "";
-				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild;
-				USE_HEADERMAP = NO;
-				WARNING_CFLAGS = ("$(inherited)");
-			};
-			name = Debug;
-		};
-		F4E13D4954FE49FBA27D2213 /* Release */ = {
+		7AF82125DFD84AE5A56D8C7E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
@@ -2253,58 +1822,67 @@ fi
 			};
 			name = Release;
 		};
-		F99B063B2EEB444090E09108 /* RelWithDebInfo */ = {
+		80350CE730654F18989D925C /* MinSizeRel */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				EXECUTABLE_PREFIX = "";
-				EXECUTABLE_SUFFIX = "";
-				FRAMEWORK_SEARCH_PATHS = ("$(inherited)");
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
-				GCC_OPTIMIZATION_LEVEL = 2;
+				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = ("/Users/philipwenkel/GitHub/Phan/tests/ph::Phan","/Users/philipwenkel/GitHub/Phan/tests/Catch2::Catch2",/Users/philipwenkel/GitHub/Phan/include,"/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-src/single_include");
 				INSTALL_PATH = "";
-				LIBRARY_SEARCH_PATHS = ("$(inherited)");
-				OTHER_CPLUSPLUSFLAGS = "       -DNDEBUG '-std=gnu++2a' ";
-				OTHER_LDFLAGS = (" -Wl,-search_paths_first -Wl,-headerpad_max_install_names",/Users/philipwenkel/GitHub/Phan/xbuild/src/RelWithDebInfo/libPhan.a);
+				OTHER_LDFLAGS = ("");
 				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = testlib;
+				PRODUCT_NAME = Experimental;
 				SECTORDER_FLAGS = "";
-				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild/tests;
+				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild;
 				USE_HEADERMAP = NO;
 				WARNING_CFLAGS = ("$(inherited)");
 			};
-			name = RelWithDebInfo;
+			name = MinSizeRel;
 		};
-		F9A7C68CC6B74C3595A04A6B /* RelWithDebInfo */ = {
+		80623C1B0BCE4E6EA3FD7AB3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				EXECUTABLE_PREFIX = lib;
-				EXECUTABLE_SUFFIX = .a;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
-				GCC_OPTIMIZATION_LEVEL = 2;
+				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = (/Users/philipwenkel/GitHub/Phan/include,/Users/philipwenkel/GitHub/Phan/xbuild/src,/Users/philipwenkel/GitHub/Phan/include/Phan);
 				INSTALL_PATH = "";
-				LIBRARY_STYLE = STATIC;
-				OTHER_CPLUSPLUSFLAGS = "       -DNDEBUG '-std=gnu++2a' ";
-				OTHER_LIBTOOLFLAGS = ("");
+				OTHER_LDFLAGS = ("");
 				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = Phan;
+				PRODUCT_NAME = Experimental;
 				SECTORDER_FLAGS = "";
-				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild/src;
+				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild;
 				USE_HEADERMAP = NO;
 				WARNING_CFLAGS = ("$(inherited)");
 			};
-			name = RelWithDebInfo;
+			name = Release;
 		};
-		FB76751A311A47C2A07F3D79 /* MinSizeRel */ = {
+		8A61DB6792944C5C9C084B59 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Nightly;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Release;
+		};
+		8DB4821B6DB149218F517631 /* MinSizeRel */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
@@ -2333,7 +1911,124 @@ fi
 			};
 			name = MinSizeRel;
 		};
-		FB8BDD78F703455BB11A2469 /* RelWithDebInfo */ = {
+		9BA6A24C8BAD4326BE880336 /* MinSizeRel */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				EXECUTABLE_PREFIX = "";
+				EXECUTABLE_SUFFIX = "";
+				FRAMEWORK_SEARCH_PATHS = ("$(inherited)");
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = ("/Users/philipwenkel/GitHub/Phan/tests/ph::Phan","/Users/philipwenkel/GitHub/Phan/tests/Catch2::Catch2",/Users/philipwenkel/GitHub/Phan/include,"/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-src/single_include");
+				INSTALL_PATH = "";
+				LIBRARY_SEARCH_PATHS = ("$(inherited)");
+				OTHER_CPLUSPLUSFLAGS = "    -DNDEBUG '-std=gnu++2a' ";
+				OTHER_LDFLAGS = (" -Wl,-search_paths_first -Wl,-headerpad_max_install_names",/Users/philipwenkel/GitHub/Phan/xbuild/src/MinSizeRel/libPhan.a);
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = testlib;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild/tests;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = MinSizeRel;
+		};
+		9C9353EF2C6E4591B64CB045 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
+				MACOSX_DEPLOYMENT_TARGET = 11.2;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = "/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.3.sdk";
+				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild/build;
+			};
+			name = Debug;
+		};
+		9E4BC4EFE6144978A3453579 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ZERO_CHECK;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Debug;
+		};
+		A30BAA83EE774634A11866B4 /* RelWithDebInfo */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = install;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = RelWithDebInfo;
+		};
+		A31176BA234842C1AA25FD1E /* MinSizeRel */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Nightly;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = MinSizeRel;
+		};
+		A32400AE98D74CEEB5DFA3B2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = install;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Release;
+		};
+		BC0389DC06434A50BD82233A /* RelWithDebInfo */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
@@ -2353,7 +2048,206 @@ fi
 			};
 			name = RelWithDebInfo;
 		};
-		FBC88784B53C4117ADA5E58E /* RelWithDebInfo */ = {
+		BD9C6876B4D44FB5BD6D5DE0 /* MinSizeRel */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Continuous;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = MinSizeRel;
+		};
+		BDF1B825BBEF43F29BA6BCE5 /* RelWithDebInfo */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				EXECUTABLE_PREFIX = "";
+				EXECUTABLE_SUFFIX = "";
+				FRAMEWORK_SEARCH_PATHS = ("$(inherited)");
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 2;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = ("/Users/philipwenkel/GitHub/Phan/tests/ph::Phan","/Users/philipwenkel/GitHub/Phan/tests/Catch2::Catch2",/Users/philipwenkel/GitHub/Phan/include,"/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-src/single_include");
+				INSTALL_PATH = "";
+				LIBRARY_SEARCH_PATHS = ("$(inherited)");
+				OTHER_CPLUSPLUSFLAGS = "       -DNDEBUG '-std=gnu++2a' ";
+				OTHER_LDFLAGS = (" -Wl,-search_paths_first -Wl,-headerpad_max_install_names",/Users/philipwenkel/GitHub/Phan/xbuild/src/RelWithDebInfo/libPhan.a);
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = testlib;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild/tests;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = RelWithDebInfo;
+		};
+		BDFA9F005DB74103AA3C09B1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Experimental;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Debug;
+		};
+		BF5E7F7248DD47C09F17AB90 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				EXECUTABLE_PREFIX = "";
+				EXECUTABLE_SUFFIX = "";
+				FRAMEWORK_SEARCH_PATHS = ("$(inherited)");
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = /Users/philipwenkel/GitHub/Phan/xbuild/apps/app1/CMakeFiles/app1.dir/Release/cmake_pch.hxx;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = (/Users/philipwenkel/GitHub/Phan/xbuild/apps/app1,/usr/local/include,/Users/philipwenkel/GitHub/Phan/include);
+				INFOPLIST_FILE = /Users/philipwenkel/GitHub/Phan/xbuild/apps/app1/CMakeFiles/app1.dir/Info.plist;
+				INSTALL_PATH = "";
+				LIBRARY_SEARCH_PATHS = ("$(inherited)");
+				OTHER_CPLUSPLUSFLAGS = "    -DNDEBUG '-std=gnu++2a' ";
+				OTHER_LDFLAGS = (" -Wl,-search_paths_first -Wl,-headerpad_max_install_names",/Users/philipwenkel/GitHub/Phan/xbuild/src/Release/libPhan.a);
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = app1;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild/apps/app1;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Release;
+		};
+		C6CACAA28FC54AD4A00E0114 /* MinSizeRel */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
+				MACOSX_DEPLOYMENT_TARGET = 11.2;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = "/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.3.sdk";
+				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild/build;
+			};
+			name = MinSizeRel;
+		};
+		CB61D72605424246AC3B89D7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
+				MACOSX_DEPLOYMENT_TARGET = 11.2;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = "/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.3.sdk";
+				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild/build;
+			};
+			name = Release;
+		};
+		CE3443A6780F464B9A249C26 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				EXECUTABLE_PREFIX = "";
+				EXECUTABLE_SUFFIX = "";
+				FRAMEWORK_SEARCH_PATHS = ("$(inherited)");
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = ("/Users/philipwenkel/GitHub/Phan/tests/ph::Phan","/Users/philipwenkel/GitHub/Phan/tests/Catch2::Catch2",/Users/philipwenkel/GitHub/Phan/include,"/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-src/single_include");
+				INSTALL_PATH = "";
+				LIBRARY_SEARCH_PATHS = ("$(inherited)");
+				OTHER_CPLUSPLUSFLAGS = "    -DNDEBUG '-std=gnu++2a' ";
+				OTHER_LDFLAGS = (" -Wl,-search_paths_first -Wl,-headerpad_max_install_names",/Users/philipwenkel/GitHub/Phan/xbuild/src/Release/libPhan.a);
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = testlib;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild/tests;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Release;
+		};
+		D00EBF229AC149D386C10219 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ALL_BUILD;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Release;
+		};
+		D210FCE63AC5438D82BF3C94 /* RelWithDebInfo */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
+				MACOSX_DEPLOYMENT_TARGET = 11.2;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = "/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.3.sdk";
+				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild/build;
+			};
+			name = RelWithDebInfo;
+		};
+		DA5CD4EB9E924A8584C43DC8 /* MinSizeRel */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				EXECUTABLE_PREFIX = lib;
+				EXECUTABLE_SUFFIX = .a;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = (/Users/philipwenkel/GitHub/Phan/include,/Users/philipwenkel/GitHub/Phan/xbuild/src,/Users/philipwenkel/GitHub/Phan/include/Phan);
+				INSTALL_PATH = "";
+				LIBRARY_STYLE = STATIC;
+				OTHER_CPLUSPLUSFLAGS = "    -DNDEBUG '-std=gnu++2a' ";
+				OTHER_LIBTOOLFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Phan;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild/src;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = MinSizeRel;
+		};
+		E58057F60C224473ABAEE5E2 /* RelWithDebInfo */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
@@ -2382,164 +2276,270 @@ fi
 			};
 			name = RelWithDebInfo;
 		};
+		E72DA6190D0C4BB5B5FD21C8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Continuous;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Release;
+		};
+		EFD1A45AC1724AB59A9309E7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				EXECUTABLE_PREFIX = "";
+				EXECUTABLE_SUFFIX = "";
+				FRAMEWORK_SEARCH_PATHS = ("$(inherited)");
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = ("/Users/philipwenkel/GitHub/Phan/tests/ph::Phan","/Users/philipwenkel/GitHub/Phan/tests/Catch2::Catch2",/Users/philipwenkel/GitHub/Phan/include,"/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-src/single_include");
+				INSTALL_PATH = "";
+				LIBRARY_SEARCH_PATHS = ("$(inherited)");
+				OTHER_CPLUSPLUSFLAGS = "   '-std=gnu++2a' ";
+				OTHER_LDFLAGS = (" -Wl,-search_paths_first -Wl,-headerpad_max_install_names",/Users/philipwenkel/GitHub/Phan/xbuild/src/Debug/libPhan.a);
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = testlib;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild/tests;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Debug;
+		};
+		F494A745BA81473983705E54 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = RUN_TESTS;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Debug;
+		};
+		FB3ABE44F6CF49F689B2A103 /* RelWithDebInfo */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Experimental;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = RelWithDebInfo;
+		};
+		FF96ABBA7C5940A58273A8C9 /* MinSizeRel */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = RUN_TESTS;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/philipwenkel/GitHub/Phan/xbuild;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = MinSizeRel;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1B81241313184F138057D0EA /* Build configuration list for PBXNativeTarget "Phan" */ = {
+		1F838D3FB11344D2A0877B7A /* Build configuration list for PBXAggregateTarget "package" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				EAC6C74ECD1243579FCB8FFD /* Debug */,
-				A696A10683A746CAA73D8106 /* Release */,
-				938DF031F0104CC38B8EF257 /* MinSizeRel */,
-				F9A7C68CC6B74C3595A04A6B /* RelWithDebInfo */,
+				4C6052D1263940DD9AD9DC30 /* Debug */,
+				7AF82125DFD84AE5A56D8C7E /* Release */,
+				1E795510F11D4B199617BB90 /* MinSizeRel */,
+				529153DF831641DDB56574AA /* RelWithDebInfo */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		2AEDFBAABC184D89B0C0C7EB /* Build configuration list for PBXAggregateTarget "ALL_BUILD" */ = {
+		28A2747A422E47E4A17129AA /* Build configuration list for PBXProject "Phan" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				474649F590E240C8A1F0A394 /* Debug */,
-				3ABC656D06CC4E0989F972F1 /* Release */,
-				6DFD6732FC984E97AB14A7C9 /* MinSizeRel */,
-				FB8BDD78F703455BB11A2469 /* RelWithDebInfo */,
+				9C9353EF2C6E4591B64CB045 /* Debug */,
+				CB61D72605424246AC3B89D7 /* Release */,
+				C6CACAA28FC54AD4A00E0114 /* MinSizeRel */,
+				D210FCE63AC5438D82BF3C94 /* RelWithDebInfo */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		3194024D208545268B5FA0C9 /* Build configuration list for PBXAggregateTarget "Continuous" */ = {
+		3BAA4B3EF7CD4700BD977982 /* Build configuration list for PBXAggregateTarget "install" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A037F574CB594D5BA1007439 /* Debug */,
-				D3BF836E79334619B9B126E8 /* Release */,
-				4F5CBD1342D74F228A4A2F48 /* MinSizeRel */,
-				51801B01EB1B483FA6738959 /* RelWithDebInfo */,
+				1AEF6D2201674BD0AABF3976 /* Debug */,
+				A32400AE98D74CEEB5DFA3B2 /* Release */,
+				033FEA4C74A145E6A46C6142 /* MinSizeRel */,
+				A30BAA83EE774634A11866B4 /* RelWithDebInfo */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		3B4087EA0D604515866AAD6F /* Build configuration list for PBXProject "Phan" */ = {
+		4F3A3051C0004C859D30981C /* Build configuration list for PBXAggregateTarget "Experimental" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				9486417921004E5CA5EB811D /* Debug */,
-				AC0BCC0E73E6493CA281B6B0 /* Release */,
-				69A7F209333B48EF9ECB25F2 /* MinSizeRel */,
-				986C00975EDE42CDB28FFC35 /* RelWithDebInfo */,
+				BDFA9F005DB74103AA3C09B1 /* Debug */,
+				80623C1B0BCE4E6EA3FD7AB3 /* Release */,
+				80350CE730654F18989D925C /* MinSizeRel */,
+				FB3ABE44F6CF49F689B2A103 /* RelWithDebInfo */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		3EC550BA73E34F14B6BA0256 /* Build configuration list for PBXAggregateTarget "install" */ = {
+		58267FDD7F504802BEAE26D7 /* Build configuration list for PBXNativeTarget "testlib" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				E79D96B093E747A1B2867BCF /* Debug */,
-				86C0719D8C5F48C38EFC0766 /* Release */,
-				D6FA2AD6221844E9A5A9ACAA /* MinSizeRel */,
-				895A4D6BD65E4BE09C309BCD /* RelWithDebInfo */,
+				EFD1A45AC1724AB59A9309E7 /* Debug */,
+				CE3443A6780F464B9A249C26 /* Release */,
+				9BA6A24C8BAD4326BE880336 /* MinSizeRel */,
+				BDF1B825BBEF43F29BA6BCE5 /* RelWithDebInfo */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		7D2039391DF54C72BBBC1A5F /* Build configuration list for PBXAggregateTarget "Docs" */ = {
+		6C47473E5587499C94602459 /* Build configuration list for PBXNativeTarget "Phan" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				B1ABE621B38D41759A3F57B4 /* Debug */,
-				D892C021E96C4FF39E5230ED /* Release */,
-				6D7BFC935EE84017BDF5BFB8 /* MinSizeRel */,
-				1B31D8698F104B67B9F8BF0A /* RelWithDebInfo */,
+				765B765CEA264C53B3C7040F /* Debug */,
+				43AFD8A0CB5447B999A27342 /* Release */,
+				DA5CD4EB9E924A8584C43DC8 /* MinSizeRel */,
+				2BEE5B195C9B4F0497346B69 /* RelWithDebInfo */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		92EAF74002AF4D27B894BA12 /* Build configuration list for PBXAggregateTarget "RUN_TESTS" */ = {
+		764F4EE4A70C4DF19D54C596 /* Build configuration list for PBXAggregateTarget "Continuous" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				21DB89D3F58D463395DB671A /* Debug */,
-				72EBC6B0B3C64396ADBA6C6D /* Release */,
-				3978DF0BFADF491EB89F8176 /* MinSizeRel */,
-				A80CC46CA95D411AAFE4A237 /* RelWithDebInfo */,
+				3C27AFF38CFE4F6BA1BFD4F1 /* Debug */,
+				E72DA6190D0C4BB5B5FD21C8 /* Release */,
+				BD9C6876B4D44FB5BD6D5DE0 /* MinSizeRel */,
+				005E7579C1EF4332BED09502 /* RelWithDebInfo */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		94D0B694AE6E46E4B6935684 /* Build configuration list for PBXAggregateTarget "NightlyMemoryCheck" */ = {
+		7FD22E5602F54DB7977B7271 /* Build configuration list for PBXAggregateTarget "Nightly" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				5A73620800294251B8908CE5 /* Debug */,
-				B2F7A97148774A4D8FB7C84E /* Release */,
-				351F5516984E4C13A2511AA6 /* MinSizeRel */,
-				8B85A6F44659458292E1E805 /* RelWithDebInfo */,
+				139626E2DFBA418AB83B2724 /* Debug */,
+				8A61DB6792944C5C9C084B59 /* Release */,
+				A31176BA234842C1AA25FD1E /* MinSizeRel */,
+				0D9062F62AAA4750B4B8C95E /* RelWithDebInfo */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		A7946A7F99F5472AB2EC8685 /* Build configuration list for PBXAggregateTarget "Nightly" */ = {
+		8DE8E50D60294D93B9C7C100 /* Build configuration list for PBXAggregateTarget "NightlyMemoryCheck" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C7704DA7C8B146569538A8F3 /* Debug */,
-				B08C257DBD204049814DC519 /* Release */,
-				192233EB62C0481BAF7F8F75 /* MinSizeRel */,
-				79E9B94244D04EAC923E8F25 /* RelWithDebInfo */,
+				254BEBFF8E424082B0F31BB9 /* Debug */,
+				32FC76CCBA7D4325BEBE3AE2 /* Release */,
+				6CA10FADCA4649D5A8243D29 /* MinSizeRel */,
+				171162DF330C452A96BB3FC5 /* RelWithDebInfo */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		B0607B30A2CB4A988D8D0528 /* Build configuration list for PBXNativeTarget "testlib" */ = {
+		A1139CCC9F764375A730A136 /* Build configuration list for PBXAggregateTarget "ZERO_CHECK" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				8281353DB413457E84589767 /* Debug */,
-				9CD1AF0B4A4D4839850B93C2 /* Release */,
-				E4BBA56045014A5FB961A6D2 /* MinSizeRel */,
-				F99B063B2EEB444090E09108 /* RelWithDebInfo */,
+				9E4BC4EFE6144978A3453579 /* Debug */,
+				02928A0497574779B9F64DEB /* Release */,
+				3158D244A16848CB87A8C10F /* MinSizeRel */,
+				35CDC71240BE4D28BEF97A22 /* RelWithDebInfo */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		CC287E8F803F4824AED90013 /* Build configuration list for PBXAggregateTarget "ZERO_CHECK" */ = {
+		AA33E56F2BA74DA89762D735 /* Build configuration list for PBXNativeTarget "app1" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				95339755AF604DC89A496064 /* Debug */,
-				E2D75094A4904A9C95432711 /* Release */,
-				AF599EE3A95740149420751C /* MinSizeRel */,
-				7AC5756EA1E14DE4BA5CC955 /* RelWithDebInfo */,
+				387E2F390C254BC08024AD8B /* Debug */,
+				BF5E7F7248DD47C09F17AB90 /* Release */,
+				8DB4821B6DB149218F517631 /* MinSizeRel */,
+				E58057F60C224473ABAEE5E2 /* RelWithDebInfo */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		DFCF0B64E7CB44D4B84336F7 /* Build configuration list for PBXAggregateTarget "Experimental" */ = {
+		C5D0B867ED7347298EBE6708 /* Build configuration list for PBXAggregateTarget "Docs" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				F1B04F5A89E14CF3A205CED9 /* Debug */,
-				15058AC436614A09A8AB8423 /* Release */,
-				85CB711B2A0D4707BFA71DDE /* MinSizeRel */,
-				1692106F05004777BD1EF769 /* RelWithDebInfo */,
+				1FF403B9502E48DF9B09C977 /* Debug */,
+				3EFA3A1FF73F4CDCB0E0A51C /* Release */,
+				6A00C5374015443BB885199E /* MinSizeRel */,
+				4586F6C8DFF944AE9DF3DAF6 /* RelWithDebInfo */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		E48BF568ADDD4085ADD96365 /* Build configuration list for PBXAggregateTarget "package" */ = {
+		E5D92C539103458992929008 /* Build configuration list for PBXAggregateTarget "RUN_TESTS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				64367A42C4AB4C76A1D99EB2 /* Debug */,
-				F4E13D4954FE49FBA27D2213 /* Release */,
-				2EB42C446DF3491BBEDE0A9D /* MinSizeRel */,
-				E72AF8089CA5487C8B2DBA89 /* RelWithDebInfo */,
+				F494A745BA81473983705E54 /* Debug */,
+				4886A78F435B4499A6CFEB82 /* Release */,
+				FF96ABBA7C5940A58273A8C9 /* MinSizeRel */,
+				10FFF0DA1A0E47CF8B7B1182 /* RelWithDebInfo */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		EF1425C98EB54E6A93FE7C64 /* Build configuration list for PBXNativeTarget "app1" */ = {
+		F7963A0F331B4D3E8C4B880E /* Build configuration list for PBXAggregateTarget "ALL_BUILD" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				0C0AF1818F5749B2A32CCC81 /* Debug */,
-				1CAB39266FAE4F1389128485 /* Release */,
-				FB76751A311A47C2A07F3D79 /* MinSizeRel */,
-				FBC88784B53C4117ADA5E58E /* RelWithDebInfo */,
+				51C50B17F85647A9861FDF8E /* Debug */,
+				D00EBF229AC149D386C10219 /* Release */,
+				0BC88EEBE8154D9986A43B42 /* MinSizeRel */,
+				BC0389DC06434A50BD82233A /* RelWithDebInfo */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 09CB6898608D4005ACC2E495 /* Project object */;
+	rootObject = 848A09FA28694514AB1184E9 /* Project object */;
 }

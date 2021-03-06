@@ -6,6 +6,13 @@ find_package (Boost 1.75 REQUIRED)
 
 add_executable(${self} MACOSX_BUNDLE app.cpp)
 
+# Only suitable if SOURCES does not contain generated files in this example
+get_target_property(sources ${self} SOURCES)
+source_group(TREE   ${CMAKE_CURRENT_SOURCE_DIR}
+             PREFIX "Sourcess"
+             FILES  ${sources}
+)
+
 configure_file (app.hpp.in app.hpp @ONLY)
 configure_file (app_2_.hpp app_2.hpp @ONLY)
 

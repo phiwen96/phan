@@ -2,14 +2,15 @@
   "buildCommand" : "build",
   "configuredTargets" : [
     {
-      "guid" : "d315fde070879d00b43b6a509ec695b03f938c03aee3f24af46a5caa592e362d"
+      "guid" : "63a02f665cd588d08bb11ca8b72deef17a76ab7124a4734b7ccbc72863f2b490"
     }
   ],
   "continueBuildingAfterErrors" : false,
   "enableIndexBuildArena" : false,
-  "hideShellScriptEnvironment" : false,
+  "hideShellScriptEnvironment" : true,
   "parameters" : {
     "action" : "build",
+    "configurationName" : "Debug",
     "overrides" : {
       "commandLine" : {
         "table" : {
@@ -30,5 +31,5 @@
   "useDryRun" : false,
   "useImplicitDependencies" : false,
   "useLegacyBuildLocations" : false,
-  "useParallelTargets" : false
+  "useParallelTargets" : true
 }

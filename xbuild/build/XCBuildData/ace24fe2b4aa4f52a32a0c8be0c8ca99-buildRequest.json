@@ -2,7 +2,7 @@
   "buildCommand" : "prepareForIndexing",
   "configuredTargets" : [
     {
-      "guid" : "55ecf8b0cb0718e625e115367303be1ba0b0687ab3b576ab1d47a166bbdc42c2"
+      "guid" : "55ecf8b0cb0718e625e115367303be1b134d94cc187fa047f6ab67549cbbf2f9"
     }
   ],
   "continueBuildingAfterErrors" : true,
@@ -40,10 +40,11 @@
       }
     }
   },
+  "qos" : "default",
   "schemeCommand" : "launch",
   "shouldCollectMetrics" : false,
   "showNonLoggedProgress" : true,
-  "useDryRun" : false,
+  "useDryRun" : true,
   "useImplicitDependencies" : true,
   "useLegacyBuildLocations" : false,
   "useParallelTargets" : true
