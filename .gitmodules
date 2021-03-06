@@ -1,3 +1,6 @@
 [submodule "cmake/phake"]
 	path = cmake/phake
 	url = git@github.com:phiwen96/phake.git
+[submodule "dependencies/toml++"]
+	path = dependencies/toml++
+	url = https://github.com/marzer/tomlplusplus.git
