@@ -1,0 +1,14 @@
+
+
+#cmakedefine KUKEN @MACOSX_BUNDLE@
+
+
+
+int i;
+
+template <>
+struct int
+{
+    
+};
+

@@ -1,0 +1,1052 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		0D6193ABF4F347F681D7E527 /* ALL_BUILD */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 30663B2894A2477CA1C43533 /* Build configuration list for PBXAggregateTarget "ALL_BUILD" */;
+			buildPhases = (
+				3B161E6EC768782133A24EF5 /* Generate CMakeFiles/ALL_BUILD */,
+			);
+			dependencies = (
+				4F866D19050346898CC68EDA /* PBXTargetDependency */,
+				2ED454606246447294E4E45B /* PBXTargetDependency */,
+			);
+			name = ALL_BUILD;
+			productName = ALL_BUILD;
+		};
+		91A1726F6C414C7CAF99BF90 /* ZERO_CHECK */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = CDE54D1A8ECC4BB1B2737FB8 /* Build configuration list for PBXAggregateTarget "ZERO_CHECK" */;
+			buildPhases = (
+				2EDDD054ED4711E5B6E8DBF0 /* Generate CMakeFiles/ZERO_CHECK */,
+			);
+			dependencies = (
+			);
+			name = ZERO_CHECK;
+			productName = ZERO_CHECK;
+		};
+		AF83DD59E36A498EA5120A0E /* catch-populate */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = E1A6B5164C9447E1B257AC8E /* Build configuration list for PBXAggregateTarget "catch-populate" */;
+			buildPhases = (
+				7494ADAC793FF6CE9569F62B /* Generate catch-populate-prefix/src/catch-populate-stamp/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/catch-populate-mkdir */,
+				B9437DC6CDC5AA33E19EA6B2 /* Generate catch-populate-prefix/src/catch-populate-stamp/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/catch-populate-download */,
+				8FA77D95A01200F071FA36A5 /* Generate catch-populate-prefix/src/catch-populate-stamp/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/catch-populate-update */,
+				CD5CA4E5BBAB1421AF429180 /* Generate catch-populate-prefix/src/catch-populate-stamp/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/catch-populate-patch */,
+				32AC724E00A97171567E4AC7 /* Generate catch-populate-prefix/src/catch-populate-stamp/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/catch-populate-configure */,
+				2F30FFA143A1A64A9EA191BE /* Generate catch-populate-prefix/src/catch-populate-stamp/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/catch-populate-build */,
+				8D13A5DA99B111139A65741A /* Generate catch-populate-prefix/src/catch-populate-stamp/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/catch-populate-install */,
+				FE62AA8EA3D98FA35CEACF9C /* Generate catch-populate-prefix/src/catch-populate-stamp/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/catch-populate-test */,
+				C7D5DA00F9B29C6D0D5BC37F /* Generate CMakeFiles/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/catch-populate-complete */,
+				2FD9030C145C1CA7192B3894 /* Generate CMakeFiles/catch-populate */,
+			);
+			dependencies = (
+				0AF675FE05824C8E9FB25722 /* PBXTargetDependency */,
+			);
+			name = "catch-populate";
+			productName = "catch-populate";
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXBuildStyle section */
+		08B188C1C3C6477D952A5188 /* RelWithDebInfo */ = {
+			isa = PBXBuildStyle;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+			};
+			name = RelWithDebInfo;
+		};
+		19BB36DC2CAD4FE283EE4C31 /* Release */ = {
+			isa = PBXBuildStyle;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+			};
+			name = Release;
+		};
+		2E58F345119F40789B5C24AA /* MinSizeRel */ = {
+			isa = PBXBuildStyle;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+			};
+			name = MinSizeRel;
+		};
+		40B3F584A4B5469489585771 /* Debug */ = {
+			isa = PBXBuildStyle;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+			};
+			name = Debug;
+		};
+/* End PBXBuildStyle section */
+
+/* Begin PBXContainerItemProxy section */
+		45EF189950014B3CB7F0C411 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 15CBD11940724571841196EC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 91A1726F6C414C7CAF99BF90;
+			remoteInfo = ZERO_CHECK;
+		};
+		5214405F44EB4BA4A18B0701 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 15CBD11940724571841196EC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 91A1726F6C414C7CAF99BF90;
+			remoteInfo = ZERO_CHECK;
+		};
+		9F85CDBA83144D948245CE68 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 15CBD11940724571841196EC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AF83DD59E36A498EA5120A0E;
+			remoteInfo = "catch-populate";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		3154880476CD447986B53311 /* /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/CMakeLists.txt */ = {isa = PBXFileReference; explicitFileType = sourcecode.text; fileEncoding = 4; name = CMakeLists.txt; path = CMakeLists.txt; sourceTree = SOURCE_ROOT; };
+		86588631A15D4CE09283E33E /* /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/CMakeLists.txt */ = {isa = PBXFileReference; explicitFileType = sourcecode.text; fileEncoding = 4; name = CMakeLists.txt; path = CMakeLists.txt; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		0C9933D7ECE54F7A92ABE02B /* catch-populate */ = {
+			isa = PBXGroup;
+			children = (
+				749DDD8099AF459D8647CA83 /* CMake Rules */,
+				3154880476CD447986B53311 /* /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/CMakeLists.txt */,
+			);
+			name = "catch-populate";
+			sourceTree = "<group>";
+		};
+		2166014D4706477A8B653EE6 = {
+			isa = PBXGroup;
+			children = (
+				0C9933D7ECE54F7A92ABE02B /* catch-populate */,
+				B707FCBAEC27430EAAE8403E /* ALL_BUILD */,
+				6980F5981F4B4B2A90E26F2C /* Products */,
+				7319E2D426C246FB909838E9 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		6980F5981F4B4B2A90E26F2C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7319E2D426C246FB909838E9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		749DDD8099AF459D8647CA83 /* CMake Rules */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "CMake Rules";
+			sourceTree = "<group>";
+		};
+		B707FCBAEC27430EAAE8403E /* ALL_BUILD */ = {
+			isa = PBXGroup;
+			children = (
+				E9531E7974834EE88C14032D /* CMake Rules */,
+				86588631A15D4CE09283E33E /* /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/CMakeLists.txt */,
+			);
+			name = ALL_BUILD;
+			sourceTree = "<group>";
+		};
+		E9531E7974834EE88C14032D /* CMake Rules */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "CMake Rules";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXProject section */
+		15CBD11940724571841196EC /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1250;
+			};
+			buildConfigurationList = CAF8AB8977FB4A5AAD92C7BE /* Build configuration list for PBXProject "catch-populate" */;
+			buildSettings = {
+			};
+			buildStyles = (
+				40B3F584A4B5469489585771 /* Debug */,
+				19BB36DC2CAD4FE283EE4C31 /* Release */,
+				2E58F345119F40789B5C24AA /* MinSizeRel */,
+				08B188C1C3C6477D952A5188 /* RelWithDebInfo */,
+			);
+			compatibilityVersion = "Xcode 3.2";
+			hasScannedForEncodings = 0;
+			mainGroup = 2166014D4706477A8B653EE6;
+			projectDirPath = .;
+			projectRoot = "";
+			targets = (
+				0D6193ABF4F347F681D7E527 /* ALL_BUILD */,
+				91A1726F6C414C7CAF99BF90 /* ZERO_CHECK */,
+				AF83DD59E36A498EA5120A0E /* catch-populate */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		2EDDD054ED4711E5B6E8DBF0 /* Generate CMakeFiles/ZERO_CHECK */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Generate CMakeFiles/ZERO_CHECK";
+			outputPaths = (
+"/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/CMakeFiles/ZERO_CHECK"			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e
+if test \"$CONFIGURATION\" = \"Debug\"; then :
+  cd /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild
+  make -f /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/CMakeScripts/ReRunCMake.make
+fi
+if test \"$CONFIGURATION\" = \"Release\"; then :
+  cd /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild
+  make -f /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/CMakeScripts/ReRunCMake.make
+fi
+if test \"$CONFIGURATION\" = \"MinSizeRel\"; then :
+  cd /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild
+  make -f /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/CMakeScripts/ReRunCMake.make
+fi
+if test \"$CONFIGURATION\" = \"RelWithDebInfo\"; then :
+  cd /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild
+  make -f /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/CMakeScripts/ReRunCMake.make
+fi
+";
+			showEnvVarsInLog = 0;
+		};
+		2F30FFA143A1A64A9EA191BE /* Generate catch-populate-prefix/src/catch-populate-stamp/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/catch-populate-build */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+"/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/catch-populate-configure"			);
+			name = "Generate catch-populate-prefix/src/catch-populate-stamp/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/catch-populate-build";
+			outputPaths = (
+"/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/catch-populate-build"			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e
+if test \"$CONFIGURATION\" = \"Debug\"; then :
+  cd /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-build
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E echo_append
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E touch /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/$CONFIGURATION$EFFECTIVE_PLATFORM_NAME/catch-populate-build
+fi
+if test \"$CONFIGURATION\" = \"Release\"; then :
+  cd /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-build
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E echo_append
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E touch /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/$CONFIGURATION$EFFECTIVE_PLATFORM_NAME/catch-populate-build
+fi
+if test \"$CONFIGURATION\" = \"MinSizeRel\"; then :
+  cd /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-build
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E echo_append
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E touch /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/$CONFIGURATION$EFFECTIVE_PLATFORM_NAME/catch-populate-build
+fi
+if test \"$CONFIGURATION\" = \"RelWithDebInfo\"; then :
+  cd /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-build
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E echo_append
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E touch /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/$CONFIGURATION$EFFECTIVE_PLATFORM_NAME/catch-populate-build
+fi
+";
+			showEnvVarsInLog = 0;
+		};
+		2FD9030C145C1CA7192B3894 /* Generate CMakeFiles/catch-populate */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+"/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/CMakeFiles/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/catch-populate-complete"			);
+			name = "Generate CMakeFiles/catch-populate";
+			outputPaths = (
+"/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/CMakeFiles/catch-populate"			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e
+if test \"$CONFIGURATION\" = \"Debug\"; then :
+  cd /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild
+fi
+if test \"$CONFIGURATION\" = \"Release\"; then :
+  cd /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild
+fi
+if test \"$CONFIGURATION\" = \"MinSizeRel\"; then :
+  cd /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild
+fi
+if test \"$CONFIGURATION\" = \"RelWithDebInfo\"; then :
+  cd /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild
+fi
+";
+			showEnvVarsInLog = 0;
+		};
+		32AC724E00A97171567E4AC7 /* Generate catch-populate-prefix/src/catch-populate-stamp/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/catch-populate-configure */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+"/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/catch-populate-patch","/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/tmp/catch-populate-cfgcmd.txt"			);
+			name = "Generate catch-populate-prefix/src/catch-populate-stamp/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/catch-populate-configure";
+			outputPaths = (
+"/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/catch-populate-configure"			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e
+if test \"$CONFIGURATION\" = \"Debug\"; then :
+  cd /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-build
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E echo_append
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E touch /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/$CONFIGURATION$EFFECTIVE_PLATFORM_NAME/catch-populate-configure
+fi
+if test \"$CONFIGURATION\" = \"Release\"; then :
+  cd /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-build
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E echo_append
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E touch /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/$CONFIGURATION$EFFECTIVE_PLATFORM_NAME/catch-populate-configure
+fi
+if test \"$CONFIGURATION\" = \"MinSizeRel\"; then :
+  cd /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-build
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E echo_append
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E touch /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/$CONFIGURATION$EFFECTIVE_PLATFORM_NAME/catch-populate-configure
+fi
+if test \"$CONFIGURATION\" = \"RelWithDebInfo\"; then :
+  cd /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-build
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E echo_append
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E touch /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/$CONFIGURATION$EFFECTIVE_PLATFORM_NAME/catch-populate-configure
+fi
+";
+			showEnvVarsInLog = 0;
+		};
+		3B161E6EC768782133A24EF5 /* Generate CMakeFiles/ALL_BUILD */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Generate CMakeFiles/ALL_BUILD";
+			outputPaths = (
+"/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/CMakeFiles/ALL_BUILD"			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e
+if test \"$CONFIGURATION\" = \"Debug\"; then :
+  cd /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild
+  echo Build\\ all\\ projects
+fi
+if test \"$CONFIGURATION\" = \"Release\"; then :
+  cd /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild
+  echo Build\\ all\\ projects
+fi
+if test \"$CONFIGURATION\" = \"MinSizeRel\"; then :
+  cd /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild
+  echo Build\\ all\\ projects
+fi
+if test \"$CONFIGURATION\" = \"RelWithDebInfo\"; then :
+  cd /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild
+  echo Build\\ all\\ projects
+fi
+";
+			showEnvVarsInLog = 0;
+		};
+		3C0110FC8322DE7E50886E21 = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# shell script goes here
+exit 0";
+			showEnvVarsInLog = 0;
+		};
+		7494ADAC793FF6CE9569F62B /* Generate catch-populate-prefix/src/catch-populate-stamp/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/catch-populate-mkdir */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Generate catch-populate-prefix/src/catch-populate-stamp/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/catch-populate-mkdir";
+			outputPaths = (
+"/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/catch-populate-mkdir"			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e
+if test \"$CONFIGURATION\" = \"Debug\"; then :
+  cd /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E make_directory /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-src
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E make_directory /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-build
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E make_directory /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E make_directory /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/tmp
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E make_directory /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/$CONFIGURATION$EFFECTIVE_PLATFORM_NAME
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E make_directory /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E make_directory /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E touch /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/$CONFIGURATION$EFFECTIVE_PLATFORM_NAME/catch-populate-mkdir
+fi
+if test \"$CONFIGURATION\" = \"Release\"; then :
+  cd /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E make_directory /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-src
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E make_directory /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-build
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E make_directory /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E make_directory /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/tmp
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E make_directory /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/$CONFIGURATION$EFFECTIVE_PLATFORM_NAME
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E make_directory /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E make_directory /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E touch /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/$CONFIGURATION$EFFECTIVE_PLATFORM_NAME/catch-populate-mkdir
+fi
+if test \"$CONFIGURATION\" = \"MinSizeRel\"; then :
+  cd /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E make_directory /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-src
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E make_directory /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-build
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E make_directory /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E make_directory /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/tmp
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E make_directory /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/$CONFIGURATION$EFFECTIVE_PLATFORM_NAME
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E make_directory /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E make_directory /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E touch /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/$CONFIGURATION$EFFECTIVE_PLATFORM_NAME/catch-populate-mkdir
+fi
+if test \"$CONFIGURATION\" = \"RelWithDebInfo\"; then :
+  cd /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E make_directory /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-src
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E make_directory /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-build
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E make_directory /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E make_directory /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/tmp
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E make_directory /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/$CONFIGURATION$EFFECTIVE_PLATFORM_NAME
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E make_directory /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E make_directory /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E touch /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/$CONFIGURATION$EFFECTIVE_PLATFORM_NAME/catch-populate-mkdir
+fi
+";
+			showEnvVarsInLog = 0;
+		};
+		8D13A5DA99B111139A65741A /* Generate catch-populate-prefix/src/catch-populate-stamp/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/catch-populate-install */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+"/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/catch-populate-build"			);
+			name = "Generate catch-populate-prefix/src/catch-populate-stamp/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/catch-populate-install";
+			outputPaths = (
+"/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/catch-populate-install"			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e
+if test \"$CONFIGURATION\" = \"Debug\"; then :
+  cd /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-build
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E echo_append
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E touch /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/$CONFIGURATION$EFFECTIVE_PLATFORM_NAME/catch-populate-install
+fi
+if test \"$CONFIGURATION\" = \"Release\"; then :
+  cd /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-build
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E echo_append
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E touch /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/$CONFIGURATION$EFFECTIVE_PLATFORM_NAME/catch-populate-install
+fi
+if test \"$CONFIGURATION\" = \"MinSizeRel\"; then :
+  cd /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-build
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E echo_append
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E touch /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/$CONFIGURATION$EFFECTIVE_PLATFORM_NAME/catch-populate-install
+fi
+if test \"$CONFIGURATION\" = \"RelWithDebInfo\"; then :
+  cd /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-build
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E echo_append
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E touch /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/$CONFIGURATION$EFFECTIVE_PLATFORM_NAME/catch-populate-install
+fi
+";
+			showEnvVarsInLog = 0;
+		};
+		8FA77D95A01200F071FA36A5 /* Generate catch-populate-prefix/src/catch-populate-stamp/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/catch-populate-update */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+"/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/catch-populate-download"			);
+			name = "Generate catch-populate-prefix/src/catch-populate-stamp/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/catch-populate-update";
+			outputPaths = (
+"/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/catch-populate-update"			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e
+if test \"$CONFIGURATION\" = \"Debug\"; then :
+  cd /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-src
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -P /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/tmp/catch-populate-gitupdate.cmake
+fi
+if test \"$CONFIGURATION\" = \"Release\"; then :
+  cd /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-src
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -P /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/tmp/catch-populate-gitupdate.cmake
+fi
+if test \"$CONFIGURATION\" = \"MinSizeRel\"; then :
+  cd /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-src
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -P /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/tmp/catch-populate-gitupdate.cmake
+fi
+if test \"$CONFIGURATION\" = \"RelWithDebInfo\"; then :
+  cd /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-src
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -P /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/tmp/catch-populate-gitupdate.cmake
+fi
+";
+			showEnvVarsInLog = 0;
+		};
+		9B50530E35CC49C82C2FACCF = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# shell script goes here
+exit 0";
+			showEnvVarsInLog = 0;
+		};
+		B9437DC6CDC5AA33E19EA6B2 /* Generate catch-populate-prefix/src/catch-populate-stamp/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/catch-populate-download */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+"/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/catch-populate-mkdir","/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/catch-populate-gitinfo.txt"			);
+			name = "Generate catch-populate-prefix/src/catch-populate-stamp/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/catch-populate-download";
+			outputPaths = (
+"/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/catch-populate-download"			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e
+if test \"$CONFIGURATION\" = \"Debug\"; then :
+  cd /Users/philipwenkel/GitHub/Phan/xbuild/_deps
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -P /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/tmp/catch-populate-gitclone.cmake
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E touch /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/$CONFIGURATION$EFFECTIVE_PLATFORM_NAME/catch-populate-download
+fi
+if test \"$CONFIGURATION\" = \"Release\"; then :
+  cd /Users/philipwenkel/GitHub/Phan/xbuild/_deps
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -P /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/tmp/catch-populate-gitclone.cmake
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E touch /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/$CONFIGURATION$EFFECTIVE_PLATFORM_NAME/catch-populate-download
+fi
+if test \"$CONFIGURATION\" = \"MinSizeRel\"; then :
+  cd /Users/philipwenkel/GitHub/Phan/xbuild/_deps
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -P /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/tmp/catch-populate-gitclone.cmake
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E touch /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/$CONFIGURATION$EFFECTIVE_PLATFORM_NAME/catch-populate-download
+fi
+if test \"$CONFIGURATION\" = \"RelWithDebInfo\"; then :
+  cd /Users/philipwenkel/GitHub/Phan/xbuild/_deps
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -P /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/tmp/catch-populate-gitclone.cmake
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E touch /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/$CONFIGURATION$EFFECTIVE_PLATFORM_NAME/catch-populate-download
+fi
+";
+			showEnvVarsInLog = 0;
+		};
+		C7D5DA00F9B29C6D0D5BC37F /* Generate CMakeFiles/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/catch-populate-complete */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+"/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/catch-populate-build","/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/catch-populate-configure","/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/catch-populate-download","/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/catch-populate-install","/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/catch-populate-mkdir","/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/catch-populate-patch","/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/catch-populate-test","/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/catch-populate-update"			);
+			name = "Generate CMakeFiles/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/catch-populate-complete";
+			outputPaths = (
+"/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/CMakeFiles/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/catch-populate-complete"			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e
+if test \"$CONFIGURATION\" = \"Debug\"; then :
+  cd /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E make_directory /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/CMakeFiles/$CONFIGURATION$EFFECTIVE_PLATFORM_NAME
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E touch /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/CMakeFiles/$CONFIGURATION$EFFECTIVE_PLATFORM_NAME/catch-populate-complete
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E touch /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/$CONFIGURATION$EFFECTIVE_PLATFORM_NAME/catch-populate-done
+fi
+if test \"$CONFIGURATION\" = \"Release\"; then :
+  cd /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E make_directory /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/CMakeFiles/$CONFIGURATION$EFFECTIVE_PLATFORM_NAME
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E touch /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/CMakeFiles/$CONFIGURATION$EFFECTIVE_PLATFORM_NAME/catch-populate-complete
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E touch /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/$CONFIGURATION$EFFECTIVE_PLATFORM_NAME/catch-populate-done
+fi
+if test \"$CONFIGURATION\" = \"MinSizeRel\"; then :
+  cd /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E make_directory /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/CMakeFiles/$CONFIGURATION$EFFECTIVE_PLATFORM_NAME
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E touch /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/CMakeFiles/$CONFIGURATION$EFFECTIVE_PLATFORM_NAME/catch-populate-complete
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E touch /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/$CONFIGURATION$EFFECTIVE_PLATFORM_NAME/catch-populate-done
+fi
+if test \"$CONFIGURATION\" = \"RelWithDebInfo\"; then :
+  cd /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E make_directory /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/CMakeFiles/$CONFIGURATION$EFFECTIVE_PLATFORM_NAME
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E touch /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/CMakeFiles/$CONFIGURATION$EFFECTIVE_PLATFORM_NAME/catch-populate-complete
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E touch /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/$CONFIGURATION$EFFECTIVE_PLATFORM_NAME/catch-populate-done
+fi
+";
+			showEnvVarsInLog = 0;
+		};
+		CD5CA4E5BBAB1421AF429180 /* Generate catch-populate-prefix/src/catch-populate-stamp/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/catch-populate-patch */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+"/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/catch-populate-update"			);
+			name = "Generate catch-populate-prefix/src/catch-populate-stamp/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/catch-populate-patch";
+			outputPaths = (
+"/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/catch-populate-patch"			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e
+if test \"$CONFIGURATION\" = \"Debug\"; then :
+  cd /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E echo_append
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E touch /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/$CONFIGURATION$EFFECTIVE_PLATFORM_NAME/catch-populate-patch
+fi
+if test \"$CONFIGURATION\" = \"Release\"; then :
+  cd /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E echo_append
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E touch /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/$CONFIGURATION$EFFECTIVE_PLATFORM_NAME/catch-populate-patch
+fi
+if test \"$CONFIGURATION\" = \"MinSizeRel\"; then :
+  cd /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E echo_append
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E touch /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/$CONFIGURATION$EFFECTIVE_PLATFORM_NAME/catch-populate-patch
+fi
+if test \"$CONFIGURATION\" = \"RelWithDebInfo\"; then :
+  cd /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E echo_append
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E touch /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/$CONFIGURATION$EFFECTIVE_PLATFORM_NAME/catch-populate-patch
+fi
+";
+			showEnvVarsInLog = 0;
+		};
+		D9DAC7799B2CEEBEF4B6B9EF = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# shell script goes here
+exit 0";
+			showEnvVarsInLog = 0;
+		};
+		FE62AA8EA3D98FA35CEACF9C /* Generate catch-populate-prefix/src/catch-populate-stamp/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/catch-populate-test */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+"/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/catch-populate-install"			);
+			name = "Generate catch-populate-prefix/src/catch-populate-stamp/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/catch-populate-test";
+			outputPaths = (
+"/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/catch-populate-test"			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e
+if test \"$CONFIGURATION\" = \"Debug\"; then :
+  cd /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-build
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E echo_append
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E touch /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/$CONFIGURATION$EFFECTIVE_PLATFORM_NAME/catch-populate-test
+fi
+if test \"$CONFIGURATION\" = \"Release\"; then :
+  cd /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-build
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E echo_append
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E touch /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/$CONFIGURATION$EFFECTIVE_PLATFORM_NAME/catch-populate-test
+fi
+if test \"$CONFIGURATION\" = \"MinSizeRel\"; then :
+  cd /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-build
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E echo_append
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E touch /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/$CONFIGURATION$EFFECTIVE_PLATFORM_NAME/catch-populate-test
+fi
+if test \"$CONFIGURATION\" = \"RelWithDebInfo\"; then :
+  cd /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-build
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E echo_append
+  /usr/local/Cellar/cmake/3.19.6/bin/cmake -E touch /Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/$CONFIGURATION$EFFECTIVE_PLATFORM_NAME/catch-populate-test
+fi
+";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		0AF675FE05824C8E9FB25722 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 91A1726F6C414C7CAF99BF90 /* ZERO_CHECK */;
+			targetProxy = 5214405F44EB4BA4A18B0701 /* PBXContainerItemProxy */;
+		};
+		2ED454606246447294E4E45B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 91A1726F6C414C7CAF99BF90 /* ZERO_CHECK */;
+			targetProxy = 45EF189950014B3CB7F0C411 /* PBXContainerItemProxy */;
+		};
+		4F866D19050346898CC68EDA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AF83DD59E36A498EA5120A0E /* catch-populate */;
+			targetProxy = 9F85CDBA83144D948245CE68 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		1F4A8DDA15D44093966FC0A0 /* MinSizeRel */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ZERO_CHECK;
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = MinSizeRel;
+		};
+		1FA43435E7764088B3B00D37 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ZERO_CHECK;
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Release;
+		};
+		3B505357619F45629DFCFD4C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = "catch-populate";
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Release;
+		};
+		4A249C72E04F4C11B4E29449 /* MinSizeRel */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ALL_BUILD;
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = MinSizeRel;
+		};
+		4B7896BDE9444E9F873EDE1E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = "catch-populate";
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Debug;
+		};
+		6CE5950C00E446C4966F6D95 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ZERO_CHECK;
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Debug;
+		};
+		9650B9EA6318457699F46092 /* RelWithDebInfo */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ZERO_CHECK;
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = RelWithDebInfo;
+		};
+		9B71F3517AA54BBBACFD9447 /* RelWithDebInfo */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ALL_BUILD;
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = RelWithDebInfo;
+		};
+		B3E5DEBE2DAE41D8985A7F25 /* RelWithDebInfo */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
+				MACOSX_DEPLOYMENT_TARGET = 11.2;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = "/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.3.sdk";
+				SYMROOT = "/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/build";
+			};
+			name = RelWithDebInfo;
+		};
+		C8EC76B8110D4B8CAC915ACC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
+				MACOSX_DEPLOYMENT_TARGET = 11.2;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = "/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.3.sdk";
+				SYMROOT = "/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/build";
+			};
+			name = Release;
+		};
+		CB862CB1D7314E55AD134BA9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
+				MACOSX_DEPLOYMENT_TARGET = 11.2;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = "/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.3.sdk";
+				SYMROOT = "/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/build";
+			};
+			name = Debug;
+		};
+		D4EA1E09A6CD43AE8F7A55F2 /* MinSizeRel */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
+				MACOSX_DEPLOYMENT_TARGET = 11.2;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = "/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.3.sdk";
+				SYMROOT = "/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/build";
+			};
+			name = MinSizeRel;
+		};
+		EF3A2233245C4463B28B8A13 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ALL_BUILD;
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Debug;
+		};
+		FB4BDFE13980480DA4B34D29 /* MinSizeRel */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = "catch-populate";
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = MinSizeRel;
+		};
+		FC68B3C7DDB84E6E916A9D1C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ALL_BUILD;
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Release;
+		};
+		FD6AF64EB4FC4A22B40E7CBD /* RelWithDebInfo */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = "catch-populate";
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = RelWithDebInfo;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		30663B2894A2477CA1C43533 /* Build configuration list for PBXAggregateTarget "ALL_BUILD" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EF3A2233245C4463B28B8A13 /* Debug */,
+				FC68B3C7DDB84E6E916A9D1C /* Release */,
+				4A249C72E04F4C11B4E29449 /* MinSizeRel */,
+				9B71F3517AA54BBBACFD9447 /* RelWithDebInfo */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		CAF8AB8977FB4A5AAD92C7BE /* Build configuration list for PBXProject "catch-populate" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CB862CB1D7314E55AD134BA9 /* Debug */,
+				C8EC76B8110D4B8CAC915ACC /* Release */,
+				D4EA1E09A6CD43AE8F7A55F2 /* MinSizeRel */,
+				B3E5DEBE2DAE41D8985A7F25 /* RelWithDebInfo */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		CDE54D1A8ECC4BB1B2737FB8 /* Build configuration list for PBXAggregateTarget "ZERO_CHECK" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6CE5950C00E446C4966F6D95 /* Debug */,
+				1FA43435E7764088B3B00D37 /* Release */,
+				1F4A8DDA15D44093966FC0A0 /* MinSizeRel */,
+				9650B9EA6318457699F46092 /* RelWithDebInfo */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E1A6B5164C9447E1B257AC8E /* Build configuration list for PBXAggregateTarget "catch-populate" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4B7896BDE9444E9F873EDE1E /* Debug */,
+				3B505357619F45629DFCFD4C /* Release */,
+				FB4BDFE13980480DA4B34D29 /* MinSizeRel */,
+				FD6AF64EB4FC4A22B40E7CBD /* RelWithDebInfo */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 15CBD11940724571841196EC /* Project object */;
+}

@@ -1,0 +1,46 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/CMakeFiles/catch-populate"
+		},
+		{
+			"file" : "/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/CMakeFiles/catch-populate.rule"
+		},
+		{
+			"file" : "/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/CMakeFiles/CMakeFiles/catch-populate-complete.rule"
+		},
+		{
+			"file" : "/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/CMakeFiles/catch-populate-install.rule"
+		},
+		{
+			"file" : "/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/CMakeFiles/catch-populate-mkdir.rule"
+		},
+		{
+			"file" : "/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/CMakeFiles/catch-populate-download.rule"
+		},
+		{
+			"file" : "/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/CMakeFiles/catch-populate-update.rule"
+		},
+		{
+			"file" : "/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/CMakeFiles/catch-populate-patch.rule"
+		},
+		{
+			"file" : "/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/CMakeFiles/catch-populate-configure.rule"
+		},
+		{
+			"file" : "/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/CMakeFiles/catch-populate-build.rule"
+		},
+		{
+			"file" : "/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-subbuild/catch-populate-prefix/src/catch-populate-stamp/CMakeFiles/catch-populate-test.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"catch-populate"
+		],
+		"name" : "catch-populate"
+	}
+}

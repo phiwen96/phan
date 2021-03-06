@@ -1,0 +1,87 @@
+{
+  "buildCommand" : "prepareForIndexing",
+  "configuredTargets" : [
+    {
+      "guid" : "55ecf8b0cb0718e625e115367303be1b2f85a188a6332755ca305d4d7aa4e64f"
+    },
+    {
+      "guid" : "55ecf8b0cb0718e625e115367303be1b9f935b962a9b121b14418bac55fc5c89"
+    },
+    {
+      "guid" : "55ecf8b0cb0718e625e115367303be1b2c6af6e02f10740e014ac2d54dc0be55"
+    },
+    {
+      "guid" : "55ecf8b0cb0718e625e115367303be1bfb92386b95e26468fae437e3e80053e9"
+    },
+    {
+      "guid" : "55ecf8b0cb0718e625e115367303be1b0e187852114d634ebb73c2d366275541"
+    },
+    {
+      "guid" : "55ecf8b0cb0718e625e115367303be1bfd6a1008ad78c2357c249d8c74c3cb54"
+    },
+    {
+      "guid" : "55ecf8b0cb0718e625e115367303be1b8fbf293e7fdbd292cccc5c52acf2bf50"
+    },
+    {
+      "guid" : "55ecf8b0cb0718e625e115367303be1b5a6ed92fa38adcc94785abbe0db7d5c1"
+    },
+    {
+      "guid" : "55ecf8b0cb0718e625e115367303be1ba0b0687ab3b576ab1d47a166bbdc42c2"
+    },
+    {
+      "guid" : "55ecf8b0cb0718e625e115367303be1b99eb354a7053f4ba8ee4ace56789b920"
+    },
+    {
+      "guid" : "55ecf8b0cb0718e625e115367303be1b3cfc5e864804803e2f286102e2e2b49b"
+    },
+    {
+      "guid" : "55ecf8b0cb0718e625e115367303be1be6c4e24a130093f3674f7614f5ba2b60"
+    },
+    {
+      "guid" : "55ecf8b0cb0718e625e115367303be1b99634d708d78429105d0d77d6cb2084d"
+    }
+  ],
+  "continueBuildingAfterErrors" : true,
+  "enableIndexBuildArena" : false,
+  "hideShellScriptEnvironment" : false,
+  "parameters" : {
+    "action" : "build",
+    "activeArchitecture" : "x86_64",
+    "activeRunDestination" : {
+      "disableOnlyActiveArch" : false,
+      "platform" : "macosx",
+      "sdk" : "macosx11.3",
+      "sdkVariant" : "macos",
+      "supportedArchitectures" : [
+        "x86_64h",
+        "x86_64"
+      ],
+      "targetArchitecture" : "x86_64"
+    },
+    "arenaInfo" : {
+      "buildIntermediatesPath" : "",
+      "buildProductsPath" : "",
+      "derivedDataPath" : "/Users/philipwenkel/Library/Developer/Xcode/DerivedData",
+      "indexDataStoreFolderPath" : "/Users/philipwenkel/Library/Developer/Xcode/DerivedData/Phan-cmwybnigrueedibcprdtpffbwebr/Index/DataStore",
+      "indexEnableDataStore" : true,
+      "indexPCHPath" : "/Users/philipwenkel/Library/Developer/Xcode/DerivedData/Phan-cmwybnigrueedibcprdtpffbwebr/Index/PrecompiledHeaders",
+      "pchPath" : ""
+    },
+    "configurationName" : "Debug",
+    "overrides" : {
+      "synthesized" : {
+        "table" : {
+          "ENABLE_PREVIEWS" : "NO"
+        }
+      }
+    }
+  },
+  "qos" : "default",
+  "schemeCommand" : "launch",
+  "shouldCollectMetrics" : false,
+  "showNonLoggedProgress" : true,
+  "useDryRun" : true,
+  "useImplicitDependencies" : true,
+  "useLegacyBuildLocations" : false,
+  "useParallelTargets" : true
+}
