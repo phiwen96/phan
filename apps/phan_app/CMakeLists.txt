@@ -18,7 +18,7 @@ find_package (Boost 1.75 REQUIRED)
 
 add_executable(${self} main.cpp)
 
-ph_precompile (TARGET ${self} HEADERS <iostream> <string> PRIVATE PCH ${std_pch} )
+ph_precompile (TARGET ${self} PRIVATE PCH ${std_pch} ${boost_pch})
 
 
 
