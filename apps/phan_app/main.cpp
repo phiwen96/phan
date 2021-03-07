@@ -26,7 +26,6 @@ auto parse = [](string str){
 #define PH(...) BOOST_PP_STRINGIZE (__VA_ARGS__)
 
 
-
 string first_signature (string str, auto&& fun)
 {
     auto a1 = str.find("${");

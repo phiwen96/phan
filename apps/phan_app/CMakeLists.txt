@@ -20,10 +20,10 @@ function (test)
     endfunction (kuk)
     
     function (FITTA a) 
-        # message ("${a}")
+        message ("${a}")
     endfunction ()
 
-    function (SNOR...)
+    function (SNOR)
         message ("${ARGN}")
         # message ("${b}")
     endfunction ()
@@ -33,13 +33,13 @@ function (test)
     endfunction ()
 
 
-    ph_parse (n0 KUK0 kuk n1 HORA FITTA n SNOR f0 hej0 f1 hej1 fn hejn ARGS ${ARGN})
+    ph_parse (. KUK0 kuk .. HORA FITTA ... SNOR f0 hej0 f1 hej1 fn hejn args ${ARGN})
 
     
 
 endfunction ()
 
-# test (kuk f0 "snoppen" horan kuk SNOR d aaa FITTA ss)
+test (kuk f0 "snoppen" horan kuk SNOR d aaa FITTA ss)
 
 
 
