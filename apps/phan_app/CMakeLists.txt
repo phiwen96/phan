@@ -23,7 +23,7 @@ function (test)
         message ("${a}")
     endfunction ()
 
-    function (SNOR)
+    function (SNOR...)
         message ("${ARGN}")
         # message ("${b}")
     endfunction ()
