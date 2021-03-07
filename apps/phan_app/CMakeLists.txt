@@ -12,24 +12,33 @@ ph_define_self (self)
 
 function (test)
 
-    function (N0 arg)
-        message ("N0 = ${arg}")
-    endfunction ()
+    ph_parse (n0 KUK0 kuk n1 HORA FITTA n SNOR f0 hej0 f1 hej1 fn hejn ARGS ${ARGN})
 
-    function (N1 arg)
-        message ("N1 = ${arg}")
-    endfunction ()
+    function (kuk)
+        
+    endfunction (kuk)
     
-    function (N arg)
-        message ("N = ${arg}")
-    endfunction ()
+    function (FITTA)
+        
+    endfunction (FITTA)
+
+    function (SNOR)
+        
+    endfunction (SNOR)
+
+    function (f0)
+        
+    endfunction (f0)
+    
+    
+    
     
 
-    ph_parse (n0 KUK0 kuk n1 FITTA n SNOR f0 hej0 f1 hej1 fn hejn ARGS ${ARGN})
+    
 
 endfunction ()
 
-test (kuk KUK0 f0 snoppen kuk)
+test (kuk f0 snoppen horan kuk SNOR d aaa FITTA ss)
 
 
 
