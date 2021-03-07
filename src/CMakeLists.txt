@@ -2,22 +2,22 @@
 # ph_current_dir_name (self)
 # set (root_source_dir )
 
-include(CheckCXXSymbolExists)
+# include(CheckCXXSymbolExists)
 
-check_cxx_symbol_exists(KUKEN ${root_include_dir}/template_library/template_library.hpp resultVar)
+# check_cxx_symbol_exists(KUKEN ${root_include_dir}/template_library/template_library.hpp resultVar)
 
-if (resultVar)
-    message("is cool!")
-else()
-    message("not cool!")
-endif()
+# if (resultVar)
+#     message("is cool!")
+# else()
+#     message("not cool!")
+# endif()
 
-message("${resultVar}")
+# message("${resultVar}")
 
-set(CMAKE_REQUIRED_DEFINES -DFOOBXX=1)
+# set(CMAKE_REQUIRED_DEFINES -DFOOBXX=1)
 
 file (GLOB_RECURSE HEADER_LIST ${root_include_dir}/*.hpp)
-file (GLOB_RECURSE SOURCE_LIST ${root_src_dir}/*.cpp)
+file (GLOB SOURCE_LIST ${root_src_dir}/*.cpp)
 
 # file(GLOB_RECURSE HEADER_LIST "${phulkan_SOURCE_DIR}/include/phulkan/*.hpp")
 # file(GLOB SOURCE_LIST ${phulkan_SOURCE_DIR}/src/*.cpp)
@@ -29,7 +29,7 @@ ph_define_self (self)
 ph_get_property (root_name root_name)
 
 
-add_library (${root_name} STATIC ${SOURCE_LIST} ${HEADER_LIST})
+add_library (${root_name} SHARED ${SOURCE_LIST} ${HEADER_LIST})
 
 
 # set ( PROJ_SOURCES
@@ -53,9 +53,9 @@ add_library (${root_name} STATIC ${SOURCE_LIST} ${HEADER_LIST})
 
 target_compile_features (${root_name} PRIVATE cxx_std_20)
 
-get_property(ResultVariable TARGET ${root_name} PROPERTY CXX_STANDARD)
+# get_property(ResultVariable TARGET ${root_name} PROPERTY CXX_STANDARD)
 
-add_library(ph::${root_name} ALIAS ${root_name})
+# add_library(ph::${root_name} ALIAS ${root_name})
 
 
 
@@ -69,16 +69,16 @@ set(ENABLE_ALGO_BETA 0 CACHE BOOL "")
 # target_sources (${root_name} PRIVATE "${PROJECT_BINARY_DIR}/include/version.hpp")
 
 configure_file (
-    "${PROJECT_SOURCE_DIR}/include/version.hpp.in"
-    "${PROJECT_BINARY_DIR}/include/version.hpp"
+    "${PROJECT_SOURCE_DIR}/include/phan/in.hpp"
+    "${PROJECT_BINARY_DIR}/include/in.hpp"
     @ONLY
 )
 
 
-target_link_libraries(${root_name} PUBLIC 
-    $<$<BOOL:${ENABLE_ALGO_BETA}>:algo_beta>
-    # $<IF:$<CONFIG:Debug>,checkedAlgo,fastAlgo>
-)
+# target_link_libraries(${root_name} PUBLIC 
+#     $<$<BOOL:${ENABLE_ALGO_BETA}>:algo_beta>
+#     # $<IF:$<CONFIG:Debug>,checkedAlgo,fastAlgo>
+# )
 
 # generate (phulkan_generator ${CMAKE_CURRENT_SOURCE_DIR}/include/phulkan_generator/instance.hpp ${CMAKE_CURRENT_SOURCE_DIR}/include/phulkan_generator/gpu.hpp)
 
@@ -90,12 +90,31 @@ target_include_directories (${root_name} PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
 target_include_directories(
     ${root_name} 
  PRIVATE
-    $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include/${root_name}>
-    $<INSTALL_INTERFACE:include/${root_name}>
+ ${CMAKE_CURRENT_SOURCE_DIR}
+   #  $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include/${root_name}>
+   #  $<INSTALL_INTERFACE:include/${root_name}>
  PUBLIC
     $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:include>
 )
+
+
+
+# include(GNUInstallDirs)
+# install(TARGETS ${root_name}
+#     EXPORT ${root_name}-export
+#     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+#     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+# )
+
+# install(EXPORT ${root_name}-targets
+#   FILE
+#   ${root_name}Targets.cmake
+#   NAMESPACE
+#   ${root_name}::
+#   DESTINATION
+#     ${CMAKE_INSTALL_LIBDIR}/cmake/${root_name}
+# )
 
 
 

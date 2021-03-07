@@ -26,35 +26,14 @@ Boost_DIR:PATH=/usr/local/lib/cmake/Boost-1.75.0
 //Path to a file.
 Boost_INCLUDE_DIR:PATH=/usr/local/include
 
-//Build documentation examples
-CATCH_BUILD_EXAMPLES:BOOL=OFF
-
-//Build extra tests
-CATCH_BUILD_EXTRA_TESTS:BOOL=OFF
-
-//Build SelfTest project
-CATCH_BUILD_TESTING:BOOL=ON
-
-//Generate coverage for codecov.io
-CATCH_ENABLE_COVERAGE:BOOL=OFF
-
-//Enable all warnings as errors
-CATCH_ENABLE_WERROR:BOOL=ON
-
-//Install documentation alongside library
-CATCH_INSTALL_DOCS:BOOL=ON
-
-//Install contrib alongside library
-CATCH_INSTALL_HELPERS:BOOL=ON
-
-//Perform SelfTests with Valgrind
-CATCH_USE_VALGRIND:BOOL=OFF
-
 //Path to a program.
 CMAKE_ADDR2LINE:FILEPATH=CMAKE_ADDR2LINE-NOTFOUND
 
 //Path to a program.
 CMAKE_AR:FILEPATH=/Applications/Xcode-beta.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ar
+
+//No help, variable specified on the command line.
+CMAKE_BUILD_TYPE:UNINITIALIZED=Debug
 
 //Semicolon separated list of supported configuration types, only
 // supports Debug, Release, MinSizeRel, and RelWithDebInfo, anything
@@ -111,9 +90,6 @@ CMAKE_EXE_LINKER_FLAGS_RELEASE:STRING=
 
 //Flags used by the linker during RELWITHDEBINFO builds.
 CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO:STRING=
-
-//ON
-CMAKE_EXPORT_COMPILE_COMMANDS:BOOL=OFF
 
 //User executables (bin)
 CMAKE_INSTALL_BINDIR:PATH=bin
@@ -305,24 +281,6 @@ COVERAGE_COMMAND:FILEPATH=/usr/bin/gcov
 //Extra command line flags to pass to the coverage tool
 COVERAGE_EXTRA_FLAGS:STRING=-l
 
-//Enable to build RPM source packages
-CPACK_SOURCE_RPM:BOOL=OFF
-
-//Enable to build TBZ2 source packages
-CPACK_SOURCE_TBZ2:BOOL=ON
-
-//Enable to build TGZ source packages
-CPACK_SOURCE_TGZ:BOOL=ON
-
-//Enable to build TXZ source packages
-CPACK_SOURCE_TXZ:BOOL=ON
-
-//Enable to build TZ source packages
-CPACK_SOURCE_TZ:BOOL=ON
-
-//Enable to build ZIP source packages
-CPACK_SOURCE_ZIP:BOOL=OFF
-
 //How many times to retry timed-out CTest submissions.
 CTEST_SUBMIT_RETRY_COUNT:STRING=3
 
@@ -335,36 +293,10 @@ CVSCOMMAND:FILEPATH=CVSCOMMAND-NOTFOUND
 //Options passed to the cvs update command.
 CVS_UPDATE_OPTIONS:STRING=-d -A -P
 
-//Value Computed by CMake
-Catch2_BINARY_DIR:STATIC=/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-build
-
-//Value Computed by CMake
-Catch2_SOURCE_DIR:STATIC=/Users/philipwenkel/GitHub/Phan/xbuild/_deps/catch-src
-
 //Maximum time allowed before CTest will kill the test.
 DART_TESTING_TIMEOUT:STRING=1500
 
 ENABLE_ALGO_BETA:BOOL=0
-
-//Directory under which to collect all populated content
-FETCHCONTENT_BASE_DIR:PATH=/Users/philipwenkel/GitHub/Phan/xbuild/_deps
-
-//Disables all attempts to download or update content and assumes
-// source dirs already exist
-FETCHCONTENT_FULLY_DISCONNECTED:BOOL=OFF
-
-//Enables QUIET option for all content population
-FETCHCONTENT_QUIET:BOOL=ON
-
-//When not empty, overrides where to find pre-populated content
-// for catch
-FETCHCONTENT_SOURCE_DIR_CATCH:PATH=
-
-//Enables UPDATE_DISCONNECTED behavior for all content population
-FETCHCONTENT_UPDATES_DISCONNECTED:BOOL=OFF
-
-//Enables UPDATE_DISCONNECTED behavior just for population of catch
-FETCHCONTENT_UPDATES_DISCONNECTED_CATCH:BOOL=OFF
 
 //Path to a program.
 GITCOMMAND:FILEPATH=/usr/bin/git
@@ -408,13 +340,23 @@ SVNCOMMAND:FILEPATH=SVNCOMMAND-NOTFOUND
 //The directory containing a CMake configuration file for boost_headers.
 boost_headers_DIR:PATH=/usr/local/lib/cmake/boost_headers-1.75.0
 
+boost_preprocessor_pch:STRING=<boost/preprocessor/seq/for_each.hpp>;<boost/preprocessor/variadic/to_seq.hpp>;<boost/preprocessor/facilities/expand.hpp>;<boost/preprocessor/stringize.hpp>;<boost/preprocessor/repetition/enum_params.hpp>;<boost/preprocessor/cat.hpp>;<boost/preprocessor/seq/cat.hpp>;<boost/preprocessor/control/if.hpp>;<boost/preprocessor/facilities/empty.hpp>;<boost/preprocessor/facilities/identity.hpp>;<boost/preprocessor/seq/to_tuple.hpp>;<boost/preprocessor/seq/for_each_i.hpp>;<boost/preprocessor/arithmetic/inc.hpp>;<boost/preprocessor/comparison/not_equal.hpp>;<boost/preprocessor/repetition/for.hpp>;<boost/preprocessor/tuple/elem.hpp>;<boost/preprocessor/repetition.hpp>;<boost/preprocessor/arithmetic/sub.hpp>;<boost/preprocessor/punctuation/comma_if.hpp>;<boost/preprocessor/control/if.hpp>;<boost/preprocessor/facilities/empty.hpp>;<boost/preprocessor/facilities/identity.hpp>
+
+//Value Computed by CMake
+phake_BINARY_DIR:STATIC=/Users/philipwenkel/GitHub/Phan/xbuild/cmake/phake
+
+//Value Computed by CMake
+phake_SOURCE_DIR:STATIC=/Users/philipwenkel/GitHub/Phan/cmake/phake
+
+std_pch:STRING=<iostream>;<vector>;<string>;<utility>;<function>;<array>;<tuple>;<type_traits>;<fstream>;<regex>
+
 
 ########################
 # INTERNAL cache entries
 ########################
 
 //Stored Xcode object GUID
-ALL_BUILD_GUID_CMAKE:INTERNAL=A78A0DA091F54A4C8E1FF396
+ALL_BUILD_GUID_CMAKE:INTERNAL=7F9DE558804D4479A6C51F03
 //ADVANCED property for variable: BZRCOMMAND
 BZRCOMMAND-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: Boost_DIR
@@ -580,18 +522,6 @@ CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
 COVERAGE_COMMAND-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: COVERAGE_EXTRA_FLAGS
 COVERAGE_EXTRA_FLAGS-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: CPACK_SOURCE_RPM
-CPACK_SOURCE_RPM-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: CPACK_SOURCE_TBZ2
-CPACK_SOURCE_TBZ2-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: CPACK_SOURCE_TGZ
-CPACK_SOURCE_TGZ-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: CPACK_SOURCE_TXZ
-CPACK_SOURCE_TXZ-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: CPACK_SOURCE_TZ
-CPACK_SOURCE_TZ-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: CPACK_SOURCE_ZIP
-CPACK_SOURCE_ZIP-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CTEST_SUBMIT_RETRY_COUNT
 CTEST_SUBMIT_RETRY_COUNT-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CTEST_SUBMIT_RETRY_DELAY
@@ -601,13 +531,11 @@ CVSCOMMAND-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CVS_UPDATE_OPTIONS
 CVS_UPDATE_OPTIONS-ADVANCED:INTERNAL=1
 //Stored Xcode object GUID
-Continuous_GUID_CMAKE:INTERNAL=190608E302024EEAAF1A27D6
+Continuous_GUID_CMAKE:INTERNAL=00BCD73D211D479F8EFF27C4
 //ADVANCED property for variable: DART_TESTING_TIMEOUT
 DART_TESTING_TIMEOUT-ADVANCED:INTERNAL=1
 //Stored Xcode object GUID
-Docs_GUID_CMAKE:INTERNAL=85A61E6167414FA08E6E4600
-//Stored Xcode object GUID
-Experimental_GUID_CMAKE:INTERNAL=FA82DCF18BBF4F9ABC23801C
+Experimental_GUID_CMAKE:INTERNAL=D291EDB987B943E09259067D
 //Details about finding Boost
 FIND_PACKAGE_MESSAGE_DETAILS_Boost:INTERNAL=[/usr/local/lib/cmake/Boost-1.75.0/BoostConfig.cmake][c ][v1.75.0(1.75)]
 //ADVANCED property for variable: GITCOMMAND
@@ -623,17 +551,17 @@ MEMORYCHECK_COMMAND-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: MEMORYCHECK_SUPPRESSIONS_FILE
 MEMORYCHECK_SUPPRESSIONS_FILE-ADVANCED:INTERNAL=1
 //Stored Xcode object GUID
-NightlyMemoryCheck_GUID_CMAKE:INTERNAL=F86E6FFBFFF84B04B571ADC5
+NightlyMemoryCheck_GUID_CMAKE:INTERNAL=D876A48ECE3549A8A1F52131
 //Stored Xcode object GUID
-Nightly_GUID_CMAKE:INTERNAL=A57CA644A2F5478FBA358D80
+Nightly_GUID_CMAKE:INTERNAL=DF9A98A388D4430E89810DBF
 //ADVANCED property for variable: P4COMMAND
 P4COMMAND-ADVANCED:INTERNAL=1
 //Stored Xcode object GUID
-PROJECT_Catch2_GUID_CMAKE:INTERNAL=DA810BD8CFD0408ABB7A2F84
+PROJECT_Phan_GUID_CMAKE:INTERNAL=F492907EBD5247D182128CF9
 //Stored Xcode object GUID
-PROJECT_Phan_GUID_CMAKE:INTERNAL=6140E3D0EF294DF5BC8D536F
+PROJECT_phake_GUID_CMAKE:INTERNAL=0889E5064BF449FFBBCAB265
 //Stored Xcode object GUID
-RUN_TESTS_GUID_CMAKE:INTERNAL=D41C5D39F05245429C0792B9
+RUN_TESTS_GUID_CMAKE:INTERNAL=3EE2F101495C4C27B91F8102
 //ADVANCED property for variable: SITE
 SITE-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: SLURM_SBATCH_COMMAND
@@ -643,21 +571,13 @@ SLURM_SRUN_COMMAND-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: SVNCOMMAND
 SVNCOMMAND-ADVANCED:INTERNAL=1
 //Stored Xcode object GUID
-ZERO_CHECK_GUID_CMAKE:INTERNAL=5D4F304EB4544827AF735E99
+ZERO_CHECK_GUID_CMAKE:INTERNAL=5FE63D75E2574E22B8E81E08
 //CMAKE_INSTALL_PREFIX during last run
 _GNUInstallDirs_LAST_CMAKE_INSTALL_PREFIX:INTERNAL=/usr/local
 //ADVANCED property for variable: boost_headers_DIR
 boost_headers_DIR-ADVANCED:INTERNAL=1
 //Stored Xcode object GUID
-install_GUID_CMAKE:INTERNAL=FF4AAC7C7D5C474B8DE1301B
+phan_app_GUID_CMAKE:INTERNAL=8D9DBBE807DC4F84B54160BA
 //Stored Xcode object GUID
-package_GUID_CMAKE:INTERNAL=3489E1004C684A3B8D2F6A7E
-//Stored Xcode object GUID
-phan_app_GUID_CMAKE:INTERNAL=841964804BDC44198DF8EA41
-//Stored Xcode object GUID
-phan_lib_GUID_CMAKE:INTERNAL=A3F1B84352944674B943C0E3
-//Have symbol KUKEN
-resultVar:INTERNAL=
-//Stored Xcode object GUID
-testlib_GUID_CMAKE:INTERNAL=7483113C9A574A9BA24EF543
+phan_lib_GUID_CMAKE:INTERNAL=8DD784AF89264533896B5F72
 

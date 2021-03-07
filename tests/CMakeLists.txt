@@ -14,7 +14,7 @@ endif()
 # Adds Catch2::Catch2
 
 # Tests need to be added as executables first
-add_executable(testlib testlib.cpp)
+add_executable(testlib src/testlib.cpp)
 
 set_target_properties (testlib PROPERTIES CXX_STANDARD 20)
 

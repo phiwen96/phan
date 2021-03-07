@@ -1,5 +1,6 @@
 cmake_minimum_required (VERSION 3.19.4)
-include (cmake/phake/phake.cmake)
+# include (cmake/phake/phake.cmake)
+add_subdirectory (cmake)
 ph_dont_build_here ()
 ph_git ()
 
@@ -29,18 +30,9 @@ get_filename_component(root_dir ${CMAKE_CURRENT_LIST_DIR} ABSOLUTE CACHE "")
 ph_define_self (self)
 ph_define_property (root_name phan_lib)
 
-set(PACKAGE_VERSION 1)
-
-include(CMakePackageConfigHelpers)
-write_basic_package_version_file(
-    ${self}ConfigVersion.cmake
-    VERSION ${PACKAGE_VERSION}
-    COMPATIBILITY AnyNewerVersion
-    )
-
 # ph_header_list (headers)
 # message(${headers})
-message ("$<CONFIG>")
+# message ("$<CONFIG>")
 # $<CXX_COMPILER_ID>
 
 # $<TARGET_NAME_IF_EXISTS:tgt>
@@ -97,10 +89,10 @@ if (CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
 	set (CMAKE_CXX_STANDARD_REQUIRED ON)
     set(CMAKE_CXX_EXTENSIONS        ON)
     set (CMAKE_BUILD_TYPE Debug)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Werror" CACHE STRING "C++ flags")
-    option(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+    # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Werror" CACHE STRING "C++ flags")
+    # option(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-	set_property(GLOBAL PROPERTY USE_FOLDERS YES)
+	# set_property(GLOBAL PROPERTY USE_FOLDERS YES)
     # set_property(CACHE CMAKE_BUILD_TYPE PROPERTY
     #     STRINGS Debug Release Profile)
     
@@ -123,7 +115,7 @@ add_subdirectory (apps)
 
 if((CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME OR MODERN_CMAKE_BUILD_TESTING)
    AND BUILD_TESTING)
-  add_subdirectory(tests)
+#   add_subdirectory(tests)
 endif()
 
 

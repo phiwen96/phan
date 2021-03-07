@@ -8,6 +8,10 @@ add_subdirectory(phan_app)
 
 
 
+
+
+
+
 # get_filename_component(ProjectId ${CMAKE_CURRENT_LIST_DIR} ABSOLUTE DIRECTORY)
 # file(GLOB subdirs LIST_DIRECTORIES true ${this})
 # foreach(i ${subdirs})

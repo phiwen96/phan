@@ -70,6 +70,7 @@ int main() {
     cout << str << endl;
     
     auto first_parser = [](string const& str) -> string {
+        
         // cannot return same!!!!
         
         cout << str << endl;
@@ -77,7 +78,7 @@ int main() {
     };
     
    
-    cout << first_signature (str, first_parser) << endl;
+//    cout << first_signature (str, first_parser) << endl;
     
     
     
