@@ -10,6 +10,8 @@ ph_define_self (self)
 # )
 
 
+
+
 function (test)
 
 
@@ -37,7 +39,7 @@ function (test)
 
 endfunction ()
 
-test (kuk f0 "snoppen" horan kuk SNOR d aaa FITTA ss)
+# test (kuk f0 "snoppen" horan kuk SNOR d aaa FITTA ss)
 
 
 
@@ -74,7 +76,6 @@ target_include_directories (${self} PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
 # target_sources (${self} PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/app_2.hpp)
 # target_sources (${self} PRIVATE app_2_.hpp)
 
-ph_boost (${self})
 
 target_compile_features(${self} PRIVATE cxx_std_20)
 set(APP_NAME ${self})
