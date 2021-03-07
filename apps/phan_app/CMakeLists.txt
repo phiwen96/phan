@@ -10,22 +10,26 @@ ph_define_self (self)
 # )
 
 
-function(test)
-    ph_parse (n0 KUK n1 FITTA n SNOR)
+function (test)
 
+    function (N0 arg)
+        message ("N0 = ${arg}")
+    endfunction ()
 
-    foreach(arg IN LISTS N0)
-        if(${${p}_${arg}})
-            message ("${arg}")
-            break ()
-        else()
-        endif()
-    endforeach()
-
+    function (N1 arg)
+        message ("N1 = ${arg}")
+    endfunction ()
     
-endfunction()
+    function (N arg)
+        message ("N = ${arg}")
+    endfunction ()
+    
 
-test (KUK)
+    ph_parse (n0 KUK0 kuk n1 FITTA n SNOR f0 hej0 f1 hej1 fn hejn ARGS ${ARGN})
+
+endfunction ()
+
+test (kuk KUK0 f0 snoppen kuk)
 
 
 
