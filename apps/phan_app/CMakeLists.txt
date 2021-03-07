@@ -10,6 +10,24 @@ ph_define_self (self)
 # )
 
 
+function(test)
+    ph_parse (n0 KUK n1 FITTA n SNOR)
+
+
+    foreach(arg IN LISTS N0)
+        if(${${p}_${arg}})
+            message ("${arg}")
+            break ()
+        else()
+        endif()
+    endforeach()
+
+    
+endfunction()
+
+test (KUK)
+
+
 
 
 find_package (Boost 1.75 REQUIRED)
