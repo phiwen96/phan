@@ -89,34 +89,34 @@ int main() {
 //    cout << first_signature (str, first_parser) << endl;
     
     
-    PROCC ((
-        template <int>
-        struct gpu;
-        
-        $(1)
-        {
-            € = inline
-            $ = declare variable, only visible to the current scope
-                and to those below
-            
-            template <>
-            struct gpu <$(0 i 10)>
-            {
-                int $(0 j 10) = 0;
-                
-                €[j = @(i)](0 i 3){int i@(i) = @(j);}(myFun)
-            0 i 3 prio före 0 i 10 -> därför sätter vi om namnet till j
-            0 i 3 is internal dvs endast inne i {} och i refererar inget utanför
-                $(stat){static $(con){constexpr} int} fitta = GPU_COUNT;
-            ERROR-> $(stat){kiss}
-                 @(stat) count = GPU_COUNT;
-                 ${static} constexpr uint32_t max_image_dimension_1D = GPU_${i}_MAX_IMAGE_DIMENSION_1D;
-                 @(st) int i = 3;
-            };
-        }
-           )(0)(string s));
+//    PROCC ((
+//        template <int>
+//        struct gpu;
+//
+//        $(1)
+//        {
+//            € = inline
+//            $ = declare variable, only visible to the current scope
+//                and to those below
+//
+//            template <>
+//            struct gpu <$(0 i 10)>
+//            {
+//                int $(0 j 10) = 0;
+//
+//                €[j = @(i)](0 i 3){int i@(i) = @(j);}(myFun)
+//            0 i 3 prio före 0 i 10 -> därför sätter vi om namnet till j
+//            0 i 3 is internal dvs endast inne i {} och i refererar inget utanför
+//                $(stat){static $(con){constexpr} int} fitta = GPU_COUNT;
+//            ERROR-> $(stat){kiss}
+//                 @(stat) count = GPU_COUNT;
+//                 ${static} constexpr uint32_t max_image_dimension_1D = GPU_${i}_MAX_IMAGE_DIMENSION_1D;
+//                 @(st) int i = 3;
+//            };
+//        }
+//           )(0)(string s));
     
-    cout << s << endl;
+//    cout << s << endl;
         
         
         
