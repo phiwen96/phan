@@ -256,6 +256,9 @@ GITCOMMAND:FILEPATH=/usr/bin/git
 //Git command line client
 GIT_EXECUTABLE:FILEPATH=/usr/bin/git
 
+//Check submodules during build
+GIT_SUBMODULE:BOOL=ON
+
 //Path to a program.
 HGCOMMAND:FILEPATH=HGCOMMAND-NOTFOUND
 
@@ -288,6 +291,12 @@ SLURM_SRUN_COMMAND:FILEPATH=SLURM_SRUN_COMMAND-NOTFOUND
 
 //Path to a program.
 SVNCOMMAND:FILEPATH=SVNCOMMAND-NOTFOUND
+
+//Value Computed by CMake
+VERSION_BINARY_DIR:STATIC=/Users/philipwenkel/GitHub/Phan/xbuild
+
+//Value Computed by CMake
+VERSION_SOURCE_DIR:STATIC=/Users/philipwenkel/GitHub/Phan
 
 //The directory containing a CMake configuration file for boost_headers.
 boost_headers_DIR:PATH=/usr/local/lib/cmake/boost_headers-1.75.0

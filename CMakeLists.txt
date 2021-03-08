@@ -30,8 +30,7 @@ get_filename_component(root_dir ${CMAKE_CURRENT_LIST_DIR} ABSOLUTE CACHE "")
 # return ()
 # variable_watch(myVar [command])
 # set_property(GLOBAL PROPERTY source_list_property "bajs")
-ph_define_self (self)
-ph_define_property (root_name phan_lib)
+
 
 # ph_header_list (headers)
 # message(${headers})
@@ -60,14 +59,17 @@ ph_define_property (root_name phan_lib)
 
 # return()
 
-project (
-	${self}
+project (Phan
+	
 	VERSION 1.0
 	LANGUAGES CXX C
     DESCRIPTION "Very nice project"
 )
 
 add_subdirectory (cmake/phake)
+
+ph_define_self (self)
+ph_define_property (root_name phan_lib)
 
 
 # Packaging support
