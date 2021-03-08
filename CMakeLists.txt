@@ -3,7 +3,7 @@ cmake_minimum_required (VERSION 3.19.4)
 
 
 # include (cmake/phake/phake.cmake)
-add_subdirectory (cmake/phake)
+
 # ph_dont_build_here ()
 # ph_git ()
 
@@ -64,7 +64,10 @@ project (
 	${self}
 	VERSION 1.0
 	LANGUAGES CXX C
-    DESCRIPTION "Very nice project")
+    DESCRIPTION "Very nice project"
+)
+
+add_subdirectory (cmake/phake)
 
 
 # Packaging support
