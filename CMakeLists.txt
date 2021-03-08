@@ -3,7 +3,7 @@ cmake_minimum_required (VERSION 3.19.4)
 
 
 # include (cmake/phake/phake.cmake)
-add_subdirectory (dependencies/phake)
+add_subdirectory (cmake/phake)
 # ph_dont_build_here ()
 # ph_git ()
 
