@@ -1,1 +1,7 @@
 
+[submodule "cmake/phake"]
+	path = cmake/phake
+	url = https://github.com/phiwen96/phake
+[submodule "dependencies/const_str"]
+	path = dependencies/const_str
+	url = https://github.com/phiwen96/const_str
