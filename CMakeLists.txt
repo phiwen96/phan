@@ -59,7 +59,7 @@ get_filename_component(root_dir ${CMAKE_CURRENT_LIST_DIR} ABSOLUTE CACHE "")
 
 # return()
 
-project (Phan
+project (phan
 	
 	VERSION 1.0
 	LANGUAGES CXX C
@@ -123,7 +123,7 @@ add_subdirectory (apps)
 
 if((CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME OR MODERN_CMAKE_BUILD_TESTING)
    AND BUILD_TESTING)
-#   add_subdirectory(tests)
+  add_subdirectory(tests)
 endif()
 
 

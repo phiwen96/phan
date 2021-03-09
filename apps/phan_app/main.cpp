@@ -61,7 +61,8 @@ string first_signature (string str, auto&& fun)
     return str;
 }
 
-int main() {
+auto main(int argc,  char** argv) -> int
+{
     
     
     
@@ -89,7 +90,7 @@ int main() {
 //    cout << first_signature (str, first_parser) << endl;
     
     
-<<<<<<< HEAD
+
     PROCC ((
         template <int>
         struct gpu;

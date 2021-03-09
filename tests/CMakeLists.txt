@@ -11,23 +11,17 @@ if(NOT catch_POPULATED)
 	FetchContent_Populate (catch)
 	add_subdirectory (${catch_SOURCE_DIR} ${catch_BINARY_DIR}) 
 endif()
+
+ph_fetch (catch2)
 # Adds Catch2::Catch2
 
 # Tests need to be added as executables first
-add_executable(testlib src/testlib.cpp)
 
-set_target_properties (testlib PROPERTIES CXX_STANDARD 20)
 
-# I'm using C++17 in the test
-target_compile_features(testlib PRIVATE cxx_std_20)
+add_subdirectory (test_phan_app)
 
-# Should be linked to the main library, as well as the Catch2 testing library
-target_link_libraries (testlib PRIVATE ${root_name} Catch2::Catch2)
-target_include_directories (testlib PRIVATE ${root_name} Catch2::Catch2)
+add_subdirectory (test_phan_lib)
 
-# If you register a test, then ctest and make test will run it.
-# You can also run examples and check the output, as well.
-add_test (NAME testlibtest COMMAND testlib) # Command can be a target
 
 
 

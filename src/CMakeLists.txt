@@ -31,6 +31,7 @@ ph_get_property (root_name root_name)
 
 add_library (${root_name} SHARED ${SOURCE_LIST} ${HEADER_LIST})
 
+# message(${root_name})
 
 # set ( PROJ_SOURCES
 # ${SOURCE_LIST}
