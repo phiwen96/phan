@@ -63,9 +63,28 @@ string first_signature (string str, auto&& fun)
     return str;
 }
 
+string readFileIntoString(ifstream& input_file) {
+      
+//      if (!input_file.is_open()) {
+//            cerr << "Could not open the file - '"
+//            << path << "'" << endl;
+//            exit(EXIT_FAILURE);
+//      }
+      return string((std::istreambuf_iterator<char>(input_file)), std::istreambuf_iterator<char>());
+}
+
+
+
 auto main(int argc,  char** argv) -> int
 {
+    ifstream infile;
+    infile.open (argv[1]);
     
+    
+    
+    ofstream outfile;
+    outfile.open (argv[2]);
+    outfile << readFileIntoString(infile);
     
     
     

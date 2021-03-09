@@ -15,7 +15,7 @@ using namespace std;
 //    }
 //}
 
-array <string, TEST_FILE_COUNT> test_files;
+//array <string, TEST_FILE_COUNT> test_files;
 
 
 #define MACRO(z, n, text) test_files [n] = BOOST_PP_CAT (text, n);
@@ -26,10 +26,10 @@ array <string, TEST_FILE_COUNT> test_files;
 
 int main (int argc, char* argv[])
 {
-    BOOST_PP_REPEAT (TEST_FILE_COUNT, MACRO, TEST_FILE_)
+//    BOOST_PP_REPEAT (TEST_FILE_COUNT, MACRO, TEST_FILE_)
     
-    for (auto i : test_files)
-        cout << i << endl;
+//    for (auto i : test_files)
+//        cout << i << endl;
 //    assert(argc == 0);
    
 //    cout << TARGET_FILE_0 << endl;

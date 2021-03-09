@@ -19,22 +19,55 @@ add_executable(${self} ${CMAKE_CURRENT_LIST_DIR}/src/${self}.cpp)
 target_compile_definitions (${self} PRIVATE CATCH_CONFIG_MAIN)
 
 
-ph_subfiles (TARGET ${CMAKE_CURRENT_LIST_DIR}/testFiles RESULT subfiles)
+ph_subfiles (TARGET ${CMAKE_CURRENT_LIST_DIR}/testFiles_pre RESULT subfiles_abs ABSOLUTE)
+# ph_subfiles (TARGET ${CMAKE_CURRENT_LIST_DIR}/testFiles RESULT subfiles_rel RELATIVE)
 
-set (i "0")
+# foreach (a ${subfiles_rel})
+#   message (${a})
+# endforeach ()
+
+
+math (EXPR i 0)
 
 set (testFiles_definitions)
 
-foreach (file ${subfiles})
-  add_compile_definitions (${testFiles_definitions} TEST_FILE_${i}="${file}")
-  math (EXPR i "${i}+1")
+foreach (file_abs ${subfiles_abs})
+  message (${file_abs})
+  get_filename_component (file_rel ${file_abs} NAME)
+  message (${file_rel})
+  # add_compile_definitions (${testFiles_definitions} TEST_FILE_${i}="${file}")
+  math (EXPR i ${i}+1)
+  add_custom_command (
+    TARGET ${self}
+    DEPENDS ${file_abs}
+    PRE_BUILD
+    COMMAND $<TARGET_FILE:phan_app> ${file_abs} ${CMAKE_CURRENT_LIST_DIR}/testFiles_post/${file_rel}
+  )
+  target_sources (${self} PRIVATE ${CMAKE_CURRENT_LIST_DIR}/testFiles_pre/${file_rel})
+  target_sources (${self} PRIVATE ${CMAKE_CURRENT_LIST_DIR}/testFiles_post/${file_rel})
+  source_group(test_files\\pre FILES ${CMAKE_CURRENT_LIST_DIR}/testFiles_pre/${file_rel})   # Overrides both of the above
+  source_group(test_files\\post FILES ${CMAKE_CURRENT_LIST_DIR}/testFiles_post/${file_rel})   # Overrides both of the above
 endforeach ()
 
+# set_target_properties (gpu_gen_definitions PROPERTIES FOLDER "phulkan_generator/Generators/gpu_generate_class/Generators")
+
+# set_target_properties(foo PROPERTIES PROJECT_LABEL "Foo Tastic")
+# source_group(Sources REGULAR_EXPRESSION "\\.(c(xx|pp)?|hh?)$")
+#   source_group(Tests   REGULAR_EXPRESSION "test.*")  # Overrides the above
+
+# source_group(TREE   ${CMAKE_CURRENT_SOURCE_DIR}
+#                PREFIX "Magic\\Sources"
+#                FILES  ${subfiles_abs}
+# )
 
 
-add_compile_definitions (${testFiles_definitions} TEST_FILE_COUNT=${i})
 
-target_compile_definitions (${self} PRIVATE ${testFiles_definitions})
+
+# add_compile_definitions (${testFiles_definitions} TEST_FILE_COUNT=${i})
+
+
+
+# target_compile_definitions (${self} PRIVATE ${testFiles_definitions})
 
 
 set_target_properties (${self} PROPERTIES CXX_STANDARD 20)
