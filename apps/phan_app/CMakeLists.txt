@@ -82,8 +82,9 @@ set(APP_NAME ${self})
 
 set_target_properties(${self} PROPERTIES CXX_STANDARD 20)
 
-target_link_libraries(${self} PRIVATE ${root_name} ${Boost_LIBRARIES})
-target_include_directories (${self} PRIVATE ${root_name} ${Boost_INCLUDE_DIRS})
+target_link_libraries(${self} PRIVATE ${root_name} const_str ${Boost_LIBRARIES})
+target_include_directories (${self} PRIVATE ${root_name} const_str ${Boost_INCLUDE_DIRS})
+ph_precompile (TARGET ${self} PRIVATE ${boost_pch} ${std_pch})
 
 # add_custom_target(Docs SOURCES ${PROJECT_SOURCE_DIR}/README.md ${PROJECT_SOURCE_DIR}/.gitignore ${PROJECT_SOURCE_DIR}/LICENSE)
 

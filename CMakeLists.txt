@@ -66,7 +66,19 @@ project (phan
     DESCRIPTION "Very nice project"
 )
 
+
+
+# add_subdirectory (dependencies/const_str)
+
+
 add_subdirectory (cmake/phake)
+add_subdirectory (dependencies/const_str)
+
+# ph_subdirs (TARGET ${CMAKE_CURRENT_LIST_DIR} RESULT deps)
+# foreach (dep ${deps})
+# 	add_subdirectory (${dep})
+	
+# endforeach ()
 
 ph_define_self (self)
 ph_define_property (root_name phan_lib)

@@ -4,6 +4,8 @@
 #include <regex>
 #include <string>
 #include <boost/preprocessor/seq/for_each.hpp>
+#include <optional>
+#define DEBUGGING
 
 
 using namespace std;
@@ -32,25 +34,257 @@ auto parse = [](string str){
     return str;
 };
 
+//bool is_number (string const& s)
+//{
+//      return regex_match (s, regex ("((\\+|-)?[[:digit:]]+)(\\.(([[:digit:]]+)?))?"));
+//}
 
+template <class T0, class T1, class T2>
+struct trio
+{
+    T0 t0;
+    T1 t1;
+    T2 t2;
+    
+    auto first () const -> T0 const& {
+        return t0;
+    }
+    
+    auto second () const -> T1 const& {
+        return t1;
+    }
+    
+    auto third () const -> T2 const& {
+        return t2;
+    }
+    
+    auto first () -> T0& {
+        return t0;
+    }
+    
+    auto second () -> T1& {
+        return t1;
+    }
+    
+    auto third () -> T2& {
+        return t2;
+    }
+};
+
+template <class T0, class T1, class T2>
+trio (T0, T1, T2) -> trio <T0, T1, T2>;
+
+
+
+
+
+
+void remove_all_chars (string& str, char c)
+{
+    std::string::iterator end_pos = std::remove(str.begin(), str.end(), c);
+    str.erase(end_pos, str.end());
+}
+
+void remove_beginning_chars (string& str, char c)
+{
+    while (str.front() == c) {
+        str.erase (str.begin(), str.begin() + 1);
+    }
+}
+
+struct extractor;
+
+struct extractor_state
+{
+    
+    extractor* m_ext;
+//    int m_curr;
+    
+    
+    virtual bool found (char){}
+    
+};
+
+
+struct extractor_state_begin : extractor_state
+{
+//    using extractor_state::extractor_state;
+    virtual bool found (char c) override;
+};
+
+struct extractor_state_first : extractor_state
+{
+//    using extractor_state::extractor_state;
+    virtual bool found (char c) override;
+};
+
+struct extractor_state_second : extractor_state
+{
+//    using extractor_state::extractor_state;
+    virtual bool found (char c) override;
+};
+
+
+struct extractor
+{
+    string m_first;
+    string m_second;
+    int m_curr;
+    int m_watched;
+    int m_first_begin_found;
+    int m_first_end_found;
+    int m_second_found;
+    
+    auto found (char c) -> optional <trio <int, int, int>>
+    {
+        if (m_state -> found (c))
+            return {trio {m_first_begin_found, m_first_end_found, m_second_found}};
+        else
+            return {};
+    }
+    
+    extractor_state* m_state;
+    
+    extractor (string const& first, string const& second) : m_first (first), m_second (second), m_state (new extractor_state_begin), m_curr (0), m_watched (0), m_first_begin_found (-1), m_first_end_found (-1), m_second_found (-1)
+    {
+        m_state -> m_ext = this;
+    }
+    
+    void change_state (extractor_state* newstate)
+    {
+        std::cout << "Context: Transition from " << typeid(*m_state).name() << " to "  << typeid(*newstate).name() << "\n";
+        delete m_state;
+        newstate -> m_ext = this;
+        m_state = newstate;
+    }
+};
+
+bool extractor_state_begin::found (char c)
+{
+    if (m_ext -> m_first [0] == c) {
+        m_ext -> m_first_begin_found = m_ext -> m_watched++;
+//        cout << "extractor_state_first::found(" << c << ") == true" << endl;
+        ++m_ext -> m_curr;
+        
+        if (m_ext -> m_curr == m_ext -> m_first.size()) {
+            m_ext -> m_first_end_found = m_ext -> m_watched;
+            m_ext -> m_curr = 0;
+            m_ext -> change_state (new extractor_state_second);
+        } else
+        {
+            m_ext -> change_state (new extractor_state_first);
+        }
+        
+//        ++m_ext -> m_watched;
+    }
+    else {
+        ++m_ext -> m_watched;
+//        cout << "extractor_state_first::found(" << c << ") == false" << endl;
+
+    }
+    
+    
+    return false;
+}
+
+bool extractor_state_first::found (char c)
+{
+    if (m_ext -> m_first [m_ext -> m_curr] == c) {
+        m_ext -> m_first_end_found = ++m_ext -> m_watched;
+//        cout << "extractor_state_first::found(" << c << ") == true" << endl;
+        ++m_ext -> m_curr;
+        if (m_ext -> m_curr == m_ext -> m_first.size()) {
+            m_ext -> m_curr = 0;
+            
+            m_ext -> change_state (new extractor_state_second);
+        }
+
+        
+    }
+    else {
+//        cout << "extractor_state_first::found(" << c << ") == false" << endl;
+        ++m_ext -> m_watched;
+    }
+    return false;
+}
+
+bool extractor_state_second::found (char c)
+{
+    if (m_ext -> m_second [m_ext -> m_curr] == c) {
+        m_ext -> m_second = m_ext -> m_watched;
+//        cout << "extractor_state_second::parse(" << c << ") == true" << endl;
+
+        ++m_ext -> m_curr;
+        ++m_ext -> m_watched;
+        if (m_ext -> m_curr == m_ext -> m_second.size()) {
+            m_ext -> m_second_found = m_ext -> m_watched;
+            return true;
+        }
+        
+    }
+    else
+    {
+//        cout << "extractor_state_second::parse(" << c << ") != " << m_ext -> m_second [m_ext -> m_curr] << endl;
+        ++m_ext -> m_watched;
+    }
+    return false;
+}
+
+
+
+
+
+
+string find_between (string const& str, vector<pair<string, string>> const& finders)
+{
+    
+//    auto a1 = str.find(first);
+//
+//    while (a1 != string::npos)
+//    {
+//        if (int a2 = str.find (second); a2 != string::npos)
+//        {
+//
+//            string replac = fun (string (str.begin() + a1, str.begin() + a2 + 1));
+//                str.replace (str.begin() + a1, str.begin() + a2 + 1, replac);
+//        }
+//        else
+//        {
+//            break;
+//        }
+//        a1 = str.find ("${");
+//    }
+}
 
 #define PH(...) BOOST_PP_STRINGIZE (__VA_ARGS__)
 
+#include <const_str/const_str.hpp>
 
-string first_signature (string str, auto&& fun)
+
+constexpr char const* a1 = "hej";
+
+
+
+
+
+
+
+
+string first_signature (string const& first, string const& second, string str, auto&& fun)
 {
-    auto a1 = str.find("${");
+    auto a1 = str.find(first);
     
     while (a1 != string::npos)
     {
-        if (int a2 = str.find ("}"); a2 != string::npos)
+        if (int a2 = str.find (second); a2 != string::npos)
         {
-//            for (int i = 0; i < max; ++i)
-//            {
-//
+
             string replac = fun (string (str.begin() + a1, str.begin() + a2 + 1));
                 str.replace (str.begin() + a1, str.begin() + a2 + 1, replac);
-//            }
+        }
+        else
+        {
+            break;
         }
         a1 = str.find ("${");
     }
@@ -73,39 +307,83 @@ string readFileIntoString(ifstream& input_file) {
       return string((std::istreambuf_iterator<char>(input_file)), std::istreambuf_iterator<char>());
 }
 
-
+using namespace placeholders;
 
 auto main(int argc,  char** argv) -> int
 {
+    
+#ifdef DEBUGGING
+    ifstream infile;
+    infile.open ("/Users/philipwenkel/GitHub/phan/tests/test_phan_app/testFiles_pre/test0.hpp");
+    
+    ofstream outfile;
+    outfile.open ("/Users/philipwenkel/GitHub/phan/tests/test_phan_app/testFiles_post/test0.hpp");
+    
+#else
     ifstream infile;
     infile.open (argv[1]);
     
-    
-    
     ofstream outfile;
     outfile.open (argv[2]);
-    outfile << readFileIntoString(infile);
+#endif
+    
+    auto remove_beginning_spaces = bind (remove_beginning_chars, _1, ' ');
+    auto remove_beginning_newlines = bind (remove_beginning_chars, _1, '\n');
     
     
+//    cout << str << endl;
     
-    
-    string str = PH(
-               template <>
-               struct gpdu <${0 i 3}>
-               {
-                int count fp${i}
-            };
-               
-               );
-    cout << str << endl;
-    
-    auto first_parser = [](string const& str) -> string {
+    auto first_parser = [&](string str) -> string {
         
         // cannot return same!!!!
+        str.erase(str.begin(), str.begin() + 2);
+        str.pop_back();
         
-        cout << str << endl;
+//        remove_beginning_newlines (str);
+    
+        
+        if (str[0] >= '0' and str[0] <= '9') {
+            str += " is number";
+        } else
+        {
+            str += " is var";
+        }
+//        str.pop_front();
+//        str.erase(1);
+//        str.pop_back();
+        
+//        str = "kuk";
+        
+//        cout << str << endl;
         return str;
     };
+    
+   
+    
+    string outtext = readFileIntoString(infile);
+    extractor ext1 {"${", "}"};
+    
+//    bool found = false;
+    for (auto i : outtext) {
+        auto found = ext1.found(i);
+        if (found) {
+            auto [t0, t1, t2] = found.value();
+            cout << "yaay" << endl;
+            cout << t0 << " : " << t1 << " : " << t2 << endl;
+            break;
+        }
+    }
+//    if (found) {
+//        outfile << "YES\n";
+//    }
+//    else {
+//        outfile << "NO\n";
+//    }
+//    outtext = first_signature ("${", "}", outtext, first_parser);
+    outfile << outtext;
+    
+    
+
     
    
 //    cout << first_signature (str, first_parser) << endl;
