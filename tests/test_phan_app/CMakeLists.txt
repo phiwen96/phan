@@ -2,6 +2,8 @@ ph_define_self (self)
 
 # message (${self})
 
+ph_fetch (catch2)
+
 add_executable(${self} ${CMAKE_CURRENT_LIST_DIR}/src/${self}.cpp)
 
 # ph_precompile (TARGET ${self}
@@ -12,9 +14,27 @@ add_executable(${self} ${CMAKE_CURRENT_LIST_DIR}/src/${self}.cpp)
 #     ${boost_pch}
 # )
 
-ph_precompile (TARGET ${self} PRIVATE PCH ${ph_catch2_pch} ${std_pch} ${boost_pch})
+
 
 target_compile_definitions (${self} PRIVATE CATCH_CONFIG_MAIN)
+
+
+ph_subfiles (TARGET ${CMAKE_CURRENT_LIST_DIR}/testFiles RESULT subfiles)
+
+set (i "0")
+
+set (testFiles_definitions)
+
+foreach (file ${subfiles})
+  add_compile_definitions (${testFiles_definitions} TEST_FILE_${i}="${file}")
+  math (EXPR i "${i}+1")
+endforeach ()
+
+
+
+add_compile_definitions (${testFiles_definitions} TEST_FILE_COUNT=${i})
+
+target_compile_definitions (${self} PRIVATE ${testFiles_definitions})
 
 
 set_target_properties (${self} PROPERTIES CXX_STANDARD 20)
@@ -40,6 +60,14 @@ PRIVATE
     Catch2::Catch2
     # ${Catch2_INCLUDE_DIRS}
     ${Boost_INCLUDE_DIRS}
+)
+
+ph_precompile (TARGET ${self} 
+  PUBLIC 
+  PCH 
+    # ${ph_catch2_pch} 
+    ${std_pch} 
+    ${boost_pch}
 )
 
 # target_sources (${self} PRIVATE test_files/test.hpp)
