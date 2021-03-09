@@ -16,7 +16,7 @@ function (test)
 
 
     function (kuk)
-        
+        message ("KKKKUUUUUUKKK")
     endfunction (kuk)
     
     function (FITTA a) 
@@ -33,18 +33,17 @@ function (test)
     endfunction ()
 
 
-    ph_parse (. KUK0 kuk .. HORA FITTA ... SNOR f0 hej0 f1 hej1 fn hejn args ${ARGN})
-
+    # ph_parse (. kuk .. HORA FITTA ... SNOR f0 hej0 f1 hej1 fn hejn args ${ARGN})
+    ph_parse (. kuk .. kuks ... kukar args ${ARGN})
     
 
 endfunction ()
 
-test (kuk f0 "snoppen" horan kuk SNOR d aaa FITTA ss)
+# test (kuk f0 "snoppen" horan kuk SNOR d aaa FITTA ss)
+# test (kuk)
 
 
-
-
-find_package (Boost 1.75 REQUIRED)
+find_package (Boost 1.74 REQUIRED)
 
 # target_precompile_headers(<target> REUSE_FROM <other_target>)
 

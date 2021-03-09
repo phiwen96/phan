@@ -3,6 +3,8 @@
 #include <tuple>
 #include <regex>
 #include <string>
+#include <boost/preprocessor/seq/for_each.hpp>
+
 
 using namespace std;
 
@@ -108,7 +110,7 @@ a       # = comment # ?(name)?{explanation}
             {
     
                 $(0 i 4) # {everyting refering to i will clone for times}
-                # int i${i} -> int i0123
+//                # int i${i} -> int i0123
 @(i)<1 10>
 @(i)<1 10> -> {@} 12345678910
 @<0 2> -> {ph}  phph
@@ -177,7 +179,7 @@ ${hej}       kukens fitta
            )(0)(string s));
     
     cout << s << endl;
-=======
+
 //    PROCC ((
 //        template <int>
 //        struct gpu;
@@ -206,7 +208,6 @@ ${hej}       kukens fitta
 //           )(0)(string s));
     
 //    cout << s << endl;
->>>>>>> 136c72eaebe765dc2b7e1a7665dce95ead7a1c20
         
         
         
