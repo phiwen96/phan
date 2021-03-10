@@ -64,9 +64,9 @@ auto main(int argc,  char** argv) -> int
             auto [var0, var1, var2, var3] = declVar.value();
 //            cout << var0 << " : " << var1 << " : " << var2 << " : " << var3 << endl;
 //            cout << outtext[var0] << endl << outtext[var1] << endl << outtext[var2] << endl << outtext[var3] << endl;
-            cout << "{" << endl;
+//            cout << "{" << endl;
             auto [_begin, _end] = pair {it - (var3 - var0 - 1), it + 1};
-            cout << "\t" << string (_begin, _end) << endl;
+//            cout << "\t" << string (_begin, _end) << endl;
             auto varstring = string (_begin + (var1-var0), _end - (var3 - var2) - 1);
             
 //            it +=
@@ -83,7 +83,7 @@ auto main(int argc,  char** argv) -> int
                 if (declVal) {
                     auto [val0, val1, val2, val3] = declVal.value();
                     auto [_begin2, _end2] = pair {it2 - (val3 - val0 - 1), it2 + 1};
-                    cout << "\t" << string (_begin2, _end2) << endl;
+//                    cout << "\t" << string (_begin2, _end2) << endl;
                     
                     
                     
@@ -92,17 +92,30 @@ auto main(int argc,  char** argv) -> int
                     //                    [&]{
                    
                     auto valstring = string (_begin2 + (val1-val0), _end2 - (val3 - val2) - 1);
+                    cout << varstring << " = " << valstring << endl;
 //                    outtext.replace(_begin, _end2, string (_begin2 + val1, _end2 - val3));
                     delete stringValueDeclerationExtractor;
                     stringValueDeclerationExtractor = new extractor {"{", "}}"};
 //                    }();
+                    
+//                    cout << *it << endl;
+//                    cout << (val1-val0) + (val3-val2) + (var1-var0) + (var1-var0) << endl;
+//                    it -= (val1-val0) + (val3-val2) + (var1-var0) + (var1-var0);
+//                    cout << *it << endl;
+//                    cout << string (it - (var3 - var0), it2) << endl;
+//                    cout << *(it - (var3 - var0)) << endl;
+                    outtext.replace (it - (var3 - var0) + 1, it2 + 1, valstring);
+//                    cout << *it << endl;
+                    
                     break;
                 }
             }
             
+//            outtext.replace (_begin, _end, varstring);
             
             
-            cout << "}" << endl;
+//            break;
+//            cout << "}" << endl;
         }
         
 //        auto declVal = stringValueDeclerationExtractor.found (*it);
