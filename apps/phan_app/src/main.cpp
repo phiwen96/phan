@@ -51,7 +51,7 @@ auto main(int argc,  char** argv) -> int
 //    auto extractors = array <extractor, 1> {extractor{"${", "}"}};
     
     auto* stringVariableDeclerationExtractor = new extractor {"$(", ")"};
-//    auto stringValueDeclerationExtractor = extractor {"{", "}"};
+    auto* stringValueDeclerationExtractor = new extractor {"{", "}"};
 //    auto stringVariablePasteExtractor = extractor {"${", "}"};
     vector <pair <string, string>> declaredVariables;
     
@@ -59,20 +59,37 @@ auto main(int argc,  char** argv) -> int
     
     for (auto it = outtext.begin(); it != outtext.end(); ++it) {
         auto declVar = stringVariableDeclerationExtractor -> found (*it);
+        
         if (declVar) {
             auto [var0, var1, var2, var3] = declVar.value();
 //            cout << var0 << " : " << var1 << " : " << var2 << " : " << var3 << endl;
 //            cout << outtext[var0] << endl << outtext[var1] << endl << outtext[var2] << endl << outtext[var3] << endl;
             cout << "{" << endl;
-            cout << "\t" << *(it-1) << endl;
-            auto [_begin, _end] = pair{it - (var3 - var0 - 1), it + 1};
+            auto [_begin, _end] = pair {it - (var3 - var0 - 1), it + 1};
             cout << "\t" << string (_begin, _end) << endl;
 //            it +=
-            cout << "}" << endl;
+            
 //            cout << "\t" << string (outtext.begin() + (outtext.end() - it) + var0, outtext.begin() + (outtext.end() - it) + var3) << endl << "}" << endl;
 //            stringVariableDeclerationExtractor.reset();
             delete stringVariableDeclerationExtractor;
             stringVariableDeclerationExtractor = new extractor {"$(", ")"};
+            
+            
+            for (auto it2 = it + 1; it2 != outtext.end(); ++it2)
+            {
+                auto declVal = stringValueDeclerationExtractor -> found (*it2);
+                if (declVal) {
+                    auto [val0, val1, val2, val3] = declVal.value();
+                    auto [_begin2, _end2] = pair {it2 - (val3 - val0 - 1), it2 + 1};
+                    cout << "\t" << string (_begin2, _end2) << endl;
+                    
+                    delete stringValueDeclerationExtractor;
+                    stringValueDeclerationExtractor = new extractor {"{", "}"};
+                    break;
+                }
+            }
+            
+            cout << "}" << endl;
         }
         
 //        auto declVal = stringValueDeclerationExtractor.found (*it);
