@@ -50,22 +50,42 @@ auto main(int argc,  char** argv) -> int
 //    auto extractors = array <extractor, 1> {extractor{"${", "}"}};
     auto extractors = array <extractor, 1> {extractor{"${", "}"}};
     
+    auto stringVariableExtractor = extractor {"$(", ")"};
+    
     
 //    bool found = false;
-    for (char c  : outtext) {
-        for (extractor& extractor : extractors)
+    for (int i = 0; char c  : outtext) {
+        if (auto foundStringVariable = stringVariableExtractor.found (c); foundStringVariable)
         {
-            auto found = extractor.found(c);
-            if (found) {
-                auto [t0, t1, t2, t3] = found.value();
-                cout << t0 << endl << t1 << endl << t2 << endl << t3 << endl;
-                cout << "yaay found: " << endl << string (outtext.begin() + t0, outtext.begin() + t1) << endl;
-                cout << string (outtext.begin() + t1, outtext.begin() + t2) << endl;
-                cout << string (outtext.begin() + t2, outtext.begin() + t3) << endl;
-                cout << t0 << " : " << t1 << " : " << t2 << endl;
-                break;
+            auto [t0, t1, t2, t3] = foundStringVariable.value();
+            cout << "stringvariable: " << string (outtext.begin() + t1, outtext.begin() + t2) << endl;
+            
+            auto stringValueExtractor = extractor {"{", "}"};
+            
+            for (string variableValue = string (outtext.begin() + t3, outtext.end());
+                 char c2 : variableValue)
+            {
+                if (auto foundStringValue = stringValueExtractor.found (c2); foundStringValue)
+                {
+                    auto [u0, u1, u2, u3] = foundStringValue.value();
+                    cout << "stringvalue: " << string (variableValue.begin() + u1, variableValue.begin() + u2) << endl;
+                }
             }
         }
+//        for (extractor& extractor : extractors)
+//        {
+//            auto found = extractor.found(c);
+//            if (found) {
+//                auto [t0, t1, t2, t3] = found.value();
+//                cout << t0 << endl << t1 << endl << t2 << endl << t3 << endl;
+//                cout << "yaay found: " << endl << string (outtext.begin() + t0, outtext.begin() + t1) << endl;
+//                cout << string (outtext.begin() + t1, outtext.begin() + t2) << endl;
+//                cout << string (outtext.begin() + t2, outtext.begin() + t3) << endl;
+//                cout << t0 << " : " << t1 << " : " << t2 << endl;
+//                break;
+//            }
+//        }
+        ++i;
     }
 //    if (found) {
 //        outfile << "YES\n";

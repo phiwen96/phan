@@ -1,4 +1,4 @@
-${hej}}
+${hej}
 $(hej){kukens fitta}
 
 @{kuk}
