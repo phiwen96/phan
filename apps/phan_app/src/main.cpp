@@ -50,7 +50,7 @@ auto main(int argc,  char** argv) -> int
 //    auto extractors = array <extractor, 1> {extractor{"${", "}"}};
 //    auto extractors = array <extractor, 1> {extractor{"${", "}"}};
     
-    auto* stringVariableDeclerationExtractor = new extractor {"$$((", "))"};
+    auto* stringVariableDeclerationExtractor = new extractor {"$((", "))"};
     auto* stringValueDeclerationExtractor = new extractor {"{{", "}}"};
     auto* stringVariablePasterExtractor = new extractor {"${{", "}}"};
 //    auto stringVariablePasteExtractor = extractor {"${", "}"};
@@ -95,7 +95,7 @@ auto main(int argc,  char** argv) -> int
                     cout << varstring << " = " << valstring << endl;
                     
                     delete stringVariableDeclerationExtractor;
-                    stringVariableDeclerationExtractor = new extractor {"$$((", "))"};
+                    stringVariableDeclerationExtractor = new extractor {"$((", "))"};
                     
                     delete stringValueDeclerationExtractor;
                     stringValueDeclerationExtractor = new extractor {"{{", "}}"};
@@ -142,6 +142,8 @@ auto main(int argc,  char** argv) -> int
     }
     
     
+//    jag har också en som heter $((mina syskon)){{Oscar wenkel}}
+//    mina brorsor heter ${{mina syskon}}
     
     
     
