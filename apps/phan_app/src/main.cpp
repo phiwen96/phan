@@ -68,20 +68,20 @@ auto main(int argc,  char** argv) -> int
             if (auto foundVariable = variableExtractor.found (c);
                 foundVariable)
             {
-                auto [v0, v1, v2, v3] = foundVariable.value();
-                string const& variable = string (outtext.begin() + v1, outtext.begin() + v2);
+                auto [variable0, variable1, variable2, variable3] = foundVariable.value();
+                string const& variable = string (outtext.begin() + variable1, outtext.begin() + variable2);
     //            cout << "variable: " << variable << endl;
                 
                 extractor valueExtractor {"{", "}"};
                 
-                for (string const& possibleValue = string (outtext.begin() + v3, outtext.end());
+                for (string const& possibleValue = string (outtext.begin() + variable3, outtext.end());
                      char c2 : possibleValue)
                 {
                     if (auto foundValue = valueExtractor.found (c2);
                         foundValue)
                     {
-                        auto [u0, u1, u2, u3] = foundValue.value();
-                        string const& value = string (possibleValue.begin() + u1, possibleValue.begin() + u2);
+                        auto [value0, value1, value2, value3] = foundValue.value();
+                        string const& value = string (possibleValue.begin() + value1, possibleValue.begin() + value2);
     //                    cout << "stringvalue: " << value << endl;
                         
                         auto variableExists = declaredVariables.begin();
@@ -103,20 +103,24 @@ auto main(int argc,  char** argv) -> int
                             declaredVariables.emplace_back (variable, value);
                         }
                         
-                        outtext.replace (v0, v1 + u2 - 1, value);
+                        
+//                        cout << string (outtext.begin() + variable0, outtext.begin() + variable3 + value3) << endl;
+                        outtext.replace (variable0, variable3 + value3 - 1, value);
+//                        cout << variable3 - variable0 + 2 << endl;
+                        i -= variable3 - variable0 + 2;
                         
                     }
                 }
             }
         }();
         [&, &variableExtractor = stringVariablePasteExtractor /* $(){} */]{
-            return;
+//            return;
             if (auto foundVariable = variableExtractor.found (c);
                 foundVariable)
             {
-                auto [t0, t1, t2, t3] = foundVariable.value();
-                string const& variable = string (outtext.begin() + t1, outtext.begin() + t2);
-    //            cout << "variable: " << variable << endl;
+                auto [value0, value1, value2, value3] = foundVariable.value();
+                string const& variable = string (outtext.begin() + value1, outtext.begin() + value2);
+//                cout << "variable: " << variable << endl;
                 
                 auto variableExists = declaredVariables.begin();
                 
@@ -131,20 +135,25 @@ auto main(int argc,  char** argv) -> int
                 
                 if (variableExists != declaredVariables.end())
                 {
+                    cout << string (outtext.begin() + value0, outtext.begin() + value3) << endl;
+                    outtext.replace (value0, value3, variableExists -> second);
+//                    cout <<
+//                    cout << string ()
 //                    variableExists -> second = value;
                 } else
                 {
+                    throw runtime_error ("pasting variable but variable not yet declared");
 //                    declaredVariables.emplace_back (variable, value);
                 }
             }
         }();
         
-        ++i;
+//        ++i;
     }
     
     for(auto& i : declaredVariables)
     {
-        cout << i.first << endl << i.second << endl;
+//        cout << i.first << endl << i.second << endl;
     }
 //    if (found) {
 //        outfile << "YES\n";
@@ -248,7 +257,7 @@ ${hej}       kukens fitta
         }
            )(0)(string s));
     
-    cout << s << endl;
+//    cout << s << endl;
 
 //    PROCC ((
 //        template <int>
@@ -285,7 +294,7 @@ ${hej}       kukens fitta
     
     std::vector<double> input = {1.2, 2.3, 3.4, 4.5};
     
-    cout << "hello world" << endl;
+//    cout << "hello world" << endl;
     return 0;
 }
 
