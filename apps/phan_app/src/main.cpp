@@ -50,42 +50,70 @@ auto main(int argc,  char** argv) -> int
 //    auto extractors = array <extractor, 1> {extractor{"${", "}"}};
     auto extractors = array <extractor, 1> {extractor{"${", "}"}};
     
-    auto stringVariableExtractor = extractor {"$(", ")"};
+    auto stringVariableDeclerationExtractor = extractor {"$(", ")"};
+    vector <pair <string, string>> declaredVariables;
+    
+    
+    
+    
     
     
 //    bool found = false;
-    for (int i = 0; char c  : outtext) {
-        if (auto foundStringVariable = stringVariableExtractor.found (c); foundStringVariable)
-        {
-            auto [t0, t1, t2, t3] = foundStringVariable.value();
-            cout << "stringvariable: " << string (outtext.begin() + t1, outtext.begin() + t2) << endl;
+    for (int i = 0;
+         char const c  : outtext)
+    {
+        [&, &variableExtractor = stringVariableDeclerationExtractor /* $(){} */]{
             
-            auto stringValueExtractor = extractor {"{", "}"};
-            
-            for (string variableValue = string (outtext.begin() + t3, outtext.end());
-                 char c2 : variableValue)
+            if (auto foundVariable = variableExtractor.found (c);
+                foundVariable)
             {
-                if (auto foundStringValue = stringValueExtractor.found (c2); foundStringValue)
+                auto [t0, t1, t2, t3] = foundVariable.value();
+                string const& variable = string (outtext.begin() + t1, outtext.begin() + t2);
+    //            cout << "variable: " << variable << endl;
+                
+                extractor valueExtractor {"{", "}"};
+                
+                for (string const& possibleValue = string (outtext.begin() + t3, outtext.end());
+                     char c2 : possibleValue)
                 {
-                    auto [u0, u1, u2, u3] = foundStringValue.value();
-                    cout << "stringvalue: " << string (variableValue.begin() + u1, variableValue.begin() + u2) << endl;
+                    if (auto foundValue = valueExtractor.found (c2);
+                        foundValue)
+                    {
+                        auto [u0, u1, u2, u3] = foundValue.value();
+                        string const& value = string (possibleValue.begin() + u1, possibleValue.begin() + u2);
+    //                    cout << "stringvalue: " << value << endl;
+                        
+                        auto variableExists = declaredVariables.begin();
+                        
+                        for (; variableExists != declaredVariables.end(); ++variableExists)
+                        {
+                            if (string const& declaredVariable = variableExists -> first;
+                                variable == declaredVariable)
+                            {
+                                break;
+                            }
+                        }
+                        
+                        if (variableExists != declaredVariables.end())
+                        {
+                            variableExists -> second = value;
+                        } else
+                        {
+                            declaredVariables.emplace_back (variable, value);
+                        }
+                        
+                    }
                 }
             }
-        }
-//        for (extractor& extractor : extractors)
-//        {
-//            auto found = extractor.found(c);
-//            if (found) {
-//                auto [t0, t1, t2, t3] = found.value();
-//                cout << t0 << endl << t1 << endl << t2 << endl << t3 << endl;
-//                cout << "yaay found: " << endl << string (outtext.begin() + t0, outtext.begin() + t1) << endl;
-//                cout << string (outtext.begin() + t1, outtext.begin() + t2) << endl;
-//                cout << string (outtext.begin() + t2, outtext.begin() + t3) << endl;
-//                cout << t0 << " : " << t1 << " : " << t2 << endl;
-//                break;
-//            }
-//        }
+        }();
+        [&]{}();
+        
         ++i;
+    }
+    
+    for(auto& i : declaredVariables)
+    {
+        cout << i.first << endl << i.second << endl;
     }
 //    if (found) {
 //        outfile << "YES\n";
