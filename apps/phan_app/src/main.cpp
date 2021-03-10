@@ -60,12 +60,11 @@ auto main(int argc,  char** argv) -> int
     
     
 //    bool found = false;
-    for (int i = 0;
-         char const c  : outtext)
+    for (auto it = outtext.begin(); it != outtext.end(); ++it)
     {
         [&, &variableExtractor = stringVariableDeclerationExtractor /* $(){} */]{
             
-            if (auto foundVariable = variableExtractor.found (c);
+            if (auto foundVariable = variableExtractor.found (*it);
                 foundVariable)
             {
                 auto [variable0, variable1, variable2, variable3] = foundVariable.value();
@@ -103,19 +102,15 @@ auto main(int argc,  char** argv) -> int
                             declaredVariables.emplace_back (variable, value);
                         }
                         
-                        
-//                        cout << string (outtext.begin() + variable0, outtext.begin() + variable3 + value3) << endl;
                         outtext.replace (variable0, variable3 + value3 - 1, value);
-//                        cout << variable3 - variable0 + 2 << endl;
-                        i -= variable3 - variable0 + 2;
-                        
+                        it += variable3 - variable0 + 1;
                     }
                 }
             }
         }();
         [&, &variableExtractor = stringVariablePasteExtractor /* $(){} */]{
 //            return;
-            if (auto foundVariable = variableExtractor.found (c);
+            if (auto foundVariable = variableExtractor.found (*it);
                 foundVariable)
             {
                 auto [value0, value1, value2, value3] = foundVariable.value();
@@ -146,7 +141,7 @@ auto main(int argc,  char** argv) -> int
 //                    declaredVariables.emplace_back (variable, value);
                 }
             }
-        }();
+        };
         
 //        ++i;
     }
