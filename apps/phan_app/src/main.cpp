@@ -47,7 +47,8 @@ auto main(int argc,  char** argv) -> int
     
     
     string outtext = readFileIntoString(infile);
-    auto extractors = array <extractor, 2> {extractor{"${", "}"}, extractor{"@{", "}"}};
+//    auto extractors = array <extractor, 1> {extractor{"${", "}"}};
+    auto extractors = array <extractor, 1> {extractor{"${", "}"}};
     
     
 //    bool found = false;
@@ -56,8 +57,11 @@ auto main(int argc,  char** argv) -> int
         {
             auto found = extractor.found(c);
             if (found) {
-                auto [t0, t1, t2] = found.value();
-                cout << "yaay found: " << string (outtext.begin() + t1, outtext.begin() + t2 - 1) << endl;
+                auto [t0, t1, t2, t3] = found.value();
+                cout << t0 << endl << t1 << endl << t2 << endl << t3 << endl;
+                cout << "yaay found: " << endl << string (outtext.begin() + t0, outtext.begin() + t1) << endl;
+                cout << string (outtext.begin() + t1, outtext.begin() + t2) << endl;
+                cout << string (outtext.begin() + t2, outtext.begin() + t3) << endl;
                 cout << t0 << " : " << t1 << " : " << t2 << endl;
                 break;
             }
