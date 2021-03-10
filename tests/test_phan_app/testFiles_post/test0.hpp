@@ -1,6 +1,5 @@
 ${hej}
-$(hej){kukens fitta}
-
+kukens fitta
 @{kuk}
 @(hej)
 ${0 i 4}

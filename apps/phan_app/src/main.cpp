@@ -51,6 +51,7 @@ auto main(int argc,  char** argv) -> int
     auto extractors = array <extractor, 1> {extractor{"${", "}"}};
     
     auto stringVariableDeclerationExtractor = extractor {"$(", ")"};
+    auto stringVariablePasteExtractor = extractor {"${", "}"};
     vector <pair <string, string>> declaredVariables;
     
     
@@ -67,13 +68,13 @@ auto main(int argc,  char** argv) -> int
             if (auto foundVariable = variableExtractor.found (c);
                 foundVariable)
             {
-                auto [t0, t1, t2, t3] = foundVariable.value();
-                string const& variable = string (outtext.begin() + t1, outtext.begin() + t2);
+                auto [v0, v1, v2, v3] = foundVariable.value();
+                string const& variable = string (outtext.begin() + v1, outtext.begin() + v2);
     //            cout << "variable: " << variable << endl;
                 
                 extractor valueExtractor {"{", "}"};
                 
-                for (string const& possibleValue = string (outtext.begin() + t3, outtext.end());
+                for (string const& possibleValue = string (outtext.begin() + v3, outtext.end());
                      char c2 : possibleValue)
                 {
                     if (auto foundValue = valueExtractor.found (c2);
@@ -102,11 +103,41 @@ auto main(int argc,  char** argv) -> int
                             declaredVariables.emplace_back (variable, value);
                         }
                         
+                        outtext.replace (v0, v1 + u2 - 1, value);
+                        
                     }
                 }
             }
         }();
-        [&]{}();
+        [&, &variableExtractor = stringVariablePasteExtractor /* $(){} */]{
+            return;
+            if (auto foundVariable = variableExtractor.found (c);
+                foundVariable)
+            {
+                auto [t0, t1, t2, t3] = foundVariable.value();
+                string const& variable = string (outtext.begin() + t1, outtext.begin() + t2);
+    //            cout << "variable: " << variable << endl;
+                
+                auto variableExists = declaredVariables.begin();
+                
+                for (; variableExists != declaredVariables.end(); ++variableExists)
+                {
+                    if (string const& declaredVariable = variableExists -> first;
+                        variable == declaredVariable)
+                    {
+                        break;
+                    }
+                }
+                
+                if (variableExists != declaredVariables.end())
+                {
+//                    variableExists -> second = value;
+                } else
+                {
+//                    declaredVariables.emplace_back (variable, value);
+                }
+            }
+        }();
         
         ++i;
     }
