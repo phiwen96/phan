@@ -48,103 +48,138 @@ auto main(int argc,  char** argv) -> int
     
     string outtext = readFileIntoString(infile);
 //    auto extractors = array <extractor, 1> {extractor{"${", "}"}};
-    auto extractors = array <extractor, 1> {extractor{"${", "}"}};
+//    auto extractors = array <extractor, 1> {extractor{"${", "}"}};
     
-    auto stringVariableDeclerationExtractor = extractor {"$(", ")"};
-    auto stringVariablePasteExtractor = extractor {"${", "}"};
+    auto* stringVariableDeclerationExtractor = new extractor {"$(", ")"};
+//    auto stringValueDeclerationExtractor = extractor {"{", "}"};
+//    auto stringVariablePasteExtractor = extractor {"${", "}"};
     vector <pair <string, string>> declaredVariables;
     
     
     
-    
+    for (auto it = outtext.begin(); it != outtext.end(); ++it) {
+        auto declVar = stringVariableDeclerationExtractor -> found (*it);
+        if (declVar) {
+            auto [var0, var1, var2, var3] = declVar.value();
+//            cout << var0 << " : " << var1 << " : " << var2 << " : " << var3 << endl;
+//            cout << outtext[var0] << endl << outtext[var1] << endl << outtext[var2] << endl << outtext[var3] << endl;
+            cout << "{" << endl;
+            cout << "\t" << *(it-1) << endl;
+            auto [_begin, _end] = pair{it - (var3 - var0 - 1), it + 1};
+            cout << "\t" << string (_begin, _end) << endl;
+//            it +=
+            cout << "}" << endl;
+//            cout << "\t" << string (outtext.begin() + (outtext.end() - it) + var0, outtext.begin() + (outtext.end() - it) + var3) << endl << "}" << endl;
+//            stringVariableDeclerationExtractor.reset();
+            delete stringVariableDeclerationExtractor;
+            stringVariableDeclerationExtractor = new extractor {"$(", ")"};
+        }
+        
+//        auto declVal = stringValueDeclerationExtractor.found (*it);
+//        if (declVal) {
+//            auto [var0, var1, var2, var3] = declVal.value();
+//            cout << var0 << " : " << var1 << " : " << var2 << " : " << var3 << endl;
+//            cout << outtext[var0] << endl << outtext[var1] << endl << outtext[var2] << endl << outtext[var3] << endl;
+//        }
+    }
     
     
 //    bool found = false;
-    for (auto it = outtext.begin(); it != outtext.end(); ++it)
-    {
-        [&, &variableExtractor = stringVariableDeclerationExtractor /* $(){} */]{
-            
-            if (auto foundVariable = variableExtractor.found (*it);
-                foundVariable)
-            {
-                auto [variable0, variable1, variable2, variable3] = foundVariable.value();
-                string const& variable = string (outtext.begin() + variable1, outtext.begin() + variable2);
-    //            cout << "variable: " << variable << endl;
-                
-                extractor valueExtractor {"{", "}"};
-                
-                for (string const& possibleValue = string (outtext.begin() + variable3, outtext.end());
-                     char c2 : possibleValue)
-                {
-                    if (auto foundValue = valueExtractor.found (c2);
-                        foundValue)
-                    {
-                        auto [value0, value1, value2, value3] = foundValue.value();
-                        string const& value = string (possibleValue.begin() + value1, possibleValue.begin() + value2);
-    //                    cout << "stringvalue: " << value << endl;
-                        
-                        auto variableExists = declaredVariables.begin();
-                        
-                        for (; variableExists != declaredVariables.end(); ++variableExists)
-                        {
-                            if (string const& declaredVariable = variableExists -> first;
-                                variable == declaredVariable)
-                            {
-                                break;
-                            }
-                        }
-                        
-                        if (variableExists != declaredVariables.end())
-                        {
-                            variableExists -> second = value;
-                        } else
-                        {
-                            declaredVariables.emplace_back (variable, value);
-                        }
-                        
-                        outtext.replace (variable0, variable3 + value3 - 1, value);
-                        it += variable3 - variable0 + 1;
-                    }
-                }
-            }
-        }();
-        [&, &variableExtractor = stringVariablePasteExtractor /* $(){} */]{
-//            return;
-            if (auto foundVariable = variableExtractor.found (*it);
-                foundVariable)
-            {
-                auto [value0, value1, value2, value3] = foundVariable.value();
-                string const& variable = string (outtext.begin() + value1, outtext.begin() + value2);
-//                cout << "variable: " << variable << endl;
-                
-                auto variableExists = declaredVariables.begin();
-                
-                for (; variableExists != declaredVariables.end(); ++variableExists)
-                {
-                    if (string const& declaredVariable = variableExists -> first;
-                        variable == declaredVariable)
-                    {
-                        break;
-                    }
-                }
-                
-                if (variableExists != declaredVariables.end())
-                {
-                    cout << string (outtext.begin() + value0, outtext.begin() + value3) << endl;
-                    outtext.replace (value0, value3, variableExists -> second);
-//                    cout <<
-//                    cout << string ()
-//                    variableExists -> second = value;
-                } else
-                {
-                    throw runtime_error ("pasting variable but variable not yet declared");
-//                    declaredVariables.emplace_back (variable, value);
-                }
-            }
-        };
-        
-//        ++i;
-    }
+//    for (int i = 0;
+//         char const c  : outtext)
+//    {
+//        [&, &variableExtractor = stringVariableDeclerationExtractor /* $(){} */]{
+//
+//            if (auto foundVariable = variableExtractor.found (c);
+//                foundVariable)
+//            {
+//                auto [variable0, variable1, variable2, variable3] = foundVariable.value();
+//                string const& variable = string (outtext.begin() + variable1, outtext.begin() + variable2);
+//    //            cout << "variable: " << variable << endl;
+//
+//                extractor valueExtractor {"{", "}"};
+//
+//                cout << string (outtext.begin() + variable3, outtext.end()) << endl << endl;
+//
+//                for (string const& possibleValue = string (outtext.begin() + variable3, outtext.end());
+//                     char c2 : possibleValue)
+//                {
+//                    if (auto foundValue = valueExtractor.found (c2);
+//                        foundValue)
+//                    {
+//                        auto [value0, value1, value2, value3] = foundValue.value();
+//                        string const& value = string (possibleValue.begin() + value1, possibleValue.begin() + value2);
+//    //                    cout << "stringvalue: " << value << endl;
+//
+//                        auto variableExists = declaredVariables.begin();
+//
+//                        for (; variableExists != declaredVariables.end(); ++variableExists)
+//                        {
+//                            if (string const& declaredVariable = variableExists -> first;
+//                                variable == declaredVariable)
+//                            {
+//                                break;
+//                            }
+//                        }
+//
+//                        if (variableExists != declaredVariables.end())
+//                        {
+//                            variableExists -> second = value;
+//                        } else
+//                        {
+//                            declaredVariables.emplace_back (variable, value);
+//                        }
+//
+////                        cout << variable << " = " << val
+////                        cout << string (outtext.begin() + variable0, outtext.begin() + variable3 + value3) << endl;
+////                        outtext.replace (variable0, variable3 + value3 - 1, value);
+////                        cout << variable3 - variable0 + 2 << endl;
+////                        i -= variable3 - variable0 + 1;
+//                        variableExtractor.reset();
+//                        return;
+//
+//                    }
+//                }
+//                // end if foundVariable
+//            }
+//        }();
+//        [&, &variableExtractor = stringVariablePasteExtractor /* $(){} */]{
+////            return;
+//            if (auto foundVariable = variableExtractor.found (c);
+//                foundVariable)
+//            {
+//                auto [value0, value1, value2, value3] = foundVariable.value();
+//                string const& variable = string (outtext.begin() + value1, outtext.begin() + value2);
+////                cout << "variable: " << variable << endl;
+//
+//                auto variableExists = declaredVariables.begin();
+//
+//                for (; variableExists != declaredVariables.end(); ++variableExists)
+//                {
+//                    if (string const& declaredVariable = variableExists -> first;
+//                        variable == declaredVariable)
+//                    {
+//                        break;
+//                    }
+//                }
+//
+//                if (variableExists != declaredVariables.end())
+//                {
+//                    cout << string (outtext.begin() + value0, outtext.begin() + value3) << endl;
+//                    outtext.replace (value0, value3, variableExists -> second);
+////                    cout <<
+////                    cout << string ()
+////                    variableExists -> second = value;
+//                } else
+//                {
+//                    throw runtime_error ("pasting variable but variable not yet declared");
+////                    declaredVariables.emplace_back (variable, value);
+//                }
+//            }
+//        };
+//
+////        ++i;
+//    }
     
     for(auto& i : declaredVariables)
     {

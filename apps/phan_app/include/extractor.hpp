@@ -53,6 +53,19 @@ struct extractor
     int m_second_begin_found;
     int m_second_end_found;
     
+    void reset ()
+    {
+        m_curr = 0;
+        m_watched = 0;
+        m_first_begin_found = -1;
+        m_first_end_found = -1;
+        m_second_begin_found = -1;
+        m_second_end_found = -1;
+        delete m_state;
+        m_state = new extractor_state_first_begin;
+        m_state -> m_ext = this;
+    }
+    
     auto found (char c) -> optional <tuple <int, int, int, int>>
     {
         if (m_state -> found (c))
@@ -147,7 +160,7 @@ bool extractor_state_second_begin::found (char c)
 
         ++m_ext -> m_curr;
 //        cout << m_ext -> m_second[m_ext -> m_watched-1] << endl;
-        m_ext -> m_second_begin_found = m_ext -> m_watched-1;
+        m_ext -> m_second_begin_found = m_ext -> m_watched;
         
         if (m_ext -> m_curr == m_ext -> m_second.size())
         {
