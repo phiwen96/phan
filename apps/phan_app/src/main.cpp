@@ -132,7 +132,7 @@ auto main(int argc,  char** argv) -> int
                 throw runtime_error ("variable pasted but not yet declared");
             } else
             {
-//                outtext.replace (it - (var3 - var0) + 1, it2 + 1, valstring);
+                outtext.replace (_begin2, _end2, declared -> second);
             }
             
             delete stringVariablePasterExtractor;

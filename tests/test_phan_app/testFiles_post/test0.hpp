@@ -1,6 +1,6 @@
 nämn tre $(p){prejudikatinstans}er
 kukens fitta
-${{hej}}
+kukens fitta
 nämn tre $(p){{prejudikatinstans}}er
 högsta domstolen är en ${p}
 hej du där
