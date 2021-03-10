@@ -10,4 +10,7 @@ $$((snopp)){{hej du där}}
 $(kuk){horan ett två}
 
 jag har en brorsa som heter William Wenkel
+jag har också en som heter Oscar wenkel
+mina brorsor heter Oscar wenkel
+
 

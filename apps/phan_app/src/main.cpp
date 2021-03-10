@@ -92,7 +92,7 @@ auto main(int argc,  char** argv) -> int
                         declared -> second = valstring;
                     }
                     
-                    cout << varstring << " = " << valstring << endl;
+//                    cout << varstring << " = " << valstring << endl;
                     
                     delete stringVariableDeclerationExtractor;
                     stringVariableDeclerationExtractor = new extractor {"$((", "))"};
@@ -103,11 +103,17 @@ auto main(int argc,  char** argv) -> int
                     delete stringVariablePasterExtractor;
                     stringVariablePasterExtractor = new extractor {"${{", "}}"};
                     
+//                    cout << *it2 << endl;
                     outtext.replace (it - (var3 - var0) + 1, it2 + 1, valstring);
+//                    cout << valstring << endl;
+//                    cout << (var3 - var2) + (var1 - var0) << endl;
+//                    cout << *(it - (var3 - var2) - (var1 - var0) - 1) << endl;
+                    it = it - (var3 - var2) - (var1 - var0) - 1;
+                    
                     break;
                 }
             }
-                        
+            
             continue;
         }
         
@@ -117,7 +123,7 @@ auto main(int argc,  char** argv) -> int
             auto [var0, var1, var2, var3] = pasteVar.value();
             auto [_begin2, _end2] = pair {it - (var3 - var0 - 1), it + 1};
             auto varstring = string (_begin2 + (var1-var0), _end2 - (var3 - var2) - 1);
-            cout << varstring << endl;
+//            cout << varstring << endl;
             
             auto declared = declaredVariables.begin();
             for (; declared != declaredVariables.end(); ++declared)
@@ -132,7 +138,10 @@ auto main(int argc,  char** argv) -> int
                 throw runtime_error ("variable pasted but not yet declared");
             } else
             {
+//                cout << *it << endl;
                 outtext.replace (_begin2, _end2, declared -> second);
+                it = it - (var3 - var2) - (var1 - var0) - 1;
+//                cout << *(it) << endl;
             }
             
             delete stringVariablePasterExtractor;

@@ -10,4 +10,7 @@ $$((snopp)){{hej du där}}
 $(kuk){horan ett två}
 
 jag har en brorsa som heter $((mina syskon)){{William Wenkel}}
+jag har också en som heter $((mina syskon)){{Oscar wenkel}}
+mina brorsor heter ${{mina syskon}}
+
 
