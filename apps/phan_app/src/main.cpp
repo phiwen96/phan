@@ -51,7 +51,7 @@ auto main(int argc,  char** argv) -> int
 //    auto extractors = array <extractor, 1> {extractor{"${", "}"}};
     
     auto* stringVariableDeclerationExtractor = new extractor {"$(", ")"};
-    auto* stringValueDeclerationExtractor = new extractor {"{", "}"};
+    auto* stringValueDeclerationExtractor = new extractor {"{", "}}"};
 //    auto stringVariablePasteExtractor = extractor {"${", "}"};
     vector <pair <string, string>> declaredVariables;
     
@@ -67,6 +67,8 @@ auto main(int argc,  char** argv) -> int
             cout << "{" << endl;
             auto [_begin, _end] = pair {it - (var3 - var0 - 1), it + 1};
             cout << "\t" << string (_begin, _end) << endl;
+            auto varstring = string (_begin + (var1-var0), _end - (var3 - var2) - 1);
+            
 //            it +=
             
 //            cout << "\t" << string (outtext.begin() + (outtext.end() - it) + var0, outtext.begin() + (outtext.end() - it) + var3) << endl << "}" << endl;
@@ -83,11 +85,22 @@ auto main(int argc,  char** argv) -> int
                     auto [_begin2, _end2] = pair {it2 - (val3 - val0 - 1), it2 + 1};
                     cout << "\t" << string (_begin2, _end2) << endl;
                     
+                    
+                    
+//                    cout << val2 << endl << val3 << endl;
+//                    cout << *_begin2
+                    //                    [&]{
+                   
+                    auto valstring = string (_begin2 + (val1-val0), _end2 - (val3 - val2) - 1);
+//                    outtext.replace(_begin, _end2, string (_begin2 + val1, _end2 - val3));
                     delete stringValueDeclerationExtractor;
-                    stringValueDeclerationExtractor = new extractor {"{", "}"};
+                    stringValueDeclerationExtractor = new extractor {"{", "}}"};
+//                    }();
                     break;
                 }
             }
+            
+            
             
             cout << "}" << endl;
         }
