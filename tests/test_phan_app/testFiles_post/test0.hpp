@@ -1,8 +1,10 @@
 nämn tre $(p){prejudikatinstans}er
 $(nej){${p} kukens fitta}
-$(sejrejej){rej}tej$(haha){kmkm}d}){tej$(haha){kmkm}}){kukens fitta}
-$(fejrejej){rej}){${p} kukens fitta}
-$(kisshej jahej ja}){rumpa}
+
+$(sej$(aaa){AAA}$(bajs$(moa){kmkd}){tej$(haha){kmkm}}){kukens fitta}
+
+$(fej$(mej){rej}){${p} kukens fitta}
+$(kiss$(en){hej ja}){rumpa}
 $(hej){kukens fitta}
 ${hej}
 högsta domstolen är en ${p}

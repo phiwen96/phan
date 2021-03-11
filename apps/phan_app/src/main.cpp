@@ -106,6 +106,9 @@ struct Context
     vector <Context*> others;
     stack <char> bracketStack;
     iter curly_begin;
+    string& str;
+    
+    string res;
     
     
 //    Context (Context&& other) : declaredVariables (other.declaredVariables)
@@ -128,7 +131,7 @@ struct Context
 //    }
     
     
-    Context (vector <pair <string, string>>& declaredVariables, State* state, Context* parent = nullptr, bool root = true) : state (state), root (root), parent (parent), declaredVariables (declaredVariables) {
+    Context (string& str, vector <pair <string, string>>& declaredVariables, State* state, Context* parent = nullptr, bool root = true) : str (str), state (state), root (root), parent (parent), declaredVariables (declaredVariables) {
 //        state -> context = this;
     }
     void transition (State* newstate) {
@@ -148,6 +151,8 @@ struct Context
 //            transition (&begin);
             return;
         }
+        
+        
         
         
         
@@ -230,6 +235,7 @@ void Begin::_process (iter i) {
     } else
     {
         context -> curr_it = i;
+        context -> res += *i;
 //        chainParent(i);
     }
 }
@@ -294,7 +300,7 @@ void Repeat::_process(iter i) {
 //    cout << *i << endl;
     if (*i == '(')
     {
-        context -> others.push_back (new Context {context -> declaredVariables, /*state*/nullptr, /*parent*/context, /*root*/false});
+        context -> others.push_back (new Context {context->str, context -> declaredVariables, /*state*/nullptr, /*parent*/context, /*root*/false});
         context -> others.back () -> state = new lParanthesisFound {context -> others.back ()};
         context -> others.back () -> begin_it = i - 1;
 //        context -> transition (new lParanthesisFound {context});
@@ -372,34 +378,48 @@ void lCurlyBracketFound::_process (iter i) {
             
             if (hasParent ())
             {
+//                context -> end_it = i;
 //                cout << "yay" << endl;
 //                cout << *context -> parent -> curr_it << endl;
 //                context -> print ();
                 
                 //parent ->
-                
+                context -> parent -> res += context -> res;
 //                cout << "oooo" << endl;
 //                cout << string (context -> parent -> begin_it, context -> end_it) << endl;
                 context -> removeFromParent ();
 //                delete this;
                 
-                cout << "parent: " << string (context -> parent -> begin_it, context -> end_it) << endl;
-                cout << "child: " << string (context -> begin_it, context -> end_it) << endl;
+//                cout << "parent: " << string (context -> parent -> begin_it, context -> end_it) << endl;
+//                cout << "child: " << string (context -> begin_it, context -> end_it) << endl;
                 
-                auto [b, e] = context -> myVariable ();
+                auto [a, b] = context -> myVariable ();
 //                cout << string (b, e) << endl;
                 
                 auto [c, d] = context -> myValue ();
 //                cout << string (c, d) << endl;
                 
+//                cout << "res: " << context -> res << endl;
+                
+//                remove_if (b-2, e+1, [](auto){return true;});
+//                remove_if (c-2, d+1, [](auto){return true;});
+//                $(sejrejej){rej}tej$(haha){kmkm}d}){tej$(haha){kmkm}}){kukens fitta}
+//                $(sejrejej){rej}tej$(haha){kmkm}d}){tej$(haha){kmkm}}){kukens fitta}
                 
                 
                 
-                
-                
-                cout << "parent: " << *context -> parent -> curr_it << endl;
-                
-                copy_n(c, d - c, context -> parent -> curr_it + 1);
+//                cout << "parent: " << *context -> parent -> curr_it << endl;
+//                cout << string (p)
+//                cout << *context -> parent -> curr_it;
+//                copy_n (c, d - c, context -> parent -> curr_it + 1);
+//                cout << " : " << *context -> parent -> curr_it << endl;
+//                string& str = context -> str;
+//                str.erase (context -> parent -> curr_it + 1, context -> parent -> curr_it + 3);
+//                str.erase (i -2, i+1);
+//                str.erase (context -> begin_it, context -> curly_begin + 1);
+//                str.erase (context -> end_it - 1, context -> end_it);
+//                str.replace (a-2, d+3, string (c-1, d+2));
+//                str.erase (b-)
                 
                 
             } else
@@ -415,6 +435,9 @@ void lCurlyBracketFound::_process (iter i) {
     } else if (*i == '{')
     {
         context -> bracketStack.push ('{');
+    } else
+    {
+        context -> res += *i;
     }
 }
 
@@ -438,13 +461,14 @@ struct Process
 {
     vector <pair <string, string>>& declaredVariables;
     declare_var::Context declVar;
+    string& str;
     
-    Process (vector <pair <string, string>>& declaredVariables) : declaredVariables (declaredVariables), declVar (declaredVariables, new declare_var::Begin {nullptr})
+    Process (string& str, vector <pair <string, string>>& declaredVariables) : str (str), declaredVariables (declaredVariables), declVar (str, declaredVariables, new declare_var::Begin {nullptr})
     {
         declVar.state -> context = &declVar;
     }
     
-    void process (string& str)
+    void process ()
     {
         
         for (auto i = str.begin(); i < str.end(); ++i)
@@ -458,6 +482,8 @@ struct Process
             }
                 
         }
+        cout << endl << "-------------------" << endl;
+        cout << declVar.res << endl;
     }
 };
 
@@ -599,8 +625,8 @@ auto main(int argc,  char** argv) -> int
         }
     };
     {
-        Process p (declaredVariables);
-        p.process (outtext);
+        Process p (outtext, declaredVariables);
+        p.process ();
     }
     
     
