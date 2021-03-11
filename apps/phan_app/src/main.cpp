@@ -96,6 +96,7 @@ struct Context
     State* state;
     iter begin_it;
     iter end_it;
+    iter curr_it;
     vector <Context*> others;
     stack <char> bracketStack;
     
@@ -163,6 +164,7 @@ struct Context
 
 void State::process (iter i) {
     if (context -> others.empty ()) {
+        context -> curr_it = i;
         _process (i);
     } else
     {
@@ -267,6 +269,7 @@ void Repeat::_process(iter i) {
         context -> state = new lParanthesisFound {context};
         context -> state -> context = context;
         context -> transition (context -> state);
+//        context -> curr_it -= 2;
     }
 //    else if (*i == ')')
 //    {
@@ -334,8 +337,11 @@ void lCurlyBracketFound::_process (iter i) {
             if (hasParent ())
             {
 //                cout << "yay" << endl;
-                
+//                cout << *context -> parent -> curr_it << endl;
                 context -> print ();
+                
+                //parent ->
+                
 //                cout << "oooo" << endl;
 //                cout << string (context -> parent -> begin_it, context -> end_it) << endl;
                 context -> removeFromParent ();
