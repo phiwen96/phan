@@ -109,6 +109,8 @@ struct Context
     string& str;
     
     string res;
+    string variable;
+    string value;
     
     
 //    Context (Context&& other) : declaredVariables (other.declaredVariables)
@@ -251,6 +253,7 @@ void DollarFound::_process (iter i) {
         
     } else
     {
+        
         if (hasParent ())
         {
             context -> curr_it = i;
@@ -288,6 +291,7 @@ void lParanthesisFound::_process (iter i) {
         
     } else
     {
+        context -> variable += *i;
 //        cout << *i << endl;
 //        cout << "hi" << endl;
 //        chainParent (i);
@@ -325,6 +329,7 @@ void Repeat::_process(iter i) {
 //        } else
 //        {
 //            context -> transition (new lParanthesisFound {context});
+        context -> variable += *i;
         context -> state = new lParanthesisFound {context};
         context -> state -> context = context;
         context -> transition (context -> state);
@@ -349,6 +354,8 @@ void rParanthesisFound::_process (iter i) {
         
     } else
     {
+//        for (
+        
         if (hasParent ())
         {
             chainParent (i);
@@ -384,19 +391,47 @@ void lCurlyBracketFound::_process (iter i) {
 //                context -> print ();
                 
                 //parent ->
-                context -> parent -> res += context -> res;
+//                context -> parent -> res += context -> res;
 //                cout << "oooo" << endl;
 //                cout << string (context -> parent -> begin_it, context -> end_it) << endl;
-                context -> removeFromParent ();
+                
 //                delete this;
                 
 //                cout << "parent: " << string (context -> parent -> begin_it, context -> end_it) << endl;
 //                cout << "child: " << string (context -> begin_it, context -> end_it) << endl;
                 
                 auto [a, b] = context -> myVariable ();
-//                cout << string (b, e) << endl;
+//                cout << string (a, b) << " : " << string (context -> parent -> begin_it, i) << endl;
+                
                 
                 auto [c, d] = context -> myValue ();
+                
+//                string variable = string (a, b);
+//                string value = string (c, d);
+                string& variable = context -> variable;
+                string& value = context -> value;
+                context -> parent -> variable += value;
+                cout << variable << " :: " << value << endl;
+//                context -> parent -> variable += value;
+                
+//                context -> parent -> variable += value;
+//                context -> parent -> value += value;
+                
+                auto declared = context -> declaredVariables.begin ();
+                for (; declared != context -> declaredVariables.end (); ++declared)
+                {
+                    if (declared -> first == variable)
+                    {
+                        declared -> second = value;
+                        break;
+                    }
+                }
+                if (declared == context -> declaredVariables.end ())
+                {
+                    context -> declaredVariables.emplace_back (variable, value);
+                }
+                
+                
 //                cout << string (c, d) << endl;
                 
 //                cout << "res: " << context -> res << endl;
@@ -421,12 +456,37 @@ void lCurlyBracketFound::_process (iter i) {
 //                str.replace (a-2, d+3, string (c-1, d+2));
 //                str.erase (b-)
                 
+                context -> removeFromParent ();
                 
             } else
             {
+//                auto [a, b] = context -> myVariable ();
+////                cout << string (b, e) << endl;
+//
+//                auto [c, d] = context -> myValue ();
+                
+                string variable = context -> variable;
+                string value = context -> value;
+                
+                auto declared = context -> declaredVariables.begin ();
+                for (; declared != context -> declaredVariables.end (); ++declared)
+                {
+                    if (declared -> first == variable)
+                    {
+                        declared -> second = value;
+                        break;
+                    }
+                }
+                if (declared == context -> declaredVariables.end ())
+                {
+                    context -> declaredVariables.emplace_back (variable, value);
+                }
 
                 context -> state = new Done {context};
                 context -> state -> context = context;
+                context -> res += context -> value;
+                context -> variable = "";
+                context -> value = "";
                 context -> transition (context -> state);
 //                context -> print ();
             }
@@ -437,7 +497,8 @@ void lCurlyBracketFound::_process (iter i) {
         context -> bracketStack.push ('{');
     } else
     {
-        context -> res += *i;
+//        context -> res += *i;
+        context -> value += *i;
     }
 }
 
@@ -483,7 +544,10 @@ struct Process
                 
         }
         cout << endl << "-------------------" << endl;
-        cout << declVar.res << endl;
+        for (auto& i : declaredVariables)
+            cout << i.first << " : " << i.second << endl;
+//        cout << endl << "-------------------" << endl;
+//        cout << declVar.res << endl;
     }
 };
 
