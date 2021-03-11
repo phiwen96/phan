@@ -386,11 +386,20 @@ void lCurlyBracketFound::_process (iter i) {
                 cout << "parent: " << string (context -> parent -> begin_it, context -> end_it) << endl;
                 cout << "child: " << string (context -> begin_it, context -> end_it) << endl;
                 
-                auto [b, e] = context -> myValue ();
-                cout << string (b, e) << endl;
-                cout << string (context -> begin_it + 2, context -> curly_begin - 1) << endl;
+                auto [b, e] = context -> myVariable ();
+//                cout << string (b, e) << endl;
+                
+                auto [c, d] = context -> myValue ();
+//                cout << string (c, d) << endl;
+                
+                
+                
+                
+                
                 
                 cout << "parent: " << *context -> parent -> curr_it << endl;
+                
+                copy_n(c, d - c, context -> parent -> curr_it + 1);
                 
                 
             } else
