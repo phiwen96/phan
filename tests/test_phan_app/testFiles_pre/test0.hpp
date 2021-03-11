@@ -1,4 +1,5 @@
 nämn tre $(p){prejudikatinstans}er
+$(kiss$(en){hej ja}){rumpa}
 $(hej){kukens fitta}
 ${hej}
 högsta domstolen är en ${p}

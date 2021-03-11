@@ -8,141 +8,133 @@
 
 
 
+using iter = string::iterator;
 
 
 
 
 
-
-
-
-
-
-
-void fun(string& str,vector <pair <string, string>>& declaredVariables, extractor& stringVariableDeclerationExtractor, extractor& stringValueDeclerationExtractor, extractor& stringVariablePasterExtractor){
+namespace declare_var
+{
+struct Context;
+struct State
+{
+    virtual void process (iter i){}
+    Context* context;
     
-    for (string::iterator it = str.begin(); it != str.end(); ++it) {
-        auto declVar = stringVariableDeclerationExtractor.found (*it);
-        
-        if (declVar) {
-            auto [var0, var1, var2, var3] = declVar.value();
+};
+struct Begin : State
+{
+    void process (iter i);
+};
 
-            auto [_begin, _end] = pair {it - (var3 - var0 - 1), it + 1};
-            string varstring = string (_begin + (var1-var0), _end - (var3 - var2) - 1);
-            
-            
-            
-//            auto stringVariableDeclerationExtractor2 = extractor {"$((", ")){{"};
-//            auto stringValueDeclerationExtractor2 = extractor {"{{", "}}"};
-//            auto stringVariablePasterExtractor2 = extractor {"${{", "}}"};
-//            cout << varstring << endl;
-//            string tmp = string (_end, str.end());
-//            auto a1 = tmp.find_first_of ("}}");
-//            if (a1 == string::npos)
-////                continue;
-//            else
-//            {
-//                tmp = string (tmp.begin(), tmp.begin() + a1);
-//                cout << tmp << endl;
-////                fun (tmp, declaredVariables, stringVariableDeclerationExtractor2, stringValueDeclerationExtractor2, stringVariablePasterExtractor2);
-//            }
-            
-//            cout << tmp << endl;
-//            return;
-//            return;
+struct DollarFound : State
+{
+    virtual void process (iter i);
+};
 
-                for (auto it2 = it + 1; it2 != str.end(); ++it2)
-                {
-                    auto declVal = stringValueDeclerationExtractor.found (*it2);
-                    if (declVal) {
-                        auto [val0, val1, val2, val3] = declVal.value();
-                        auto [_begin2, _end2] = pair {it2 - (val3 - val0 - 1), it2 + 1};
+struct lParanthesisFound : State
+{
+    virtual void process (iter i);
+};
 
-                        auto valstring = string (_begin2 + (val1-val0), _end2 - (val3 - val2) - 1);
-                        
-                        auto stringVariableDeclerationExtractor2 = extractor {"$(", ")"};
-                        auto stringValueDeclerationExtractor2 = extractor {"{", "}"};
-                        auto stringVariablePasterExtractor2 = extractor {"${", "}"};
-                        
-                        cout << ":" << valstring << endl;
-                        fun (valstring, declaredVariables, stringVariableDeclerationExtractor2, stringValueDeclerationExtractor2, stringVariablePasterExtractor2);
-                        cout << ":" << valstring << endl;
+struct rParanthesisFound : State
+{
+    virtual void process (iter i);
+};
 
-                        auto declared = declaredVariables.begin();
-                        for (; declared != declaredVariables.end(); ++declared)
-                        {
-                            if (declared -> first == varstring) {
-                                break;
-                            }
-                        }
+struct Done : State
+{
+    virtual void process (iter i);
+};
 
-                        if (declared == declaredVariables.end())
-                        {
-                            declaredVariables.emplace_back (varstring, valstring);
-                        } else
-                        {
-                            declared -> second = valstring;
-                        }
+Begin* begin = new Begin;
+DollarFound* dollarFound = new DollarFound;
+lParanthesisFound* lparanthesisFound = new lParanthesisFound;
+rParanthesisFound* rparanthesisFound = new rParanthesisFound;
+Done* done = new Done;
 
-                        cout << varstring << " = " << valstring << endl;
 
-//                        delete stringVariableDeclerationExtractor;
-                        stringVariableDeclerationExtractor.reset();
 
-//                        delete stringValueDeclerationExtractor;
-                        stringValueDeclerationExtractor.reset();
-
-//                        delete stringVariablePasterExtractor;
-                        stringVariablePasterExtractor.reset();
-
-    //                    cout << *it2 << endl;
-                        str.replace (it - (var3 - var0) + 1, it2 + 1, valstring);
-    //                    cout << valstring << endl;
-    //                    cout << (var3 - var2) + (var1 - var0) << endl;
-    //                    cout << *(it - (var3 - var2) - (var1 - var0) - 1) << endl;
-                        it = it - (var3 - var2) - (var1 - var0) - 1;
-
-                        break;
-                    }
-                }
-            
-            continue;
-        }
-        
-            auto pasteVar = stringVariablePasterExtractor.found (*it);
-            if (pasteVar)
-            {
-                auto [var0, var1, var2, var3] = pasteVar.value();
-                auto [_begin2, _end2] = pair {it - (var3 - var0 - 1), it + 1};
-                auto varstring = string (_begin2 + (var1-var0), _end2 - (var3 - var2) - 1);
-                cout << varstring << endl;
-
-                auto declared = declaredVariables.begin();
-                for (; declared != declaredVariables.end(); ++declared)
-                {
-                    if (declared -> first == varstring) {
-                        break;
-                    }
-                }
-
-                if (declared == declaredVariables.end())
-                {
-                    cout << "ERROR" << endl << "variable " << declared->first << " is not yet defined!" << endl;
-                    throw runtime_error ("variable pasted but not yet declared");
-                } else
-                {
-    //                cout << *it << endl;
-                    str.replace (_begin2, _end2, declared -> second);
-                    it = it - (var3 - var2) - (var1 - var0) - 1;
-    //                cout << *(it) << endl;
-                }
-
-//                delete stringVariablePasterExtractor;
-                stringVariablePasterExtractor.reset();
-            }
-        
+struct Context
+{
+    iter begin_it;
+    iter end_it;
+    
+    State* state;
+    Context () : state (begin) {
+        state -> context = this;
+    }
+    void transition (State* newstate) {
+        state = newstate;
+        state -> context = this;
+    }
+    void process (iter i) {
+        state -> process (i);
     }
 };
+
+void Begin::process (iter i) {
+    if (*i == '$') {
+        context -> begin_it = i;
+        context -> transition (dollarFound);
+    }
+}
+void DollarFound::process (iter i) {
+    if (*i == '(') {
+        context -> transition (lparanthesisFound);
+    } else {
+        context -> transition (begin);
+    }
+}
+void lParanthesisFound::process (iter i) {
+    if (*i == ')') {
+        context -> end_it = i + 1;
+        context -> transition (rparanthesisFound);
+    }
+}
+void rParanthesisFound::process (iter i) {
+    if (*i == '{') {
+        context -> end_it = i + 1;
+        context -> transition (done);
+    } else
+    {
+        context -> transition (begin);
+    }
+}
+
+
+
+void Done::process (iter i) {
+   
+}
+
+
+}
+
+struct Process
+{
+    declare_var::Context declVar;
+    
+    void process (string& str)
+    {
+        
+        for (auto i = str.begin(); i < str.end(); ++i)
+        {
+            declVar.process (i);
+            if (declVar.state == declare_var::done) {
+                cout << string (declVar.begin_it, declVar.end_it) << endl;
+                
+                declVar.state = declare_var::begin;
+            }
+                
+        }
+    }
+};
+
+
+
+
 
 
 
@@ -278,10 +270,12 @@ auto main(int argc,  char** argv) -> int
         }
     };
     
+    Process p;
+    p.process (outtext);
+    
+
     
     
-    
-    fun (outtext, declaredVariables, stringVariableDeclerationExtractor, stringValueDeclerationExtractor, stringVariablePasterExtractor);
     
     
 
