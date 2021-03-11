@@ -27,50 +27,56 @@ struct State
     int chainParent (iter i);
     bool hasParent () const;
     State (Context* context) : context (context) {}
-    virtual bool done () const;
+    virtual bool done ();
     
 };
 struct Begin : State
 {
     using State::State;
     void _process (iter i);
+    bool done () {return false;}
 };
 
 struct DollarFound : State
 {
     using State::State;
     virtual void _process (iter i);
+    bool done () {return false;}
 };
 
 struct lParanthesisFound : State
 {
     using State::State;
     virtual void _process (iter i);
+    bool done () {return false;}
 };
 
 struct rParanthesisFound : State
 {
     using State::State;
     virtual void _process (iter i);
+    bool done () {return false;}
 };
 
 struct lCurlyBracketFound : State
 {
     using State::State;
     virtual void _process (iter i);
+    bool done () {return false;}
 };
 
 struct Done : State
 {
     using State::State;
     virtual void _process (iter i);
-    bool done () const {return true;}
+    bool done () {return true;}
 };
 
 struct Repeat : State
 {
     using State::State;
     virtual void _process (iter i);
+    bool done () {return false;}
 };
 
 
@@ -99,6 +105,8 @@ struct Context
     iter curr_it;
     vector <Context*> others;
     stack <char> bracketStack;
+    iter curly_begin;
+    
     
 //    Context (Context&& other) : declaredVariables (other.declaredVariables)
 //    {
@@ -160,11 +168,26 @@ struct Context
     {
         cout << string (begin_it, end_it) << endl;
     }
+    
+    pair <iter, iter> myValue () {
+        return {curly_begin + 1, end_it - 1};
+    }
+    pair <iter, iter> myVariable () {
+        return {begin_it + 2, curly_begin - 1};
+    }
 };
+
+
+
+
+
+
+
+
 
 void State::process (iter i) {
     if (context -> others.empty ()) {
-        context -> curr_it = i;
+//        context -> curr_it = i;
         _process (i);
     } else
     {
@@ -187,7 +210,7 @@ bool State::hasParent () const {
     return context -> parent != nullptr;
 }
 
-bool State::done () const {
+bool State::done () {
 //    cout << string (context -> begin_it, context -> end_it) << endl;
     return false;
 }
@@ -197,6 +220,7 @@ void Begin::_process (iter i) {
     
     if (*i == '$')
     {
+        context -> curr_it = i;
         context -> begin_it = i;
 //        context -> transition (new DollarFound {context});
         context -> state = new DollarFound {context};
@@ -205,6 +229,7 @@ void Begin::_process (iter i) {
         
     } else
     {
+        context -> curr_it = i;
 //        chainParent(i);
     }
 }
@@ -216,15 +241,19 @@ void DollarFound::_process (iter i) {
         context -> state -> context = context;
         context -> transition (context -> state);
         
+        context -> curr_it = i;
+        
     } else
     {
         if (hasParent ())
         {
+            context -> curr_it = i;
             chainParent (i);
             context -> removeFromParent ();
             
         } else
         {
+            context -> curr_it = i;
 //            context -> transition (new Begin {context});
             context -> state = new Begin {context};
             context -> state -> context = context;
@@ -257,6 +286,9 @@ void lParanthesisFound::_process (iter i) {
 //        cout << "hi" << endl;
 //        chainParent (i);
     }
+    
+    ++context -> curr_it;
+    
 }
 void Repeat::_process(iter i) {
 //    cout << *i << endl;
@@ -269,6 +301,7 @@ void Repeat::_process(iter i) {
         context -> state = new lParanthesisFound {context};
         context -> state -> context = context;
         context -> transition (context -> state);
+        context -> curr_it = i - 2;
 //        context -> curr_it -= 2;
     }
 //    else if (*i == ')')
@@ -298,6 +331,8 @@ void rParanthesisFound::_process (iter i) {
     
     if (*i == '{')
     {
+        context -> curly_begin = i;
+        context -> curr_it = i;
 //        context -> end_it = i + 1;
         context -> bracketStack.push ('{');
 //        context -> transition (new lCurlyBracketFound {context});
@@ -315,6 +350,7 @@ void rParanthesisFound::_process (iter i) {
         }
         else
         {
+            context -> curr_it = i;
 //            context -> transition (new Begin {context});
             context -> state = new Begin {context};
             context -> state -> context = context;
@@ -338,7 +374,7 @@ void lCurlyBracketFound::_process (iter i) {
             {
 //                cout << "yay" << endl;
 //                cout << *context -> parent -> curr_it << endl;
-                context -> print ();
+//                context -> print ();
                 
                 //parent ->
                 
@@ -347,13 +383,23 @@ void lCurlyBracketFound::_process (iter i) {
                 context -> removeFromParent ();
 //                delete this;
                 
+                cout << "parent: " << string (context -> parent -> begin_it, context -> end_it) << endl;
+                cout << "child: " << string (context -> begin_it, context -> end_it) << endl;
+                
+                auto [b, e] = context -> myValue ();
+                cout << string (b, e) << endl;
+                cout << string (context -> begin_it + 2, context -> curly_begin - 1) << endl;
+                
+                cout << "parent: " << *context -> parent -> curr_it << endl;
+                
+                
             } else
             {
 
                 context -> state = new Done {context};
                 context -> state -> context = context;
                 context -> transition (context -> state);
-                context -> print ();
+//                context -> print ();
             }
         }
         
