@@ -3,6 +3,8 @@
 #include "extractor.hpp"
 #include "trio.hpp"
 #include <functional>
+#include <algorithm>
+#include <vector>
 
 
 
@@ -19,102 +21,313 @@ namespace declare_var
 struct Context;
 struct State
 {
-    virtual void process (iter i){}
+    void process (iter i);
+    virtual void _process (iter i){}
     Context* context;
+    int chainParent (iter i);
+    bool hasParent () const;
+    State (Context* context) : context (context) {}
+    virtual bool done () const {return false;}
     
 };
 struct Begin : State
 {
-    void process (iter i);
+    using State::State;
+    void _process (iter i);
 };
 
 struct DollarFound : State
 {
-    virtual void process (iter i);
+    using State::State;
+    virtual void _process (iter i);
 };
 
 struct lParanthesisFound : State
 {
-    virtual void process (iter i);
+    using State::State;
+    virtual void _process (iter i);
 };
 
 struct rParanthesisFound : State
 {
-    virtual void process (iter i);
+    using State::State;
+    virtual void _process (iter i);
+};
+
+struct lCurlyBracketFound : State
+{
+    using State::State;
+    virtual void _process (iter i);
 };
 
 struct Done : State
 {
-    virtual void process (iter i);
+    using State::State;
+    virtual void _process (iter i);
+    bool done () const {return true;}
 };
 
-Begin* begin = new Begin;
-DollarFound* dollarFound = new DollarFound;
-lParanthesisFound* lparanthesisFound = new lParanthesisFound;
-rParanthesisFound* rparanthesisFound = new rParanthesisFound;
-Done* done = new Done;
+struct Repeat : State
+{
+    using State::State;
+    virtual void _process (iter i);
+};
+
+
+
+
+
+
+//Begin begin;
+//DollarFound dollarFound;
+//lParanthesisFound lparanthesisFound;
+//rParanthesisFound rparanthesisFound;
+//lCurlyBracketFound lcurlyBracketFound;
+//Repeat repeat;
+//Done done;
 
 
 
 struct Context
 {
+    bool root;
+    Context* parent;
+    vector <pair <string, string>>& declaredVariables;
+    State* state;
     iter begin_it;
     iter end_it;
+    vector <Context*> others;
+    stack <char> bracketStack;
     
-    State* state;
-    Context () : state (begin) {
-        state -> context = this;
+//    Context (Context&& other) : declaredVariables (other.declaredVariables)
+//    {
+//        swap (*this, other);
+//    }
+//    Context (Context const& other) : root (other.root), parent (other.parent), declaredVariables (other.declaredVariables), state (other.state), begin_it (other.begin_it), end_it (other.end_it), others (other.others), bracketStack (other.bracketStack)
+//    {
+//
+//    }
+//    friend void swap (Context& lhs, Context& rhs) {
+//        using std::swap;
+//        swap (lhs.root, rhs.root);
+//        swap (lhs.parent, rhs.parent);
+//        swap (lhs.state, rhs.state);
+//        swap (lhs.begin_it, rhs.begin_it);
+//        swap (lhs.end_it, rhs.end_it);
+//        swap (lhs.others, rhs.others);
+//        swap (lhs.bracketStack, rhs.bracketStack);
+//    }
+    
+    
+    Context (vector <pair <string, string>>& declaredVariables, State* state, Context* parent = nullptr, bool root = true) : state (state), root (root), parent (parent), declaredVariables (declaredVariables) {
+//        state -> context = this;
     }
     void transition (State* newstate) {
+        cout << "transition from " << typeid (*state).name() << " to " << typeid (*newstate).name() << endl;
+
         state = newstate;
         state -> context = this;
     }
     void process (iter i) {
+//        if (state == nullptr)
+//            cout << "state is null" << endl;
         state -> process (i);
+    }
+    void removeFromParent () {
+        if (parent == nullptr)
+        {
+//            transition (&begin);
+            return;
+        }
+        
+//        erase_if (parent->others, [&](Context& c){return &c == this;});
+//        std::stable_partition(vec.begin(), vec.end(), [](int* pi){ return *pi % 2 != 0; });
+        remove (parent->others.begin(), parent->others.end(), this);
+//        for (auto i = parent->others.begin(); i != parent->others.end(); ++i) {
+//            if ((*i) == this)
+//            {
+//                cout << "oj" << endl;
+//                remove (i, i+1);
+//                i = parent->others.erase(i);
+//                break;
+//            }
+//        }
     }
 };
 
-void Begin::process (iter i) {
-    if (*i == '$') {
-        context -> begin_it = i;
-        context -> transition (dollarFound);
-    }
-}
-void DollarFound::process (iter i) {
-    if (*i == '(') {
-        context -> transition (lparanthesisFound);
-    } else {
-        context -> transition (begin);
-    }
-}
-void lParanthesisFound::process (iter i) {
-    if (*i == ')') {
-        context -> end_it = i + 1;
-        context -> transition (rparanthesisFound);
-    }
-}
-void rParanthesisFound::process (iter i) {
-    if (*i == '{') {
-        context -> end_it = i + 1;
-        context -> transition (done);
+void State::process (iter i) {
+    if (context -> others.empty ()) {
+        _process (i);
     } else
     {
-        context -> transition (begin);
+        for (auto& o : context->others)
+            o -> process (i);
     }
 }
 
+int State::chainParent (iter i) {
+    if (hasParent ())
+    {
+        context -> parent -> process (i);
+    }
+    else
+    {
+//        _process (i);
+    }
+}
+bool State::hasParent () const {
+    return context -> parent != nullptr;
+}
 
+void Begin::_process (iter i) {
+    
+    if (*i == '$')
+    {
+        context -> begin_it = i;
+        context -> transition (new DollarFound {context});
+        
+    } else
+    {
+//        chainParent(i);
+    }
+}
+void DollarFound::_process (iter i) {
+    if (*i == '(')
+    {
+        context -> transition (new lParanthesisFound {context});
+        
+    } else
+    {
+        if (hasParent ())
+        {
+            chainParent (i);
+            context->removeFromParent ();
+            
+        } else
+        {
+            context -> transition (new Begin {context});
+        }
+    }
+}
+void lParanthesisFound::_process (iter i) {
+    if (*i == ')')
+    {
+//        context -> end_it = i + 1;
+        context -> transition (new rParanthesisFound {context});
+        
+    } else if (*i == '$')
+    {
+        
+//        Context* pushed = context -> others.back ();
+//        pushed->transition (&dollarFound);
+        context -> transition (new Repeat {context});
+        
+    } else
+    {
+        cout << *i << endl;
+//        cout << "hi" << endl;
+//        chainParent (i);
+    }
+}
+void Repeat::_process(iter i) {
+//    cout << *i << endl;
+    if (*i == '(')
+    {
+        context -> others.push_back (new Context {context -> declaredVariables, /*state*/nullptr, /*parent*/context, /*root*/false});
+        context -> others.back () -> state = new lParanthesisFound {context -> others.back ()};
+        context -> others.back () -> begin_it = i - 1;
+    }
+//    else if (*i == ')')
+//    {
+//        context -> transition ( new rParanthesisFound {context});
+//
+//    }
+    else
+    {
+//        if (hasParent ())
+//        {
+//            chainParent (i);
+//            context -> removeFromParent ();
+//
+//        } else
+//        {
+            context -> transition (new lParanthesisFound {context});
+//        }
+    }
+}
+void rParanthesisFound::_process (iter i) {
+    
+    context -> others.clear();
+    
+    if (*i == '{')
+    {
+//        context -> end_it = i + 1;
+        context -> bracketStack.push ('{');
+        context -> transition (new lCurlyBracketFound {context});
+        
+    } else
+    {
+        if (hasParent ())
+        {
+            chainParent (i);
+            context -> removeFromParent();
+        }
+        else
+        {
+            context -> transition (new Begin {context});
+        }
+    
+        
+    }
+}
+void lCurlyBracketFound::_process (iter i) {
+    if (*i == '}')
+    {
+        context -> bracketStack.pop ();
+        
+        if (context -> bracketStack.empty ())
+        {
+            context -> end_it = i + 1;
+            if (hasParent ())
+            {
+                
+            } else
+            {
+                context -> transition (new Done {context});
+            }
+        }
+        
+    } else if (*i == '{')
+    {
+        context -> bracketStack.push ('{');
+    }
+}
 
-void Done::process (iter i) {
-   
+void Done::_process (iter i) {
+    
+}
+
+//  context -> transition (dollarFound);
+        
+//        context -> process (i);
 }
 
 
-}
+
+
+
+
+
 
 struct Process
 {
+    vector <pair <string, string>>& declaredVariables;
     declare_var::Context declVar;
+    
+    Process (vector <pair <string, string>>& declaredVariables) : declaredVariables (declaredVariables), declVar (declaredVariables, new declare_var::Begin {nullptr})
+    {
+        declVar.state -> context = &declVar;
+    }
     
     void process (string& str)
     {
@@ -122,10 +335,10 @@ struct Process
         for (auto i = str.begin(); i < str.end(); ++i)
         {
             declVar.process (i);
-            if (declVar.state == declare_var::done) {
+            if (declVar.state->done()) {
                 cout << string (declVar.begin_it, declVar.end_it) << endl;
                 
-                declVar.state = declare_var::begin;
+                declVar.state = new declare_var::Begin {&declVar};
             }
                 
         }
@@ -269,9 +482,16 @@ auto main(int argc,  char** argv) -> int
             
         }
     };
+    {
+        Process p (declaredVariables);
+        p.process (outtext);
+    }
     
-    Process p;
-    p.process (outtext);
+    
+    {
+//        Process p;
+//        p.process (outtext);
+    }
     
 
     
