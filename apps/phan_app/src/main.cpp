@@ -27,7 +27,7 @@ struct State
     int chainParent (iter i);
     bool hasParent () const;
     State (Context* context) : context (context) {}
-    virtual bool done () const {return false;}
+    virtual bool done () const;
     
 };
 struct Begin : State
@@ -123,10 +123,10 @@ struct Context
 //        state -> context = this;
     }
     void transition (State* newstate) {
-        cout << "transition from " << typeid (*state).name() << " to " << typeid (*newstate).name() << endl;
+//        cout << "transition from " << typeid (*state).name() << " to " << typeid (*newstate).name() << endl;
 
-        state = newstate;
-        state -> context = this;
+//        state = newstate;
+//        state -> context = this;
     }
     void process (iter i) {
 //        if (state == nullptr)
@@ -140,18 +140,24 @@ struct Context
             return;
         }
         
+        
+        
 //        erase_if (parent->others, [&](Context& c){return &c == this;});
 //        std::stable_partition(vec.begin(), vec.end(), [](int* pi){ return *pi % 2 != 0; });
-        remove (parent->others.begin(), parent->others.end(), this);
-//        for (auto i = parent->others.begin(); i != parent->others.end(); ++i) {
-//            if ((*i) == this)
-//            {
+//        remove (parent->others.begin(), parent->others.end(), this);
+        for (auto i = parent->others.begin(); i != parent->others.end(); ++i) {
+            if ((*i) == this)
+            {
 //                cout << "oj" << endl;
 //                remove (i, i+1);
-//                i = parent->others.erase(i);
-//                break;
-//            }
-//        }
+                i = parent->others.erase(i);
+                break;
+            }
+        }
+    }
+    void print () const
+    {
+        cout << string (begin_it, end_it) << endl;
     }
 };
 
@@ -179,12 +185,21 @@ bool State::hasParent () const {
     return context -> parent != nullptr;
 }
 
+bool State::done () const {
+//    cout << string (context -> begin_it, context -> end_it) << endl;
+    return false;
+}
+
+
 void Begin::_process (iter i) {
     
     if (*i == '$')
     {
         context -> begin_it = i;
-        context -> transition (new DollarFound {context});
+//        context -> transition (new DollarFound {context});
+        context -> state = new DollarFound {context};
+        context -> state -> context = context;
+        context -> transition (context -> state);
         
     } else
     {
@@ -194,18 +209,24 @@ void Begin::_process (iter i) {
 void DollarFound::_process (iter i) {
     if (*i == '(')
     {
-        context -> transition (new lParanthesisFound {context});
+//        context -> transition (new lParanthesisFound {context});
+        context -> state = new lParanthesisFound {context};
+        context -> state -> context = context;
+        context -> transition (context -> state);
         
     } else
     {
         if (hasParent ())
         {
             chainParent (i);
-            context->removeFromParent ();
+            context -> removeFromParent ();
             
         } else
         {
-            context -> transition (new Begin {context});
+//            context -> transition (new Begin {context});
+            context -> state = new Begin {context};
+            context -> state -> context = context;
+            context -> transition (context -> state);
         }
     }
 }
@@ -213,18 +234,24 @@ void lParanthesisFound::_process (iter i) {
     if (*i == ')')
     {
 //        context -> end_it = i + 1;
-        context -> transition (new rParanthesisFound {context});
+//        context -> transition (new rParanthesisFound {context});
+        context -> state = new rParanthesisFound {context};
+        context -> state -> context = context;
+        context -> transition (context -> state);
         
     } else if (*i == '$')
     {
         
 //        Context* pushed = context -> others.back ();
 //        pushed->transition (&dollarFound);
-        context -> transition (new Repeat {context});
+//        context -> transition (new Repeat {context});
+        context -> state = new Repeat {context};
+        context -> state -> context = context;
+        context -> transition (context -> state);
         
     } else
     {
-        cout << *i << endl;
+//        cout << *i << endl;
 //        cout << "hi" << endl;
 //        chainParent (i);
     }
@@ -236,6 +263,10 @@ void Repeat::_process(iter i) {
         context -> others.push_back (new Context {context -> declaredVariables, /*state*/nullptr, /*parent*/context, /*root*/false});
         context -> others.back () -> state = new lParanthesisFound {context -> others.back ()};
         context -> others.back () -> begin_it = i - 1;
+//        context -> transition (new lParanthesisFound {context});
+        context -> state = new lParanthesisFound {context};
+        context -> state -> context = context;
+        context -> transition (context -> state);
     }
 //    else if (*i == ')')
 //    {
@@ -247,34 +278,44 @@ void Repeat::_process(iter i) {
 //        if (hasParent ())
 //        {
 //            chainParent (i);
-//            context -> removeFromParent ();
+//            context -> parent -> removeFromParent ();
 //
 //        } else
 //        {
-            context -> transition (new lParanthesisFound {context});
+//            context -> transition (new lParanthesisFound {context});
+        context -> state = new lParanthesisFound {context};
+        context -> state -> context = context;
+        context -> transition (context -> state);
 //        }
     }
 }
 void rParanthesisFound::_process (iter i) {
     
-    context -> others.clear();
+//    context -> others.clear();
     
     if (*i == '{')
     {
 //        context -> end_it = i + 1;
         context -> bracketStack.push ('{');
-        context -> transition (new lCurlyBracketFound {context});
+//        context -> transition (new lCurlyBracketFound {context});
+        context -> state = new lCurlyBracketFound {context};
+        context -> state -> context = context;
+        context -> transition (context -> state);
+        
         
     } else
     {
         if (hasParent ())
         {
             chainParent (i);
-            context -> removeFromParent();
+            context -> removeFromParent ();
         }
         else
         {
-            context -> transition (new Begin {context});
+//            context -> transition (new Begin {context});
+            context -> state = new Begin {context};
+            context -> state -> context = context;
+            context -> transition (context -> state);
         }
     
         
@@ -283,17 +324,30 @@ void rParanthesisFound::_process (iter i) {
 void lCurlyBracketFound::_process (iter i) {
     if (*i == '}')
     {
+        
         context -> bracketStack.pop ();
         
         if (context -> bracketStack.empty ())
         {
             context -> end_it = i + 1;
+            
             if (hasParent ())
             {
+//                cout << "yay" << endl;
+                
+                context -> print ();
+//                cout << "oooo" << endl;
+//                cout << string (context -> parent -> begin_it, context -> end_it) << endl;
+                context -> removeFromParent ();
+//                delete this;
                 
             } else
             {
-                context -> transition (new Done {context});
+
+                context -> state = new Done {context};
+                context -> state -> context = context;
+                context -> transition (context -> state);
+                context -> print ();
             }
         }
         
@@ -336,8 +390,9 @@ struct Process
         {
             declVar.process (i);
             if (declVar.state->done()) {
-                cout << string (declVar.begin_it, declVar.end_it) << endl;
-                
+//                cout << "done" << endl;
+//                cout << string (declVar.begin_it, declVar.end_it) << endl;
+//                declVar.print ();
                 declVar.state = new declare_var::Begin {&declVar};
             }
                 
