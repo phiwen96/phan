@@ -1,4 +1,4 @@
-nämn tre $(p){prejudikatinstans}er
+nämn tre $($p){prejudikatinstans}er
 $(nej){${p} kukens fitta}
 
 $(sej$(aaa){AAA}$(bajs$(moa){kmkd}){tej$(haha){kmkm}}){kukens fitta}
@@ -16,7 +16,7 @@ $(snopp){${mitt namn} ${hej} du där}
 $(kuk){horan ett två}
 
 jag har en brorsa som heter $(mina syskon){William Wenkel}
-jag har också en som heter $(mina syskon){{Oscar wenkel}
+jag har också en som heter $(mina syskon){Oscar wenkel}
 mina brorsor heter ${mina syskon}
 
 

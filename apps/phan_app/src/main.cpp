@@ -108,9 +108,13 @@ struct Context
     iter curly_begin;
     string& str;
     
-    string res;
+    inline static string res = "";
     string variable;
     string value;
+    
+    string potential;
+    
+    
     
     
 //    Context (Context&& other) : declaredVariables (other.declaredVariables)
@@ -227,6 +231,7 @@ void Begin::_process (iter i) {
     
     if (*i == '$')
     {
+        context -> potential += '$';
         context -> curr_it = i;
         context -> begin_it = i;
 //        context -> transition (new DollarFound {context});
@@ -236,8 +241,9 @@ void Begin::_process (iter i) {
         
     } else
     {
-        context -> curr_it = i;
         context -> res += *i;
+        context -> curr_it = i;
+//        context -> res += *i;
 //        chainParent(i);
     }
 }
@@ -253,6 +259,9 @@ void DollarFound::_process (iter i) {
         
     } else
     {
+        context -> res += context -> potential;
+        context -> res += *i;
+        context -> potential = "";
         
         if (hasParent ())
         {
@@ -273,6 +282,7 @@ void DollarFound::_process (iter i) {
 void lParanthesisFound::_process (iter i) {
     if (*i == ')')
     {
+        context -> potential = "";
 //        context -> end_it = i + 1;
 //        context -> transition (new rParanthesisFound {context});
         context -> state = new rParanthesisFound {context};
@@ -285,12 +295,14 @@ void lParanthesisFound::_process (iter i) {
 //        Context* pushed = context -> others.back ();
 //        pushed->transition (&dollarFound);
 //        context -> transition (new Repeat {context});
+        context -> potential += '$';
         context -> state = new Repeat {context};
         context -> state -> context = context;
         context -> transition (context -> state);
         
     } else
     {
+        context -> potential += *i;
         context -> variable += *i;
 //        cout << *i << endl;
 //        cout << "hi" << endl;
@@ -351,11 +363,10 @@ void rParanthesisFound::_process (iter i) {
         context -> state -> context = context;
         context -> transition (context -> state);
         
-        
     } else
     {
 //        for (
-        
+        context -> res += context -> potential;
         if (hasParent ())
         {
             chainParent (i);
@@ -369,13 +380,12 @@ void rParanthesisFound::_process (iter i) {
             context -> state -> context = context;
             context -> transition (context -> state);
         }
-    
-        
     }
 }
 void lCurlyBracketFound::_process (iter i) {
     if (*i == '}')
     {
+        context -> potential = "";
         
         context -> bracketStack.pop ();
         
@@ -431,6 +441,8 @@ void lCurlyBracketFound::_process (iter i) {
                     context -> declaredVariables.emplace_back (variable, value);
                 }
                 
+                context -> res += context -> value;
+                
                 
 //                cout << string (c, d) << endl;
                 
@@ -481,23 +493,28 @@ void lCurlyBracketFound::_process (iter i) {
                 {
                     context -> declaredVariables.emplace_back (variable, value);
                 }
-
+                context -> res += context -> value;
                 context -> state = new Done {context};
                 context -> state -> context = context;
-                context -> res += context -> value;
+//                context -> res += context -> value;
                 context -> variable = "";
                 context -> value = "";
                 context -> transition (context -> state);
 //                context -> print ();
             }
+        } else
+        {
+            context -> value += *i;
         }
         
     } else if (*i == '{')
     {
         context -> bracketStack.push ('{');
+        context -> value += *i;
     } else
     {
 //        context -> res += *i;
+        context -> potential += *i;
         context -> value += *i;
     }
 }
@@ -543,9 +560,14 @@ struct Process
             }
                 
         }
-        cout << endl << "-------------------" << endl;
+        
         for (auto& i : declaredVariables)
             cout << i.first << " : " << i.second << endl;
+        
+        cout << endl << "-------------------" << endl;
+        
+        cout << declVar.res << endl;
+        
 //        cout << endl << "-------------------" << endl;
 //        cout << declVar.res << endl;
     }
