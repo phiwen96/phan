@@ -22,13 +22,22 @@ namespace declare_var
 struct Context;
 struct State
 {
+    Context* context;
+    
     void process (iter i);
     virtual void _process (iter i){}
-    Context* context;
-    int chainParent (iter i);
     bool hasParent () const;
-    State (Context* context) : context (context) {}
-    virtual bool done ();
+    string& variable ();
+    string& value ();
+    string& result ();
+    string& potential ();
+    void removeFromParent ();
+    template <class T> void transition ();
+    template <class T> Context& addChildContext ();
+    State* parent ();
+    void declare (string const& var, string const& val);
+    virtual void addResultFromChild (string const& res);
+    
     
 };
 struct Begin : State
@@ -36,34 +45,39 @@ struct Begin : State
     using State::State;
     void _process (iter i);
     bool done () {return false;}
+    void addResultFromChild (string const& res);
 };
 
-struct DollarFound : State
+struct Dollar : State
 {
     using State::State;
     virtual void _process (iter i);
     bool done () {return false;}
+    void addResultFromChild (string const& res);
 };
 
-struct lParanthesisFound : State
+struct LParan : State
 {
     using State::State;
     virtual void _process (iter i);
     bool done () {return false;}
+    void addResultFromChild (string const& res);
 };
 
-struct rParanthesisFound : State
+struct RParan : State
 {
     using State::State;
     virtual void _process (iter i);
     bool done () {return false;}
+    void addResultFromChild (string const& res);
 };
 
-struct lCurlyBracketFound : State
+struct LBracket : State
 {
     using State::State;
     virtual void _process (iter i);
     bool done () {return false;}
+    void addResultFromChild (string const& res);
 };
 
 struct Done : State
@@ -71,6 +85,7 @@ struct Done : State
     using State::State;
     virtual void _process (iter i);
     bool done () {return true;}
+ 
 };
 
 struct Repeat : State
@@ -78,6 +93,7 @@ struct Repeat : State
     using State::State;
     virtual void _process (iter i);
     bool done () {return false;}
+
 };
 
 
@@ -86,10 +102,10 @@ struct Repeat : State
 
 
 //Begin begin;
-//DollarFound dollarFound;
-//lParanthesisFound lparanthesisFound;
-//rParanthesisFound rparanthesisFound;
-//lCurlyBracketFound lcurlyBracketFound;
+//Dollar Dollar;
+//LParan LParan;
+//RParan RParan;
+//LBracket LBracket;
 //Repeat repeat;
 //Done done;
 
@@ -97,104 +113,43 @@ struct Repeat : State
 
 struct Context
 {
-    bool root;
     Context* parent;
     vector <pair <string, string>>& declaredVariables;
-    State* state;
-    iter begin_it;
-    iter end_it;
-    iter curr_it;
+    State* state {nullptr};
     vector <Context*> children;
     stack <char> bracketStack;
-    iter curly_begin;
-    string& str;
     
-    inline static string res = "";
+    inline static string result = "";
     string variable;
     string value;
-    
     string potential;
     
-    
-    
-    
-//    Context (Context&& other) : declaredVariables (other.declaredVariables)
-//    {
-//        swap (*this, other);
-//    }
-//    Context (Context const& other) : root (other.root), parent (other.parent), declaredVariables (other.declaredVariables), state (other.state), begin_it (other.begin_it), end_it (other.end_it), children (other.children), bracketStack (other.bracketStack)
-//    {
-//
-//    }
-//    friend void swap (Context& lhs, Context& rhs) {
-//        using std::swap;
-//        swap (lhs.root, rhs.root);
-//        swap (lhs.parent, rhs.parent);
-//        swap (lhs.state, rhs.state);
-//        swap (lhs.begin_it, rhs.begin_it);
-//        swap (lhs.end_it, rhs.end_it);
-//        swap (lhs.children, rhs.children);
-//        swap (lhs.bracketStack, rhs.bracketStack);
-//    }
-    
-    
-    Context (string& str, vector <pair <string, string>>& declaredVariables, State* state, Context* parent = nullptr, bool root = true) : str (str), state (state), root (root), parent (parent), declaredVariables (declaredVariables) {
-//        state -> context = this;
-    }
-    void transition (State* newstate) {
-//        cout << "transition from " << typeid (*state).name() << " to " << typeid (*newstate).name() << endl;
-        newstate -> context = this;
-        state = newstate;
-//        state -> context = this;
-    }
-    void process (iter i) {
-//        if (state == nullptr)
-//            cout << "state is null" << endl;
-        state -> process (i);
-    }
-    void removeFromParent () {
-        if (parent == nullptr)
-        {
-//            transition (&begin);
-            return;
-        }
-        
-        
-        
-        
-        
-//        erase_if (parent->children, [&](Context& c){return &c == this;});
-//        std::stable_partition(vec.begin(), vec.end(), [](int* pi){ return *pi % 2 != 0; });
-//        remove (parent->children.begin(), parent->children.end(), this);
-        for (auto i = parent->children.begin(); i != parent->children.end(); ++i) {
-            if ((*i) == this)
-            {
-//                cout << "oj" << endl;
-//                remove (i, i+1);
-                i = parent->children.erase(i);
-                break;
-            }
-        }
-    }
-    void print () const
-    {
-        cout << string (begin_it, end_it) << endl;
-    }
-    
-    pair <iter, iter> myValue () {
-        return {curly_begin + 1, end_it - 1};
-    }
-    pair <iter, iter> myVariable () {
-        return {begin_it + 2, curly_begin - 1};
-    }
+    void process (iter);
 };
 
 
+void State::declare (string const& var, string const& val) {
+    auto declared = context -> declaredVariables.begin ();
+    for (; declared < context -> declaredVariables.end (); ++declared) {
+        if (declared -> first == var) {
+            declared -> second = val;
+            return;
+        }
+    }
+    context -> declaredVariables.emplace_back (var, val);
+}
 
+State* State::parent () {
+    return context -> parent -> state;
+}
 
+void Context::process(iter i) {
+    state -> process (i);
+}
 
-
-
+void State::addResultFromChild (string const& res) {
+    
+}
 
 
 void State::process (iter i) {
@@ -208,120 +163,152 @@ void State::process (iter i) {
     }
 }
 
-int State::chainParent (iter i) {
-    if (hasParent ())
-    {
-//        context -> parent -> process (i);.
-    }
-    else
-    {
-//        _process (i);
-    }
-}
 bool State::hasParent () const {
     return context -> parent != nullptr;
 }
 
-bool State::done () {
-//    cout << string (context -> begin_it, context -> end_it) << endl;
-    return false;
+void State::removeFromParent () {
+    for (auto cont = context -> parent -> children.begin(); cont < context -> parent -> children.end(); ++cont) {
+        if (*cont == context) {
+//            cout << "removing child context from parent context" << endl;
+            context -> parent -> children.erase (cont);
+            break;
+        }
+    }
 }
+
+
+template <class T>
+void State::transition () {
+    
+    cout << "transitioning from " << typeid (*context -> state).name () << " to ";
+    context -> state = new T;
+    context -> state -> context = context;
+    cout << typeid (*context -> state).name () << endl;
+}
+
+template <class state>
+Context& State::addChildContext () {
+    State* childState = new state;
+    Context* childContext = new Context {context, context->declaredVariables, childState};
+    childState -> context = childContext;
+    context -> children.push_back (childContext);
+    return *childContext;
+}
+//optional <string> State::declared () {
+//    for (auto d = context -> declaredVariables.begin (); d != context -> declaredVariables.end(); ++d) {
+//        if (d -> first == context -> variable) {
+//            return optional{d->second};
+//        }
+//    }
+//    return {};
+//}
+string& State::variable () {
+    return context -> variable;
+}
+string& State::value () {
+    return context -> value;
+}
+string& State::result () {
+    return context -> result;
+}
+string& State::potential () {
+    return context -> potential;
+}
+
+void Begin::addResultFromChild (string const& res) {
+    
+}
+
+void Dollar::addResultFromChild (string const& res) {
+    
+}
+
+void LParan::addResultFromChild (string const& res) {
+    potential () += res;
+}
+
+void RParan::addResultFromChild (string const& res) {
+    
+}
+
+void LBracket::addResultFromChild (string const& res) {
+    value () += res;
+}
+
+
 
 
 void Begin::_process (iter i) {
     
     if (*i == '$')
     {
-        context -> potential += '$';
-        context -> curr_it = i;
-        context -> begin_it = i;
-//        context -> transition (new DollarFound {context});
-     
-        context -> transition (new DollarFound {context});
+        potential () += '$';
+        transition <Dollar> ();
         
     } else
     {
-        context -> res += *i;
-        context -> curr_it = i;
-//        context -> res += *i;
-//        chainParent(i);
+        result () += *i;
     }
 }
-void DollarFound::_process (iter i) {
+void Dollar::_process (iter i) {
+    
     if (*i == '(')
     {
-//        context -> transition (new lParanthesisFound {context});
-      
-        context -> transition (new lParanthesisFound {context});
-        
-        context -> curr_it = i;
+        potential () += '(';
+        transition <LParan> ();
         
     } else
     {
-        context -> res += context -> potential;
-        context -> res += *i;
-        context -> potential = "";
         
         if (hasParent ())
         {
-            context -> curr_it = i;
-            chainParent (i);
-            context -> removeFromParent ();
+            parent () -> addResultFromChild (potential ());
+            removeFromParent ();
             
         } else
         {
-            context -> curr_it = i;
-            context -> transition (new Begin {context});
+            result () += potential();
+            result () += *i;
+            potential().clear ();
+            variable ().clear ();
+            value ().clear ();
+            transition <Begin> ();
         }
     }
 }
-void lParanthesisFound::_process (iter i) {
+void LParan::_process (iter i) {
+    
     if (*i == ')')
     {
-        context -> potential = "";
-//        context -> end_it = i + 1;
-//        context -> transition (new rParanthesisFound {context});
-
-        context -> transition (new rParanthesisFound {context});
+        variable() = string (potential().begin() + 2, potential().end());
+        potential () += ')';
+        transition <RParan> ();
         
     } else if (*i == '$')
     {
-        
-//        Context* pushed = context -> children.back ();
-//        pushed->transition (&dollarFound);
-//        context -> transition (new Repeat {context});
-        context -> potential += '$';
+        addChildContext <Dollar> ().potential += '$';
 
-        context -> transition (new Repeat {context});
-        
     } else
     {
-        context -> potential += *i;
-        context -> variable += *i;
-//        cout << *i << endl;
-//        cout << "hi" << endl;
-//        chainParent (i);
+        potential () += *i;
     }
     
-    ++context -> curr_it;
     
 }
 void Repeat::_process(iter i) {
 //    cout << *i << endl;
     if (*i == '(')
     {
-        context -> children.push_back (new Context {context->str, context -> declaredVariables, /*state*/nullptr, /*parent*/context, /*root*/false});
-        context -> children.back () -> state = new lParanthesisFound {context -> children.back ()};
-        context -> children.back () -> begin_it = i - 1;
-//        context -> transition (new lParanthesisFound {context});
+        addChildContext <LParan> ();
+//        context -> transition (new LParan {context});
         
-        context -> transition (new lParanthesisFound {context});
-        context -> curr_it = i - 2;
+        transition <LParan> ();
 //        context -> curr_it -= 2;
     }
 //    else if (*i == ')')
 //    {
-//        context -> transition ( new rParanthesisFound {context});
+//        context -> transition ( new RParan {context});
 //
 //    }
     else
@@ -333,171 +320,91 @@ void Repeat::_process(iter i) {
 //
 //        } else
 //        {
-//            context -> transition (new lParanthesisFound {context});
+//            context -> transition (new LParan {context});
         context -> variable += *i;
-        context -> transition (new lParanthesisFound {context});
+        transition<LParan>();
 //        }
     }
 }
-void rParanthesisFound::_process (iter i) {
+void RParan::_process (iter i) {
     
-//    context -> children.clear();
     
     if (*i == '{')
     {
-        context -> curly_begin = i;
-        context -> curr_it = i;
-//        context -> end_it = i + 1;
+
         context -> bracketStack.push ('{');
-//        context -> transition (new lCurlyBracketFound {context});
-  
-        context -> transition (new lCurlyBracketFound {context});
+
+        transition <LBracket> ();
         
     } else
     {
-        context -> res += context -> potential;
+        
         if (hasParent ())
         {
-            chainParent (i);
-            context -> removeFromParent ();
+            /**
+            om parent
+             **/
+            parent () -> addResultFromChild (potential ());
+            removeFromParent ();
         }
         else
         {
-            context -> curr_it = i;
-//            context -> transition (new Begin {context});
-
-            context -> transition (new Begin {context});
+            result () += potential ();
+            potential ().clear ();
+            variable ().clear ();
+            value ().clear ();
+            transition<Begin>();
         }
+        potential ().clear ();
+        variable ().clear ();
     }
 }
 
-void lCurlyBracketFound::_process (iter i) {
+void LBracket::_process (iter i) {
     if (*i == '}')
     {
-        context -> potential = "";
+//        context -> bracketStack.pop ();
         
-        context -> bracketStack.pop ();
-        
-        if (context -> bracketStack.empty ())
-        {
-            context -> end_it = i + 1;
+//        if (context -> bracketStack.empty ())
+//        {
+//        cout << value () << endl;
+//        auto declared
+        declare (variable (), value ());
             
             if (hasParent ())
             {
-//                context -> end_it = i;
-//                cout << "yay" << endl;
-//                cout << *context -> parent -> curr_it << endl;
-//                context -> print ();
-                
-                //parent ->
-//                context -> parent -> res += context -> res;
-//                cout << "oooo" << endl;
-//                cout << string (context -> parent -> begin_it, context -> end_it) << endl;
-                
-//                delete this;
-                
-//                cout << "parent: " << string (context -> parent -> begin_it, context -> end_it) << endl;
-//                cout << "child: " << string (context -> begin_it, context -> end_it) << endl;
-                
-                auto [a, b] = context -> myVariable ();
-//                cout << string (a, b) << " : " << string (context -> parent -> begin_it, i) << endl;
-                
-                
-                auto [c, d] = context -> myValue ();
-                
-//                string variable = string (a, b);
-//                string value = string (c, d);
-                string& variable = context -> variable;
-                string& value = context -> value;
-                context -> parent -> variable += value;
-//                cout << variable << " :: " << value << endl;
-//                context -> parent -> variable += value;
-                
-//                context -> parent -> variable += value;
-//                context -> parent -> value += value;
-                
-                auto declared = context -> declaredVariables.begin ();
-                for (; declared != context -> declaredVariables.end (); ++declared)
-                {
-                    if (declared -> first == variable)
-                    {
-                        declared -> second = value;
-                        break;
-                    }
-                }
-                if (declared == context -> declaredVariables.end ())
-                {
-                    context -> declaredVariables.emplace_back (variable, value);
-                }
-                
-                context -> res += context -> value;
-
-                context -> removeFromParent ();
-                
-            } else
-            {
-
-                string variable = context -> variable;
-                string value = context -> value;
-                
-                auto declared = context -> declaredVariables.begin ();
-                for (; declared != context -> declaredVariables.end (); ++declared)
-                {
-                    if (declared -> first == variable)
-                    {
-                        declared -> second = value;
-                        break;
-                    }
-                }
-                if (declared == context -> declaredVariables.end ())
-                {
-                    context -> declaredVariables.emplace_back (variable, value);
-                }
-                context -> res += context -> value;
-              
-//                context -> res += context -> value;
-                context -> variable = "";
-                context -> value = "";
-                context -> transition (new Done {context});
-//                context -> print ();
+                parent () -> addResultFromChild (value ());
+                removeFromParent ();
             }
-        } else
-        {
-            context -> value += *i;
-        }
-        
-    } else if (*i == '{')
-    {
-        context -> bracketStack.push ('{');
-        context -> value += *i;
-        
+            
+//        }
+            else
+            {
+                result () += value ();
+                potential().clear();
+                value().clear();
+                variable().clear();
+                transition <Begin> ();
+    //            value() += *i;
+            }
     }
-//    else if (*i == '$')
-//    {
         
-//        context -> children.push_back (new Context {context->str, context -> declaredVariables, /*state*/nullptr, /*parent*/context, /*root*/false});
-//        context -> children.back () -> state = new Begin {context -> children.back ()};
-////        context -> children.back () -> begin_it = i;
-//        context -> children.back() -> potential += '$';
-        
-//        context -> potential += '$';
-//        Context* child = new Context {context -> str, context -> declaredVariables, /*state*/nullptr, /*parent*/context, /*root*/false};
-//        child -> potential += '$';
-//        child -> state = new Begin {child};
-
-//        child -> state -> context =
-
-//        context -> children.push_back (child);
 //    }
-//    else if (*i == '$')
+//    else if (*i == '{')
 //    {
+//        context -> bracketStack.push ('{');
+//        value() += *i;
 //
-//    }
+//
+    else if (*i == '$')
+    {
+        addChildContext <Dollar>().potential += '$';
+    }
     else
     {
-//        context -> res += *i;
-        context -> potential += *i;
-        context -> value += *i;
+//        result () += *i;
+        potential () += *i;
+        value () += *i;
     }
 }
 
@@ -505,7 +412,7 @@ void Done::_process (iter i) {
     
 }
 
-//  context -> transition (dollarFound);
+//  context -> transition (Dollar);
         
 //        context -> process (i);
 }
@@ -599,10 +506,10 @@ string& State::variable () {
     return context -> variable;
 }
 string& State::result () {
-    return context -> res;
+    return result ();
 }
 string& State::potential () {
-    return context -> potential;
+    return potential();
 }
 void State::removeFromParent () {
     for (auto cont = context -> parent -> children.begin(); cont < context -> parent -> children.end(); ++cont) {
@@ -654,7 +561,7 @@ void LBracket::_process (iter i) {
             } else
             {
                 string warning = "variable \"" + variable () + "\" pasted but it has not yet been declared!";
-                cout << context -> res << endl;
+                cout << result () << endl;
                 throw runtime_error (warning);
             }
             
@@ -709,7 +616,7 @@ struct Process
     paste_var::Context pasteVar;
     string str;
     
-    Process (string const& str) : pasteVar {new paste_var::Begin{}, declaredVariables}, str (str), declVar (this->str, declaredVariables, new declare_var::Begin {nullptr})
+    Process (string const& str) : pasteVar {new paste_var::Begin{}, declaredVariables}, str (str), declVar {nullptr, declaredVariables, new declare_var::Begin}
     {
         declVar.state -> context = &declVar;
         pasteVar.state -> context = &pasteVar;
@@ -721,22 +628,18 @@ struct Process
         for (auto i = str.begin(); i < str.end(); ++i)
         {
             declVar.process (i);
-            if (declVar.state->done()) {
-//                cout << "done" << endl;
-//                cout << string (declVar.begin_it, declVar.end_it) << endl;
-//                declVar.print ();
-                declVar.state = new declare_var::Begin {&declVar};
-            }
-                
         }
         
-//        for (auto& i : declaredVariables)
-//            cout << i.first << " : " << i.second << endl;
+        for (auto& i : declaredVariables)
+            cout << i.first << " : " << i.second << endl;
         
         
     
         
-        str = declVar.res;
+        str = declVar.result;
+        cout << str << endl;
+        
+        return str;
 //        cout << str << endl;
         
         
