@@ -800,7 +800,7 @@ auto main(int argc,  char** argv) -> int
 
     
 #ifdef Debug
-#define ANTAL 2
+#define ANTAL TEST_FILE_COUNT
     
     BOOST_PP_REPEAT (TEST_FILE_COUNT, PRE, TEST_FILE_PRE_)
     BOOST_PP_REPEAT (TEST_FILE_COUNT, POST, TEST_FILE_POST_)
