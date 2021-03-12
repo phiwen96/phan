@@ -526,10 +526,10 @@ string& State::variable () {
     return context -> variable;
 }
 string& State::result () {
-    return result ();
+    return context -> res;
 }
 string& State::potential () {
-    return potential();
+    return context -> potential;
 }
 void State::removeFromParent () {
     for (auto cont = context -> parent -> children.begin(); cont < context -> parent -> children.end(); ++cont) {
@@ -542,8 +542,9 @@ void State::removeFromParent () {
 }
 
 void Begin::_process (iter i) {
+
     if (*i == '$'){
-        potential () += '$';
+        potential ().push_back ('$');
         transition <Dollar> ();
     }
     else {
