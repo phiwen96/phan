@@ -1,11 +1,6 @@
-nämn tre $($p){prejudikatinstans}er
-$(nej){${p} kukens fitta}
+nämn tre $(p){prejudikatinstans}er
+$(nej$(ja){sa jag}$(kuk){!}){${p} kukens fitta}
 
-$(sej$(aaa){AAA}$(bajs$(moa){kmkd}){tej$(haha){kmkm}}){kukens fitta}
-
-
-$(fej$(mej){rej}){${p} kukens fitta}
-$(kiss$(en){hej ja}){rumpa}
 $(hej){kukens fitta}
 ${hej}
 högsta domstolen är en ${p}

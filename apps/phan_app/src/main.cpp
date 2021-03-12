@@ -409,7 +409,7 @@ void lCurlyBracketFound::_process (iter i) {
                 string& variable = context -> variable;
                 string& value = context -> value;
                 context -> parent -> variable += value;
-                cout << variable << " :: " << value << endl;
+//                cout << variable << " :: " << value << endl;
 //                context -> parent -> variable += value;
                 
 //                context -> parent -> variable += value;
@@ -471,13 +471,13 @@ void lCurlyBracketFound::_process (iter i) {
         context -> value += *i;
         
     }
-    else if (*i == '$')
-    {
+//    else if (*i == '$')
+//    {
         
-        context -> children.push_back (new Context {context->str, context -> declaredVariables, /*state*/nullptr, /*parent*/context, /*root*/false});
-        context -> children.back () -> state = new DollarFound {context -> children.back ()};
-//        context -> children.back () -> begin_it = i;
-        context -> children.back() -> potential += '$';
+//        context -> children.push_back (new Context {context->str, context -> declaredVariables, /*state*/nullptr, /*parent*/context, /*root*/false});
+//        context -> children.back () -> state = new Begin {context -> children.back ()};
+////        context -> children.back () -> begin_it = i;
+//        context -> children.back() -> potential += '$';
         
 //        context -> potential += '$';
 //        Context* child = new Context {context -> str, context -> declaredVariables, /*state*/nullptr, /*parent*/context, /*root*/false};
@@ -487,7 +487,7 @@ void lCurlyBracketFound::_process (iter i) {
 //        child -> state -> context =
 
 //        context -> children.push_back (child);
-    }
+//    }
 //    else if (*i == '$')
 //    {
 //
@@ -514,18 +514,116 @@ void Done::_process (iter i) {
 //$(sej$(aaa){AAA}$(bajs$(moa){kmkd}){tej$(haha){kmkm}}){kukens fitta}
 //$(bajskmkd){tej$(haha){kmkd}}
 
+namespace paste_var {
 
+struct State;
+struct Begin;
+struct Dollar;
+struct LBracket;
+
+struct Context {
+    State* state;
+    vector <pair <string, string>>& declaredVariables;
+    inline static string res = "";
+    string variable;
+    iter begin_it;
+    void process (iter);
+    template <class T>
+    void transition ();
+    
+};
+
+struct State {
+    struct Context* context;
+    
+    virtual void process (iter i) {}
+};
+
+struct Begin : State {
+    void process (iter i);
+};
+
+struct Dollar : State {
+    using State::context;
+    void process (iter i);
+};
+
+struct LBracket : State {
+    void process (iter i);
+};
+void Context::process (iter i) {
+    state -> process (i);
+}
+template <class T>
+void Context::transition () {
+    state = new T;
+    state -> context = this;
+}
+
+void Begin::process (iter i) {
+    if (*i == '$'){
+        context -> begin_it = i;
+        context -> transition <Dollar> ();
+//        context -> state = new Dollar {};
+//        context -> state -> context = context;
+    }
+    else {
+        context -> res += *i;
+    }
+}
+void Dollar::process (iter i) {
+    if (*i == '{') {
+        context -> transition <LBracket> ();
+    }
+    else {
+        context -> res += *i;
+        context -> transition <Begin> ();
+    }
+}
+void LBracket::process (iter i) {
+    if (*i == '}') {
+        
+        
+//        cout << "var: " << context -> variable << endl << endl;
+//        cout << context -> declaredVariables.size() << endl;
+        auto declared = context -> declaredVariables.begin ();
+        
+        
+        for (; declared < context -> declaredVariables.end(); ++declared) {
+            if (declared -> first == context -> variable) {
+//                cout << "found" << endl;
+//                context -> str
+//                cout << declared -> first << " : " << declared -> second << endl;
+                context -> res += declared -> second;
+                break;
+            }
+        }
+        if (declared == context -> declaredVariables.end ()) {
+            throw runtime_error ("variable pasted but it has not yet been declared!");
+        }
+        
+        context -> variable.clear ();
+        context -> transition <Begin> ();
+    }
+    else {
+        context -> variable += *i;
+    }
+}
+
+}
 
 
 struct Process
 {
     vector <pair <string, string>>& declaredVariables;
     declare_var::Context declVar;
-    string& str;
+    paste_var::Context pasteVar;
+    string str;
     
-    Process (string& str, vector <pair <string, string>>& declaredVariables) : str (str), declaredVariables (declaredVariables), declVar (str, declaredVariables, new declare_var::Begin {nullptr})
+    Process (string& str, vector <pair <string, string>>& declaredVariables) : pasteVar {new paste_var::Begin{}, declaredVariables}, str (str), declaredVariables (declaredVariables), declVar (str, declaredVariables, new declare_var::Begin {nullptr})
     {
         declVar.state -> context = &declVar;
+        pasteVar.state -> context = &pasteVar;
     }
     
     void process ()
@@ -543,12 +641,34 @@ struct Process
                 
         }
         
-        for (auto& i : declaredVariables)
-            cout << i.first << " : " << i.second << endl;
+//        for (auto& i : declaredVariables)
+//            cout << i.first << " : " << i.second << endl;
+        
+        
+    
+        
+        str = declVar.res;
+//        cout << str << endl;
+        
         
         cout << endl << "-------------------" << endl;
+        for (auto i = str.begin(); i < str.end(); ++i)
+        {
+            pasteVar.process (i);
+//            if (declVar.state->done()) {
+////                cout << "done" << endl;
+////                cout << string (declVar.begin_it, declVar.end_it) << endl;
+////                declVar.print ();
+//                declVar.state = new declare_var::Begin {&declVar};
+//            }
+                
+        }
+        str = pasteVar.res;
+        cout << str << endl;
         
-        cout << declVar.res << endl;
+//        cout << pasteVar.res << endl;
+        
+//        cout << declVar.res << endl;
         
 //        cout << endl << "-------------------" << endl;
 //        cout << declVar.res << endl;
