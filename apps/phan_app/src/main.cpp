@@ -543,6 +543,9 @@ struct State {
 protected:
     template <class T> void transition ();
     optional <string> declared ();
+    string& variable ();
+    string& result ();
+    string& potential ();
     
 };
 
@@ -578,6 +581,15 @@ optional <string> State::declared () {
     }
     return {};
 }
+string& State::variable () {
+    return context -> variable;
+}
+string& State::result () {
+    return context -> res;
+}
+string& State::potential () {
+    return context -> potential;
+}
 
 void Begin::process (iter i) {
     if (*i == '$'){
@@ -587,7 +599,7 @@ void Begin::process (iter i) {
 //        context -> state -> context = context;
     }
     else {
-        context -> res += *i;
+        result () += *i;
     }
 }
 void Dollar::process (iter i) {
@@ -595,7 +607,7 @@ void Dollar::process (iter i) {
         transition <LBracket> ();
     }
     else {
-        context -> res += *i;
+        result () += *i;
         transition <Begin> ();
     }
 }
@@ -605,39 +617,32 @@ void LBracket::process (iter i) {
      */
     if (*i == '}') {
         
-        
-//        cout << "var: " << context -> variable << endl << endl;
-//        cout << context -> declaredVariables.size() << endl;
-        auto declared = State::declared();
+        optional <string> declared = State::declared();
         
         
-        auto exists = State::declared();
-        
-        
-        if (exists) {
-            context -> res += exists.value();
+        if (declared) {
+            result () += declared.value();
         } else {
             throw runtime_error ("variable pasted but it has not yet been declared!");
         }
        
-        
-        context -> variable.clear ();
+        variable ().clear ();
         transition <Begin> ();
     }
     else if (*i == '$') {
-        context -> potential += *i;
+        potential () += *i;
         transition <PotentialNest> ();
     }
     else {
-        context -> variable += *i;
+        variable () += *i;
     }
 }
 void PotentialNest::process (iter i) {
     switch (*i) {
         case '{':
-            context -> potential.clear ();
+            potential ().clear ();
             context -> begin_it = i;
-            transition<LBracket> ();
+            transition <LBracket> ();
             break;
             
         default:
