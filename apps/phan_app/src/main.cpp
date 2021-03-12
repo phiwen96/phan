@@ -525,12 +525,13 @@ struct LBracket;
 struct Context {
     State* state;
     vector <pair <string, string>>& declaredVariables;
+    Context* parent {nullptr};
     inline static string res = "";
     string variable;
     iter begin_it;
     string potential;
-    Context* parent {nullptr};
     vector <Context*> children;
+    
     void process (iter);
     
 };
@@ -538,35 +539,48 @@ struct Context {
 struct State {
     Context* context;
     
-    virtual void process (iter i) {}
+    void process (iter i);
     
 protected:
+    virtual void _process (iter i) {}
+    
     template <class T> void transition ();
     optional <string> declared ();
     string& variable ();
     string& result ();
     string& potential ();
+    void removeFromParent ();
     
 };
 
 struct Begin : State {
-    void process (iter i);
+    void _process (iter i);
 };
 
 struct Dollar : State {
     using State::context;
-    void process (iter i);
+    void _process (iter i);
 };
 
 struct LBracket : State {
-    void process (iter i);
+    void _process (iter i);
 };
 struct PotentialNest : State {
-    void process (iter i);
+    void _process (iter i);
 };
 
 void Context::process (iter i) {
     state -> process (i);
+}
+void State::process (iter i) {
+    if (auto& children = context -> children;
+        not children.empty ()) {
+        for (auto& child : children)
+            child -> process (i);
+    }
+    else {
+        _process (i);
+    }
 }
 template <class T>
 void State::transition () {
@@ -590,8 +604,16 @@ string& State::result () {
 string& State::potential () {
     return context -> potential;
 }
+void State::removeFromParent () {
+    for (auto cont = context -> children.begin(); cont < context -> children.end(); ++cont) {
+        if (*cont == context) {
+            context -> children.erase (cont);
+            break;
+        }
+    }
+}
 
-void Begin::process (iter i) {
+void Begin::_process (iter i) {
     if (*i == '$'){
         context -> begin_it = i;
         transition <Dollar> ();
@@ -602,7 +624,7 @@ void Begin::process (iter i) {
         result () += *i;
     }
 }
-void Dollar::process (iter i) {
+void Dollar::_process (iter i) {
     if (*i == '{') {
         transition <LBracket> ();
     }
@@ -611,7 +633,7 @@ void Dollar::process (iter i) {
         transition <Begin> ();
     }
 }
-void LBracket::process (iter i) {
+void LBracket::_process (iter i) {
     /**
      if never an ending bracket, must set res += variable and res += parent.potential
      */
@@ -625,11 +647,26 @@ void LBracket::process (iter i) {
         } else {
             throw runtime_error ("variable pasted but it has not yet been declared!");
         }
-       
+    
         variable ().clear ();
-        transition <Begin> ();
+        
+        if (auto* parent = context -> parent;
+            parent == nullptr) {
+            transition <Begin> ();
+        } else {
+            parent -> res += context -> res;
+            removeFromParent ();
+        }
+        
     }
     else if (*i == '$') {
+        State* childState = new Dollar;
+        Context* childContext = new Context {childState, context -> declaredVariables, context};
+        childContext -> begin_it = i;
+        childState -> context = childContext;
+        
+        context -> children.push_back (childContext);
+        
         potential () += *i;
         transition <PotentialNest> ();
     }
@@ -637,7 +674,7 @@ void LBracket::process (iter i) {
         variable () += *i;
     }
 }
-void PotentialNest::process (iter i) {
+void PotentialNest::_process (iter i) {
     switch (*i) {
         case '{':
             potential ().clear ();
