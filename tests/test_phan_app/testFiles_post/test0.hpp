@@ -1,20 +1,20 @@
-nämn tre $(p){prejudikatinstans}er
-$(nej$(ja){sa jag}$(kuk){!}){${p} kukens fitta}
+nämn tre prejudikatinstanser
+sa jag!prejudikatinstans kukens fitta
 
-$(hej){kukens fitta}
+kukens fitta
 kk
-$(he){he}
-${${he}j}
-högsta domstolen är en ${p}
-hej jag heter $(mitt namn){Philip Wenkel}
-Han heter ${mitt namn}
-Min syster heter $(mitt namn){Matilda Wenkel}
-Hans syster heter ${mitt namn}
-$(snopp){${mitt namn} ${hej} du där}
-$(kuk){horan ett två}
+he
+kukens fitta
+högsta domstolen är en prejudikatinstans
+hej jag heter Philip Wenkel
+Han heter Matilda Wenkel
+Min syster heter Matilda Wenkel
+Hans syster heter Matilda Wenkel
+Matilda Wenkel kukens fitta du där
+horan ett två
 
-jag har en brorsa som heter $(mina syskon){William Wenkel}
-jag har också en som heter $(mina syskon){Oscar wenkel}
-mina brorsor heter ${mina syskon}
+jag har en brorsa som heter William Wenkel
+jag har också en som heter Oscar wenkel
+mina brorsor heter Oscar wenkel
 
 

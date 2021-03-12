@@ -43,6 +43,7 @@ foreach (file_abs ${subfiles_abs})
     PRE_BUILD
     COMMAND $<TARGET_FILE:phan_app> ${file_abs} ${CMAKE_CURRENT_LIST_DIR}/testFiles_post/${file_rel}
   )
+  
   add_compile_definitions (${testFiles_definitions} TEST_FILE_PRE_${i}="${CMAKE_CURRENT_LIST_DIR}/testFiles_pre/${file_rel}")
   add_compile_definitions (${testFiles_definitions} TEST_FILE_POST_${i}="${CMAKE_CURRENT_LIST_DIR}/testFiles_post/${file_rel}")
   add_compile_definitions (${testFiles_definitions} TEST_FILE_FACIT_${i}="${CMAKE_CURRENT_LIST_DIR}/testFiles_facit/${file_rel}")

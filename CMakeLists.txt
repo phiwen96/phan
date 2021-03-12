@@ -108,7 +108,25 @@ if (CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
 	set (CMAKE_CXX_STANDARD 20)
 	set (CMAKE_CXX_STANDARD_REQUIRED ON)
     set(CMAKE_CXX_EXTENSIONS        ON)
-    set (CMAKE_BUILD_TYPE Debug)
+    # set (CMAKE_BUILD_TYPE Debug)
+
+	
+	# if(CMAKE_CONFIGURATION_TYPES)
+    #   if(NOT "Profile" IN_LIST CMAKE_CONFIGURATION_TYPES)
+    #       list(APPEND CMAKE_CONFIGURATION_TYPES Profile)
+    #   endif()
+  	# else()
+    #   set(allowableBuildTypes Debug Release Profile)
+    #   set_property(CACHE CMAKE_BUILD_TYPE PROPERTY
+    #                STRINGS "${allowableBuildTypes}")
+    #   if(NOT CMAKE_BUILD_TYPE)
+    #       set(CMAKE_BUILD_TYPE Debug CACHE STRING "" FORCE)
+    #   elseif(NOT CMAKE_BUILD_TYPE IN_LIST allowableBuildTypes)
+    #       message(FATAL_ERROR "Invalid build type: ${CMAKE_BUILD_TYPE}")
+    #   endif()
+  	# endif()
+
+
     # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Werror" CACHE STRING "C++ flags")
     # option(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 

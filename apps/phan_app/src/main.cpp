@@ -715,7 +715,7 @@ struct Process
         pasteVar.state -> context = &pasteVar;
     }
     
-    void process ()
+    string process ()
     {
         
         for (auto i = str.begin(); i < str.end(); ++i)
@@ -755,6 +755,7 @@ struct Process
         cout << endl << "-------------------" << endl;
         str = pasteVar.res;
         cout << str << endl;
+        return str;
         
 //        cout << pasteVar.res << endl;
         
@@ -774,6 +775,13 @@ struct Process
 
 auto main(int argc,  char** argv) -> int
 {
+    
+#ifdef HORA
+    cout << "DEBUG!!!" << endl;
+    
+#else
+    cout << "NOT DEBUG" << endl;
+#endif
     
 #ifdef DEBUGGING
     ifstream infile;
@@ -904,7 +912,7 @@ auto main(int argc,  char** argv) -> int
     };
     {
         Process p (outtext, declaredVariables);
-        p.process ();
+        outtext = p.process ();
     }
     
     
