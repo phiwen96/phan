@@ -800,51 +800,63 @@ auto main(int argc,  char** argv) -> int
 
     
 #ifdef Debug
-#define ANTAL TEST_FILE_COUNT
     
-    BOOST_PP_REPEAT (TEST_FILE_COUNT, PRE, TEST_FILE_PRE_)
-    BOOST_PP_REPEAT (TEST_FILE_COUNT, POST, TEST_FILE_POST_)
-    BOOST_PP_REPEAT (TEST_FILE_COUNT, FACIT, TEST_FILE_FACIT_)
+    #define ANTAL TEST_FILE_COUNT
     
     string warning = "";
     
-#define SINGEL 2
+    #define SINGEL 2
     
-#ifdef SINGEL
-    string inputPath = BOOST_PP_CAT (TEST_FILE_PRE_, SINGEL);
-    string outputPath = BOOST_PP_CAT (TEST_FILE_POST_, SINGEL);
-    string facitPath = BOOST_PP_CAT (TEST_FILE_FACIT_, SINGEL);
-    
-    app (inputPath, outputPath);
-    string result = readFileIntoString (outputPath);
-    string facit = readFileIntoString (facitPath);
-    
-    if (result != facit)
-    {
-        warning += "\n\n\t" + outputPath + "\n\t != " + "\n\t" + facitPath + "\n\n\n";
-    }
-#else
-    
-    for (int i = 0; i < ANTAL; ++i)
-    {
-        string inputPath = test_files_pre [i];
-        string outputPath = test_files_post [i];
-        string facitPath = test_files_facit [i];
+    #ifdef SINGEL
+        string inputPath = BOOST_PP_CAT (TEST_FILE_PRE_, SINGEL);
+        string outputPath = BOOST_PP_CAT (TEST_FILE_POST_, SINGEL);
+        string facitPath = BOOST_PP_CAT (TEST_FILE_FACIT_, SINGEL);
         
         app (inputPath, outputPath);
-        
         string result = readFileIntoString (outputPath);
         string facit = readFileIntoString (facitPath);
-    
-//        string post = readFileIntoString (test_files_post[i]);
-//        string facit = readFileIntoString (test_files_facit[i]);
- 
+        
         if (result != facit)
         {
-            warning += "\n\n\t" + test_files_post[i] + "\n\t != " + "\n\t" + test_files_facit[i] + "\n\n\n";
+            warning += "\n\n\t" + outputPath + "\n\t != " + "\n\t" + facitPath + "\n\n\n";
         }
-    }
-#endif
+    
+    #else
+        array <string, TEST_FILE_COUNT> test_files_pre;
+        array <string, TEST_FILE_COUNT> test_files_post;
+        array <string, TEST_FILE_COUNT> test_files_facit;
+
+
+        #define PRE(z, n, text) test_files_pre [n] = BOOST_PP_CAT (text, n);
+        #define POST(z, n, text) test_files_post [n] = BOOST_PP_CAT (text, n);
+        #define FACIT(z, n, text) test_files_facit [n] = BOOST_PP_CAT (text, n);
+    
+        BOOST_PP_REPEAT (TEST_FILE_COUNT, PRE, TEST_FILE_PRE_)
+        BOOST_PP_REPEAT (TEST_FILE_COUNT, POST, TEST_FILE_POST_)
+        BOOST_PP_REPEAT (TEST_FILE_COUNT, FACIT, TEST_FILE_FACIT_)
+    
+        for (int i = 0; i < ANTAL; ++i)
+        {
+            string inputPath = test_files_pre [i];
+            string outputPath = test_files_post [i];
+            string facitPath = test_files_facit [i];
+            
+            app (inputPath, outputPath);
+            
+            string result = readFileIntoString (outputPath);
+            string facit = readFileIntoString (facitPath);
+        
+    //        string post = readFileIntoString (test_files_post[i]);
+    //        string facit = readFileIntoString (test_files_facit[i]);
+     
+            if (result != facit)
+            {
+                warning += "\n\n\t" + test_files_post[i] + "\n\t != " + "\n\t" + test_files_facit[i] + "\n\n\n";
+            }
+        }
+    
+    #endif
+    
     if (warning != "") {
 //        throw runtime_error (warning);
         cout << warning << endl;
