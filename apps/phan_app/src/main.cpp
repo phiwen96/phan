@@ -808,6 +808,23 @@ auto main(int argc,  char** argv) -> int
     
     string warning = "";
     
+#define SINGEL 2
+    
+#ifdef SINGEL
+    string inputPath = BOOST_PP_CAT (TEST_FILE_PRE_, SINGEL);
+    string outputPath = BOOST_PP_CAT (TEST_FILE_POST_, SINGEL);
+    string facitPath = BOOST_PP_CAT (TEST_FILE_FACIT_, SINGEL);
+    
+    app (inputPath, outputPath);
+    string result = readFileIntoString (outputPath);
+    string facit = readFileIntoString (facitPath);
+    
+    if (result != facit)
+    {
+        warning += "\n\n\t" + outputPath + "\n\t != " + "\n\t" + facitPath + "\n\n\n";
+    }
+#else
+    
     for (int i = 0; i < ANTAL; ++i)
     {
         string inputPath = test_files_pre [i];
@@ -827,6 +844,7 @@ auto main(int argc,  char** argv) -> int
             warning += "\n\n\t" + test_files_post[i] + "\n\t != " + "\n\t" + test_files_facit[i] + "\n\n\n";
         }
     }
+#endif
     if (warning != "") {
 //        throw runtime_error (warning);
         cout << warning << endl;
