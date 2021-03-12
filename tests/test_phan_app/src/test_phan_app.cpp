@@ -15,21 +15,26 @@ using namespace std;
 //    }
 //}
 
-//array <string, TEST_FILE_COUNT> test_files;
+array <string, TEST_FILE_COUNT> test_files_pre;
+array <string, TEST_FILE_COUNT> test_files_post;
+array <string, TEST_FILE_COUNT> test_files_facit;
 
 
-#define MACRO(z, n, text) test_files [n] = BOOST_PP_CAT (text, n);
-
-
+#define PRE(z, n, text) test_files_pre [n] = BOOST_PP_CAT (text, n);
+#define POST(z, n, text) test_files_post [n] = BOOST_PP_CAT (text, n);
+#define FACIT(z, n, text) test_files_facit [n] = BOOST_PP_CAT (text, n);
 
 
 
 int main (int argc, char* argv[])
 {
-//    BOOST_PP_REPEAT (TEST_FILE_COUNT, MACRO, TEST_FILE_)
     
-//    for (auto i : test_files)
-//        cout << i << endl;
+    
+    BOOST_PP_REPEAT (TEST_FILE_COUNT, PRE, TEST_FILE_PRE_)
+    BOOST_PP_REPEAT (TEST_FILE_COUNT, POST, TEST_FILE_POST_)
+    
+    for (auto i : test_files_pre)
+        cout << i << endl;
 //    assert(argc == 0);
    
 //    cout << TARGET_FILE_0 << endl;

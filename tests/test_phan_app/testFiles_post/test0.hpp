@@ -2,6 +2,7 @@ nämn tre $(p){prejudikatinstans}er
 $(nej$(ja){sa jag}$(kuk){!}){${p} kukens fitta}
 
 $(hej){kukens fitta}
+kk
 $(he){he}
 ${${he}j}
 högsta domstolen är en ${p}

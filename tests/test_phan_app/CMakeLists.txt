@@ -36,17 +36,20 @@ foreach (file_abs ${subfiles_abs})
   get_filename_component (file_rel ${file_abs} NAME)
   message (${file_rel})
   # add_compile_definitions (${testFiles_definitions} TEST_FILE_${i}="${file}")
-  math (EXPR i ${i}+1)
+ 
   add_custom_command (
     TARGET ${self}
     DEPENDS ${file_abs}
     PRE_BUILD
     COMMAND $<TARGET_FILE:phan_app> ${file_abs} ${CMAKE_CURRENT_LIST_DIR}/testFiles_post/${file_rel}
   )
+  add_compile_definitions (${testFiles_definitions} TEST_FILE_PRE_${i}="${CMAKE_CURRENT_LIST_DIR}/testFiles_pre/${file_rel}")
+  add_compile_definitions (${testFiles_definitions} TEST_FILE_POST_${i}="${CMAKE_CURRENT_LIST_DIR}/testFiles_post/${file_rel}")
   target_sources (${self} PRIVATE ${CMAKE_CURRENT_LIST_DIR}/testFiles_pre/${file_rel})
   target_sources (${self} PRIVATE ${CMAKE_CURRENT_LIST_DIR}/testFiles_post/${file_rel})
   source_group(test_files\\pre FILES ${CMAKE_CURRENT_LIST_DIR}/testFiles_pre/${file_rel})   # Overrides both of the above
   source_group(test_files\\post FILES ${CMAKE_CURRENT_LIST_DIR}/testFiles_post/${file_rel})   # Overrides both of the above
+  math (EXPR i ${i}+1)
 endforeach ()
 
 # set_target_properties (gpu_gen_definitions PROPERTIES FOLDER "phulkan_generator/Generators/gpu_generate_class/Generators")
@@ -63,11 +66,11 @@ endforeach ()
 
 
 
-# add_compile_definitions (${testFiles_definitions} TEST_FILE_COUNT=${i})
+add_compile_definitions (${testFiles_definitions} TEST_FILE_COUNT=${i})
 
+# target_compile_definitions (${self} PRIVATE TEST_FILE_COUNT=${i})
 
-
-# target_compile_definitions (${self} PRIVATE ${testFiles_definitions})
+target_compile_definitions (${self} PRIVATE ${testFiles_definitions})
 
 
 set_target_properties (${self} PROPERTIES CXX_STANDARD 20)
