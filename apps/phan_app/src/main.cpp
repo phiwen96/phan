@@ -430,9 +430,9 @@ struct Dollar;
 struct LBracket;
 
 struct Context {
-    State* state;
-    vector <pair <string, string>>& declaredVariables;
     Context* parent {nullptr};
+    vector <pair <string, string>>& declaredVariables;
+    State* state;
     inline static string res = "";
     string variable;
     iter begin_it;
@@ -450,7 +450,8 @@ struct State {
     
 protected:
     virtual void _process (iter i) {}
-    
+    bool hasParent ();
+    State* parent ();
     template <class T> void transition ();
     optional <string> declared ();
     string& variable ();
@@ -458,6 +459,7 @@ protected:
     string& potential ();
     void removeFromParent ();
     virtual void addResultFromChild (string const& res) {}
+    template <class state> Context& addChildContext ();
     
 };
 
@@ -480,6 +482,12 @@ struct PotentialNest : State {
 void Context::process (iter i) {
     state -> process (i);
 }
+bool State::hasParent () {
+    return context -> parent == nullptr;
+}
+State* State::parent () {
+    return context -> parent -> state;
+}
 void State::process (iter i) {
     if (auto& children = context -> children;
         not children.empty ()) {
@@ -490,10 +498,21 @@ void State::process (iter i) {
         _process (i);
     }
 }
+template <class state>
+Context& State::addChildContext () {
+    State* childState = new state;
+    Context* childContext = new Context {context, context->declaredVariables, childState};
+    childState -> context = childContext;
+    context -> children.push_back (childContext);
+    return *childContext;
+}
+
 template <class T>
 void State::transition () {
+    cout << "transitioning from " << typeid (*context -> state).name () << " to ";
     context -> state = new T;
     context -> state -> context = context;
+    cout << typeid (*context -> state).name () << endl;
 }
 optional <string> State::declared () {
     for (auto d = context -> declaredVariables.begin (); d != context -> declaredVariables.end(); ++d) {
@@ -524,22 +543,29 @@ void State::removeFromParent () {
 
 void Begin::_process (iter i) {
     if (*i == '$'){
-        context -> begin_it = i;
+        potential () += '$';
         transition <Dollar> ();
-//        context -> state = new Dollar {};
-//        context -> state -> context = context;
     }
     else {
         result () += *i;
     }
 }
 void Dollar::_process (iter i) {
+    
+    potential () += *i;
+    
     if (*i == '{') {
         transition <LBracket> ();
     }
     else {
-        result () += *i;
-        transition <Begin> ();
+        if (hasParent ()) {
+            addResultFromChild (potential ());
+            removeFromParent ();
+        } else {
+            result () += potential ();
+            potential ().clear ();
+            transition <Begin> ();
+        }
     }
 }
 void LBracket::_process (iter i) {
@@ -548,47 +574,35 @@ void LBracket::_process (iter i) {
      */
     if (*i == '}') {
         
-        
-        
         optional <string> declared = State::declared();
         
-        if (auto* parent = context -> parent;
-            parent == nullptr)
+        if (declared)
         {
-            if (declared)
-            {
-                result () += declared.value();
-                
-            } else
-            {
-                string warning = "variable \"" + variable () + "\" pasted but it has not yet been declared!";
-                cout << result () << endl;
-                throw runtime_error (warning);
-            }
+            variable () += declared.value ();
             
+        } else
+        {
+            string warning = "variable \"" + variable () + "\" pasted but it has not yet been declared!";
+            cout << result () << endl;
+            throw runtime_error (warning);
+        }
+        
+        if ( not hasParent ())
+        {
+            result () += variable ();
+            potential ().clear ();
+            variable ().clear ();
             transition <Begin> ();
             
         } else
         {
-            context -> parent -> variable += variable ();
+            addResultFromChild (variable ());
             removeFromParent ();
         }
         
-        
-        
-    
-        variable ().clear ();
-        
-
-        
     }
     else if (*i == '$') {
-        State* childState = new Dollar;
-        Context* childContext = new Context {childState, context -> declaredVariables, context};
-//        childContext -> begin_it = i;
-        childState -> context = childContext;
-        
-        context -> children.push_back (childContext);
+        addChildContext <Dollar> ().potential.push_back ('$');
     }
     else {
         variable () += *i;
@@ -617,7 +631,7 @@ struct Process
     paste_var::Context pasteVar;
     string str;
     
-    Process (string const& str) : pasteVar {new paste_var::Begin{}, declaredVariables}, str (str), declVar {nullptr, declaredVariables, new declare_var::Begin}
+    Process (string const& str) : pasteVar {nullptr, declaredVariables, new paste_var::Begin{}}, str (str), declVar {nullptr, declaredVariables, new declare_var::Begin}
     {
         declVar.state -> context = &declVar;
         pasteVar.state -> context = &pasteVar;
@@ -639,16 +653,17 @@ struct Process
         
         str = declVar.result;
         
-        cout << str << endl;
+//        cout << str << endl;
 //
-        return str;
+//        return str;
 //        cout << str << endl;
         
         
 //        cout << endl << "-------------------" << endl;
-        for (auto i = str.begin(); i < str.end(); ++i)
+        for (auto j = str.begin(); j < str.end(); ++j)
         {
-            pasteVar.process (i);
+//            cout << *j << endl;
+            pasteVar.process (j);
 //            if (declVar.state->done()) {
 ////                cout << "done" << endl;
 ////                cout << string (declVar.begin_it, declVar.end_it) << endl;
@@ -657,9 +672,10 @@ struct Process
 //            }
                 
         }
-        cout << endl << "-------------------" << endl;
+//        cout << endl << "-------------------" << endl;
+////        str = pasteVar.res;
+//        cout << str << endl;
         str = pasteVar.res;
-        cout << str << endl;
         return str;
         
 //        cout << pasteVar.res << endl;
@@ -698,7 +714,7 @@ auto main(int argc,  char** argv) -> int
     
     string warning = "";
     
-    #define TEST_SINGEL_FILE 2.hpp
+    #define TEST_SINGEL_FILE declpaste.hpp
     
     #ifdef TEST_SINGEL_FILE
         string inputPath =  string (TEST_FILES_PRE_PATH) + string (BOOST_PP_STRINGIZE (TEST_SINGEL_FILE));

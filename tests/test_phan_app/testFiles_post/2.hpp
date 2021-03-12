@@ -1,2 +1,0 @@
-Philip
-ja precis
