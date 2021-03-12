@@ -34,6 +34,13 @@ ph_subfiles (TARGET ${CMAKE_CURRENT_LIST_DIR}/testFiles_pre RESULT subfiles_abs 
 #   message (${a})
 # endforeach ()
 
+target_compile_definitions (app 
+    PRIVATE 
+      $<$<CONFIG:Debug>:TEST_FILES_PRE_PATH="${CMAKE_CURRENT_LIST_DIR}/testFiles_pre/">
+      $<$<CONFIG:Debug>:TEST_FILES_POST_PATH="${CMAKE_CURRENT_LIST_DIR}/testFiles_post/">
+      $<$<CONFIG:Debug>:TEST_FILES_FACIT_PATH="${CMAKE_CURRENT_LIST_DIR}/testFiles_facit/">
+  )
+
 
 math (EXPR i 0)
 

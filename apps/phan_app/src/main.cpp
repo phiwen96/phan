@@ -805,13 +805,13 @@ auto main(int argc,  char** argv) -> int
     
     string warning = "";
     
-    #define SINGEL 2
+    #define SINGEL 2.hpp
     
     #ifdef SINGEL
-        string inputPath = BOOST_PP_CAT (TEST_FILE_PRE_, SINGEL);
-        string outputPath = BOOST_PP_CAT (TEST_FILE_POST_, SINGEL);
-        string facitPath = BOOST_PP_CAT (TEST_FILE_FACIT_, SINGEL);
-        
+        string inputPath =  string (TEST_FILES_PRE_PATH) + string (BOOST_PP_STRINGIZE (SINGEL));
+        string outputPath = string (TEST_FILES_POST_PATH) + string (BOOST_PP_STRINGIZE (SINGEL));
+        string facitPath = string (TEST_FILES_FACIT_PATH) + string (BOOST_PP_STRINGIZE (SINGEL));
+    
         app (inputPath, outputPath);
         string result = readFileIntoString (outputPath);
         string facit = readFileIntoString (facitPath);
