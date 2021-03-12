@@ -181,10 +181,10 @@ void State::removeFromParent () {
 template <class T>
 void State::transition () {
     
-    cout << "transitioning from " << typeid (*context -> state).name () << " to ";
+//    cout << "transitioning from " << typeid (*context -> state).name () << " to ";
     context -> state = new T;
     context -> state -> context = context;
-    cout << typeid (*context -> state).name () << endl;
+//    cout << typeid (*context -> state).name () << endl;
 }
 
 template <class state>
@@ -457,6 +457,7 @@ protected:
     string& result ();
     string& potential ();
     void removeFromParent ();
+    virtual void addResultFromChild (string const& res) {}
     
 };
 
@@ -630,15 +631,16 @@ struct Process
             declVar.process (i);
         }
         
-        for (auto& i : declaredVariables)
-            cout << i.first << " : " << i.second << endl;
+//        for (auto& i : declaredVariables)
+//            cout << i.first << " : " << i.second << endl;
         
         
     
         
         str = declVar.result;
-        cout << str << endl;
         
+        cout << str << endl;
+//
         return str;
 //        cout << str << endl;
         
