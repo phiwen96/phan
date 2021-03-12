@@ -5,6 +5,7 @@
 #include <functional>
 #include <algorithm>
 #include <vector>
+#include <optional>
 
 
 
@@ -527,16 +528,22 @@ struct Context {
     inline static string res = "";
     string variable;
     iter begin_it;
+    string potential;
+    Context* parent {nullptr};
+    vector <Context*> children;
     void process (iter);
-    template <class T>
-    void transition ();
     
 };
 
 struct State {
-    struct Context* context;
+    Context* context;
     
     virtual void process (iter i) {}
+    
+protected:
+    template <class T> void transition ();
+    optional <string> declared ();
+    
 };
 
 struct Begin : State {
@@ -551,19 +558,31 @@ struct Dollar : State {
 struct LBracket : State {
     void process (iter i);
 };
+struct PotentialNest : State {
+    void process (iter i);
+};
+
 void Context::process (iter i) {
     state -> process (i);
 }
 template <class T>
-void Context::transition () {
-    state = new T;
-    state -> context = this;
+void State::transition () {
+    context -> state = new T;
+    context -> state -> context = context;
+}
+optional <string> State::declared () {
+    for (auto d = context -> declaredVariables.begin (); d < context -> declaredVariables.end(); ++d) {
+        if (d -> first == context -> variable) {
+            return optional{d->second};
+        }
+    }
+    return {};
 }
 
 void Begin::process (iter i) {
     if (*i == '$'){
         context -> begin_it = i;
-        context -> transition <Dollar> ();
+        transition <Dollar> ();
 //        context -> state = new Dollar {};
 //        context -> state -> context = context;
     }
@@ -573,40 +592,56 @@ void Begin::process (iter i) {
 }
 void Dollar::process (iter i) {
     if (*i == '{') {
-        context -> transition <LBracket> ();
+        transition <LBracket> ();
     }
     else {
         context -> res += *i;
-        context -> transition <Begin> ();
+        transition <Begin> ();
     }
 }
 void LBracket::process (iter i) {
+    /**
+     if never an ending bracket, must set res += variable and res += parent.potential
+     */
     if (*i == '}') {
         
         
 //        cout << "var: " << context -> variable << endl << endl;
 //        cout << context -> declaredVariables.size() << endl;
-        auto declared = context -> declaredVariables.begin ();
+        auto declared = State::declared();
         
         
-        for (; declared < context -> declaredVariables.end(); ++declared) {
-            if (declared -> first == context -> variable) {
-//                cout << "found" << endl;
-//                context -> str
-//                cout << declared -> first << " : " << declared -> second << endl;
-                context -> res += declared -> second;
-                break;
-            }
-        }
-        if (declared == context -> declaredVariables.end ()) {
+        auto exists = State::declared();
+        
+        
+        if (exists) {
+            context -> res += exists.value();
+        } else {
             throw runtime_error ("variable pasted but it has not yet been declared!");
         }
+       
         
         context -> variable.clear ();
-        context -> transition <Begin> ();
+        transition <Begin> ();
+    }
+    else if (*i == '$') {
+        context -> potential += *i;
+        transition <PotentialNest> ();
     }
     else {
         context -> variable += *i;
+    }
+}
+void PotentialNest::process (iter i) {
+    switch (*i) {
+        case '{':
+            context -> potential.clear ();
+            context -> begin_it = i;
+            transition<LBracket> ();
+            break;
+            
+        default:
+            break;
     }
 }
 
