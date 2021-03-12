@@ -588,7 +588,7 @@ void State::transition () {
     context -> state -> context = context;
 }
 optional <string> State::declared () {
-    for (auto d = context -> declaredVariables.begin (); d < context -> declaredVariables.end(); ++d) {
+    for (auto d = context -> declaredVariables.begin (); d != context -> declaredVariables.end(); ++d) {
         if (d -> first == context -> variable) {
             return optional{d->second};
         }
@@ -605,9 +605,10 @@ string& State::potential () {
     return context -> potential;
 }
 void State::removeFromParent () {
-    for (auto cont = context -> children.begin(); cont < context -> children.end(); ++cont) {
+    for (auto cont = context -> parent -> children.begin(); cont < context -> parent -> children.end(); ++cont) {
         if (*cont == context) {
-            context -> children.erase (cont);
+//            cout << "removing child context from parent context" << endl;
+            context -> parent -> children.erase (cont);
             break;
         }
     }
@@ -639,36 +640,47 @@ void LBracket::_process (iter i) {
      */
     if (*i == '}') {
         
+        
+        
         optional <string> declared = State::declared();
         
-        
-        if (declared) {
-            result () += declared.value();
-        } else {
-            throw runtime_error ("variable pasted but it has not yet been declared!");
+        if (auto* parent = context -> parent;
+            parent == nullptr)
+        {
+            if (declared)
+            {
+                result () += declared.value();
+                
+            } else
+            {
+                string warning = "variable \"" + variable () + "\" pasted but it has not yet been declared!";
+                cout << context -> res << endl;
+                throw runtime_error (warning);
+            }
+            
+            transition <Begin> ();
+            
+        } else
+        {
+            context -> parent -> variable += variable ();
+            removeFromParent ();
         }
+        
+        
+        
     
         variable ().clear ();
         
-        if (auto* parent = context -> parent;
-            parent == nullptr) {
-            transition <Begin> ();
-        } else {
-            parent -> res += context -> res;
-            removeFromParent ();
-        }
+
         
     }
     else if (*i == '$') {
         State* childState = new Dollar;
         Context* childContext = new Context {childState, context -> declaredVariables, context};
-        childContext -> begin_it = i;
+//        childContext -> begin_it = i;
         childState -> context = childContext;
         
         context -> children.push_back (childContext);
-        
-        potential () += *i;
-        transition <PotentialNest> ();
     }
     else {
         variable () += *i;
@@ -728,7 +740,7 @@ struct Process
 //        cout << str << endl;
         
         
-        cout << endl << "-------------------" << endl;
+//        cout << endl << "-------------------" << endl;
         for (auto i = str.begin(); i < str.end(); ++i)
         {
             pasteVar.process (i);
@@ -740,6 +752,7 @@ struct Process
 //            }
                 
         }
+        cout << endl << "-------------------" << endl;
         str = pasteVar.res;
         cout << str << endl;
         

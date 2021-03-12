@@ -2,7 +2,8 @@ nämn tre $(p){prejudikatinstans}er
 $(nej$(ja){sa jag}$(kuk){!}){${p} kukens fitta}
 
 $(hej){kukens fitta}
-${hej${hej}}
+$(he){he}
+${${he}j}
 högsta domstolen är en ${p}
 hej jag heter $(mitt namn){Philip Wenkel}
 Han heter ${mitt namn}
