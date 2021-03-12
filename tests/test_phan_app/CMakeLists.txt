@@ -45,10 +45,13 @@ foreach (file_abs ${subfiles_abs})
   )
   add_compile_definitions (${testFiles_definitions} TEST_FILE_PRE_${i}="${CMAKE_CURRENT_LIST_DIR}/testFiles_pre/${file_rel}")
   add_compile_definitions (${testFiles_definitions} TEST_FILE_POST_${i}="${CMAKE_CURRENT_LIST_DIR}/testFiles_post/${file_rel}")
+  add_compile_definitions (${testFiles_definitions} TEST_FILE_FACIT_${i}="${CMAKE_CURRENT_LIST_DIR}/testFiles_facit/${file_rel}")
   target_sources (${self} PRIVATE ${CMAKE_CURRENT_LIST_DIR}/testFiles_pre/${file_rel})
   target_sources (${self} PRIVATE ${CMAKE_CURRENT_LIST_DIR}/testFiles_post/${file_rel})
+  target_sources (${self} PRIVATE ${CMAKE_CURRENT_LIST_DIR}/testFiles_facit/${file_rel})
   source_group(test_files\\pre FILES ${CMAKE_CURRENT_LIST_DIR}/testFiles_pre/${file_rel})   # Overrides both of the above
   source_group(test_files\\post FILES ${CMAKE_CURRENT_LIST_DIR}/testFiles_post/${file_rel})   # Overrides both of the above
+  source_group(test_files\\facit FILES ${CMAKE_CURRENT_LIST_DIR}/testFiles_facit/${file_rel})
   math (EXPR i ${i}+1)
 endforeach ()
 
