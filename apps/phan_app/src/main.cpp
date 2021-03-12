@@ -769,24 +769,12 @@ struct Process
 
 
 
-#ifdef Debug
-    array <string, TEST_FILE_COUNT> test_files_pre;
-    array <string, TEST_FILE_COUNT> test_files_post;
-    array <string, TEST_FILE_COUNT> test_files_facit;
-
-
-    #define PRE(z, n, text) test_files_pre [n] = BOOST_PP_CAT (text, n);
-    #define POST(z, n, text) test_files_post [n] = BOOST_PP_CAT (text, n);
-    #define FACIT(z, n, text) test_files_facit [n] = BOOST_PP_CAT (text, n);
-#endif
-
-
 
 void app (string const& inputPath, string const& outputPath) {
  
     ofstream outputFile (outputPath);
     
-    if (!outputFile.is_open())
+    if (!outputFile.is_open ())
         throw runtime_error ("could not open file " + outputPath);
     
     outputFile << Process {readFileIntoString (inputPath)}.process ();
@@ -805,12 +793,12 @@ auto main(int argc,  char** argv) -> int
     
     string warning = "";
     
-    #define SINGEL 2.hpp
+    #define TEST_SINGEL_FILE 2.hpp
     
-    #ifdef SINGEL
-        string inputPath =  string (TEST_FILES_PRE_PATH) + string (BOOST_PP_STRINGIZE (SINGEL));
-        string outputPath = string (TEST_FILES_POST_PATH) + string (BOOST_PP_STRINGIZE (SINGEL));
-        string facitPath = string (TEST_FILES_FACIT_PATH) + string (BOOST_PP_STRINGIZE (SINGEL));
+    #ifdef TEST_SINGEL_FILE
+        string inputPath =  string (TEST_FILES_PRE_PATH) + string (BOOST_PP_STRINGIZE (TEST_SINGEL_FILE));
+        string outputPath = string (TEST_FILES_POST_PATH) + string (BOOST_PP_STRINGIZE (TEST_SINGEL_FILE));
+        string facitPath = string (TEST_FILES_FACIT_PATH) + string (BOOST_PP_STRINGIZE (TEST_SINGEL_FILE));
     
         app (inputPath, outputPath);
         string result = readFileIntoString (outputPath);
@@ -830,6 +818,8 @@ auto main(int argc,  char** argv) -> int
         #define PRE(z, n, text) test_files_pre [n] = BOOST_PP_CAT (text, n);
         #define POST(z, n, text) test_files_post [n] = BOOST_PP_CAT (text, n);
         #define FACIT(z, n, text) test_files_facit [n] = BOOST_PP_CAT (text, n);
+    
+      
     
         BOOST_PP_REPEAT (TEST_FILE_COUNT, PRE, TEST_FILE_PRE_)
         BOOST_PP_REPEAT (TEST_FILE_COUNT, POST, TEST_FILE_POST_)
