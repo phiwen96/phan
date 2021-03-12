@@ -800,13 +800,15 @@ auto main(int argc,  char** argv) -> int
 
     
 #ifdef Debug
+#define ANTAL 2
+    
     BOOST_PP_REPEAT (TEST_FILE_COUNT, PRE, TEST_FILE_PRE_)
     BOOST_PP_REPEAT (TEST_FILE_COUNT, POST, TEST_FILE_POST_)
     BOOST_PP_REPEAT (TEST_FILE_COUNT, FACIT, TEST_FILE_FACIT_)
     
     string warning = "";
     
-    for (int i = 0; i < TEST_FILE_COUNT; ++i)
+    for (int i = 0; i < ANTAL; ++i)
     {
         string inputPath = test_files_pre [i];
         string outputPath = test_files_post [i];
