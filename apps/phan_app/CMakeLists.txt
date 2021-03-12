@@ -52,6 +52,8 @@ file (GLOB_RECURSE SOURCE_LIST ${CMAKE_CURRENT_LIST_DIR}/src/*.cpp)
 
 add_executable(${self} ${SOURCE_LIST} ${HEADER_LIST})
 
+set_target_properties(${self} PROPERTIES OUTPUT_NAME ${PROJECT_NAME})
+
 target_include_directories (${self} PRIVATE ${CMAKE_CURRENT_LIST_DIR}/include)
 
 ph_precompile (TARGET ${self} PRIVATE PCH ${std_pch} ${boost_pch})
