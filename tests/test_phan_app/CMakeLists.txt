@@ -1,10 +1,18 @@
-ph_define_self (self)
+# ph_define_self (self)
+set (self with_files)
 
 # message (${self})
 
 ph_fetch (catch2)
 
 add_executable(${self} ${CMAKE_CURRENT_LIST_DIR}/src/${self}.cpp)
+
+
+
+set_target_properties (${self} PROPERTIES FOLDER "phan/app/test")
+
+set_target_properties(${self} PROPERTIES PROJECT_LABEL "files")
+
 
 # ph_precompile (TARGET ${self}
 #   PUBLIC 
@@ -32,17 +40,33 @@ math (EXPR i 0)
 set (testFiles_definitions)
 
 foreach (file_abs ${subfiles_abs})
-  message (${file_abs})
+  # message (${file_abs})
   get_filename_component (file_rel ${file_abs} NAME)
-  message (${file_rel})
+  # message (${file_rel})
   # add_compile_definitions (${testFiles_definitions} TEST_FILE_${i}="${file}")
  
   add_custom_command (
     TARGET ${self}
     DEPENDS ${file_abs}
     PRE_BUILD
-    COMMAND $<TARGET_FILE:phan_app> ${file_abs} ${CMAKE_CURRENT_LIST_DIR}/testFiles_post/${file_rel}
+    COMMAND $<TARGET_FILE:app> ${file_abs} ${CMAKE_CURRENT_LIST_DIR}/testFiles_post/${file_rel}
   )
+  target_compile_definitions (app 
+    PRIVATE 
+      $<$<CONFIG:Debug>:TEST_FILE_COUNT=${i}>
+      $<$<CONFIG:Debug>:TEST_FILE_PRE_${i}="${CMAKE_CURRENT_LIST_DIR}/testFiles_pre/${file_rel}">
+      $<$<CONFIG:Debug>:TEST_FILE_POST_${i}="${CMAKE_CURRENT_LIST_DIR}/testFiles_post/${file_rel}">
+      $<$<CONFIG:Debug>:TEST_FILE_FACIT_${i}="${CMAKE_CURRENT_LIST_DIR}/testFiles_facit/${file_rel}">
+  )
+  
+  # target_sources (${PROJECT_NAME}_app  PRIVATE $<$<CONFIG:Debug>${CMAKE_CURRENT_LIST_DIR}/testFiles_pre/${file_rel}>)
+  # target_sources (${PROJECT_NAME}_app  PRIVATE $<$<CONFIG:Debug>${CMAKE_CURRENT_LIST_DIR}/testFiles_post/${file_rel}>)
+  # target_sources (${PROJECT_NAME}_app  PRIVATE $<$<CONFIG:Debug>${CMAKE_CURRENT_LIST_DIR}/testFiles_facit/${file_rel}>)
+  # source_group(test_files\\pre FILES $<$<CONFIG:Debug>${CMAKE_CURRENT_LIST_DIR}/testFiles_pre/${file_rel}>)   # Overrides both of the above
+  # source_group(test_files\\post FILES $<$<CONFIG:Debug>${CMAKE_CURRENT_LIST_DIR}/testFiles_post/${file_rel}>)   # Overrides both of the above
+  # source_group(test_files\\facit FILES $<$<CONFIG:Debug>${CMAKE_CURRENT_LIST_DIR}/testFiles_facit/${file_rel}>)
+
+
   
   add_compile_definitions (${testFiles_definitions} TEST_FILE_PRE_${i}="${CMAKE_CURRENT_LIST_DIR}/testFiles_pre/${file_rel}")
   add_compile_definitions (${testFiles_definitions} TEST_FILE_POST_${i}="${CMAKE_CURRENT_LIST_DIR}/testFiles_post/${file_rel}")
@@ -55,6 +79,8 @@ foreach (file_abs ${subfiles_abs})
   source_group(test_files\\facit FILES ${CMAKE_CURRENT_LIST_DIR}/testFiles_facit/${file_rel})
   math (EXPR i ${i}+1)
 endforeach ()
+
+
 
 # set_target_properties (gpu_gen_definitions PROPERTIES FOLDER "phulkan_generator/Generators/gpu_generate_class/Generators")
 
@@ -75,6 +101,10 @@ add_compile_definitions (${testFiles_definitions} TEST_FILE_COUNT=${i})
 # target_compile_definitions (${self} PRIVATE TEST_FILE_COUNT=${i})
 
 target_compile_definitions (${self} PRIVATE ${testFiles_definitions})
+
+
+
+target_compile_definitions (app PRIVATE $<$<CONFIG:Debug>:TEST_FILE_COUNT=${i}>)
 
 
 set_target_properties (${self} PROPERTIES CXX_STANDARD 20)

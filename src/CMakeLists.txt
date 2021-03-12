@@ -31,6 +31,9 @@ ph_get_property (root_name root_name)
 
 add_library (${root_name} SHARED ${SOURCE_LIST} ${HEADER_LIST})
 
+
+set_target_properties (${root_name} PROPERTIES FOLDER "phan/lib")
+
 # message(${root_name})
 
 # set ( PROJ_SOURCES

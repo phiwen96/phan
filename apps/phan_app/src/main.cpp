@@ -704,12 +704,12 @@ void PotentialNest::_process (iter i) {
 
 struct Process
 {
-    vector <pair <string, string>>& declaredVariables;
+    vector <pair <string, string>> declaredVariables;
     declare_var::Context declVar;
     paste_var::Context pasteVar;
     string str;
     
-    Process (string& str, vector <pair <string, string>>& declaredVariables) : pasteVar {new paste_var::Begin{}, declaredVariables}, str (str), declaredVariables (declaredVariables), declVar (str, declaredVariables, new declare_var::Begin {nullptr})
+    Process (string const& str) : pasteVar {new paste_var::Begin{}, declaredVariables}, str (str), declVar (this->str, declaredVariables, new declare_var::Begin {nullptr})
     {
         declVar.state -> context = &declVar;
         pasteVar.state -> context = &pasteVar;
@@ -769,18 +769,68 @@ struct Process
 
 
 
+#ifdef Debug
+    array <string, TEST_FILE_COUNT> test_files_pre;
+    array <string, TEST_FILE_COUNT> test_files_post;
+    array <string, TEST_FILE_COUNT> test_files_facit;
 
+
+    #define PRE(z, n, text) test_files_pre [n] = BOOST_PP_CAT (text, n);
+    #define POST(z, n, text) test_files_post [n] = BOOST_PP_CAT (text, n);
+    #define FACIT(z, n, text) test_files_facit [n] = BOOST_PP_CAT (text, n);
+#endif
+
+
+
+void app (string const& inputPath, string const& outputPath) {
+ 
+    ofstream outputFile (outputPath);
+    
+    if (!outputFile.is_open())
+        throw runtime_error ("could not open file " + outputPath);
+    
+    outputFile << Process {readFileIntoString (inputPath)}.process ();
+    outputFile.close ();
+}
 
 
 
 auto main(int argc,  char** argv) -> int
 {
+
     
-#ifdef HORA
-    cout << "DEBUG!!!" << endl;
+#ifdef Debug
+    BOOST_PP_REPEAT (TEST_FILE_COUNT, PRE, TEST_FILE_PRE_)
+    BOOST_PP_REPEAT (TEST_FILE_COUNT, POST, TEST_FILE_POST_)
+    BOOST_PP_REPEAT (TEST_FILE_COUNT, FACIT, TEST_FILE_FACIT_)
     
-#else
-    cout << "NOT DEBUG" << endl;
+    string warning = "";
+    
+    for (int i = 0; i < TEST_FILE_COUNT; ++i)
+    {
+        string inputPath = test_files_pre [i];
+        string outputPath = test_files_post [i];
+        string facitPath = test_files_facit [i];
+        
+        app (inputPath, outputPath);
+        
+        string result = readFileIntoString (outputPath);
+        string facit = readFileIntoString (facitPath);
+    
+//        string post = readFileIntoString (test_files_post[i]);
+//        string facit = readFileIntoString (test_files_facit[i]);
+ 
+        if (result != facit)
+        {
+            warning += "\n\n\t" + test_files_post[i] + "\n\t != " + "\n\t" + test_files_facit[i] + "\n\n\n";
+        }
+    }
+    if (warning != "") {
+//        throw runtime_error (warning);
+        cout << warning << endl;
+    }
+    return 0;
+    
 #endif
     
 #ifdef DEBUGGING
@@ -910,10 +960,8 @@ auto main(int argc,  char** argv) -> int
             
         }
     };
-    {
-        Process p (outtext, declaredVariables);
-        outtext = p.process ();
-    }
+    
+        
     
     
     {

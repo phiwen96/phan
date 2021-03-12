@@ -1,4 +1,5 @@
-ph_define_self (self)
+# ph_define_self (self)
+set (self app)
 
  # Define two executables which each have their own source
   # file as well as the object files from objLib
@@ -50,9 +51,15 @@ find_package (Boost 1.74 REQUIRED)
 file (GLOB_RECURSE HEADER_LIST ${CMAKE_CURRENT_LIST_DIR}/include/*.hpp)
 file (GLOB_RECURSE SOURCE_LIST ${CMAKE_CURRENT_LIST_DIR}/src/*.cpp)
 
+source_group("sources" FILES SOURCE_LIST)
+
 add_executable(${self} ${SOURCE_LIST} ${HEADER_LIST})
 
-target_compile_definitions (${self} PRIVATE $<$<CONFIG:Debug>:HORA> $<$<CONFIG:Release>:FITTA>)
+# set_target_properties(${self} PROPERTIES OUTPUT_NAME "files")
+
+set_target_properties (${self} PROPERTIES FOLDER "phan")
+
+target_compile_definitions (${self} PRIVATE $<$<CONFIG:Debug>:Debug> $<$<CONFIG:Release>:Release> $<$<CONFIG:Kuk>:Kuk>)
 
 set_target_properties(${self} PROPERTIES OUTPUT_NAME ${PROJECT_NAME})
 

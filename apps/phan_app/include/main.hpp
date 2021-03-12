@@ -35,3 +35,15 @@ void remove_beginning_chars (string& str, char c)
         str.erase (str.begin(), str.begin() + 1);
     }
 }
+
+
+
+string readFileIntoString(const string& path) {
+    ifstream input_file(path);
+        if (!input_file.is_open()) {
+            throw runtime_error ("Could not open the file - '" + path);
+        }
+        return string((std::istreambuf_iterator<char>(input_file)), std::istreambuf_iterator<char>());
+    input_file.close ();
+}
+
