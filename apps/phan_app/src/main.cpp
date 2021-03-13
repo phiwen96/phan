@@ -183,6 +183,7 @@ auto main(int argc,  char** argv) -> int
     
     ASSERT_FILE (1.hpp, LOUD (0))
     ASSERT_FILE (declare.hpp, LOUD (0))
+    ASSERT_FILE (4.hpp, LOUD (0))
     
     
 //    ASSERT_FILES (pastedecl);
