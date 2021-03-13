@@ -29,12 +29,14 @@ struct Process
     vector <pair <string, string>> declaredVariables;
     declare::Context declVar;
     paste::Context pasteVar;
+    comment::Context commentVal;
     string str;
     
-    Process (string const& str) : pasteVar {nullptr, declaredVariables, new paste::Begin{}}, str (str), declVar {nullptr, declaredVariables, new declare::Begin}
+    Process (string const& str) : commentVal{nullptr, declaredVariables, new comment::Begin{}}, pasteVar {nullptr, declaredVariables, new paste::Begin{}}, str (str), declVar {nullptr, declaredVariables, new declare::Begin}
     {
         declVar.state -> context = &declVar;
         pasteVar.state -> context = &pasteVar;
+        commentVal.state -> context = &commentVal;
     }
     
     string process ()
@@ -59,14 +61,26 @@ struct Process
 
         str = pasteVar.res;
         
-    if constexpr (DO_LOUD)
+        if constexpr (DO_LOUD)
             cout << endl << "paste: " << endl << str << endl;
 
+        for (auto j = str.begin(); j < str.end(); ++j)
+        {
+            commentVal.process (j);
+        }
+        
+        str = commentVal.res;
+        
+        if constexpr (DO_LOUD)
+            cout << endl << "comment: " << endl << str << endl;
+        
+        
         declVar.result.clear ();
         pasteVar.res.clear ();
-        return str;
+        commentVal.res.clear ();
         
-
+        
+        return str;
     }
 };
 
@@ -132,6 +146,7 @@ auto main(int argc,  char** argv) -> int
 
     ASSERT_FILE (declare.hpp, LOUD (0))
     ASSERT_FILE (paste.hpp, LOUD (0))
+    ASSERT_FILE (comment.hpp, LOUD (1))
     
 #ifdef Debug
     

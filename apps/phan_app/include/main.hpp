@@ -3,7 +3,9 @@
 #include <const_str/const_str.hpp>
 #include "declare.hpp"
 #include "paste.hpp"
+#include "comment.hpp"
 #include "extractor.hpp"
+
 
 
 #define PROCC2(str, max, var) var = []()->string\
