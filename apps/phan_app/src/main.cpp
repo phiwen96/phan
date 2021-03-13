@@ -61,7 +61,15 @@ struct Process
         }
         
         if constexpr (DO_LOUD)
-                cout << endl << "declare: " << endl << str << endl;
+        {
+            cout << endl << "declare: " << endl << str << endl;
+            cout << endl << "variables: " << endl;
+            for (auto& i : declaredVariables)
+            {
+                cout << i.first << " = " << i.second << endl;
+            }
+                
+        }
 
         for (auto j = str.begin(); j < str.end(); ++j)
         {
@@ -81,6 +89,8 @@ struct Process
         
         if constexpr (DO_LOUD)
             cout << endl << "paste: " << endl << str << endl;
+        
+        
 
         for (auto j = str.begin(); j < str.end(); ++j)
         {
@@ -175,7 +185,7 @@ auto main(int argc,  char** argv) -> int
     ASSERT_FILE (paste.hpp, LOUD (0))
     ASSERT_FILE (comment.hpp, LOUD (0))
     ASSERT_FILE (4.hpp, LOUD (0))
-//    ASSERT_FILE (1.hpp, LOUD (1))
+    ASSERT_FILE (1.hpp, LOUD (1))
     
 #ifdef Debug
     
