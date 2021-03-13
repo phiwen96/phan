@@ -432,10 +432,10 @@ struct LBracket;
 struct Context {
     Context* parent {nullptr};
     vector <pair <string, string>>& declaredVariables;
-    State* state;
+    State* state {nullptr};
     inline static string res = "";
     string variable;
-    iter begin_it;
+//    iter begin_it;
     string potential;
     vector <Context*> children;
     
@@ -483,7 +483,7 @@ void Context::process (iter i) {
     state -> process (i);
 }
 bool State::hasParent () {
-    return context -> parent == nullptr;
+    return context -> parent != nullptr;
 }
 State* State::parent () {
     return context -> parent -> state;
@@ -573,13 +573,15 @@ void LBracket::_process (iter i) {
     /**
      if never an ending bracket, must set res += variable and res += parent.potential
      */
+    
     if (*i == '}') {
         
         optional <string> declared = State::declared();
         
         if (declared)
         {
-            variable () += declared.value ();
+//            variable () += declared.value ();
+            
             
         } else
         {
@@ -590,15 +592,19 @@ void LBracket::_process (iter i) {
         
         if ( not hasParent ())
         {
-            result () += variable ();
+            result () += declared.value();
             potential ().clear ();
             variable ().clear ();
             transition <Begin> ();
             
         } else
         {
+//            cout << *i << endl;
             addResultFromChild (variable ());
+            
             removeFromParent ();
+//            cout << *i << endl;
+            
         }
         
     }
@@ -613,7 +619,7 @@ void PotentialNest::_process (iter i) {
     switch (*i) {
         case '{':
             potential ().clear ();
-            context -> begin_it = i;
+//            context -> begin_it = i;
             transition <LBracket> ();
             break;
             
@@ -677,6 +683,7 @@ struct Process
 ////        str = pasteVar.res;
 //        cout << str << endl;
         str = pasteVar.res;
+        cout << str << endl;
         return str;
         
 //        cout << pasteVar.res << endl;
@@ -715,7 +722,7 @@ auto main(int argc,  char** argv) -> int
     
     string warning = "";
     
-    #define TEST_SINGEL_FILE declpaste.hpp
+    #define TEST_SINGEL_FILE pastedecl.hpp
     
     #ifdef TEST_SINGEL_FILE
         string inputPath =  string (TEST_FILES_PRE_PATH) + string (BOOST_PP_STRINGIZE (TEST_SINGEL_FILE));
