@@ -27,16 +27,16 @@ template <bool DO_LOUD = true>
 struct Process
 {
     vector <pair <string, string>> declaredVariables;
-    declare::Context declVar;
-    paste::Context pasteVar;
-    comment::Context commentVal;
+    Context declVar;
+//    Context pasteVar;
+//    comment::Context commentVal;
     string str;
     
-    Process (string const& str) : commentVal{nullptr, declaredVariables, new comment::Begin{}}, pasteVar {nullptr, declaredVariables, new paste::Begin{}}, str (str), declVar {nullptr, declaredVariables, new declare::Begin}
+    Process (string const& str) : str (str), declVar {nullptr, declaredVariables, new declare::Begin}
     {
         declVar.state -> context = &declVar;
-        pasteVar.state -> context = &pasteVar;
-        commentVal.state -> context = &commentVal;
+//        pasteVar.state -> context = &pasteVar;
+//        commentVal.state -> context = &commentVal;
     }
     
     string process ()
@@ -70,54 +70,56 @@ struct Process
             }
                 
         }
-
-        for (auto j = str.begin(); j < str.end(); ++j)
-        {
-            pasteVar.process (j);
-        }
-
-        str = pasteVar.res;
-        
-        if(paste::Done* d = dynamic_cast<paste::Done*>(pasteVar.state))
-        {
-           
-        } else {
-//            cout << "not Done" << endl;
-//            cout << commentVal.potential << endl;
-            str += pasteVar.potential;
-        }
-        
-        if constexpr (DO_LOUD)
-            cout << endl << "paste: " << endl << str << endl;
-        
-        
-
-        for (auto j = str.begin(); j < str.end(); ++j)
-        {
-            commentVal.process (j);
-        }
-        
-        str = commentVal.res;
-        
-        
-        if(comment::Done* d = dynamic_cast<comment::Done*>(commentVal.state))
-        {
-           
-        } else {
-//            cout << "not Done" << endl;
-//            cout << commentVal.potential << endl;
-            str += commentVal.potential;
-        }
-        
-        if constexpr (DO_LOUD)
-            cout << endl << "comment: " << endl << str << endl;
-        
-        declVar.result.clear ();
-        pasteVar.res.clear ();
-        commentVal.res.clear ();
-        
         
         return str;
+
+//        for (auto j = str.begin(); j < str.end(); ++j)
+//        {
+//            pasteVar.process (j);
+//        }
+//
+//        str = pasteVar.result;
+//
+//        if(paste::Done* d = dynamic_cast<paste::Done*>(pasteVar.state))
+//        {
+//
+//        } else {
+////            cout << "not Done" << endl;
+////            cout << commentVal.potential << endl;
+//            str += pasteVar.potential;
+//        }
+//
+//        if constexpr (DO_LOUD)
+//            cout << endl << "paste: " << endl << str << endl;
+//
+//
+//
+//        for (auto j = str.begin(); j < str.end(); ++j)
+//        {
+//            commentVal.process (j);
+//        }
+//
+//        str = commentVal.res;
+//
+//
+//        if(comment::Done* d = dynamic_cast<comment::Done*>(commentVal.state))
+//        {
+//
+//        } else {
+////            cout << "not Done" << endl;
+////            cout << commentVal.potential << endl;
+//            str += commentVal.potential;
+//        }
+//
+//        if constexpr (DO_LOUD)
+//            cout << endl << "comment: " << endl << str << endl;
+//
+//        declVar.result.clear ();
+//        pasteVar.result.clear ();
+//        commentVal.res.clear ();
+//
+//
+//        return str;
     }
 };
 
@@ -181,10 +183,10 @@ auto main(int argc,  char** argv) -> int
 //    ASSERT_FILES (pastedecl);
 //    ASSERT_FILE (declare.hpp, LOUD (0))
     
-    ASSERT_FILE (declare.hpp, LOUD (0))
-    ASSERT_FILE (paste.hpp, LOUD (0))
-    ASSERT_FILE (comment.hpp, LOUD (0))
-    ASSERT_FILE (4.hpp, LOUD (0))
+//    ASSERT_FILE (declare.hpp, LOUD (0))
+//    ASSERT_FILE (paste.hpp, LOUD (1))
+//    ASSERT_FILE (comment.hpp, LOUD (0))
+//    ASSERT_FILE (4.hpp, LOUD (0))
     ASSERT_FILE (1.hpp, LOUD (1))
     
 #ifdef Debug

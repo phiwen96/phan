@@ -2,9 +2,9 @@
 using iter = string::iterator;
 
 
-namespace declare
-{
 struct Context;
+
+
 struct State
 {
     Context* context;
@@ -16,86 +16,15 @@ struct State
     string& value ();
     string& result ();
     string& potential ();
+    string& paste ();
     void removeFromParent ();
     template <class T> void transition ();
     template <class T> Context& addChildContext ();
     State* parent ();
     void declare (string const& var, string const& val);
+    optional <string> declared (string const&);
     virtual void addResultFromChild (string const& res);
-    
-    
 };
-
-
-struct Begin : State
-{
-    using State::State;
-    void _process (iter i);
-    bool done () {return false;}
-    void addResultFromChild (string const& res);
-};
-
-
-
-struct Dollar : State
-{
-    using State::State;
-    virtual void _process (iter i);
-    bool done () {return false;}
-    void addResultFromChild (string const& res);
-};
-
-
-
-struct LParan : State
-{
-    using State::State;
-    virtual void _process (iter i);
-    bool done () {return false;}
-    void addResultFromChild (string const& res);
-};
-
-
-
-struct RParan : State
-{
-    using State::State;
-    virtual void _process (iter i);
-    bool done () {return false;}
-    void addResultFromChild (string const& res);
-};
-
-
-
-struct LBracket : State
-{
-    using State::State;
-    virtual void _process (iter i);
-    bool done () {return false;}
-    void addResultFromChild (string const& res);
-};
-
-
-
-struct Done : Begin
-{
-//    using State::State;
-    virtual void _process (iter i);
-    bool done () {return true;}
- 
-};
-
-
-
-
-
-
-
-
-
-
-
-
 
 struct Context
 {
@@ -109,6 +38,7 @@ struct Context
     string variable;
     string value;
     string potential;
+    string paste;
     
     void process (iter);
 };
@@ -123,6 +53,14 @@ void State::declare (string const& var, string const& val) {
         }
     }
     context -> declaredVariables.emplace_back (var, val);
+}
+optional <string> State::declared (string const& p) {
+    for (auto d = context -> declaredVariables.begin (); d != context -> declaredVariables.end(); ++d) {
+        if (d -> first == p) {
+            return optional{d->second};
+        }
+    }
+    return {};
 }
 
 State* State::parent () {
@@ -166,11 +104,15 @@ void State::removeFromParent () {
 
 template <class T>
 void State::transition () {
+//    T* newstate = new T;
+//    newstate -> context = context;
     
-//    cout << "transitioning from " << typeid (*context -> state).name () << " to ";
+    cout << "transitioning from " << typeid (*context -> state).name () << " to ";
     context -> state = new T;
+    
     context -> state -> context = context;
-//    cout << typeid (*context -> state).name () << endl;
+    
+    cout << typeid (*context -> state).name () << endl;
 }
 
 template <class state>
@@ -201,12 +143,110 @@ string& State::result () {
 string& State::potential () {
     return context -> potential;
 }
+string& State::paste () {
+    return context -> paste;
+}
+
+namespace declare
+{
+
+
+
+struct Begin : State
+{
+    using State::State;
+    void _process (iter i);
+    bool done () {return false;}
+    void addResultFromChild (string const& res);
+};
+
+
+
+struct Dollar : State
+{
+    using State::State;
+    virtual void _process (iter i);
+    bool done () {return false;}
+    void addResultFromChild (string const& res);
+};
+
+struct Paste : State
+{
+    using State::State;
+    virtual void _process (iter i);
+    bool done () {return false;}
+    void addResultFromChild (string const& res);
+};
+
+
+struct LParan : State
+{
+    using State::State;
+    virtual void _process (iter i);
+    bool done () {return false;}
+    void addResultFromChild (string const& res);
+};
+
+
+
+struct RParan : State
+{
+    using State::State;
+    virtual void _process (iter i);
+    bool done () {return false;}
+    void addResultFromChild (string const& res);
+};
+
+
+
+struct LBracket : State
+{
+    using State::State;
+    virtual void _process (iter i);
+    bool done () {return false;}
+    void addResultFromChild (string const& res);
+};
+
+
+
+struct Done : Begin
+{
+//    using State::State;
+    virtual void _process (iter i);
+    bool done () {return true;}
+ 
+};
+
+struct PasteLBracket : State
+{
+//    using State::State;
+    virtual void _process (iter i);
+    bool done () {return true;}
+ 
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 void Begin::addResultFromChild (string const& res) {
     throw runtime_error ("oops");
 }
 
 void Dollar::addResultFromChild (string const& res) {
+    potential() += res;
     throw runtime_error ("oops");
 }
 
@@ -239,18 +279,17 @@ void Begin::_process (iter i) {
 }
 void Dollar::_process (iter i) {
     
-    
-    
     if (*i == '(')
     {
         potential () += *i;
         transition <LParan> ();
         
-    } else if (*i == '{' and hasParent ())
+    } else if (*i == '{')
     {
-        parent () -> addResultFromChild (potential ());
-        removeFromParent ();
-        parent () -> process (i);
+//        addChildContext<PasteLBracket>();
+        potential() += '{';
+        transition <PasteLBracket> ();
+        // so that parent can push bracket to it's bracketstack
     } else
     {
         potential () += *i;
@@ -267,6 +306,45 @@ void Dollar::_process (iter i) {
             value ().clear ();
             transition <Done> ();
         }
+    }
+}
+void PasteLBracket::_process (iter i) {
+    
+    potential() += *i;
+    
+    if (*i == '}')
+    {
+//        cout << paste () << endl << paste () << endl;
+        optional <string> decl = declared (paste ());
+        if (decl)
+        {
+//            cout << paste () << endl << paste () << endl;
+            if (hasParent ())
+            {
+//                cout << paste () << endl << paste () << endl;
+                parent () -> addResultFromChild (decl.value ());
+                removeFromParent ();
+            } else
+            {
+//                cout << paste () << endl << paste () << endl;
+                result() += decl.value ();
+                potential().clear();
+                value().clear();
+                variable().clear();
+                paste().clear();
+                transition<Begin>();
+            }
+            
+        } else
+        {
+            string warning = "variable \"" + paste () + "\" pasted but it has not yet been declared!";
+            //            cout << result () << endl;
+            throw runtime_error (warning);
+        }
+    } else
+    {
+        paste () += *i;
+//        potential() += *i;
     }
 }
 void LParan::_process (iter i) {
@@ -383,3 +461,127 @@ void Done::_process (iter i) {
         
 //        context -> process (i);
 }
+
+
+//namespace paste {
+//
+//
+//
+//
+//
+//struct Begin : State {
+//    virtual void _process (iter i);
+//};
+//
+//struct Dollar : State {
+//    using State::context;
+//    virtual void _process (iter i);
+//};
+//
+//struct LBracket : State {
+//    virtual void _process (iter i);
+//};
+//struct PotentialNest : State {
+//    virtual void _process (iter i);
+//};
+//struct Done : Begin {
+//    virtual void _process (iter i);
+//};
+//
+//
+//
+//
+//
+//
+//
+//void Done::_process (iter i) {
+//    Begin::_process(i);
+//}
+//void Begin::_process (iter i) {
+//
+//    if (*i == '$'){
+//        potential ().push_back ('$');
+//        transition <Dollar> ();
+//    }
+//    else {
+//        result () += *i;
+//    }
+//}
+//void Dollar::_process (iter i) {
+//
+//    potential () += *i;
+//
+//    if (*i == '{') {
+//        transition <LBracket> ();
+//    }
+//    else {
+//        if (hasParent ()) {
+//            addResultFromChild (potential ());
+//            removeFromParent ();
+//        } else {
+//            result () += potential ();
+//            potential ().clear ();
+//            transition <Begin> ();
+//        }
+//    }
+//}
+//void LBracket::_process (iter i) {
+//    /**
+//     if never an ending bracket, must set res += variable and res += parent.potential
+//     */
+//
+//    if (*i == '}') {
+//
+//        optional <string> declared = State::declared();
+//
+//        if (declared)
+//        {
+////            variable () += declared.value ();
+//
+//
+//        } else
+//        {
+//            string warning = "variable \"" + variable () + "\" pasted but it has not yet been declared!";
+//            cout << result () << endl;
+//            throw runtime_error (warning);
+//        }
+//
+//        if ( not hasParent ())
+//        {
+//            result () += declared.value();
+//            potential ().clear ();
+//            variable ().clear ();
+//            transition <Done> ();
+//
+//        } else
+//        {
+////            cout << *i << endl;
+//            addResultFromChild (variable ());
+//
+//            removeFromParent ();
+////            cout << *i << endl;
+//
+//        }
+//
+//    }
+//    else if (*i == '$') {
+//        addChildContext <Dollar> ().potential.push_back ('$');
+//    }
+//    else {
+//        variable () += *i;
+//    }
+//}
+//void PotentialNest::_process (iter i) {
+//    switch (*i) {
+//        case '{':
+//            potential ().clear ();
+////            context -> begin_it = i;
+//            transition <LBracket> ();
+//            break;
+//
+//        default:
+//            break;
+//    }
+//}
+//
+//}
