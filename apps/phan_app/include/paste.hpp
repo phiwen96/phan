@@ -91,10 +91,14 @@ Context& State::addChildContext () {
 
 template <class T>
 void State::transition () {
+#if defined (DO_LOUD)
     cout << "transitioning from " << typeid (*context -> state).name () << " to ";
+#endif
     context -> state = new T;
     context -> state -> context = context;
+#if defined (DO_LOUD)
     cout << typeid (*context -> state).name () << endl;
+#endif
 }
 optional <string> State::declared () {
     for (auto d = context -> declaredVariables.begin (); d != context -> declaredVariables.end(); ++d) {

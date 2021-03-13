@@ -62,7 +62,8 @@ struct Process
     if constexpr (DO_LOUD)
             cout << endl << "paste: " << endl << str << endl;
 
-        
+        declVar.result.clear ();
+        pasteVar.res.clear ();
         return str;
         
 
@@ -128,7 +129,9 @@ auto main(int argc,  char** argv) -> int
     
 //    ASSERT_FILES (pastedecl);
 //    ASSERT_FILE (declare.hpp, LOUD (0))
-    ASSERT_FILE (paste.hpp, LOUD (1))
+
+    ASSERT_FILE (declare.hpp, LOUD (0))
+    ASSERT_FILE (paste.hpp, LOUD (0))
     
 #ifdef Debug
     
