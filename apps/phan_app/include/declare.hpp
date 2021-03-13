@@ -107,12 +107,12 @@ void State::transition () {
 //    T* newstate = new T;
 //    newstate -> context = context;
     
-    cout << "transitioning from " << typeid (*context -> state).name () << " to ";
+//    cout << "transitioning from " << typeid (*context -> state).name () << " to ";
     context -> state = new T;
     
     context -> state -> context = context;
     
-    cout << typeid (*context -> state).name () << endl;
+//    cout << typeid (*context -> state).name () << endl;
 }
 
 template <class state>
@@ -332,7 +332,7 @@ void PasteLBracket::_process (iter i) {
                 value().clear();
                 variable().clear();
                 paste().clear();
-                transition<Begin>();
+                transition<Done>();
             }
             
         } else
