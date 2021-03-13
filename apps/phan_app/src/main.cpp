@@ -71,9 +71,18 @@ struct Process
         
         str = commentVal.res;
         
+        
+        if(comment::Done* d = dynamic_cast<comment::Done*>(commentVal.state))
+        {
+           
+        } else {
+//            cout << "not Done" << endl;
+//            cout << commentVal.potential << endl;
+            str += commentVal.potential;
+        }
+        
         if constexpr (DO_LOUD)
             cout << endl << "comment: " << endl << str << endl;
-        
         
         declVar.result.clear ();
         pasteVar.res.clear ();
@@ -146,7 +155,7 @@ auto main(int argc,  char** argv) -> int
 
     ASSERT_FILE (declare.hpp, LOUD (0))
     ASSERT_FILE (paste.hpp, LOUD (0))
-    ASSERT_FILE (comment.hpp, LOUD (1))
+    ASSERT_FILE (comment.hpp, LOUD (0))
     
 #ifdef Debug
     

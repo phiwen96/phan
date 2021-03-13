@@ -160,7 +160,10 @@ void Hashtag::_process (iter i) {
     }
 }
 void Done::_process (iter i) {
-    Begin::_process(i);
+    if (*i != '\n')
+        Begin::_process(i);
+//    cout << "yo" << endl;
+    
 }
 void LBracket::_process (iter i) {
     /**
@@ -168,33 +171,17 @@ void LBracket::_process (iter i) {
      */
     
     if (*i == '}') {
-        
-//        optional <string> declared = State::declared();
-        
-//        if (declared)
-//        {
-////            variable () += declared.value ();
-//
-//
-//        } else
-//        {
-//            string warning = "variable \"" + variable () + "\" pasted but it has not yet been declared!";
-//            cout << result () << endl;
-//            throw runtime_error (warning);
+
         if ( not hasParent ())
         {
-//            result () += declared.value();
             potential ().clear ();
             variable ().clear ();
             transition <Done> ();
             
         } else
         {
-//            cout << *i << endl;
-//            addResultFromChild (variable ());
-            
+
             removeFromParent ();
-//            cout << *i << endl;
             
         }
     }
