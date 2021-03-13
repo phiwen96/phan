@@ -71,6 +71,8 @@ struct Process
                 
         }
         
+        declVar.result.clear ();
+        
         return str;
 
 //        for (auto j = str.begin(); j < str.end(); ++j)
@@ -179,15 +181,17 @@ void assert_file(string const& inputPath, string const& outputPath, string const
 auto main(int argc,  char** argv) -> int
 {
     
+    ASSERT_FILE (1.hpp, LOUD (0))
+    ASSERT_FILE (declare.hpp, LOUD (0))
+    
     
 //    ASSERT_FILES (pastedecl);
-//    ASSERT_FILE (declare.hpp, LOUD (0))
     
 //    ASSERT_FILE (declare.hpp, LOUD (0))
 //    ASSERT_FILE (paste.hpp, LOUD (1))
 //    ASSERT_FILE (comment.hpp, LOUD (0))
 //    ASSERT_FILE (4.hpp, LOUD (0))
-    ASSERT_FILE (1.hpp, LOUD (1))
+
     
 #ifdef Debug
     
