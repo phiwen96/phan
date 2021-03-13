@@ -1,5 +1,5 @@
 #include "main.hpp"
-
+#include <filesystem>
 
 
 
@@ -135,16 +135,47 @@ struct Process
 //dejn $(p){prejudikatinstans}
 //
 //${p}
-template <bool DO_LOUD = true>
-void app (string const& inputPath, string const& outputPath) {
- 
+
+void fileApp (filesystem::path const& inputPath, filesystem::path const& outputPath) {
     ofstream outputFile (outputPath);
     
     if (!outputFile.is_open ())
-        throw runtime_error ("could not open file " + outputPath);
+        throw runtime_error ("could not open file " + outputPath.string());
     
-    outputFile << Process <DO_LOUD> {readFileIntoString (inputPath)}.process ();
+    outputFile << Process {readFileIntoString (inputPath)}.process ();
     outputFile.close ();
+}
+
+
+void folderApp (filesystem::path const& inputPath, filesystem::path const& outputPath) {
+    
+}
+
+template <bool DO_LOUD = true>
+void app (filesystem::path const& inputPath, filesystem::path const& outputPath) {
+    filesystem::path p {inputPath};
+    cout << filesystem::exists(inputPath) << endl;
+    cout << filesystem::is_directory (p) << endl;
+    cout << p.extension() << endl;
+    cout << p.stem() << endl;
+    cout << p.filename() << endl;
+    
+    
+    if (not filesystem::exists (inputPath)) {
+        throw runtime_error ("file does not exists");
+    }
+    if (filesystem::exists (outputPath)) {
+//        throw runtime_error ("file already exists");
+    }
+    
+    if (filesystem::is_directory(inputPath)) {
+        folderApp (inputPath, outputPath);
+    } else if (filesystem::is_regular_file(p)) {
+        fileApp(inputPath, outputPath);
+    } else {
+        throw runtime_error ("");
+    }
+    
 }
 
 string warning = "";
@@ -159,7 +190,7 @@ void assert_file(string const& inputPath, string const& outputPath, string const
     if constexpr (not DO_LOUD) {
         if (result != facit)
         {
-
+            
             string warn = "\n\n\t" + outputPath + "\n\t != " + "\n\t" + facitPath + "\n\n\n";
             throw runtime_error (warn);
         }
@@ -184,6 +215,7 @@ auto main(int argc,  char** argv) -> int
     ASSERT_FILE (1.hpp, LOUD (0))
     ASSERT_FILE (declare.hpp, LOUD (0))
     ASSERT_FILE (4.hpp, LOUD (0))
+    ASSERT_FILE (paste.hpp, LOUD (0))
 //    ASSERT_FILE (comment.hpp, LOUD (0))
     
     
