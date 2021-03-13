@@ -697,7 +697,14 @@ struct Process
 
 
 
-
+//$(beckis familj){Gustaf Beck-Friis}
+//
+//Gabriels familj består av $(familj){Gustaf} och hans mamma
+//$(familj){${familj} Anneli}
+//
+//dejn $(p){prejudikatinstans}
+//
+//${p}
 
 void app (string const& inputPath, string const& outputPath) {
  
@@ -710,21 +717,38 @@ void app (string const& inputPath, string const& outputPath) {
     outputFile.close ();
 }
 
+string warning = "";
+
+void assert_file(string const& inputPath, string const& outputPath, string const& facitPath, string& warning) {
+    app (inputPath, outputPath);
+    string result = readFileIntoString (outputPath);
+    string facit = readFileIntoString (facitPath);
+    if (result != facit)
+    {
+        warning += "\n\n\t" + outputPath + "\n\t != " + "\n\t" + facitPath + "\n\n\n";
+    }
+}
+#define ASSERT_FILE(file) assert_file (string (TEST_FILES_PRE_PATH) + string (BOOST_PP_STRINGIZE (file)), string (TEST_FILES_POST_PATH) + string (BOOST_PP_STRINGIZE (file)), string (TEST_FILES_FACIT_PATH) + string (BOOST_PP_STRINGIZE (file)), warning);
+#define ASSERT_FILES_2(seqFiles) BOOST_PP_SEQ_FOR_EACH(ASSERT_FILE, -, seqFiles);
+#define ASSERT_FILES(...) ASSERT_FILES_2 (BOOST_PP_TUPLE_TO_SEQ (__VA_ARGS__));
 
 
 auto main(int argc,  char** argv) -> int
 {
-
+    
+//    ASSERT_FILES (pastedecl);
+    ASSERT_FILE (pastedecl.hpp)
     
 #ifdef Debug
     
     #define ANTAL TEST_FILE_COUNT
     
-    string warning = "";
+    
     
     #define TEST_SINGEL_FILE pastedecl.hpp
     
     #ifdef TEST_SINGEL_FILE
+    
         string inputPath =  string (TEST_FILES_PRE_PATH) + string (BOOST_PP_STRINGIZE (TEST_SINGEL_FILE));
         string outputPath = string (TEST_FILES_POST_PATH) + string (BOOST_PP_STRINGIZE (TEST_SINGEL_FILE));
         string facitPath = string (TEST_FILES_FACIT_PATH) + string (BOOST_PP_STRINGIZE (TEST_SINGEL_FILE));
