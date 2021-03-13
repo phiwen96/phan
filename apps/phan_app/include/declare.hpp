@@ -225,7 +225,23 @@ struct PasteLBracket : State
  
 };
 
-struct Hashtag : State
+struct HashtagBegin : State
+{
+//    using State::State;
+    virtual void _process (iter i);
+    bool done () {return true;}
+ 
+};
+
+struct HashtagDone: Done
+{
+//    using State::State;
+    virtual void _process (iter i);
+    bool done () {return true;}
+ 
+};
+
+struct HashtagLBracket : State
 {
 //    using State::State;
     virtual void _process (iter i);
@@ -271,18 +287,42 @@ void LBracket::addResultFromChild (string const& res) {
 }
 
 
-void Hashtag::_process (iter i) {
-    potential () += '{';
+void HashtagDone::_process (iter i) {
+    if (*i == '\n')
+    {
+        
+    } else
+    {
+        Done::_process (i);
+    }
+}
+
+void HashtagLBracket::_process (iter i) {
+    potential() += *i;
+    if (*i == '}') {
+        if (hasParent()) {
+            removeFromParent ();
+        } else
+        {
+            potential().clear();
+            transition<HashtagDone>();
+        }
+    }
+}
+
+void HashtagBegin::_process (iter i) {
+    potential () += *i ;
     
     if (*i == '{')
     {
-    
+        transition <HashtagLBracket> ();
         
     } else
     {
         if (hasParent())
         {
             addResultFromChild (potential ());
+            removeFromParent ();
         } else
         {
             result () += potential ();
@@ -303,7 +343,7 @@ void Begin::_process (iter i) {
     } else if (*i == '#')
     {
         potential () += '#';
-        transition <Hashtag> ();
+        transition <HashtagBegin> ();
     } else
     {
         result () += *i;
