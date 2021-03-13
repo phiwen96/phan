@@ -1,5 +1,20 @@
-Philip Wenkel
+Philip
+ja precis
+
+
+
+Philip
+ja precis
+
+
+
 Philip Wenkel
 Philip
-Philip (efternamn){Wenkel}
-${förnamn} $(efternamn){Wenkel}
+ja precis
+
+
+
+Philip Wenkel
+Philip
+$förnamn Wenkel}
+$förnamn
