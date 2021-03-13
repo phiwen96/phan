@@ -152,7 +152,7 @@ auto main(int argc,  char** argv) -> int
     
 //    ASSERT_FILES (pastedecl);
 //    ASSERT_FILE (declare.hpp, LOUD (0))
-
+    ASSERT_FILE (1.hpp, LOUD (1))
     ASSERT_FILE (declare.hpp, LOUD (0))
     ASSERT_FILE (paste.hpp, LOUD (0))
     ASSERT_FILE (comment.hpp, LOUD (0))
