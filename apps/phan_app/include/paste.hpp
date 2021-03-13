@@ -42,19 +42,22 @@ protected:
 };
 
 struct Begin : State {
-    void _process (iter i);
+    virtual void _process (iter i);
 };
 
 struct Dollar : State {
     using State::context;
-    void _process (iter i);
+    virtual void _process (iter i);
 };
 
 struct LBracket : State {
-    void _process (iter i);
+    virtual void _process (iter i);
 };
 struct PotentialNest : State {
-    void _process (iter i);
+    virtual void _process (iter i);
+};
+struct Done : Begin {
+    virtual void _process (iter i);
 };
 
 
@@ -126,7 +129,9 @@ void State::removeFromParent () {
         }
     }
 }
-
+void Done::_process (iter i) {
+    Begin::_process(i);
+}
 void Begin::_process (iter i) {
 
     if (*i == '$'){
@@ -181,7 +186,7 @@ void LBracket::_process (iter i) {
             result () += declared.value();
             potential ().clear ();
             variable ().clear ();
-            transition <Begin> ();
+            transition <Done> ();
             
         } else
         {

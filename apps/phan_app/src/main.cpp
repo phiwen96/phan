@@ -51,6 +51,15 @@ struct Process
         
         str = declVar.result;
         
+        if(declare::Done* d = dynamic_cast<declare::Done*>(declVar.state))
+        {
+           
+        } else {
+//            cout << "not Done" << endl;
+//            cout << commentVal.potential << endl;
+            str += declVar.potential;
+        }
+        
         if constexpr (DO_LOUD)
                 cout << endl << "declare: " << endl << str << endl;
 
@@ -60,6 +69,15 @@ struct Process
         }
 
         str = pasteVar.res;
+        
+        if(paste::Done* d = dynamic_cast<paste::Done*>(pasteVar.state))
+        {
+           
+        } else {
+//            cout << "not Done" << endl;
+//            cout << commentVal.potential << endl;
+            str += pasteVar.potential;
+        }
         
         if constexpr (DO_LOUD)
             cout << endl << "paste: " << endl << str << endl;
@@ -152,10 +170,12 @@ auto main(int argc,  char** argv) -> int
     
 //    ASSERT_FILES (pastedecl);
 //    ASSERT_FILE (declare.hpp, LOUD (0))
-    ASSERT_FILE (1.hpp, LOUD (1))
+    
     ASSERT_FILE (declare.hpp, LOUD (0))
     ASSERT_FILE (paste.hpp, LOUD (0))
     ASSERT_FILE (comment.hpp, LOUD (0))
+    ASSERT_FILE (4.hpp, LOUD (0))
+//    ASSERT_FILE (1.hpp, LOUD (1))
     
 #ifdef Debug
     

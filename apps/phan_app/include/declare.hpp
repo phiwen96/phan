@@ -77,9 +77,9 @@ struct LBracket : State
 
 
 
-struct Done : State
+struct Done : Begin
 {
-    using State::State;
+//    using State::State;
     virtual void _process (iter i);
     bool done () {return true;}
  
@@ -87,13 +87,7 @@ struct Done : State
 
 
 
-struct Repeat : State
-{
-    using State::State;
-    virtual void _process (iter i);
-    bool done () {return false;}
 
-};
 
 
 
@@ -209,11 +203,11 @@ string& State::potential () {
 }
 
 void Begin::addResultFromChild (string const& res) {
-    
+    throw runtime_error ("oops");
 }
 
 void Dollar::addResultFromChild (string const& res) {
-    
+    throw runtime_error ("oops");
 }
 
 void LParan::addResultFromChild (string const& res) {
@@ -221,7 +215,7 @@ void LParan::addResultFromChild (string const& res) {
 }
 
 void RParan::addResultFromChild (string const& res) {
-    
+    throw runtime_error ("oops");
 }
 
 void LBracket::addResultFromChild (string const& res) {
@@ -245,15 +239,21 @@ void Begin::_process (iter i) {
 }
 void Dollar::_process (iter i) {
     
+    
+    
     if (*i == '(')
     {
-        potential () += '(';
+        potential () += *i;
         transition <LParan> ();
         
+    } else if (*i == '{' and hasParent ())
+    {
+        parent () -> addResultFromChild (potential ());
+        removeFromParent ();
+        parent () -> process (i);
     } else
     {
         potential () += *i;
-        
         if (hasParent ())
         {
             parent () -> addResultFromChild (potential ());
@@ -265,7 +265,7 @@ void Dollar::_process (iter i) {
             potential().clear ();
             variable ().clear ();
             value ().clear ();
-            transition <Begin> ();
+            transition <Done> ();
         }
     }
 }
@@ -288,36 +288,7 @@ void LParan::_process (iter i) {
     
     
 }
-void Repeat::_process(iter i) {
-//    cout << *i << endl;
-    if (*i == '(')
-    {
-        addChildContext <LParan> ();
-//        context -> transition (new LParan {context});
-        
-        transition <LParan> ();
-//        context -> curr_it -= 2;
-    }
-//    else if (*i == ')')
-//    {
-//        context -> transition ( new RParan {context});
-//
-//    }
-    else
-    {
-//        if (hasParent ())
-//        {
-//            chainParent (i);
-//            context -> parent -> removeFromParent ();
-//
-//        } else
-//        {
-//            context -> transition (new LParan {context});
-        context -> variable += *i;
-        transition<LParan>();
-//        }
-    }
-}
+
 void RParan::_process (iter i) {
     
     
@@ -355,14 +326,12 @@ void RParan::_process (iter i) {
 void LBracket::_process (iter i) {
     if (*i == '}')
     {
-//        context -> bracketStack.pop ();
+        context -> bracketStack.pop ();
         
-//        if (context -> bracketStack.empty ())
-//        {
-//        cout << value () << endl;
-//        auto declared
-        declare (variable (), value ());
-            
+        if (context -> bracketStack.empty ())
+        {
+            declare (variable (), value ());
+                
             if (hasParent ())
             {
                 parent () -> addResultFromChild (value ());
@@ -379,18 +348,24 @@ void LBracket::_process (iter i) {
                 transition <Begin> ();
     //            value() += *i;
             }
+        } else
+        {
+            value () += '}';
+        }
+        
     }
         
-//    }
-//    else if (*i == '{')
-//    {
-//        context -> bracketStack.push ('{');
-//        value() += *i;
-//
-//
+
+    else if (*i == '{')
+    {
+        context -> bracketStack.push ('{');
+        value() += *i;
+    }
+
+
     else if (*i == '$')
     {
-        addChildContext <Dollar>().potential += '$';
+        addChildContext <Dollar> ().potential += '$';
     }
     else
     {
@@ -401,7 +376,7 @@ void LBracket::_process (iter i) {
 }
 
 void Done::_process (iter i) {
-    
+    Begin::_process (i);
 }
 
 //  context -> transition (Dollar);
