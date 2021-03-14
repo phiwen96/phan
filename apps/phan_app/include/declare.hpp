@@ -197,10 +197,9 @@ string& State<>::paste () {
 
 
 
-
-struct Begin : State <>
+template <>
+struct STATE ("") : State <>
 {
-    using State<>::State;
     void _process (iter i);
     bool done () {return false;}
     void addResultFromChild (string const& res);
@@ -210,7 +209,6 @@ struct Begin : State <>
 template <>
 struct STATE ("$") : State <>
 {
-    using State<>::State;
     virtual void _process (iter i);
     bool done () {return false;}
     void addResultFromChild (string const& res);
@@ -219,7 +217,6 @@ struct STATE ("$") : State <>
 template <>
 struct STATE ("#") : State <>
 {
-    using State<>::State;
     virtual void _process (iter i);
     bool done () {return false;}
     void addResultFromChild (string const& res);
@@ -229,7 +226,6 @@ struct STATE ("#") : State <>
 template <>
 struct STATE ("$(") : State <>
 {
-    using State<>::State;
     virtual void _process (iter i);
     bool done () {return false;}
     void addResultFromChild (string const& res);
@@ -241,7 +237,6 @@ struct STATE ("$(") : State <>
 template <>
 struct STATE ("$()") : State <>
 {
-    using State<>::State;
     virtual void _process (iter i);
     bool done () {return false;}
     void addResultFromChild (string const& res);
@@ -251,83 +246,66 @@ struct STATE ("$()") : State <>
 template <>
 struct STATE ("$(){") : State <>
 {
-    using State<>::State;
     virtual void _process (iter i);
     bool done () {return false;}
     void addResultFromChild (string const& res);
 };
 
 
-
-struct Done : Begin
+template <>
+struct STATE ("done") : STATE ("")
 {
-//    using State<>::State;
     virtual void _process (iter i);
-    bool done () {return true;}
  
 };
 
 template <>
 struct STATE ("${") : State <>
 {
-//    using State<>::State;
     virtual void _process (iter i);
-    bool done () {return true;}
  
 };
 
 
 
-struct Paste_Done: Done
+struct Paste_Done: STATE ("done")
 {
-//    using State<>::State;
     virtual void _process (iter i);
-    bool done () {return true;}
  
 };
 
 template <>
 struct STATE ("#{") : State <>
 {
-//    using State<>::State;
     virtual void _process (iter i);
-    bool done () {return true;}
  
 };
 
 template <>
 struct STATE ("@") : State <>
 {
-//    using State<>::State;
     virtual void _process (iter i);
-    bool done () {return true;}
  
 };
 
 template <>
 struct STATE ("@(") : State <>
 {
-//    using State<>::State;
     virtual void _process (iter i);
-    bool done () {return true;}
  
 };
 
 template <>
 struct STATE ("@()") : State <>
 {
-//    using State<>::State;
     virtual void _process (iter i);
-    bool done () {return true;}
  
 };
 
 template <>
 struct STATE ("@(){") : State <>
 {
-//    using State<>::State;
     virtual void _process (iter i);
-    bool done () {return true;}
  
 };
 
@@ -347,7 +325,7 @@ struct STATE ("@(){") : State <>
 
 
 
-void Begin::addResultFromChild (string const& res) {
+void STATE ("")::addResultFromChild (string const& res) {
     throw runtime_error ("oops");
 }
 
@@ -381,7 +359,7 @@ void Paste_Done::_process (iter i) {
         
     } else
     {
-        Done::_process (i);
+        STATE ("done")::_process (i);
     }
 }
 
@@ -403,7 +381,7 @@ void STATE ("#")::_process (iter i) {
     
     if (*i == '{')
     {
-        transition <STATE ("#{")> ();
+        TRANSITION ("#{")
         
     } else
     {
@@ -415,7 +393,7 @@ void STATE ("#")::_process (iter i) {
         {
             result () += potential ();
             potential ().clear ();
-            transition <Begin> ();
+            TRANSITION ("")
         }
     }
 }
@@ -431,7 +409,7 @@ void STATE ("@")::_process (iter i) {
     switch (*i)
     {
         case '(':
-            transition <STATE ("@(")> ();
+            TRANSITION ("@(")
             break;
             
         default:
@@ -443,7 +421,7 @@ void STATE ("@")::_process (iter i) {
             {
                 result () += potential ();
                 potential ().clear ();
-                transition <Begin> ();
+                TRANSITION ("")
             }
             break;
     }
@@ -455,7 +433,7 @@ void STATE ("@(")::_process (iter i) {
     switch (*i)
     {
         case ')':
-            transition<STATE ("@()")>();
+            TRANSITION ("@()")
             break;
             
         default:
@@ -467,7 +445,7 @@ void STATE ("@(")::_process (iter i) {
             {
                 result () += potential ();
                 potential ().clear ();
-                transition <Begin> ();
+                TRANSITION ("")
             }
             break;
     }
@@ -481,7 +459,7 @@ void STATE ("@(){")::_process (iter i) {
     
 }
 
-void Begin::_process (iter i) {
+void STATE ("")::_process (iter i) {
     switch (*i)
     {
         case '$':
@@ -532,7 +510,7 @@ void STATE ("$")::_process (iter i) {
             potential().clear ();
             variable ().clear ();
             value ().clear ();
-            transition <Done> ();
+            transition <STATE ("done")> ();
         }
     }
 }
@@ -560,7 +538,7 @@ void STATE ("${")::_process (iter i) {
                 value().clear();
                 variable().clear();
                 paste().clear();
-                transition<Done>();
+                transition<STATE ("done")>();
             }
             
         } else
@@ -622,7 +600,7 @@ void STATE ("$()")::_process (iter i) {
             potential ().clear ();
             variable ().clear ();
             value ().clear ();
-            transition<Begin>();
+            TRANSITION ("")
         }
         potential ().clear ();
         variable ().clear ();
@@ -653,7 +631,7 @@ void STATE ("$(){")::_process (iter i) {
                     potential().clear();
                     value().clear();
                     variable().clear();
-                    transition <Begin> ();
+                    TRANSITION ("")
         //            value() += *i;
                 }
             } else
@@ -678,8 +656,8 @@ void STATE ("$(){")::_process (iter i) {
     }
 }
 
-void Done::_process (iter i) {
-    Begin::_process (i);
+void STATE ("done")::_process (iter i) {
+    STATE ("")::_process (i);
 }
 
 

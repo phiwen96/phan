@@ -32,7 +32,7 @@ struct Process
 //    comment::Context commentVal;
 //    string str;
     
-    Process () : declVar {nullptr, declaredVariables, new Begin}
+    Process () : declVar {nullptr, declaredVariables, new STATE ("")}
     {
         declVar.state -> context = &declVar;
 //        pasteVar.state -> context = &pasteVar;
@@ -51,7 +51,7 @@ struct Process
         
         str = declVar.result;
         
-        if(Done* d = dynamic_cast<Done*>(declVar.state))
+        if(STATE ("done")* d = dynamic_cast<STATE ("done")*>(declVar.state))
         {
            
         } else {
