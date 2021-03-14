@@ -36,6 +36,8 @@ return N; \
 
 #define STATE(x) State S(x)
 
+
+
 #define TRANSITION(x) transition <STATE (x)> ();
 
 
@@ -200,35 +202,131 @@ string& State<>::paste () {
 template <>
 struct STATE ("") : State <>
 {
-    void _process (iter i);
-    bool done () {return false;}
-    void addResultFromChild (string const& res);
+    void _process (iter i){
+        switch (*i)
+        {
+            case '$':
+                potential () += '$';
+                TRANSITION ("$")
+                break;
+                
+            case '#':
+                potential () += '#';
+                TRANSITION ("#")
+                break;
+                
+            case '@':
+                potential () += '@';
+                TRANSITION ("@")
+                break;
+                
+            default:
+                result () += *i;
+                break;
+        }
+
+    }
+    void addResultFromChild (string const& res){
+        throw runtime_error ("oops");
+    }
 };
 
 
 template <>
 struct STATE ("$") : State <>
 {
-    virtual void _process (iter i);
-    bool done () {return false;}
-    void addResultFromChild (string const& res);
+    virtual void _process (iter i){
+        
+        if (*i == '(')
+        {
+            potential () += *i;
+            TRANSITION ("$(")
+            
+        } else if (*i == '{')
+        {
+    //        addChildContext<STATE ("${")>();
+            potential() += '{';
+            TRANSITION ("${")
+            // so that parent can push bracket to it's bracketstack
+        } else
+        {
+            potential () += *i;
+            if (hasParent ())
+            {
+                parent () -> addResultFromChild (potential ());
+                removeFromParent ();
+                
+            } else
+            {
+                result () += potential();
+                potential().clear ();
+                variable ().clear ();
+                value ().clear ();
+                transition <STATE ("done")> ();
+            }
+        }
+    }
+    void addResultFromChild (string const& res){
+        potential() += res;
+        throw runtime_error ("oops");
+    }
 };
 
 template <>
 struct STATE ("#") : State <>
 {
-    virtual void _process (iter i);
-    bool done () {return false;}
-    void addResultFromChild (string const& res);
+    virtual void _process (iter i){
+        potential () += *i ;
+        
+        if (*i == '{')
+        {
+            TRANSITION ("#{")
+            
+        } else
+        {
+            if (hasParent())
+            {
+                addResultFromChild (potential ());
+                removeFromParent ();
+            } else
+            {
+                result () += potential ();
+                potential ().clear ();
+                TRANSITION ("")
+            }
+        }
+    }
+    void addResultFromChild (string const& res){
+        throw runtime_error ("oops");
+    }
 };
 
 
 template <>
 struct STATE ("$(") : State <>
 {
-    virtual void _process (iter i);
-    bool done () {return false;}
-    void addResultFromChild (string const& res);
+    virtual void _process (iter i){
+        
+        if (*i == ')')
+        {
+            variable() = string (potential().begin() + 2, potential().end());
+            potential () += ')';
+            TRANSITION ("$()")
+            
+        } else if (*i == '$')
+        {
+            addChildContext <STATE ("$")> ().potential += '$';
+
+        } else
+        {
+            potential () += *i;
+        }
+        
+        
+    }
+    void addResultFromChild (string const& res){
+        potential () += res;
+    }
 };
 
 
@@ -237,32 +335,161 @@ struct STATE ("$(") : State <>
 template <>
 struct STATE ("$()") : State <>
 {
-    virtual void _process (iter i);
-    bool done () {return false;}
-    void addResultFromChild (string const& res);
+    virtual void _process (iter i){
+        
+        
+        if (*i == '{')
+        {
+
+            context -> bracketStack.push ('{');
+
+            TRANSITION ("$(){")
+            
+        } else
+        {
+            
+            if (hasParent ())
+            {
+                /**
+                om parent
+                 **/
+                parent () -> addResultFromChild (potential ());
+                removeFromParent ();
+            }
+            else
+            {
+                result () += potential ();
+                potential ().clear ();
+                variable ().clear ();
+                value ().clear ();
+                TRANSITION ("")
+            }
+            potential ().clear ();
+            variable ().clear ();
+        }
+    }
+    void addResultFromChild (string const& res){
+        throw runtime_error ("oops");
+    }
 };
 
 
 template <>
 struct STATE ("$(){") : State <>
 {
-    virtual void _process (iter i);
-    bool done () {return false;}
-    void addResultFromChild (string const& res);
+    virtual void _process (iter i){
+        
+        switch (*i)
+        {
+            case '}':
+                context -> bracketStack.pop ();
+                
+                if (context -> bracketStack.empty ())
+                {
+                    declare (variable (), value ());
+                        
+                    if (hasParent ())
+                    {
+                        parent () -> addResultFromChild (value ());
+                        removeFromParent ();
+                    }
+                    
+        //        }
+                    else
+                    {
+                        result () += value ();
+                        potential().clear();
+                        value().clear();
+                        variable().clear();
+                        TRANSITION ("")
+            //            value() += *i;
+                    }
+                } else
+                {
+                    value () += '}';
+                }
+                break;
+                
+            case '{':
+                context -> bracketStack.push ('{');
+                value() += *i;
+                break;
+                
+            case '$':
+                addChildContext <STATE ("$")> ().potential += '$';
+                break;
+                
+            default:
+                potential () += *i;
+                value () += *i;
+                break;
+        }
+    }
+    void addResultFromChild (string const& res){
+        value () += res;
+    }
 };
+
+
+
+
+
+
+
+
 
 
 template <>
 struct STATE ("done") : STATE ("")
 {
-    virtual void _process (iter i);
+    virtual void _process (iter i){
+        STATE ("")::_process (i);
+    }
  
 };
 
 template <>
 struct STATE ("${") : State <>
 {
-    virtual void _process (iter i);
+    virtual void _process (iter i){
+        
+        potential() += *i;
+        
+        if (*i == '}')
+        {
+    //        cout << paste () << endl << paste () << endl;
+            optional <string> decl = declared (paste ());
+            if (decl)
+            {
+    //            cout << paste () << endl << paste () << endl;
+                if (hasParent ())
+                {
+    //                cout << paste () << endl << paste () << endl;
+                    parent () -> addResultFromChild (decl.value ());
+                    removeFromParent ();
+                } else
+                {
+    //                cout << paste () << endl << paste () << endl;
+                    result() += decl.value ();
+                    potential().clear();
+                    value().clear();
+                    variable().clear();
+                    paste().clear();
+                    transition<STATE ("done")>();
+                }
+                
+            } else
+            {
+                string warning = "variable \"" + paste () + "\" pasted but it has not yet been declared!";
+                //            cout << result () << endl;
+                throw runtime_error (warning);
+            }
+        } else
+        {
+            paste () += *i;
+    //        potential() += *i;
+        }
+    }
  
 };
 
@@ -270,42 +497,109 @@ struct STATE ("${") : State <>
 
 struct Paste_Done: STATE ("done")
 {
-    virtual void _process (iter i);
+    virtual void _process (iter i){
+        if (*i == '\n')
+        {
+            
+        } else
+        {
+            STATE ("done")::_process (i);
+        }
+    }
  
 };
 
 template <>
 struct STATE ("#{") : State <>
 {
-    virtual void _process (iter i);
+    virtual void _process (iter i){
+        potential() += *i;
+        if (*i == '}') {
+            if (hasParent()) {
+                removeFromParent ();
+            } else
+            {
+                potential().clear();
+                transition<Paste_Done>();
+            }
+        }
+    }
  
 };
 
 template <>
 struct STATE ("@") : State <>
 {
-    virtual void _process (iter i);
+    virtual void _process (iter i){
+        potential() += *i;
+        
+        switch (*i)
+        {
+            case '(':
+                TRANSITION ("@(")
+                break;
+                
+            default:
+                if (hasParent())
+                {
+                    addResultFromChild (potential ());
+                    removeFromParent ();
+                } else
+                {
+                    result () += potential ();
+                    potential ().clear ();
+                    TRANSITION ("")
+                }
+                break;
+        }
+    }
  
 };
 
 template <>
 struct STATE ("@(") : State <>
 {
-    virtual void _process (iter i);
+    virtual void _process (iter i){
+        potential() += *i;
+        
+        switch (*i)
+        {
+            case ')':
+                TRANSITION ("@()")
+                break;
+                
+            default:
+                if (hasParent())
+                {
+                    addResultFromChild (potential ());
+                    removeFromParent ();
+                } else
+                {
+                    result () += potential ();
+                    potential ().clear ();
+                    TRANSITION ("")
+                }
+                break;
+        }
+    }
  
 };
 
 template <>
 struct STATE ("@()") : State <>
 {
-    virtual void _process (iter i);
+    virtual void _process (iter i){
+        
+    }
  
 };
 
 template <>
 struct STATE ("@(){") : State <>
 {
-    virtual void _process (iter i);
+    virtual void _process (iter i){
+        
+    }
  
 };
 
@@ -317,348 +611,6 @@ struct STATE ("@(){") : State <>
 
 
 
-
-
-
-
-
-
-
-
-void STATE ("")::addResultFromChild (string const& res) {
-    throw runtime_error ("oops");
-}
-
-
-void STATE ("$")::addResultFromChild (string const& res) {
-    potential() += res;
-    throw runtime_error ("oops");
-}
-
-void STATE ("#")::addResultFromChild (string const& res) {
-    throw runtime_error ("oops");
-}
-
-void STATE ("$(")::addResultFromChild (string const& res) {
-    potential () += res;
-}
-
-void STATE ("$()")::addResultFromChild (string const& res) {
-    throw runtime_error ("oops");
-}
-
-void STATE ("$(){")::addResultFromChild (string const& res) {
-    value () += res;
-}
-
-
-
-void Paste_Done::_process (iter i) {
-    if (*i == '\n')
-    {
-        
-    } else
-    {
-        STATE ("done")::_process (i);
-    }
-}
-
-void STATE ("#{")::_process (iter i) {
-    potential() += *i;
-    if (*i == '}') {
-        if (hasParent()) {
-            removeFromParent ();
-        } else
-        {
-            potential().clear();
-            transition<Paste_Done>();
-        }
-    }
-}
-
-void STATE ("#")::_process (iter i) {
-    potential () += *i ;
-    
-    if (*i == '{')
-    {
-        TRANSITION ("#{")
-        
-    } else
-    {
-        if (hasParent())
-        {
-            addResultFromChild (potential ());
-            removeFromParent ();
-        } else
-        {
-            result () += potential ();
-            potential ().clear ();
-            TRANSITION ("")
-        }
-    }
-}
-
-
-
-
-
-
-void STATE ("@")::_process (iter i) {
-    potential() += *i;
-    
-    switch (*i)
-    {
-        case '(':
-            TRANSITION ("@(")
-            break;
-            
-        default:
-            if (hasParent())
-            {
-                addResultFromChild (potential ());
-                removeFromParent ();
-            } else
-            {
-                result () += potential ();
-                potential ().clear ();
-                TRANSITION ("")
-            }
-            break;
-    }
-}
-
-void STATE ("@(")::_process (iter i) {
-    potential() += *i;
-    
-    switch (*i)
-    {
-        case ')':
-            TRANSITION ("@()")
-            break;
-            
-        default:
-            if (hasParent())
-            {
-                addResultFromChild (potential ());
-                removeFromParent ();
-            } else
-            {
-                result () += potential ();
-                potential ().clear ();
-                TRANSITION ("")
-            }
-            break;
-    }
-}
-
-void STATE ("@()")::_process (iter i) {
-    
-}
-
-void STATE ("@(){")::_process (iter i) {
-    
-}
-
-void STATE ("")::_process (iter i) {
-    switch (*i)
-    {
-        case '$':
-            potential () += '$';
-            TRANSITION ("$")
-            break;
-            
-        case '#':
-            potential () += '#';
-            TRANSITION ("#")
-            break;
-            
-        case '@':
-            potential () += '@';
-            TRANSITION ("@")
-            break;
-            
-        default:
-            result () += *i;
-            break;
-    }
-
-}
-void STATE ("$")::_process (iter i) {
-    
-    if (*i == '(')
-    {
-        potential () += *i;
-        TRANSITION ("$(")
-        
-    } else if (*i == '{')
-    {
-//        addChildContext<STATE ("${")>();
-        potential() += '{';
-        TRANSITION ("${")
-        // so that parent can push bracket to it's bracketstack
-    } else
-    {
-        potential () += *i;
-        if (hasParent ())
-        {
-            parent () -> addResultFromChild (potential ());
-            removeFromParent ();
-            
-        } else
-        {
-            result () += potential();
-            potential().clear ();
-            variable ().clear ();
-            value ().clear ();
-            transition <STATE ("done")> ();
-        }
-    }
-}
-void STATE ("${")::_process (iter i) {
-    
-    potential() += *i;
-    
-    if (*i == '}')
-    {
-//        cout << paste () << endl << paste () << endl;
-        optional <string> decl = declared (paste ());
-        if (decl)
-        {
-//            cout << paste () << endl << paste () << endl;
-            if (hasParent ())
-            {
-//                cout << paste () << endl << paste () << endl;
-                parent () -> addResultFromChild (decl.value ());
-                removeFromParent ();
-            } else
-            {
-//                cout << paste () << endl << paste () << endl;
-                result() += decl.value ();
-                potential().clear();
-                value().clear();
-                variable().clear();
-                paste().clear();
-                transition<STATE ("done")>();
-            }
-            
-        } else
-        {
-            string warning = "variable \"" + paste () + "\" pasted but it has not yet been declared!";
-            //            cout << result () << endl;
-            throw runtime_error (warning);
-        }
-    } else
-    {
-        paste () += *i;
-//        potential() += *i;
-    }
-}
-void STATE ("$(")::_process (iter i) {
-    
-    if (*i == ')')
-    {
-        variable() = string (potential().begin() + 2, potential().end());
-        potential () += ')';
-        TRANSITION ("$()")
-        
-    } else if (*i == '$')
-    {
-        addChildContext <STATE ("$")> ().potential += '$';
-
-    } else
-    {
-        potential () += *i;
-    }
-    
-    
-}
-
-void STATE ("$()")::_process (iter i) {
-    
-    
-    if (*i == '{')
-    {
-
-        context -> bracketStack.push ('{');
-
-        TRANSITION ("$(){")
-        
-    } else
-    {
-        
-        if (hasParent ())
-        {
-            /**
-            om parent
-             **/
-            parent () -> addResultFromChild (potential ());
-            removeFromParent ();
-        }
-        else
-        {
-            result () += potential ();
-            potential ().clear ();
-            variable ().clear ();
-            value ().clear ();
-            TRANSITION ("")
-        }
-        potential ().clear ();
-        variable ().clear ();
-    }
-}
-
-void STATE ("$(){")::_process (iter i) {
-    
-    switch (*i)
-    {
-        case '}':
-            context -> bracketStack.pop ();
-            
-            if (context -> bracketStack.empty ())
-            {
-                declare (variable (), value ());
-                    
-                if (hasParent ())
-                {
-                    parent () -> addResultFromChild (value ());
-                    removeFromParent ();
-                }
-                
-    //        }
-                else
-                {
-                    result () += value ();
-                    potential().clear();
-                    value().clear();
-                    variable().clear();
-                    TRANSITION ("")
-        //            value() += *i;
-                }
-            } else
-            {
-                value () += '}';
-            }
-            break;
-            
-        case '{':
-            context -> bracketStack.push ('{');
-            value() += *i;
-            break;
-            
-        case '$':
-            addChildContext <STATE ("$")> ().potential += '$';
-            break;
-            
-        default:
-            potential () += *i;
-            value () += *i;
-            break;
-    }
-}
-
-void STATE ("done")::_process (iter i) {
-    STATE ("")::_process (i);
-}
 
 
 
