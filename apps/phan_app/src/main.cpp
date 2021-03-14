@@ -166,6 +166,7 @@ void folderApp (Process& p, filesystem::path inputPath)
     set <filesystem::path> subdirs;
     for (auto& i : filesystem::directory_iterator (inputPath))
     {
+        
         if (filesystem::is_directory(i.path()))
         {
             
@@ -208,7 +209,8 @@ void app (filesystem::path const& inputPath, filesystem::path outputPath) {
     
     
     if (not filesystem::exists (inputPath)) {
-        throw runtime_error ("file does not exists");
+//        string warn = "file " + inputPath + "does not exists";
+        throw runtime_error ("file " + inputPath.string() + "does not exists");
     }
     if (filesystem::exists (outputPath)) {
 //        throw runtime_error ("file already exists");
@@ -243,6 +245,13 @@ void app (filesystem::path const& inputPath, filesystem::path outputPath) {
 
 string warning = "";
 
+void assert_folder(string const& inputPath, string const& outputPath, string& warning) {
+
+    cout << inputPath << endl;
+    app (inputPath, outputPath);
+    
+}
+
 template <bool DO_LOUD = true>
 void assert_file(string const& inputPath, string const& outputPath, string const& facitPath, string& warning) {
     
@@ -268,13 +277,15 @@ void assert_file(string const& inputPath, string const& outputPath, string const
 #define LOUD(x) x
 #define ASSERT_FILE(file, DO_LOUD) assert_file <DO_LOUD> (string (TEST_FILES_PRE_PATH) + string (BOOST_PP_STRINGIZE (file)), string (TEST_FILES_POST_PATH), string (TEST_FILES_FACIT_PATH), warning);
 
+#define ASSERT_FOLDER(folder, DO_LOUD) assert_folder (string (TEST_FOLDERS_PRE_PATH) + string (BOOST_PP_STRINGIZE (folder)), string (TEST_FOLDERS_POST_PATH), warning);
+
 #define ASSERT_FILE_SEQ(r, data, file) assert_file (string (TEST_FILES_PRE_PATH) + string (BOOST_PP_STRINGIZE (file)), string (TEST_FILES_POST_PATH) + string (BOOST_PP_STRINGIZE (file)), string (TEST_FILES_FACIT_PATH) + string (BOOST_PP_STRINGIZE (file)), warning);
 #define ASSERT_FILES_2(seqFiles) BOOST_PP_SEQ_FOR_EACH(ASSERT_FILE_SEQ, -, seqFiles);
 #define ASSERT_FILES(...) ASSERT_FILES_2 (BOOST_PP_TUPLE_TO_SEQ (__VA_ARGS__));
 
 auto main(int argc,  char** argv) -> int
 {
-    ASSERT_FILE(folder1, LOUD(1))
+    ASSERT_FOLDER ($(root){philip}, LOUD(1))
     return 0;
     ASSERT_FILE (1.hpp, LOUD (0))
     ASSERT_FILE (declare.hpp, LOUD (0))

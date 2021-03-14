@@ -39,8 +39,11 @@ target_compile_definitions (app
       $<$<CONFIG:Debug>:TEST_FILES_PRE_PATH="${CMAKE_CURRENT_LIST_DIR}/testFiles_pre/">
       $<$<CONFIG:Debug>:TEST_FILES_POST_PATH="${CMAKE_CURRENT_LIST_DIR}/testFiles_post/">
       $<$<CONFIG:Debug>:TEST_FILES_FACIT_PATH="${CMAKE_CURRENT_LIST_DIR}/testFiles_facit/">
-  )
+      $<$<CONFIG:Debug>:TEST_FOLDERS_PRE_PATH="${CMAKE_CURRENT_LIST_DIR}/testFolders_pre/">
+      $<$<CONFIG:Debug>:TEST_FOLDERS_POST_PATH="${CMAKE_CURRENT_LIST_DIR}/testFolders_post/">
+)
 
+target_sources (app PRIVATE ${CMAKE_CURRENT_LIST_DIR}/testFolders_pre ${CMAKE_CURRENT_LIST_DIR}/testFolders_post)
 
 math (EXPR i 0)
 
@@ -49,6 +52,7 @@ set (testFiles_definitions)
 foreach (file_abs ${subfiles_abs})
   # message (${file_abs})
   get_filename_component (file_rel ${file_abs} NAME)
+
   # message (${file_rel})
   # add_compile_definitions (${testFiles_definitions} TEST_FILE_${i}="${file}")
  
