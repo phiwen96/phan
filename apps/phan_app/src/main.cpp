@@ -181,9 +181,10 @@ void folderApp (Process& p, filesystem::path inputPath)
         }
     }
     
-    for (auto& filename : all)
+    for (auto const& filename : subfiles)
     {
-        
+        cout << "inserting" << endl;
+        fileApp (p, filename, filename);
     }
 }
 

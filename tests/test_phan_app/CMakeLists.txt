@@ -43,6 +43,9 @@ target_compile_definitions (app
       $<$<CONFIG:Debug>:TEST_FOLDERS_POST_PATH="${CMAKE_CURRENT_LIST_DIR}/testFolders_post/">
 )
 
+
+
+
 target_sources (app PRIVATE ${CMAKE_CURRENT_LIST_DIR}/testFolders_pre ${CMAKE_CURRENT_LIST_DIR}/testFolders_post)
 
 math (EXPR i 0)
