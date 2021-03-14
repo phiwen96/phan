@@ -111,7 +111,7 @@ void BASE_STATE::declare (string const& var, string const& val, Context& ctx) {
 optional <string> BASE_STATE::declared (string const& p, Context& ctx) {
     for (auto d = ctx.declaredVariables.begin (); d != ctx.declaredVariables.end(); ++d) {
         if (d -> first == p) {
-            return optional{d->second};
+            return d->second;
         }
     }
     return {};
@@ -168,7 +168,7 @@ void BASE_STATE::removeFromParent (Context& ctx) {
 
 template <class state>
 Context& BASE_STATE::addChildContext (Context& ctx) {
-    State* childState = new state;
+    State<>* childState = new state;
     Context* childContext = new Context {&ctx, ctx.declaredVariables, childState};
 //    childState -> context = childContext;
     ctx.children.push_back (childContext);
@@ -245,23 +245,24 @@ struct STATE ("$") : BASE_STATE
         
         potential (ctx) += *i;
         
-        switch (*i)
+        if (*i == '(')
         {
-            case '(':
-                TRANSITION ("$(")
-                break;
-                
-            case '{':
-                TRANSITION ("${")
-                break;
-                
-            default:
-                reset (ctx);
-                break;
+            TRANSITION ("$(")
+
+        } else if (*i == '{')
+        {
+            
+            TRANSITION ("${")
+
+        } else
+        {
+            reset (ctx);
         }
+        
+   
     
     }
-    void addResultFromChild (string const& res, Context& ctx){
+    virtual void addResultFromChild (string const& res, Context& ctx){
         potential(ctx) += res;
         throw runtime_error ("oops");
     }
@@ -285,19 +286,18 @@ struct STATE ("#") : BASE_STATE
     static STATE ("#") instance;
     virtual void _process (iter i, Context& ctx){
         potential (ctx) += *i ;
-        
-        switch (*i)
+        if (*i == '{')
         {
-            case '{':
-                TRANSITION ("#{")
-                break;
-                
-            default:
-                reset (ctx);
-                break;
+            TRANSITION ("#{")
+
+        } else
+        {
+            reset (ctx);
+
         }
+        
     }
-    void addResultFromChild (string const& res){
+    virtual void addResultFromChild (string const& res){
         throw runtime_error ("oops");
     }
     
@@ -318,26 +318,27 @@ struct STATE ("$(") : BASE_STATE
 {
     static STATE ("$(") instance;
     virtual void _process (iter i, Context& ctx){
-        
-        switch (*i)
+        potential (ctx) += *i;
+        if (*i == ')')
         {
-            case ')':
-                variable(ctx) = string (potential(ctx).begin() + 2, potential(ctx).end());
-                potential (ctx) += ')';
-                TRANSITION ("$()")
-                break;
-                
-            case '$':
-                addChildContext <STATE ("$")> (ctx).potential += '$';
-                break;
-                
-            default:
-                potential (ctx) += *i;
-                break;
+//            variable (ctx) = string (potential(ctx).begin() + 2, potential(ctx).end());
+//            potential (ctx) += ')';
+            TRANSITION ("$()")
+            
+        } else if (*i == '$')
+        {
+            addChildContext <STATE ("$")> (ctx).potential = '$';
+
+        } else
+        {
+            variable (ctx) += *i;
+//            potential (ctx) += *i;
+
         }
+       
     }
-    void addResultFromChild (string const& res, Context& ctx){
-        potential (ctx) += res;
+    virtual void addResultFromChild (string const& res, Context& ctx){
+        variable (ctx) += res;
     }
     
     virtual void reset_hasNoParent (Context& ctx){}
@@ -353,19 +354,22 @@ struct STATE ("$()") : BASE_STATE
     static STATE ("$()") instance;
     virtual void _process (iter i, Context& ctx){
         
-        switch (*i)
+        if (*i == '{')
         {
-            case '{':
-                ctx.bracketStack.push ('{');
-                TRANSITION ("$(){")
-                break;
-                
-            default:
-                reset (ctx);
-                break;
+            ctx.bracketStack.push ('{');
+            TRANSITION ("$(){")
+            
+        } else if (*i == '$')
+        {
+            addChildContext <STATE ("$")> (ctx).potential = '$';
+            
+        } else
+        {
+            reset (ctx);
+
         }
     }
-    void addResultFromChild (string const& res){
+    virtual void addResultFromChild (string const& res){
         throw runtime_error ("oops");
     }
     
@@ -392,40 +396,67 @@ struct STATE ("$()") : BASE_STATE
 template <>
 struct STATE ("$(){") : BASE_STATE
 {
-    static STATE ("$(){") instance;
+   
     virtual void _process (iter i, Context& ctx){
-        
-        switch (*i)
+        potential (ctx) += *i;
+        if (*i == '}')
         {
-            case '}':
-                ctx.bracketStack.pop ();
-                
-                if (ctx.bracketStack.empty ())
-                {
-                    declare (variable (ctx), value (ctx), ctx);
-                    reset(ctx);
-                } else
-                {
-                    value (ctx) += '}';
+//            ctx.bracketStack.pop ();
+//
+//            if (ctx.bracketStack.empty ())
+//            {
+            bool found = false;
+            cout << "var: " << variable(ctx) << endl << "val: " << value(ctx) << endl;
+            for (auto j = ctx.declaredVariables.begin(); j < ctx.declaredVariables.end(); ++j){
+                if (j->first == variable(ctx)){
+//                    value(ctx) = j->second;
+                    j->second = value (ctx);
+                    cout << "found:" << j->first << " = " << j->second << endl;
+                    found = true;
+                    break;
                 }
-                break;
-                
-            case '{':
-                ctx.bracketStack.push ('{');
-                value(ctx) += *i;
-                break;
-                
-            case '$':
-                addChildContext <STATE ("$")> (ctx).potential += '$';
-                break;
-                
-            default:
-                potential (ctx) += *i;
-                value (ctx) += *i;
-                break;
+            }
+            if (not found){
+                cout << "found:" << variable(ctx) << " = " << value(ctx) << endl;
+                ctx.declaredVariables.emplace_back(variable(ctx), value(ctx));
+                cout << "v::" << value(ctx) << endl;
+            }
+            if (hasParent(ctx))
+            {
+                addResultFromChild(value(ctx), ctx);
+                removeFromParent(ctx);
+            } else {
+                result (ctx) += value (ctx);
+                variable (ctx).clear();
+                value (ctx).clear();
+                potential (ctx).clear();
+                TRANSITION ("done")
+            }
+//                declare (variable (ctx), value (ctx), ctx);
+//                reset(ctx);
+//            } else
+//            {
+//                value (ctx) += '}';
+//            }
+            
         }
+//        else if (*i == '{')
+//        {
+//            ctx.bracketStack.push ('{');
+//            value(ctx) += *i;
+//
+//        }
+        else if (*i == '$')
+        {
+            addChildContext <STATE ("$")> (ctx).potential += '$';
+
+        } else
+        {
+            value (ctx) += *i;
+        }
+        
     }
-    void addResultFromChild (string const& res, Context& ctx){
+    virtual void addResultFromChild (string const& res, Context& ctx){
         value (ctx) += res;
     }
     void finish () {
@@ -476,23 +507,47 @@ struct STATE ("${") : BASE_STATE
         
         if (*i == '}')
         {
-            optional <string> decl = declared (paste (ctx), ctx);
-            
-            if (decl)
-            {
-                value(ctx) = decl.value ();
-                reset (ctx);
-                
-            } else
-            {
-                string warning = "variable \"" + paste (ctx) + "\" pasted but it has not yet been declared!";
+//            optional <string> decl = declared (variable (ctx), ctx);
+            for (auto d = ctx.declaredVariables.begin (); d != ctx.declaredVariables.end(); ++d) {
+                if (d -> first == variable(ctx)) {
+//                    return d->second;
+                    cout << "::" << d->second << endl;
+                    if (hasParent(ctx))
+                    {
+    //                    cout << "kuk" << endl;
+                        ctx.state -> addResultFromChild (d->second, ctx);
+                        removeFromParent(ctx);
+                    } else {
+                        result(ctx) += d->second;
+                        cout << result(ctx) << endl;
+                        potential(ctx).clear();
+                        value(ctx).clear();
+                        variable(ctx).clear();
+                        paste(ctx).clear();
+                        TRANSITION ("${} done")
+                    }
+                    return;
+                    
+                }
+            }
+           
+                string warning = "variable \"" + variable (ctx) + "\" pasted but it has not yet been declared!";
                 //            cout << result (ctx) << endl;
                 throw runtime_error (warning);
-            }
+            
+        } else if (*i == '$')
+        {
+            addChildContext<STATE ("$")>(ctx).potential = '$';
+            
         } else
         {
-            paste (ctx) += *i;
+            variable (ctx) += *i;
+            cout << *i << endl;
         }
+    }
+    
+    virtual void addResultFromChild (string const& res, Context& ctx){
+        variable (ctx) += res;
     }
     
     virtual void reset_hasNoParent (Context& ctx){
@@ -501,7 +556,7 @@ struct STATE ("${") : BASE_STATE
         value(ctx).clear();
         variable(ctx).clear();
         paste(ctx).clear();
-        TRANSITION ("done")
+        TRANSITION ("${} done")
     }
     virtual void reset_hasParent (Context& ctx){
         parent (ctx) -> addResultFromChild (value (ctx), ctx);
@@ -515,13 +570,10 @@ template <>
 struct STATE ("${} done"): STATE ("done")
 {
     virtual void _process (iter i, Context& ctx){
-        if (*i == '\n')
-        {
-            
-        } else
+        if (*i != '\n')
         {
             STATE ("done")::_process (i, ctx);
-        }
+        } 
     }
     
     virtual void reset_hasNoParent (Context& ctx){}
@@ -541,12 +593,21 @@ struct STATE ("#{") : BASE_STATE
     
     virtual void reset_hasNoParent (Context& ctx){
         potential(ctx).clear();
-        transition<STATE ("${} done")>(ctx);
+        transition<STATE ("#{} done")>(ctx);
     }
     virtual void reset_hasParent (Context& ctx){
         removeFromParent (ctx);
     }
  
+};
+
+template <>
+struct STATE ("#{} done") : STATE ("done")
+{
+    virtual void _process (iter i, Context& ctx) {
+        if (*i != '\n')
+            STATE ("done")::_process (i, ctx);
+    }
 };
 
 template <>
@@ -599,7 +660,7 @@ struct STATE ("@(") : BASE_STATE
         }
         
     }
-    void addResultFromChild (string const& res, Context& ctx){
+    virtual void addResultFromChild (string const& res, Context& ctx){
         variable (ctx) += res;
     }
     virtual void reset_hasNoParent (Context& ctx){}
@@ -655,7 +716,7 @@ struct STATE ("@(){") : BASE_STATE
         }
     }
     
-    void addResultFromChild (string const& res, Context& ctx){
+    virtual void addResultFromChild (string const& res, Context& ctx){
         value (ctx) += res;
     }
     
@@ -714,7 +775,7 @@ void BASE_STATE::transition (Context& ctx) {
 //    T* newstate = new T;
 //    newstate -> context = context;
     
-//    cout << "transitioning from " << typeid (*context -> state).name () << " to ";
+    cout << "transitioning from " << typeid (*ctx.state).name () << " to ";
 //    auto a = get<T>(states);
 //    if constexpr (is_same_v<T, decltype (a0)>)
 //        context -> state = &a0;
@@ -751,7 +812,7 @@ void BASE_STATE::transition (Context& ctx) {
     
 //    ctx.state -> context = context;
     
-//    cout << typeid (*context -> state).name () << endl;
+    cout << typeid (*ctx.state).name () << endl;
 }
 
 
