@@ -43,7 +43,7 @@ target_compile_definitions (app
       $<$<CONFIG:Debug>:TEST_FOLDERS_POST_PATH="${CMAKE_CURRENT_LIST_DIR}/testFolders_post/">
 )
 
-
+# ph_subdirs (TARGET ${CMAKE_CURRENT_LIST_DIR}/testFiles_pre)
 
 
 target_sources (app PRIVATE ${CMAKE_CURRENT_LIST_DIR}/testFolders_pre ${CMAKE_CURRENT_LIST_DIR}/testFolders_post)
@@ -51,6 +51,12 @@ target_sources (app PRIVATE ${CMAKE_CURRENT_LIST_DIR}/testFolders_pre ${CMAKE_CU
 math (EXPR i 0)
 
 set (testFiles_definitions)
+
+# add_custom_target(kiss ALL
+#       COMMAND "${CMAKE_COMMAND}" -E remove_directory philip
+#       WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/testFolders_post
+#       POST_BUILD
+# )
 
 foreach (file_abs ${subfiles_abs})
   # message (${file_abs})
