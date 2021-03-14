@@ -3,9 +3,11 @@ using iter = string::iterator;
 
 
 struct Context;
+template <char...>
+struct State;
 
-
-struct State
+template <>
+struct State <>
 {
     Context* context;
     
@@ -30,7 +32,7 @@ struct Context
 {
     Context* parent;
     vector <pair <string, string>>& declaredVariables;
-    State* state {nullptr};
+    State<>* state {nullptr};
     vector <Context*> children;
     stack <char> bracketStack;
     
@@ -44,7 +46,7 @@ struct Context
 };
 
 
-void State::declare (string const& var, string const& val) {
+void State<>::declare (string const& var, string const& val) {
     auto declared = context -> declaredVariables.begin ();
     for (; declared < context -> declaredVariables.end (); ++declared) {
         if (declared -> first == var) {
@@ -54,7 +56,7 @@ void State::declare (string const& var, string const& val) {
     }
     context -> declaredVariables.emplace_back (var, val);
 }
-optional <string> State::declared (string const& p) {
+optional <string> State<>::declared (string const& p) {
     for (auto d = context -> declaredVariables.begin (); d != context -> declaredVariables.end(); ++d) {
         if (d -> first == p) {
             return optional{d->second};
@@ -63,7 +65,7 @@ optional <string> State::declared (string const& p) {
     return {};
 }
 
-State* State::parent () {
+State<>* State<>::parent () {
     return context -> parent -> state;
 }
 
@@ -71,12 +73,12 @@ void Context::process(iter i) {
     state -> process (i);
 }
 
-void State::addResultFromChild (string const& res) {
+void State<>::addResultFromChild (string const& res) {
     
 }
 
 
-void State::process (iter i) {
+void State<>::process (iter i) {
     if (context -> children.empty ()) {
 //        context -> curr_it = i;
         _process (i);
@@ -87,11 +89,11 @@ void State::process (iter i) {
     }
 }
 
-bool State::hasParent () const {
+bool State<>::hasParent () const {
     return context -> parent != nullptr;
 }
 
-void State::removeFromParent () {
+void State<>::removeFromParent () {
     for (auto cont = context -> parent -> children.begin(); cont < context -> parent -> children.end(); ++cont) {
         if (*cont == context) {
 //            cout << "removing child context from parent context" << endl;
@@ -103,7 +105,7 @@ void State::removeFromParent () {
 
 
 template <class T>
-void State::transition () {
+void State<>::transition () {
 //    T* newstate = new T;
 //    newstate -> context = context;
     
@@ -116,14 +118,14 @@ void State::transition () {
 }
 
 template <class state>
-Context& State::addChildContext () {
+Context& State<>::addChildContext () {
     State* childState = new state;
     Context* childContext = new Context {context, context->declaredVariables, childState};
     childState -> context = childContext;
     context -> children.push_back (childContext);
     return *childContext;
 }
-//optional <string> State::declared () {
+//optional <string> State<>::declared () {
 //    for (auto d = context -> declaredVariables.begin (); d != context -> declaredVariables.end(); ++d) {
 //        if (d -> first == context -> variable) {
 //            return optional{d->second};
@@ -131,19 +133,19 @@ Context& State::addChildContext () {
 //    }
 //    return {};
 //}
-string& State::variable () {
+string& State<>::variable () {
     return context -> variable;
 }
-string& State::value () {
+string& State<>::value () {
     return context -> value;
 }
-string& State::result () {
+string& State<>::result () {
     return context -> result;
 }
-string& State::potential () {
+string& State<>::potential () {
     return context -> potential;
 }
-string& State::paste () {
+string& State<>::paste () {
     return context -> paste;
 }
 
@@ -152,9 +154,9 @@ namespace declare
 
 
 
-struct Begin : State
+struct Begin : State <>
 {
-    using State::State;
+    using State<>::State;
     void _process (iter i);
     bool done () {return false;}
     void addResultFromChild (string const& res);
@@ -162,36 +164,26 @@ struct Begin : State
 
 
 
-struct Dollar : State
+struct Dollar : State <>
 {
-    using State::State;
+    using State<>::State;
     virtual void _process (iter i);
     bool done () {return false;}
     void addResultFromChild (string const& res);
 };
 
-struct Paste : State
+struct Paste : State <>
 {
-    using State::State;
-    virtual void _process (iter i);
-    bool done () {return false;}
-    void addResultFromChild (string const& res);
-};
-
-
-struct DeclPaste_LParan : State
-{
-    using State::State;
+    using State<>::State;
     virtual void _process (iter i);
     bool done () {return false;}
     void addResultFromChild (string const& res);
 };
 
 
-
-struct DeclPaste_RParan : State
+struct DeclPaste_LParan : State <>
 {
-    using State::State;
+    using State<>::State;
     virtual void _process (iter i);
     bool done () {return false;}
     void addResultFromChild (string const& res);
@@ -199,9 +191,19 @@ struct DeclPaste_RParan : State
 
 
 
-struct DeclPaste_LBracket : State
+struct DeclPaste_RParan : State <>
 {
-    using State::State;
+    using State<>::State;
+    virtual void _process (iter i);
+    bool done () {return false;}
+    void addResultFromChild (string const& res);
+};
+
+
+
+struct DeclPaste_LBracket : State <>
+{
+    using State<>::State;
     virtual void _process (iter i);
     bool done () {return false;}
     void addResultFromChild (string const& res);
@@ -211,23 +213,23 @@ struct DeclPaste_LBracket : State
 
 struct Done : Begin
 {
-//    using State::State;
+//    using State<>::State;
     virtual void _process (iter i);
     bool done () {return true;}
  
 };
 
-struct PasteLBracket : State
+struct PasteLBracket : State <>
 {
-//    using State::State;
+//    using State<>::State;
     virtual void _process (iter i);
     bool done () {return true;}
  
 };
 
-struct Hashtag : State
+struct Hashtag : State <>
 {
-//    using State::State;
+//    using State<>::State;
     virtual void _process (iter i);
     bool done () {return true;}
  
@@ -235,47 +237,47 @@ struct Hashtag : State
 
 struct Paste_Done: Done
 {
-//    using State::State;
+//    using State<>::State;
     virtual void _process (iter i);
     bool done () {return true;}
  
 };
 
-struct Paste_LBracket : State
+struct Paste_LBracket : State <>
 {
-//    using State::State;
+//    using State<>::State;
     virtual void _process (iter i);
     bool done () {return true;}
  
 };
 
-struct At : State
+struct At : State <>
 {
-//    using State::State;
+//    using State<>::State;
     virtual void _process (iter i);
     bool done () {return true;}
  
 };
 
-struct Declare_LParan : State
+struct Declare_LParan : State <>
 {
-//    using State::State;
+//    using State<>::State;
     virtual void _process (iter i);
     bool done () {return true;}
  
 };
 
-struct Declare_RParan : State
+struct Declare_RParan : State <>
 {
-//    using State::State;
+//    using State<>::State;
     virtual void _process (iter i);
     bool done () {return true;}
  
 };
 
-struct Declare_LBracket : State
+struct Declare_LBracket : State <>
 {
-//    using State::State;
+//    using State<>::State;
     virtual void _process (iter i);
     bool done () {return true;}
  
