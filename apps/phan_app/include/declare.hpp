@@ -225,7 +225,7 @@ struct STATE ("#") : State <>
 
 
 template <>
-struct State S("$(") : State <>
+struct STATE ("$(") : State <>
 {
     using State<>::State;
     virtual void _process (iter i);
@@ -237,7 +237,7 @@ struct State S("$(") : State <>
 
 
 template <>
-struct State  S("$()") : State <>
+struct STATE ("$()") : State <>
 {
     using State<>::State;
     virtual void _process (iter i);
@@ -247,7 +247,7 @@ struct State  S("$()") : State <>
 
 
 template <>
-struct State S("$(){") : State <>
+struct STATE ("$(){") : State <>
 {
     using State<>::State;
     virtual void _process (iter i);
@@ -265,7 +265,8 @@ struct Done : Begin
  
 };
 
-struct PasteLBracket : State <>
+template <>
+struct STATE ("${") : State <>
 {
 //    using State<>::State;
     virtual void _process (iter i);
@@ -283,7 +284,8 @@ struct Paste_Done: Done
  
 };
 
-struct Paste_LBracket : State <>
+template <>
+struct STATE ("#{") : State <>
 {
 //    using State<>::State;
     virtual void _process (iter i);
@@ -299,7 +301,8 @@ struct At : State <>
  
 };
 
-struct Declare_LParan : State <>
+template <>
+struct STATE ("@(") : State <>
 {
 //    using State<>::State;
     virtual void _process (iter i);
@@ -307,7 +310,8 @@ struct Declare_LParan : State <>
  
 };
 
-struct Declare_RParan : State <>
+template <>
+struct STATE ("@()") : State <>
 {
 //    using State<>::State;
     virtual void _process (iter i);
@@ -315,7 +319,8 @@ struct Declare_RParan : State <>
  
 };
 
-struct Declare_LBracket : State <>
+template <>
+struct STATE ("@(){") : State <>
 {
 //    using State<>::State;
     virtual void _process (iter i);
@@ -353,15 +358,15 @@ void STATE ("#")::addResultFromChild (string const& res) {
     throw runtime_error ("oops");
 }
 
-void State S("$(")::addResultFromChild (string const& res) {
+void STATE ("$(")::addResultFromChild (string const& res) {
     potential () += res;
 }
 
-void State S("$()")::addResultFromChild (string const& res) {
+void STATE ("$()")::addResultFromChild (string const& res) {
     throw runtime_error ("oops");
 }
 
-void State S("$(){")::addResultFromChild (string const& res) {
+void STATE ("$(){")::addResultFromChild (string const& res) {
     value () += res;
 }
 
@@ -377,7 +382,7 @@ void Paste_Done::_process (iter i) {
     }
 }
 
-void Paste_LBracket::_process (iter i) {
+void STATE ("#{")::_process (iter i) {
     potential() += *i;
     if (*i == '}') {
         if (hasParent()) {
@@ -395,7 +400,7 @@ void STATE ("#")::_process (iter i) {
     
     if (*i == '{')
     {
-        transition <Paste_LBracket> ();
+        transition <STATE ("#{")> ();
         
     } else
     {
@@ -441,15 +446,15 @@ void At::_process (iter i) {
     }
 }
 
-void Declare_LParan::_process (iter i) {
+void STATE ("@(")::_process (iter i) {
     
 }
 
-void Declare_RParan::_process (iter i) {
+void STATE ("@()")::_process (iter i) {
     
 }
 
-void Declare_LBracket::_process (iter i) {
+void STATE ("@(){")::_process (iter i) {
     
 }
 
@@ -482,13 +487,13 @@ void STATE ("$")::_process (iter i) {
     if (*i == '(')
     {
         potential () += *i;
-        transition <State S("$(")> ();
+        transition <STATE ("$(")> ();
         
     } else if (*i == '{')
     {
-//        addChildContext<PasteLBracket>();
+//        addChildContext<STATE ("${")>();
         potential() += '{';
-        transition <PasteLBracket> ();
+        transition <STATE ("${")> ();
         // so that parent can push bracket to it's bracketstack
     } else
     {
@@ -508,7 +513,7 @@ void STATE ("$")::_process (iter i) {
         }
     }
 }
-void PasteLBracket::_process (iter i) {
+void STATE ("${")::_process (iter i) {
     
     potential() += *i;
     
@@ -547,13 +552,13 @@ void PasteLBracket::_process (iter i) {
 //        potential() += *i;
     }
 }
-void State S("$(")::_process (iter i) {
+void STATE ("$(")::_process (iter i) {
     
     if (*i == ')')
     {
         variable() = string (potential().begin() + 2, potential().end());
         potential () += ')';
-        transition <State S("$()")> ();
+        transition <STATE ("$()")> ();
         
     } else if (*i == '$')
     {
@@ -567,7 +572,7 @@ void State S("$(")::_process (iter i) {
     
 }
 
-void State S("$()")::_process (iter i) {
+void STATE ("$()")::_process (iter i) {
     
     
     if (*i == '{')
@@ -575,7 +580,7 @@ void State S("$()")::_process (iter i) {
 
         context -> bracketStack.push ('{');
 
-        transition <State S("$(){")> ();
+        transition <STATE ("$(){")> ();
         
     } else
     {
@@ -601,7 +606,7 @@ void State S("$()")::_process (iter i) {
     }
 }
 
-void State S("$(){")::_process (iter i) {
+void STATE ("$(){")::_process (iter i) {
     
     switch (*i)
     {
