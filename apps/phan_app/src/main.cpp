@@ -23,25 +23,25 @@
 
 
 
-template <bool DO_LOUD = true>
+//template <bool DO_LOUD = true>
 struct Process
 {
     vector <pair <string, string>> declaredVariables;
     Context declVar;
 //    Context pasteVar;
 //    comment::Context commentVal;
-    string str;
+//    string str;
     
-    Process (string const& str) : str (str), declVar {nullptr, declaredVariables, new declare::Begin}
+    Process () : declVar {nullptr, declaredVariables, new declare::Begin}
     {
         declVar.state -> context = &declVar;
 //        pasteVar.state -> context = &pasteVar;
 //        commentVal.state -> context = &commentVal;
     }
     
-    string process ()
+    string process (string str)
     {
-        if constexpr (DO_LOUD)
+//        if constexpr (DO_LOUD)
                 cout << endl << "input: " << endl << str << endl;
         
         for (auto i = str.begin(); i < str.end(); ++i)
@@ -60,8 +60,8 @@ struct Process
             str += declVar.potential;
         }
         
-        if constexpr (DO_LOUD)
-        {
+//        if constexpr (DO_LOUD)
+//        {
             cout << endl << "declare: " << endl << str << endl;
             cout << endl << "variables: " << endl;
             for (auto& i : declaredVariables)
@@ -69,7 +69,7 @@ struct Process
                 cout << i.first << " = " << i.second << endl;
             }
                 
-        }
+//        }
         
         declVar.result.clear ();
         
@@ -142,23 +142,40 @@ void fileApp (filesystem::path const& inputPath, filesystem::path const& outputP
     if (!outputFile.is_open ())
         throw runtime_error ("could not open file " + outputPath.string());
     
-    outputFile << Process {readFileIntoString (inputPath)}.process ();
+    outputFile << Process{}.process ({readFileIntoString (inputPath)});
     outputFile.close ();
 }
 
 
-void folderApp (filesystem::path const& inputPath, filesystem::path const& outputPath) {
+void folderApp (Process& p, filesystem::path const& inputPath, filesystem::path outputPath)
+{
+   for (auto& i : filesystem::directory_iterator (inputPath))
+   {
+       if (filesystem::is_directory(i.path()))
+       {
+           
+       } else if (filesystem::is_regular_file (i.path()))
+       {
+           
+       }
+           
+   }
+       
+    outputPath.replace_filename(Process{}.process({inputPath.stem()}));
+    cout << outputPath << endl;
     
+//    filesystem::create_directory (outputPath);
+//    filesystem::rename (<#const path &__from#>, <#const path &__to#>)
 }
 
-template <bool DO_LOUD = true>
+//template <bool DO_LOUD = true>
 void app (filesystem::path const& inputPath, filesystem::path const& outputPath) {
-    filesystem::path p {inputPath};
-    cout << filesystem::exists(inputPath) << endl;
-    cout << filesystem::is_directory (p) << endl;
-    cout << p.extension() << endl;
-    cout << p.stem() << endl;
-    cout << p.filename() << endl;
+//    filesystem::path p {inputPath};
+//    cout << filesystem::exists(inputPath) << endl;
+//    cout << filesystem::is_directory (p) << endl;
+//    cout << p.extension() << endl;
+//    cout << p.stem() << endl;
+//    cout << p.filename() << endl;
     
     
     if (not filesystem::exists (inputPath)) {
@@ -168,10 +185,12 @@ void app (filesystem::path const& inputPath, filesystem::path const& outputPath)
 //        throw runtime_error ("file already exists");
     }
     
+    Process p;
+    
     if (filesystem::is_directory(inputPath)) {
-        folderApp (inputPath, outputPath);
-    } else if (filesystem::is_regular_file(p)) {
-        fileApp(inputPath, outputPath);
+        folderApp (p, inputPath, outputPath);
+    } else if (filesystem::is_regular_file(inputPath)) {
+        fileApp (inputPath, outputPath);
     } else {
         throw runtime_error ("");
     }
@@ -183,7 +202,7 @@ string warning = "";
 template <bool DO_LOUD = true>
 void assert_file(string const& inputPath, string const& outputPath, string const& facitPath, string& warning) {
     
-    app <DO_LOUD> (inputPath, outputPath);
+    app (inputPath, outputPath);
     
     string result = readFileIntoString (outputPath);
     string facit = readFileIntoString (facitPath);
@@ -211,7 +230,8 @@ void assert_file(string const& inputPath, string const& outputPath, string const
 
 auto main(int argc,  char** argv) -> int
 {
-    
+    ASSERT_FILE(folder1, LOUD(1))
+    return 0;
     ASSERT_FILE (1.hpp, LOUD (0))
     ASSERT_FILE (declare.hpp, LOUD (0))
     ASSERT_FILE (4.hpp, LOUD (0))
