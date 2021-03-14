@@ -1,5 +1,5 @@
 int main ()
 {
-    cout << ${angela} << endl;
+    cout << angela är kåt och vill ha snopp << endl;
 }
 

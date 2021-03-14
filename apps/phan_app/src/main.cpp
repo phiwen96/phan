@@ -137,12 +137,13 @@ struct Process
 //${p}
 
 void fileApp (Process& p, filesystem::path const& inputPath, filesystem::path const& outputPath) {
+    string input = readFileIntoString (inputPath);
     ofstream outputFile (outputPath);
     
     if (!outputFile.is_open ())
         throw runtime_error ("could not open file " + outputPath.string());
     
-    outputFile << Process{}.process ({readFileIntoString (inputPath)});
+    outputFile << p.process (input);
     outputFile.close ();
 }
 
@@ -151,6 +152,7 @@ void folderApp (Process& p, filesystem::path inputPath)
 {
     
     filesystem::rename (inputPath, filesystem::path{inputPath}.replace_filename (p.process (inputPath.filename ())));
+    
     inputPath = filesystem::path{inputPath}.replace_filename (p.process (inputPath.filename ()));
     
     set <filesystem::path> all;
@@ -183,8 +185,12 @@ void folderApp (Process& p, filesystem::path inputPath)
     
     for (auto const& filename : subfiles)
     {
-        cout << "inserting" << endl;
         fileApp (p, filename, filename);
+    }
+    
+    for (auto const& dirname : subdirs)
+    {
+        folderApp (p, dirname);
     }
 }
 
@@ -237,7 +243,7 @@ string warning = "";
 
 void assert_folder(string const& inputPath, string const& outputPath, string& warning) {
 
-    cout << inputPath << endl;
+//    cout << inputPath << endl;
     app (inputPath, outputPath);
     
 }
