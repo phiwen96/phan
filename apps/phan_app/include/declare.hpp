@@ -77,12 +77,13 @@ struct BASE_STATE
     void reset (Context& ctx);
     virtual void reset_hasNoParent (Context& ctx){}
     virtual void reset_hasParent (Context& ctx){}
-    
+    virtual string trans(){throw runtime_error ("");}
+    string transi (Context& ctx);
 };
 
 struct Context
 {
-    Context* parent;
+    Context* parent {nullptr};
     vector <pair <string, string>>& declaredVariables;
     State<>* state {nullptr};
     vector <Context*> children;
@@ -99,6 +100,7 @@ struct Context
 
 
 void BASE_STATE::declare (string const& var, string const& val, Context& ctx) {
+    throw runtime_error ("");
     auto declared = ctx.declaredVariables.begin ();
     for (; declared < ctx.declaredVariables.end (); ++declared) {
         if (declared -> first == var) {
@@ -109,6 +111,7 @@ void BASE_STATE::declare (string const& var, string const& val, Context& ctx) {
     ctx.declaredVariables.emplace_back (var, val);
 }
 optional <string> BASE_STATE::declared (string const& p, Context& ctx) {
+    throw runtime_error ("");
     for (auto d = ctx.declaredVariables.begin (); d != ctx.declaredVariables.end(); ++d) {
         if (d -> first == p) {
             return d->second;
@@ -118,6 +121,10 @@ optional <string> BASE_STATE::declared (string const& p, Context& ctx) {
 }
 
 BASE_STATE* BASE_STATE::parent (Context& ctx) {
+#if defined (Debug)
+    if (ctx.parent == nullptr or ctx.parent -> state == nullptr)
+        throw runtime_error ("");
+#endif
     return ctx.parent -> state;
 }
 
@@ -134,7 +141,11 @@ void Context::process(iter i) {
 }
 
 void BASE_STATE::addResultFromChild (string const& res, Context& ctx) {
-    
+#if defined (Debug)
+    if (ctx.parent == nullptr || ctx.parent -> state == nullptr)
+        throw runtime_error ("");
+#endif
+    ctx.parent -> state -> addResultFromChild (res, ctx);
 }
 
 
@@ -150,10 +161,21 @@ void BASE_STATE::process (iter i, Context& ctx) {
 }
 
 bool BASE_STATE::hasParent (Context& ctx) const {
-    return ctx.parent != nullptr;
+    return ctx.parent != nullptr and ctx.parent->state != nullptr;
 }
 
 void BASE_STATE::removeFromParent (Context& ctx) {
+#if defined (Debug)
+    for (auto cont = ctx.parent -> children.begin(); cont < ctx.parent -> children.end(); ++cont) {
+        if (*cont == &ctx) {
+//            cout << "removing child context from parent context" << endl;
+            ctx.parent -> children.erase (cont);
+//            ctx.parent -> children.
+            return;
+        }
+    }
+    throw runtime_error ("");
+#else
     for (auto cont = ctx.parent -> children.begin(); cont < ctx.parent -> children.end(); ++cont) {
         if (*cont == &ctx) {
 //            cout << "removing child context from parent context" << endl;
@@ -161,14 +183,17 @@ void BASE_STATE::removeFromParent (Context& ctx) {
             break;
         }
     }
+#endif
+    
 }
 
 
 
 
-template <class state>
+template <class Q>
 Context& BASE_STATE::addChildContext (Context& ctx) {
-    State<>* childState = new state;
+    cout << endl;
+    State<>* childState = new Q;
     Context* childContext = new Context {&ctx, ctx.declaredVariables, childState};
 //    childState -> context = childContext;
     ctx.children.push_back (childContext);
@@ -197,7 +222,14 @@ string& BASE_STATE::potential (Context& ctx) {
 string& BASE_STATE::paste (Context& ctx) {
     return ctx.paste;
 }
-
+string BASE_STATE::transi (Context& ctx) {
+    if (hasParent(ctx)){
+        return ctx.parent->state->transi(*ctx.parent) + "::" + trans();
+    } else
+    {
+        return trans();
+    }
+}
 
 
 
@@ -232,15 +264,22 @@ struct STATE ("") : BASE_STATE
         throw runtime_error ("oops");
     }
     
-    virtual void reset_hasNoParent (Context& ctx){}
-    virtual void reset_hasParent (Context& ctx){}
+    virtual void reset_hasNoParent (Context& ctx){
+        throw runtime_error ("");
+    }
+    virtual void reset_hasParent (Context& ctx){
+        throw runtime_error ("");
+    }
+    virtual string trans (){
+        return "\"\"";
+    }
 };
 
 
 template <>
 struct STATE ("$") : BASE_STATE
 {
-    static STATE ("$") instance;
+
     virtual void _process (iter i, Context& ctx){
         
         potential (ctx) += *i;
@@ -275,15 +314,17 @@ struct STATE ("$") : BASE_STATE
         TRANSITION ("done")
     }
     virtual void reset_hasParent (Context& ctx){
-        parent (ctx) -> addResultFromChild (potential (ctx), ctx);
+        BASE_STATE::addResultFromChild (potential (ctx), ctx);
         removeFromParent (ctx);
+    }
+    virtual string trans (){
+        return "$";
     }
 };
 
 template <>
 struct STATE ("#") : BASE_STATE
 {
-    static STATE ("#") instance;
     virtual void _process (iter i, Context& ctx){
         potential (ctx) += *i ;
         if (*i == '{')
@@ -307,8 +348,11 @@ struct STATE ("#") : BASE_STATE
         TRANSITION ("")
     }
     virtual void reset_hasParent (Context& ctx){
-        addResultFromChild (potential (ctx));
+        BASE_STATE::addResultFromChild (potential (ctx), ctx);
         removeFromParent (ctx);
+    }
+    virtual string trans (){
+        return "#";
     }
 };
 
@@ -316,11 +360,12 @@ struct STATE ("#") : BASE_STATE
 template <>
 struct STATE ("$(") : BASE_STATE
 {
-    static STATE ("$(") instance;
+
     virtual void _process (iter i, Context& ctx){
-        potential (ctx) += *i;
+        
         if (*i == ')')
         {
+            potential (ctx) += *i;
 //            variable (ctx) = string (potential(ctx).begin() + 2, potential(ctx).end());
 //            potential (ctx) += ')';
             TRANSITION ("$()")
@@ -332,6 +377,7 @@ struct STATE ("$(") : BASE_STATE
         } else
         {
             variable (ctx) += *i;
+            potential (ctx) += *i;
 //            potential (ctx) += *i;
 
         }
@@ -341,8 +387,15 @@ struct STATE ("$(") : BASE_STATE
         variable (ctx) += res;
     }
     
-    virtual void reset_hasNoParent (Context& ctx){}
-    virtual void reset_hasParent (Context& ctx){}
+    virtual void reset_hasNoParent (Context& ctx){
+        throw runtime_error ("");
+    }
+    virtual void reset_hasParent (Context& ctx){
+        throw runtime_error ("");
+    }
+    virtual string trans (){
+        return "$(";
+    }
 };
 
 
@@ -351,11 +404,12 @@ struct STATE ("$(") : BASE_STATE
 template <>
 struct STATE ("$()") : BASE_STATE
 {
-    static STATE ("$()") instance;
+
     virtual void _process (iter i, Context& ctx){
         
         if (*i == '{')
         {
+            potential (ctx) += '{';
             ctx.bracketStack.push ('{');
             TRANSITION ("$(){")
             
@@ -365,6 +419,7 @@ struct STATE ("$()") : BASE_STATE
             
         } else
         {
+            potential (ctx) += *i;
             reset (ctx);
 
         }
@@ -380,15 +435,14 @@ struct STATE ("$()") : BASE_STATE
         value (ctx).clear ();
         TRANSITION ("")
         
-        potential (ctx).clear ();
-        variable (ctx).clear ();
+        
     }
     virtual void reset_hasParent (Context& ctx){
-        parent (ctx) -> addResultFromChild (potential (ctx), ctx);
+        BASE_STATE::addResultFromChild (potential (ctx), ctx);
         removeFromParent (ctx);
-        
-        potential (ctx).clear ();
-        variable (ctx).clear ();
+    }
+    virtual string trans (){
+        return "$()";
     }
 };
 
@@ -398,7 +452,9 @@ struct STATE ("$(){") : BASE_STATE
 {
    
     virtual void _process (iter i, Context& ctx){
-        potential (ctx) += *i;
+        
+       
+        
         if (*i == '}')
         {
 //            ctx.bracketStack.pop ();
@@ -406,24 +462,27 @@ struct STATE ("$(){") : BASE_STATE
 //            if (ctx.bracketStack.empty ())
 //            {
             bool found = false;
-            cout << "var: " << variable(ctx) << endl << "val: " << value(ctx) << endl;
-            for (auto j = ctx.declaredVariables.begin(); j < ctx.declaredVariables.end(); ++j){
-                if (j->first == variable(ctx)){
+//            cout << "var: " << variable(ctx) << endl << "val: " << value(ctx) << endl;
+            for (auto& j : ctx.declaredVariables){
+                if (j.first == variable(ctx)){
 //                    value(ctx) = j->second;
-                    j->second = value (ctx);
-                    cout << "found:" << j->first << " = " << j->second << endl;
+                    j.second = value (ctx);
+//                    cout << "found:" << j->first << " = " << j->second << endl;
                     found = true;
                     break;
                 }
             }
             if (not found){
-                cout << "found:" << variable(ctx) << " = " << value(ctx) << endl;
+//                cout << "found:" << variable(ctx) << " = " << value(ctx) << endl;
                 ctx.declaredVariables.emplace_back(variable(ctx), value(ctx));
-                cout << "v::" << value(ctx) << endl;
+//                cout << "v::" << value(ctx) << endl;
             }
             if (hasParent(ctx))
             {
-                addResultFromChild(value(ctx), ctx);
+                BASE_STATE::addResultFromChild(value(ctx), ctx);
+                variable (ctx).clear();
+                value (ctx).clear();
+                potential (ctx).clear();
                 removeFromParent(ctx);
             } else {
                 result (ctx) += value (ctx);
@@ -450,28 +509,42 @@ struct STATE ("$(){") : BASE_STATE
         {
             addChildContext <STATE ("$")> (ctx).potential += '$';
 
+        } else if (*i == '@')
+        {
+            addChildContext <STATE ("@")> (ctx).potential += '@';
+
+        } else if (*i == '#')
+        {
+            addChildContext <STATE ("#")> (ctx).potential += '#';
+
         } else
         {
             value (ctx) += *i;
+            potential (ctx) += *i;
         }
         
     }
     virtual void addResultFromChild (string const& res, Context& ctx){
         value (ctx) += res;
+//        cout << "kuk::$(){" << endl;
+//        throw runtime_error ("oops");
     }
-    void finish () {
-        
-    }
+    
     virtual void reset_hasNoParent (Context& ctx){
         result (ctx) += value (ctx);
         potential(ctx).clear();
         value(ctx).clear();
         variable(ctx).clear();
         TRANSITION ("")
+        throw runtime_error ("oops");
     }
     virtual void reset_hasParent (Context& ctx){
-        parent (ctx) -> addResultFromChild (value (ctx), ctx);
+        BASE_STATE::addResultFromChild (value (ctx), ctx);
         removeFromParent (ctx);
+        throw runtime_error ("oops");
+    }
+    virtual string trans (){
+        return "$(){";
     }
 };
 
@@ -492,8 +565,15 @@ struct STATE ("done") : STATE ("")
         STATE ("")::_process (i, ctx);
     }
     
-    virtual void reset_hasNoParent (Context& ctx){}
-    virtual void reset_hasParent (Context& ctx){}
+    virtual void reset_hasNoParent (Context& ctx){
+        throw runtime_error ("");
+    }
+    virtual void reset_hasParent (Context& ctx){
+        throw runtime_error ("");
+    }
+    virtual void addResultFromChild (string const& res, Context& ctx){
+        throw runtime_error ("");
+    }
 };
 
 template <>
@@ -501,30 +581,31 @@ struct STATE ("${") : BASE_STATE
 {
     virtual void _process (iter i, Context& ctx){
         
-        potential(ctx) += *i;
+        
         
         
         
         if (*i == '}')
         {
 //            optional <string> decl = declared (variable (ctx), ctx);
-            for (auto d = ctx.declaredVariables.begin (); d != ctx.declaredVariables.end(); ++d) {
-                if (d -> first == variable(ctx)) {
+            for (auto& d : ctx.declaredVariables) {
+                if (d.first == variable(ctx)) {
 //                    return d->second;
-                    cout << "::" << d->second << endl;
+//                    cout << "::" << d->second << endl;
                     if (hasParent(ctx))
                     {
-    //                    cout << "kuk" << endl;
-                        ctx.state -> addResultFromChild (d->second, ctx);
-                        removeFromParent(ctx);
+//                        cout << "kuk::${" << endl;
+                        BASE_STATE::addResultFromChild (d.second, ctx);
+                        cout << "adding result \"" << d.second << "\" from ${ to parent" << endl;
+                        removeFromParent (ctx);
                     } else {
-                        result(ctx) += d->second;
-                        cout << result(ctx) << endl;
+                        result(ctx) += d.second;
+//                        cout << result(ctx) << endl;
                         potential(ctx).clear();
                         value(ctx).clear();
                         variable(ctx).clear();
                         paste(ctx).clear();
-                        TRANSITION ("${} done")
+                        TRANSITION ("done")
                     }
                     return;
                     
@@ -539,15 +620,25 @@ struct STATE ("${") : BASE_STATE
         {
             addChildContext<STATE ("$")>(ctx).potential = '$';
             
+        } else if (*i == '@')
+        {
+            addChildContext<STATE ("@")>(ctx).potential = '@';
+            
+        } else if (*i == '#')
+        {
+            addChildContext<STATE ("#")>(ctx).potential = '#';
+            
         } else
         {
             variable (ctx) += *i;
-            cout << *i << endl;
+            potential(ctx) += *i;
+//            cout << *i << endl;
         }
     }
     
     virtual void addResultFromChild (string const& res, Context& ctx){
         variable (ctx) += res;
+        potential (ctx) += res;
     }
     
     virtual void reset_hasNoParent (Context& ctx){
@@ -559,8 +650,11 @@ struct STATE ("${") : BASE_STATE
         TRANSITION ("${} done")
     }
     virtual void reset_hasParent (Context& ctx){
-        parent (ctx) -> addResultFromChild (value (ctx), ctx);
+        BASE_STATE::addResultFromChild (value (ctx), ctx);
         removeFromParent (ctx);
+    }
+    virtual string trans (){
+        return "${";
     }
  
 };
@@ -570,14 +664,23 @@ template <>
 struct STATE ("${} done"): STATE ("done")
 {
     virtual void _process (iter i, Context& ctx){
-        if (*i != '\n')
-        {
+//        if (*i != '\n')
+//        {
             STATE ("done")::_process (i, ctx);
-        } 
+//        }
     }
-    
-    virtual void reset_hasNoParent (Context& ctx){}
-    virtual void reset_hasParent (Context& ctx){}
+    virtual void addResultFromChild (string const& res, Context& ctx){
+        throw runtime_error ("");
+    }
+    virtual void reset_hasNoParent (Context& ctx){
+        throw runtime_error ("");
+    }
+    virtual void reset_hasParent (Context& ctx){
+        throw runtime_error ("");
+    }
+    virtual string trans (){
+        return "${} done";
+    }
  
 };
 
@@ -591,12 +694,18 @@ struct STATE ("#{") : BASE_STATE
         }
     }
     
+    virtual void addResultFromChild (string const& res, Context& ctx){
+        throw runtime_error ("");
+    }
     virtual void reset_hasNoParent (Context& ctx){
         potential(ctx).clear();
         transition<STATE ("#{} done")>(ctx);
     }
     virtual void reset_hasParent (Context& ctx){
         removeFromParent (ctx);
+    }
+    virtual string trans (){
+        return "#{";
     }
  
 };
@@ -607,6 +716,18 @@ struct STATE ("#{} done") : STATE ("done")
     virtual void _process (iter i, Context& ctx) {
         if (*i != '\n')
             STATE ("done")::_process (i, ctx);
+    }
+    virtual void addResultFromChild (string const& res, Context& ctx){
+        throw runtime_error ("");
+    }
+    virtual void reset_hasNoParent (Context& ctx){
+        throw runtime_error ("");
+    }
+    virtual void reset_hasParent (Context& ctx){
+        throw runtime_error ("");
+    }
+    virtual string trans (){
+        return "#{} done";
     }
 };
 
@@ -633,8 +754,11 @@ struct STATE ("@") : BASE_STATE
         TRANSITION ("")
     }
     virtual void reset_hasParent(Context& ctx){
-        addResultFromChild (potential (ctx), ctx);
+        BASE_STATE::addResultFromChild (potential (ctx), ctx);
         removeFromParent (ctx);
+    }
+    virtual string trans (){
+        return "@";
     }
  
 };
@@ -665,7 +789,9 @@ struct STATE ("@(") : BASE_STATE
     }
     virtual void reset_hasNoParent (Context& ctx){}
     virtual void reset_hasParent (Context& ctx){}
- 
+    virtual string trans (){
+        return "@(";
+    }
 };
 
 template <>
@@ -689,10 +815,12 @@ struct STATE ("@()") : BASE_STATE
         TRANSITION ("")
     }
     virtual void reset_hasParent (Context& ctx){
-        addResultFromChild (potential (ctx), ctx);
+        BASE_STATE::addResultFromChild (potential (ctx), ctx);
         removeFromParent (ctx);
     }
- 
+    virtual string trans (){
+        return "@()";
+    }
 };
 
 template <>
@@ -733,6 +861,9 @@ struct STATE ("@(){") : BASE_STATE
     virtual void reset_hasParent (Context& ctx){
         removeFromParent (ctx);
     }
+    virtual string trans (){
+        return "@(){";
+    }
 };
 
 template <>
@@ -741,6 +872,9 @@ struct STATE ("@(){} done") : STATE ("done")
     virtual void _process (iter i, Context& ctx) {
         if (*i != '\n')
             STATE ("done")::_process (i, ctx);
+    }
+    virtual string trans (){
+        return "@(){} done";
     }
 };
 
@@ -775,44 +909,46 @@ void BASE_STATE::transition (Context& ctx) {
 //    T* newstate = new T;
 //    newstate -> context = context;
     
-    cout << "transitioning from " << typeid (*ctx.state).name () << " to ";
+    cout << transi(ctx) << " -> ";
 //    auto a = get<T>(states);
-//    if constexpr (is_same_v<T, decltype (a0)>)
-//        context -> state = &a0;
+    if constexpr (is_same_v<T, STATE ("")>)
+        cout << "kamskdmaskmd" << endl;
+//        ctx.state = &a0;
 //    if constexpr (is_same_v<T, decltype (a1)>)
-//        context -> state = &a1;
+//        ctx.state = &a1;
 //    if constexpr (is_same_v<T, decltype (a2)>)
-//        context -> state = &a2;
+//        ctx.state = &a2;
 //    if constexpr (is_same_v<T, decltype (a3)>)
-//        context -> state = &a3;
+//        ctx.state = &a3;
 //    if constexpr (is_same_v<T, decltype (a4)>)
-//        context -> state = &a4;
+//        ctx.state = &a4;
 //    if constexpr (is_same_v<T, decltype (a5)>)
-//        context -> state = &a5;
+//        ctx.state = &a5;
 //    if constexpr (is_same_v<T, decltype (a6)>)
-//        context -> state = &a6;
+//        ctx.state = &a6;
 //    if constexpr (is_same_v<T, decltype (a7)>)
-//        context -> state = &a7;
+//        ctx.state = &a7;
 //    if constexpr (is_same_v<T, decltype (a8)>)
-//        context -> state = &a8;
+//        ctx.state = &a8;
 //    if constexpr (is_same_v<T, decltype (a9)>)
-//        context -> state = &a9;
+//        ctx.state = &a9;
 //    if constexpr (is_same_v<T, decltype (a10)>)
-//        context -> state = &a10;
+//        ctx.state = &a10;
 //    if constexpr (is_same_v<T, decltype (a11)>)
-//        context -> state = &a11;
+//        ctx.state = &a11;
 //    if constexpr (is_same_v<T, decltype (a12)>)
-//        context -> state = &a11;
+//        ctx.state = &a11;
 //    if constexpr (is_same_v<T, decltype (a13)>)
-//        context -> state = &a13;
+//        ctx.state = &a13;
 //    if constexpr (is_same_v<T, decltype (a14)>)
-//        context -> state = &a14;
+//        ctx.state = &a14;
     
     ctx.state = new T;
     
 //    ctx.state -> context = context;
     
-    cout << typeid (*ctx.state).name () << endl;
+    cout << ctx.state->transi(ctx) << endl;
+    cout << ctx.result << endl;
 }
 
 
