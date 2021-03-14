@@ -145,7 +145,7 @@ void BASE_STATE::addResultFromChild (string const& res, Context& ctx) {
     if (ctx.parent == nullptr || ctx.parent -> state == nullptr)
         throw runtime_error ("");
 #endif
-    ctx.parent -> state -> addResultFromChild (res, ctx);
+    ctx.parent -> state -> addResultFromChild (res, *ctx.parent);
 }
 
 
@@ -166,10 +166,10 @@ bool BASE_STATE::hasParent (Context& ctx) const {
 
 void BASE_STATE::removeFromParent (Context& ctx) {
 #if defined (Debug)
-    for (auto cont = ctx.parent -> children.begin(); cont < ctx.parent -> children.end(); ++cont) {
-        if (*cont == &ctx) {
+    for (int i = 0; i < ctx.parent->children.size (); ++i) {
+        if (ctx.parent->children[i] == &ctx) {
 //            cout << "removing child context from parent context" << endl;
-            ctx.parent -> children.erase (cont);
+            ctx.parent -> children.erase (ctx.parent->children.begin() + i);
 //            ctx.parent -> children.
             return;
         }
@@ -420,7 +420,7 @@ struct STATE ("$()") : BASE_STATE
         } else
         {
             potential (ctx) += *i;
-            reset (ctx);
+//            reset (ctx);
 
         }
     }
@@ -479,7 +479,8 @@ struct STATE ("$(){") : BASE_STATE
             }
             if (hasParent(ctx))
             {
-                BASE_STATE::addResultFromChild(value(ctx), ctx);
+//                BASE_STATE::addResultFromChild(value(ctx), ctx);
+                ctx.parent->state->addResultFromChild (value(ctx), *ctx.parent);
                 variable (ctx).clear();
                 value (ctx).clear();
                 potential (ctx).clear();
@@ -507,15 +508,15 @@ struct STATE ("$(){") : BASE_STATE
 //        }
         else if (*i == '$')
         {
-            addChildContext <STATE ("$")> (ctx).potential += '$';
+            addChildContext <STATE ("$")> (ctx).potential = '$';
 
         } else if (*i == '@')
         {
-            addChildContext <STATE ("@")> (ctx).potential += '@';
+            addChildContext <STATE ("@")> (ctx).potential = '@';
 
         } else if (*i == '#')
         {
-            addChildContext <STATE ("#")> (ctx).potential += '#';
+            addChildContext <STATE ("#")> (ctx).potential = '#';
 
         } else
         {
@@ -595,7 +596,7 @@ struct STATE ("${") : BASE_STATE
                     if (hasParent(ctx))
                     {
 //                        cout << "kuk::${" << endl;
-                        BASE_STATE::addResultFromChild (d.second, ctx);
+                        ctx.parent->state->addResultFromChild (d.second, *ctx.parent);
                         cout << "adding result \"" << d.second << "\" from ${ to parent" << endl;
                         removeFromParent (ctx);
                     } else {
@@ -637,6 +638,7 @@ struct STATE ("${") : BASE_STATE
     }
     
     virtual void addResultFromChild (string const& res, Context& ctx){
+        cout << "getting result \"" << res << "\" to ${" << endl;
         variable (ctx) += res;
         potential (ctx) += res;
     }
@@ -952,3 +954,11 @@ void BASE_STATE::transition (Context& ctx) {
 }
 
 
+
+
+/**
+ 
+ ${fornamn${fornamn}}
+ 
+ 
+ */
