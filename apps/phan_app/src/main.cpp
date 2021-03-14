@@ -149,40 +149,34 @@ void fileApp (Process& p, filesystem::path const& inputPath, filesystem::path co
 
 void folderApp (Process& p, filesystem::path inputPath)
 {
-//    cout << inputPath << endl;
+    
     filesystem::rename (inputPath, filesystem::path{inputPath}.replace_filename (p.process (inputPath.filename ())));
     inputPath = filesystem::path{inputPath}.replace_filename (p.process (inputPath.filename ()));
-//    filesystem::rename (inputPath, filesystem::path{inputPath}.replace_filename (p.process (inputPath.filename ())));
-//    return;
-//    cout << inputPath << endl;
-//    return;
-//    inputPath.replace_filename (p.process (inputPath.filename ()));
-//    cout << outputPath << endl;
-//    outputPath += p.process (inputPath.filename ());
-//    cout << outputPath << endl;
-//    return;
-//    filesystem::copy (inputPath, outputPath, std::filesystem::copy_options::recursive);
-//    filesystem::create_directory (outputPath);
+    
+    set <filesystem::path> all;
     set <filesystem::path> subdirs;
+    set <filesystem::path> subfiles;
+    
     for (auto& i : filesystem::directory_iterator (inputPath))
     {
-        
-        if (filesystem::is_directory(i.path()))
-        {
-            
-            subdirs.insert (i.path ());
-            
-        } else if (filesystem::is_regular_file (i.path()))
-        {
-           
-        }
+        auto renamed = filesystem::path {i.path().parent_path()} /= p.process (i.path().filename());
+        cout << i.path().string() << endl << renamed.c_str() << endl;
+//        filesystem::rename (i.path(), renamed);
     }
     
-    for (auto& filename : subdirs)
+    for (auto& filename : all)
     {
-//        filesystem::rename (<#const path &__from#>, <#const path &__to#>)
-        folderApp (p, filename);
-        cout << filename << endl;
+//        if (filesystem::is_directory(i.path()))
+//        {
+//
+//            subdirs.insert (i.path ());
+//
+//        } else if (filesystem::is_regular_file (i.path()))
+//        {
+//
+//        }
+//        folderApp (p, filename);
+//        cout << filename << endl;
     }
 //    while (!subdirs.empty ())
 //    {
