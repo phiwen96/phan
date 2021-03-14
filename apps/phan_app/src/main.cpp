@@ -160,8 +160,15 @@ void folderApp (Process& p, filesystem::path inputPath)
     for (auto& i : filesystem::directory_iterator (inputPath))
     {
         auto renamed = filesystem::path {i.path().parent_path()} /= p.process (i.path().filename());
-        cout << i.path().string() << endl << renamed.c_str() << endl;
-//        filesystem::rename (i.path(), renamed);
+        all.insert (renamed);
+        filesystem::rename (i.path(), renamed);
+        if (filesystem::is_directory (renamed))
+        {
+            subdirs.insert (renamed);
+        } else if (filesystem::is_regular_file (renamed))
+        {
+            subfiles.insert (renamed);
+        }
     }
     
     for (auto& filename : all)
