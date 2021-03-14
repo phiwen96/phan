@@ -51,3 +51,8 @@ string readFileIntoString(const string& path) {
     input_file.close ();
 }
 
+
+void removeFolderContent (filesystem::path const& p) {
+    for (auto& i : filesystem::directory_iterator (p))
+        filesystem::remove_all (i.path ());
+}

@@ -276,8 +276,7 @@ void assert_file(string const& inputPath, string const& outputPath, string const
 auto main(int argc,  char** argv) -> int
 {
 #if defined (Debug)
-    filesystem::path testFolders {TEST_FOLDERS_POST_PATH};
-    filesystem::remove_all(<#const path &__p#>)
+    removeFolderContent (TEST_FOLDERS_POST_PATH);
 #endif
     ASSERT_FOLDER ($(root){philip}, LOUD(1))
     return 0;
