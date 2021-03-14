@@ -40,6 +40,7 @@ return N; \
 
 #define TRANSITION(x) transition <STATE (x)> ();
 
+#define BASE_STATE State <>
 
 
 using iter = string::iterator;
@@ -54,7 +55,7 @@ template <char...>
 struct State;
 
 template <>
-struct State <>
+struct BASE_STATE
 {
     Context* context;
     
@@ -73,6 +74,8 @@ struct State <>
     void declare (string const& var, string const& val);
     optional <string> declared (string const&);
     virtual void addResultFromChild (string const& res);
+    void reset ();
+    
 };
 
 struct Context
@@ -93,7 +96,7 @@ struct Context
 };
 
 
-void State<>::declare (string const& var, string const& val) {
+void BASE_STATE::declare (string const& var, string const& val) {
     auto declared = context -> declaredVariables.begin ();
     for (; declared < context -> declaredVariables.end (); ++declared) {
         if (declared -> first == var) {
@@ -103,7 +106,7 @@ void State<>::declare (string const& var, string const& val) {
     }
     context -> declaredVariables.emplace_back (var, val);
 }
-optional <string> State<>::declared (string const& p) {
+optional <string> BASE_STATE::declared (string const& p) {
     for (auto d = context -> declaredVariables.begin (); d != context -> declaredVariables.end(); ++d) {
         if (d -> first == p) {
             return optional{d->second};
@@ -112,7 +115,7 @@ optional <string> State<>::declared (string const& p) {
     return {};
 }
 
-State<>* State<>::parent () {
+BASE_STATE* BASE_STATE::parent () {
     return context -> parent -> state;
 }
 
@@ -120,12 +123,12 @@ void Context::process(iter i) {
     state -> process (i);
 }
 
-void State<>::addResultFromChild (string const& res) {
+void BASE_STATE::addResultFromChild (string const& res) {
     
 }
 
 
-void State<>::process (iter i) {
+void BASE_STATE::process (iter i) {
     if (context -> children.empty ()) {
 //        context -> curr_it = i;
         _process (i);
@@ -136,11 +139,11 @@ void State<>::process (iter i) {
     }
 }
 
-bool State<>::hasParent () const {
+bool BASE_STATE::hasParent () const {
     return context -> parent != nullptr;
 }
 
-void State<>::removeFromParent () {
+void BASE_STATE::removeFromParent () {
     for (auto cont = context -> parent -> children.begin(); cont < context -> parent -> children.end(); ++cont) {
         if (*cont == context) {
 //            cout << "removing child context from parent context" << endl;
@@ -150,9 +153,13 @@ void State<>::removeFromParent () {
     }
 }
 
+void BASE_STATE::reset () {
+    
+}
+
 
 template <class T>
-void State<>::transition () {
+void BASE_STATE::transition () {
 //    T* newstate = new T;
 //    newstate -> context = context;
     
@@ -165,14 +172,14 @@ void State<>::transition () {
 }
 
 template <class state>
-Context& State<>::addChildContext () {
+Context& BASE_STATE::addChildContext () {
     State* childState = new state;
     Context* childContext = new Context {context, context->declaredVariables, childState};
     childState -> context = childContext;
     context -> children.push_back (childContext);
     return *childContext;
 }
-//optional <string> State<>::declared () {
+//optional <string> BASE_STATE::declared () {
 //    for (auto d = context -> declaredVariables.begin (); d != context -> declaredVariables.end(); ++d) {
 //        if (d -> first == context -> variable) {
 //            return optional{d->second};
@@ -180,19 +187,19 @@ Context& State<>::addChildContext () {
 //    }
 //    return {};
 //}
-string& State<>::variable () {
+string& BASE_STATE::variable () {
     return context -> variable;
 }
-string& State<>::value () {
+string& BASE_STATE::value () {
     return context -> value;
 }
-string& State<>::result () {
+string& BASE_STATE::result () {
     return context -> result;
 }
-string& State<>::potential () {
+string& BASE_STATE::potential () {
     return context -> potential;
 }
-string& State<>::paste () {
+string& BASE_STATE::paste () {
     return context -> paste;
 }
 
@@ -200,7 +207,7 @@ string& State<>::paste () {
 
 
 template <>
-struct STATE ("") : State <>
+struct STATE ("") : BASE_STATE
 {
     void _process (iter i){
         switch (*i)
@@ -233,7 +240,7 @@ struct STATE ("") : State <>
 
 
 template <>
-struct STATE ("$") : State <>
+struct STATE ("$") : BASE_STATE
 {
     virtual void _process (iter i){
         
@@ -273,7 +280,7 @@ struct STATE ("$") : State <>
 };
 
 template <>
-struct STATE ("#") : State <>
+struct STATE ("#") : BASE_STATE
 {
     virtual void _process (iter i){
         potential () += *i ;
@@ -303,7 +310,7 @@ struct STATE ("#") : State <>
 
 
 template <>
-struct STATE ("$(") : State <>
+struct STATE ("$(") : BASE_STATE
 {
     virtual void _process (iter i){
         
@@ -333,7 +340,7 @@ struct STATE ("$(") : State <>
 
 
 template <>
-struct STATE ("$()") : State <>
+struct STATE ("$()") : BASE_STATE
 {
     virtual void _process (iter i){
         
@@ -375,7 +382,7 @@ struct STATE ("$()") : State <>
 
 
 template <>
-struct STATE ("$(){") : State <>
+struct STATE ("$(){") : BASE_STATE
 {
     virtual void _process (iter i){
         
@@ -449,7 +456,7 @@ struct STATE ("done") : STATE ("")
 };
 
 template <>
-struct STATE ("${") : State <>
+struct STATE ("${") : BASE_STATE
 {
     virtual void _process (iter i){
         
@@ -510,7 +517,7 @@ struct Paste_Done: STATE ("done")
 };
 
 template <>
-struct STATE ("#{") : State <>
+struct STATE ("#{") : BASE_STATE
 {
     virtual void _process (iter i){
         potential() += *i;
@@ -528,7 +535,7 @@ struct STATE ("#{") : State <>
 };
 
 template <>
-struct STATE ("@") : State <>
+struct STATE ("@") : BASE_STATE
 {
     virtual void _process (iter i){
         potential() += *i;
@@ -557,7 +564,7 @@ struct STATE ("@") : State <>
 };
 
 template <>
-struct STATE ("@(") : State <>
+struct STATE ("@(") : BASE_STATE
 {
     virtual void _process (iter i){
         potential() += *i;
@@ -586,7 +593,7 @@ struct STATE ("@(") : State <>
 };
 
 template <>
-struct STATE ("@()") : State <>
+struct STATE ("@()") : BASE_STATE
 {
     virtual void _process (iter i){
         
@@ -595,7 +602,7 @@ struct STATE ("@()") : State <>
 };
 
 template <>
-struct STATE ("@(){") : State <>
+struct STATE ("@(){") : BASE_STATE
 {
     virtual void _process (iter i){
         
