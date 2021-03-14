@@ -149,8 +149,7 @@ string& State<>::paste () {
     return context -> paste;
 }
 
-namespace declare
-{
+
 
 
 
@@ -163,8 +162,8 @@ struct Begin : State <>
 };
 
 
-
-struct Dollar : State <>
+template <>
+struct State <'$'> : State <>
 {
     using State<>::State;
     virtual void _process (iter i);
@@ -303,7 +302,8 @@ void Begin::addResultFromChild (string const& res) {
     throw runtime_error ("oops");
 }
 
-void Dollar::addResultFromChild (string const& res) {
+
+void State<'$'>::addResultFromChild (string const& res) {
     potential() += res;
     throw runtime_error ("oops");
 }
@@ -413,7 +413,7 @@ void Begin::_process (iter i) {
     {
         case '$':
             potential () += '$';
-            transition <Dollar> ();
+            transition <State <'$'>> ();
             break;
             
         case '#':
@@ -432,7 +432,7 @@ void Begin::_process (iter i) {
     }
 
 }
-void Dollar::_process (iter i) {
+void State<'$'>::_process (iter i) {
     
     if (*i == '(')
     {
@@ -512,7 +512,7 @@ void DeclPaste_LParan::_process (iter i) {
         
     } else if (*i == '$')
     {
-        addChildContext <Dollar> ().potential += '$';
+        addChildContext <State <'$'>> ().potential += '$';
 
     } else
     {
@@ -595,7 +595,7 @@ void DeclPaste_LBracket::_process (iter i) {
             break;
             
         case '$':
-            addChildContext <Dollar> ().potential += '$';
+            addChildContext <State <'$'>> ().potential += '$';
             break;
             
         default:
@@ -658,5 +658,5 @@ void Done::_process (iter i) {
     Begin::_process (i);
 }
 
-}
+
 

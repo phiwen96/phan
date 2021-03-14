@@ -32,7 +32,7 @@ struct Process
 //    comment::Context commentVal;
 //    string str;
     
-    Process () : declVar {nullptr, declaredVariables, new declare::Begin}
+    Process () : declVar {nullptr, declaredVariables, new Begin}
     {
         declVar.state -> context = &declVar;
 //        pasteVar.state -> context = &pasteVar;
@@ -51,7 +51,7 @@ struct Process
         
         str = declVar.result;
         
-        if(declare::Done* d = dynamic_cast<declare::Done*>(declVar.state))
+        if(Done* d = dynamic_cast<Done*>(declVar.state))
         {
            
         } else {
@@ -284,7 +284,11 @@ auto main(int argc,  char** argv) -> int
 #if defined (Debug)
     removeFolderContent (TEST_FOLDERS_POST_PATH);
 #endif
-//    ASSERT_FILE (1.hpp, LOUD (0))
+    ASSERT_FILE (declare.hpp, LOUD (0))
+    ASSERT_FILE (4.hpp, LOUD (0))
+    ASSERT_FILE (paste.hpp, LOUD (0))
+    ASSERT_FILE (1.hpp, LOUD (0))
+    
     ASSERT_FILE (5.hpp, LOUD (1))
     return 0;
     ASSERT_FOLDER ($(root){philip}, LOUD(1))
