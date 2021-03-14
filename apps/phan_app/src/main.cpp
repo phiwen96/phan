@@ -34,7 +34,7 @@ struct Process
     
     Process () : declVar {nullptr, declaredVariables, new STATE ("")}
     {
-        declVar.state -> context = &declVar;
+//        declVar.state -> context = &declVar;
 //        pasteVar.state -> context = &pasteVar;
 //        commentVal.state -> context = &commentVal;
     }
@@ -306,11 +306,11 @@ auto main(int argc,  char** argv) -> int
 //    return 0;
     ASSERT_FILE (declpaste.hpp, LOUD (0))
     ASSERT_FILE (4.hpp, LOUD (0))
-    ASSERT_FILE (paste.hpp, LOUD (0))
-    ASSERT_FILE (1.hpp, LOUD (0))
+//    ASSERT_FILE (paste.hpp, LOUD (0))
+//    ASSERT_FILE (1.hpp, LOUD (0))
 //    ASSERT_FILE (comment.hpp, LOUD (0))
 //    ASSERT_FILE (5.hpp, LOUD (0))
-    ASSERT_FILE (decl.hpp, LOUD (1))
+//    ASSERT_FILE (decl.hpp, LOUD (1))
     
     return 0;
     ASSERT_FOLDER ($(root){philip}, LOUD(1))
