@@ -162,41 +162,29 @@ void folderApp (Process& p, filesystem::path inputPath)
         auto renamed = filesystem::path {i.path().parent_path()} /= p.process (i.path().filename());
         all.insert (renamed);
         filesystem::rename (i.path(), renamed);
+        
         if (filesystem::is_directory (renamed))
         {
             subdirs.insert (renamed);
+            
         } else if (filesystem::is_regular_file (renamed))
         {
-            subfiles.insert (renamed);
+            if (renamed.extension() == ".ph")
+            {
+                p.process (readFileIntoString (renamed));
+                filesystem::remove (renamed);
+                
+            } else
+            {
+                subfiles.insert (renamed);
+            }
         }
     }
     
     for (auto& filename : all)
     {
-//        if (filesystem::is_directory(i.path()))
-//        {
-//
-//            subdirs.insert (i.path ());
-//
-//        } else if (filesystem::is_regular_file (i.path()))
-//        {
-//
-//        }
-//        folderApp (p, filename);
-//        cout << filename << endl;
+        
     }
-//    while (!subdirs.empty ())
-//    {
-//        auto* i = subdirs.back ();
-//        folderApp (p, *i);
-//        subdirs.pop ();
-//    }
-       
-//    outputPath.replace_filename(Process{}.process({inputPath.stem()}));
-//    cout << outputPath << endl;
-    
-//    filesystem::create_directory (outputPath);
-//    filesystem::rename (<#const path &__from#>, <#const path &__to#>)
 }
 
 //template <bool DO_LOUD = true>
