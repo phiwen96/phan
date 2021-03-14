@@ -136,7 +136,7 @@ struct Process
 //
 //${p}
 
-void fileApp (filesystem::path const& inputPath, filesystem::path const& outputPath) {
+void fileApp (Process& p, filesystem::path const& inputPath, filesystem::path const& outputPath) {
     ofstream outputFile (outputPath);
     
     if (!outputFile.is_open ())
@@ -169,7 +169,7 @@ void folderApp (Process& p, filesystem::path const& inputPath, filesystem::path 
 }
 
 //template <bool DO_LOUD = true>
-void app (filesystem::path const& inputPath, filesystem::path const& outputPath) {
+void app (filesystem::path const& inputPath, filesystem::path outputPath) {
 //    filesystem::path p {inputPath};
 //    cout << filesystem::exists(inputPath) << endl;
 //    cout << filesystem::is_directory (p) << endl;
@@ -186,11 +186,12 @@ void app (filesystem::path const& inputPath, filesystem::path const& outputPath)
     }
     
     Process p;
+    outputPath += p.process (inputPath.stem());
     
     if (filesystem::is_directory(inputPath)) {
         folderApp (p, inputPath, outputPath);
     } else if (filesystem::is_regular_file(inputPath)) {
-        fileApp (inputPath, outputPath);
+        fileApp (p, inputPath, outputPath);
     } else {
         throw runtime_error ("");
     }
@@ -222,7 +223,7 @@ void assert_file(string const& inputPath, string const& outputPath, string const
     }
 }
 #define LOUD(x) x
-#define ASSERT_FILE(file, DO_LOUD) assert_file <DO_LOUD> (string (TEST_FILES_PRE_PATH) + string (BOOST_PP_STRINGIZE (file)), string (TEST_FILES_POST_PATH) + string (BOOST_PP_STRINGIZE (file)), string (TEST_FILES_FACIT_PATH) + string (BOOST_PP_STRINGIZE (file)), warning);
+#define ASSERT_FILE(file, DO_LOUD) assert_file <DO_LOUD> (string (TEST_FILES_PRE_PATH) + string (BOOST_PP_STRINGIZE (file)), string (TEST_FILES_POST_PATH), string (TEST_FILES_FACIT_PATH), warning);
 
 #define ASSERT_FILE_SEQ(r, data, file) assert_file (string (TEST_FILES_PRE_PATH) + string (BOOST_PP_STRINGIZE (file)), string (TEST_FILES_POST_PATH) + string (BOOST_PP_STRINGIZE (file)), string (TEST_FILES_FACIT_PATH) + string (BOOST_PP_STRINGIZE (file)), warning);
 #define ASSERT_FILES_2(seqFiles) BOOST_PP_SEQ_FOR_EACH(ASSERT_FILE_SEQ, -, seqFiles);
@@ -230,8 +231,8 @@ void assert_file(string const& inputPath, string const& outputPath, string const
 
 auto main(int argc,  char** argv) -> int
 {
-    ASSERT_FILE(folder1, LOUD(1))
-    return 0;
+//    ASSERT_FILE(folder1, LOUD(1))
+//    return 0;
     ASSERT_FILE (1.hpp, LOUD (0))
     ASSERT_FILE (declare.hpp, LOUD (0))
     ASSERT_FILE (4.hpp, LOUD (0))
