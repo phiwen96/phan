@@ -74,13 +74,7 @@ struct BASE_STATE
     void declare (string const& var, string const& val);
     optional <string> declared (string const&);
     virtual void addResultFromChild (string const& res);
-    void reset (){
-        if (parent() == nullptr) {
-            reset_hasNoParent();
-        } else {
-            reset_hasParent();
-        }
-    }
+    void reset ();
     virtual void reset_hasNoParent (){}
     virtual void reset_hasParent (){}
     
@@ -125,6 +119,14 @@ optional <string> BASE_STATE::declared (string const& p) {
 
 BASE_STATE* BASE_STATE::parent () {
     return context -> parent -> state;
+}
+
+void BASE_STATE::reset (){
+    if (not hasParent()) {
+        reset_hasNoParent();
+    } else {
+        reset_hasParent();
+    }
 }
 
 void Context::process(iter i) {
@@ -294,30 +296,30 @@ struct STATE ("#") : BASE_STATE
     virtual void _process (iter i){
         potential () += *i ;
         
-        if (*i == '{')
+        switch (*i)
         {
-            TRANSITION ("#{")
-            
-        } else
-        {
-            if (hasParent())
-            {
-                addResultFromChild (potential ());
-                removeFromParent ();
-            } else
-            {
-                result () += potential ();
-                potential ().clear ();
-                TRANSITION ("")
-            }
+            case '{':
+                TRANSITION ("#{")
+                break;
+                
+            default:
+                reset ();
+                break;
         }
     }
     void addResultFromChild (string const& res){
         throw runtime_error ("oops");
     }
     
-    virtual void reset_hasNoParent (){}
-    virtual void reset_hasParent (){}
+    virtual void reset_hasNoParent (){
+        result () += potential ();
+        potential ().clear ();
+        TRANSITION ("")
+    }
+    virtual void reset_hasParent (){
+        addResultFromChild (potential ());
+        removeFromParent ();
+    }
 };
 
 
@@ -326,22 +328,22 @@ struct STATE ("$(") : BASE_STATE
 {
     virtual void _process (iter i){
         
-        if (*i == ')')
+        switch (*i)
         {
-            variable() = string (potential().begin() + 2, potential().end());
-            potential () += ')';
-            TRANSITION ("$()")
-            
-        } else if (*i == '$')
-        {
-            addChildContext <STATE ("$")> ().potential += '$';
-
-        } else
-        {
-            potential () += *i;
+            case ')':
+                variable() = string (potential().begin() + 2, potential().end());
+                potential () += ')';
+                TRANSITION ("$()")
+                break;
+                
+            case '$':
+                addChildContext <STATE ("$")> ().potential += '$';
+                break;
+                
+            default:
+                potential () += *i;
+                break;
         }
-        
-        
     }
     void addResultFromChild (string const& res){
         potential () += res;
@@ -359,43 +361,39 @@ struct STATE ("$()") : BASE_STATE
 {
     virtual void _process (iter i){
         
-        
-        if (*i == '{')
+        switch (*i)
         {
-
-            context -> bracketStack.push ('{');
-
-            TRANSITION ("$(){")
-            
-        } else
-        {
-            
-            if (hasParent ())
-            {
-                /**
-                om parent
-                 **/
-                parent () -> addResultFromChild (potential ());
-                removeFromParent ();
-            }
-            else
-            {
-                result () += potential ();
-                potential ().clear ();
-                variable ().clear ();
-                value ().clear ();
-                TRANSITION ("")
-            }
-            potential ().clear ();
-            variable ().clear ();
+            case '{':
+                context -> bracketStack.push ('{');
+                TRANSITION ("$(){")
+                break;
+                
+            default:
+                reset ();
+                break;
         }
     }
     void addResultFromChild (string const& res){
         throw runtime_error ("oops");
     }
     
-    virtual void reset_hasNoParent (){}
-    virtual void reset_hasParent (){}
+    virtual void reset_hasNoParent (){
+        result () += potential ();
+        potential ().clear ();
+        variable ().clear ();
+        value ().clear ();
+        TRANSITION ("")
+        
+        potential ().clear ();
+        variable ().clear ();
+    }
+    virtual void reset_hasParent (){
+        parent () -> addResultFromChild (potential ());
+        removeFromParent ();
+        
+        potential ().clear ();
+        variable ().clear ();
+    }
 };
 
 
@@ -412,23 +410,7 @@ struct STATE ("$(){") : BASE_STATE
                 if (context -> bracketStack.empty ())
                 {
                     declare (variable (), value ());
-                        
-                    if (hasParent ())
-                    {
-                        parent () -> addResultFromChild (value ());
-                        removeFromParent ();
-                    }
-                    
-        //        }
-                    else
-                    {
-                        result () += value ();
-                        potential().clear();
-                        value().clear();
-                        variable().clear();
-                        TRANSITION ("")
-            //            value() += *i;
-                    }
+                    reset();
                 } else
                 {
                     value () += '}';
@@ -453,9 +435,20 @@ struct STATE ("$(){") : BASE_STATE
     void addResultFromChild (string const& res){
         value () += res;
     }
-    
-    virtual void reset_hasNoParent (){}
-    virtual void reset_hasParent (){}
+    void finish () {
+        
+    }
+    virtual void reset_hasNoParent (){
+        result () += value ();
+        potential().clear();
+        value().clear();
+        variable().clear();
+        TRANSITION ("")
+    }
+    virtual void reset_hasParent (){
+        parent () -> addResultFromChild (value ());
+        removeFromParent ();
+    }
 };
 
 
@@ -485,29 +478,15 @@ struct STATE ("${") : BASE_STATE
         
         potential() += *i;
         
+        
+        
         if (*i == '}')
         {
-    //        cout << paste () << endl << paste () << endl;
             optional <string> decl = declared (paste ());
             if (decl)
             {
-    //            cout << paste () << endl << paste () << endl;
-                
-                if (hasParent ())
-                {
-    //                cout << paste () << endl << paste () << endl;
-                    parent () -> addResultFromChild (decl.value ());
-                    removeFromParent ();
-                } else
-                {
-    //                cout << paste () << endl << paste () << endl;
-                    result() += decl.value ();
-                    potential().clear();
-                    value().clear();
-                    variable().clear();
-                    paste().clear();
-                    TRANSITION ("done")
-                }
+                value() = decl.value ();
+                reset ();
                 
             } else
             {
@@ -518,13 +497,20 @@ struct STATE ("${") : BASE_STATE
         } else
         {
             paste () += *i;
-    //        potential() += *i;
         }
     }
     
-    virtual void reset_hasNoParent (){}
+    virtual void reset_hasNoParent (){
+        result() += value ();
+        potential().clear();
+        value().clear();
+        variable().clear();
+        paste().clear();
+        TRANSITION ("done")
+    }
     virtual void reset_hasParent (){
-      
+        parent () -> addResultFromChild (value ());
+        removeFromParent ();
     }
  
 };
@@ -554,18 +540,17 @@ struct STATE ("#{") : BASE_STATE
     virtual void _process (iter i){
         potential() += *i;
         if (*i == '}') {
-            if (hasParent()) {
-                removeFromParent ();
-            } else
-            {
-                potential().clear();
-                transition<STATE ("${} done")>();
-            }
+            reset ();
         }
     }
     
-    virtual void reset_hasNoParent (){}
-    virtual void reset_hasParent (){}
+    virtual void reset_hasNoParent (){
+        potential().clear();
+        transition<STATE ("${} done")>();
+    }
+    virtual void reset_hasParent (){
+        removeFromParent ();
+    }
  
 };
 
@@ -611,16 +596,7 @@ struct STATE ("@(") : BASE_STATE
                 break;
                 
             default:
-                if (hasParent())
-                {
-                    addResultFromChild (potential ());
-                    removeFromParent ();
-                } else
-                {
-                    result () += potential ();
-                    potential ().clear ();
-                    TRANSITION ("")
-                }
+                variable () += *i;
                 break;
         }
     }
@@ -634,11 +610,29 @@ template <>
 struct STATE ("@()") : BASE_STATE
 {
     virtual void _process (iter i){
+        potential() += *i;
         
+        switch (*i)
+        {
+            case '{':
+                TRANSITION ("@(){")
+                break;
+                
+            default:
+                reset ();
+                break;
+        }
     }
     
-    virtual void reset_hasNoParent (){}
-    virtual void reset_hasParent (){}
+    virtual void reset_hasNoParent (){
+        result() += potential();
+        potential().clear();
+        TRANSITION ("")
+    }
+    virtual void reset_hasParent (){
+        addResultFromChild (potential ());
+        removeFromParent ();
+    }
  
 };
 
@@ -647,10 +641,40 @@ struct STATE ("@(){") : BASE_STATE
 {
     virtual void _process (iter i){
         
+        potential () += *i;
+        
+        if (*i == '}')
+        {
+            declare (variable (), value ());
+            reset ();
+            TRANSITION ("@(){} done")
+        } else
+        {
+            value () += *i;
+        }
     }
     
-    virtual void reset_hasNoParent (){}
-    virtual void reset_hasParent (){}
+    void finish () {
+        
+    }
+    
+    virtual void reset_hasNoParent (){
+        potential().clear();
+        variable().clear();
+        value().clear();
+    }
+    virtual void reset_hasParent (){
+        removeFromParent ();
+    }
+};
+
+template <>
+struct STATE ("@(){} done") : STATE ("done")
+{
+    virtual void _process (iter i) {
+        if (*i != '\n')
+            STATE ("done")::_process (i);
+    }
 };
 
 
