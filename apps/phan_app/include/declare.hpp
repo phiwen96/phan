@@ -241,6 +241,7 @@ struct STATE ("") : BASE_STATE
     void addResultFromChild (string const& res){
         throw runtime_error ("oops");
     }
+    
     virtual void reset_hasNoParent (){}
     virtual void reset_hasParent (){}
 };
@@ -251,42 +252,40 @@ struct STATE ("$") : BASE_STATE
 {
     virtual void _process (iter i){
         
-        if (*i == '(')
+        potential () += *i;
+        
+        switch (*i)
         {
-            potential () += *i;
-            TRANSITION ("$(")
-            
-        } else if (*i == '{')
-        {
-    //        addChildContext<STATE ("${")>();
-            potential() += '{';
-            TRANSITION ("${")
-            // so that parent can push bracket to it's bracketstack
-        } else
-        {
-            potential () += *i;
-            if (hasParent ())
-            {
-                parent () -> addResultFromChild (potential ());
-                removeFromParent ();
+            case '(':
+                TRANSITION ("$(")
+                break;
                 
-            } else
-            {
-                result () += potential();
-                potential().clear ();
-                variable ().clear ();
-                value ().clear ();
-                transition <STATE ("done")> ();
-            }
+            case '{':
+                TRANSITION ("${")
+                break;
+                
+            default:
+                reset ();
+                break;
         }
+    
     }
     void addResultFromChild (string const& res){
         potential() += res;
         throw runtime_error ("oops");
     }
     
-    virtual void reset_hasNoParent (){}
-    virtual void reset_hasParent (){}
+    virtual void reset_hasNoParent (){
+        result () += potential();
+        potential().clear ();
+        variable ().clear ();
+        value ().clear ();
+        TRANSITION ("done")
+    }
+    virtual void reset_hasParent (){
+        parent () -> addResultFromChild (potential ());
+        removeFromParent ();
+    }
 };
 
 template <>
@@ -507,7 +506,7 @@ struct STATE ("${") : BASE_STATE
                     value().clear();
                     variable().clear();
                     paste().clear();
-                    transition<STATE ("done")>();
+                    TRANSITION ("done")
                 }
                 
             } else
@@ -524,7 +523,9 @@ struct STATE ("${") : BASE_STATE
     }
     
     virtual void reset_hasNoParent (){}
-    virtual void reset_hasParent (){}
+    virtual void reset_hasParent (){
+      
+    }
  
 };
 
