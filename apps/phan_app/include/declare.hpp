@@ -483,6 +483,7 @@ struct STATE ("${") : BASE_STATE
         if (*i == '}')
         {
             optional <string> decl = declared (paste ());
+            
             if (decl)
             {
                 value() = decl.value ();
@@ -587,20 +588,26 @@ template <>
 struct STATE ("@(") : BASE_STATE
 {
     virtual void _process (iter i){
+        
         potential() += *i;
         
-        switch (*i)
+        if (*i == ')')
         {
-            case ')':
-                TRANSITION ("@()")
-                break;
-                
-            default:
-                variable () += *i;
-                break;
+            TRANSITION ("@()")
+            
+        } else if (*i == '$')
+        {
+            addChildContext<STATE ("$")>().potential = '$';
+
+        } else
+        {
+            variable () += *i;
         }
+        
     }
-    
+    void addResultFromChild (string const& res){
+        variable () += res;
+    }
     virtual void reset_hasNoParent (){}
     virtual void reset_hasParent (){}
  
@@ -645,10 +652,17 @@ struct STATE ("@(){") : BASE_STATE
             declare (variable (), value ());
             reset ();
             
+        } else if (*i == '$')
+        {
+            addChildContext <STATE ("$")>().potential = '$';
         } else
         {
             value () += *i;
         }
+    }
+    
+    void addResultFromChild (string const& res){
+        value () += res;
     }
     
     void finish () {
