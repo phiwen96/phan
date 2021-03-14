@@ -171,6 +171,7 @@ void BASE_STATE::removeFromParent (Context& ctx) {
 //            cout << "removing child context from parent context" << endl;
             ctx.parent -> children.erase (ctx.parent->children.begin() + i);
 //            ctx.parent -> children.
+            delete this;
             return;
         }
     }
@@ -480,7 +481,7 @@ struct STATE ("$(){") : BASE_STATE
             if (hasParent(ctx))
             {
 //                BASE_STATE::addResultFromChild(value(ctx), ctx);
-                ctx.parent->state->addResultFromChild (value(ctx), *ctx.parent);
+                BASE_STATE::addResultFromChild (value(ctx), ctx);
                 variable (ctx).clear();
                 value (ctx).clear();
                 potential (ctx).clear();
@@ -596,7 +597,7 @@ struct STATE ("${") : BASE_STATE
                     if (hasParent(ctx))
                     {
 //                        cout << "kuk::${" << endl;
-                        ctx.parent->state->addResultFromChild (d.second, *ctx.parent);
+                        BASE_STATE::addResultFromChild (d.second, ctx);
 //                        cout << "adding result \"" << d.second << "\" from ${ to parent" << endl;
                         removeFromParent (ctx);
                     } else {
