@@ -74,7 +74,15 @@ struct BASE_STATE
     void declare (string const& var, string const& val);
     optional <string> declared (string const&);
     virtual void addResultFromChild (string const& res);
-    void reset ();
+    void reset (){
+        if (parent() == nullptr) {
+            reset_hasNoParent();
+        } else {
+            reset_hasParent();
+        }
+    }
+    virtual void reset_hasNoParent (){}
+    virtual void reset_hasParent (){}
     
 };
 
@@ -153,9 +161,6 @@ void BASE_STATE::removeFromParent () {
     }
 }
 
-void BASE_STATE::reset () {
-    
-}
 
 
 template <class T>
@@ -236,6 +241,8 @@ struct STATE ("") : BASE_STATE
     void addResultFromChild (string const& res){
         throw runtime_error ("oops");
     }
+    virtual void reset_hasNoParent (){}
+    virtual void reset_hasParent (){}
 };
 
 
@@ -277,6 +284,9 @@ struct STATE ("$") : BASE_STATE
         potential() += res;
         throw runtime_error ("oops");
     }
+    
+    virtual void reset_hasNoParent (){}
+    virtual void reset_hasParent (){}
 };
 
 template <>
@@ -306,6 +316,9 @@ struct STATE ("#") : BASE_STATE
     void addResultFromChild (string const& res){
         throw runtime_error ("oops");
     }
+    
+    virtual void reset_hasNoParent (){}
+    virtual void reset_hasParent (){}
 };
 
 
@@ -334,6 +347,9 @@ struct STATE ("$(") : BASE_STATE
     void addResultFromChild (string const& res){
         potential () += res;
     }
+    
+    virtual void reset_hasNoParent (){}
+    virtual void reset_hasParent (){}
 };
 
 
@@ -378,6 +394,9 @@ struct STATE ("$()") : BASE_STATE
     void addResultFromChild (string const& res){
         throw runtime_error ("oops");
     }
+    
+    virtual void reset_hasNoParent (){}
+    virtual void reset_hasParent (){}
 };
 
 
@@ -435,6 +454,9 @@ struct STATE ("$(){") : BASE_STATE
     void addResultFromChild (string const& res){
         value () += res;
     }
+    
+    virtual void reset_hasNoParent (){}
+    virtual void reset_hasParent (){}
 };
 
 
@@ -452,7 +474,9 @@ struct STATE ("done") : STATE ("")
     virtual void _process (iter i){
         STATE ("")::_process (i);
     }
- 
+    
+    virtual void reset_hasNoParent (){}
+    virtual void reset_hasParent (){}
 };
 
 template <>
@@ -469,6 +493,7 @@ struct STATE ("${") : BASE_STATE
             if (decl)
             {
     //            cout << paste () << endl << paste () << endl;
+                
                 if (hasParent ())
                 {
     //                cout << paste () << endl << paste () << endl;
@@ -497,12 +522,15 @@ struct STATE ("${") : BASE_STATE
     //        potential() += *i;
         }
     }
+    
+    virtual void reset_hasNoParent (){}
+    virtual void reset_hasParent (){}
  
 };
 
 
-
-struct Paste_Done: STATE ("done")
+template <>
+struct STATE ("${} done"): STATE ("done")
 {
     virtual void _process (iter i){
         if (*i == '\n')
@@ -513,6 +541,9 @@ struct Paste_Done: STATE ("done")
             STATE ("done")::_process (i);
         }
     }
+    
+    virtual void reset_hasNoParent (){}
+    virtual void reset_hasParent (){}
  
 };
 
@@ -527,10 +558,13 @@ struct STATE ("#{") : BASE_STATE
             } else
             {
                 potential().clear();
-                transition<Paste_Done>();
+                transition<STATE ("${} done")>();
             }
         }
     }
+    
+    virtual void reset_hasNoParent (){}
+    virtual void reset_hasParent (){}
  
 };
 
@@ -547,18 +581,18 @@ struct STATE ("@") : BASE_STATE
                 break;
                 
             default:
-                if (hasParent())
-                {
-                    addResultFromChild (potential ());
-                    removeFromParent ();
-                } else
-                {
-                    result () += potential ();
-                    potential ().clear ();
-                    TRANSITION ("")
-                }
+                reset ();
                 break;
         }
+    }
+    virtual void reset_hasNoParent(){
+        result () += potential ();
+        potential ().clear ();
+        TRANSITION ("")
+    }
+    virtual void reset_hasParent(){
+        addResultFromChild (potential ());
+        removeFromParent ();
     }
  
 };
@@ -589,6 +623,9 @@ struct STATE ("@(") : BASE_STATE
                 break;
         }
     }
+    
+    virtual void reset_hasNoParent (){}
+    virtual void reset_hasParent (){}
  
 };
 
@@ -598,6 +635,9 @@ struct STATE ("@()") : BASE_STATE
     virtual void _process (iter i){
         
     }
+    
+    virtual void reset_hasNoParent (){}
+    virtual void reset_hasParent (){}
  
 };
 
@@ -607,7 +647,9 @@ struct STATE ("@(){") : BASE_STATE
     virtual void _process (iter i){
         
     }
- 
+    
+    virtual void reset_hasNoParent (){}
+    virtual void reset_hasParent (){}
 };
 
 
