@@ -36,6 +36,8 @@ return N; \
 
 #define STATE(x) State S(x)
 
+#define TRANSITION(x) transition <STATE (x)> ();
+
 
 
 using iter = string::iterator;
@@ -429,7 +431,7 @@ void STATE ("@")::_process (iter i) {
     switch (*i)
     {
         case '(':
-            transition<STATE ("@(")>();
+            transition <STATE ("@(")> ();
             break;
             
         default:
@@ -484,17 +486,17 @@ void Begin::_process (iter i) {
     {
         case '$':
             potential () += '$';
-            transition <STATE ("$")> ();
+            TRANSITION ("$")
             break;
             
         case '#':
             potential () += '#';
-            transition <STATE ("#")> ();
+            TRANSITION ("#")
             break;
             
         case '@':
             potential () += '@';
-            transition <STATE ("@")> ();
+            TRANSITION ("@")
             break;
             
         default:
@@ -508,13 +510,13 @@ void STATE ("$")::_process (iter i) {
     if (*i == '(')
     {
         potential () += *i;
-        transition <STATE ("$(")> ();
+        TRANSITION ("$(")
         
     } else if (*i == '{')
     {
 //        addChildContext<STATE ("${")>();
         potential() += '{';
-        transition <STATE ("${")> ();
+        TRANSITION ("${")
         // so that parent can push bracket to it's bracketstack
     } else
     {
@@ -579,7 +581,7 @@ void STATE ("$(")::_process (iter i) {
     {
         variable() = string (potential().begin() + 2, potential().end());
         potential () += ')';
-        transition <STATE ("$()")> ();
+        TRANSITION ("$()")
         
     } else if (*i == '$')
     {
@@ -601,7 +603,7 @@ void STATE ("$()")::_process (iter i) {
 
         context -> bracketStack.push ('{');
 
-        transition <STATE ("$(){")> ();
+        TRANSITION ("$(){")
         
     } else
     {
@@ -674,55 +676,6 @@ void STATE ("$(){")::_process (iter i) {
             value () += *i;
             break;
     }
-//    if (*i == '}')
-//    {
-//        context -> bracketStack.pop ();
-//
-//        if (context -> bracketStack.empty ())
-//        {
-//            declare (variable (), value ());
-//
-//            if (hasParent ())
-//            {
-//                parent () -> addResultFromChild (value ());
-//                removeFromParent ();
-//            }
-//
-////        }
-//            else
-//            {
-//                result () += value ();
-//                potential().clear();
-//                value().clear();
-//                variable().clear();
-//                transition <Begin> ();
-//    //            value() += *i;
-//            }
-//        } else
-//        {
-//            value () += '}';
-//        }
-//
-//    }
-        
-
-//    else if (*i == '{')
-//    {
-//        context -> bracketStack.push ('{');
-//        value() += *i;
-//    }
-
-
-//    else if (*i == '$')
-//    {
-//        addChildContext <Dollar> ().potential += '$';
-//    }
-//    else
-//    {
-////        result () += *i;
-//        potential () += *i;
-//        value () += *i;
-//    }
 }
 
 void Done::_process (iter i) {
