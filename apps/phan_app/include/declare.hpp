@@ -171,7 +171,8 @@ struct State <'$'> : State <>
     void addResultFromChild (string const& res);
 };
 
-struct Paste : State <>
+template <>
+struct State <'#'> : State <>
 {
     using State<>::State;
     virtual void _process (iter i);
@@ -180,7 +181,8 @@ struct Paste : State <>
 };
 
 
-struct DeclPaste_LParan : State <>
+template <>
+struct State <'$', '('> : State <>
 {
     using State<>::State;
     virtual void _process (iter i);
@@ -190,7 +192,8 @@ struct DeclPaste_LParan : State <>
 
 
 
-struct DeclPaste_RParan : State <>
+template <>
+struct State <'$', '(', ')'> : State <>
 {
     using State<>::State;
     virtual void _process (iter i);
@@ -199,8 +202,8 @@ struct DeclPaste_RParan : State <>
 };
 
 
-
-struct DeclPaste_LBracket : State <>
+template <>
+struct State <'$', '(', ')', '{'> : State <>
 {
     using State<>::State;
     virtual void _process (iter i);
@@ -226,13 +229,7 @@ struct PasteLBracket : State <>
  
 };
 
-struct Hashtag : State <>
-{
-//    using State<>::State;
-    virtual void _process (iter i);
-    bool done () {return true;}
- 
-};
+
 
 struct Paste_Done: Done
 {
@@ -308,15 +305,19 @@ void State<'$'>::addResultFromChild (string const& res) {
     throw runtime_error ("oops");
 }
 
-void DeclPaste_LParan::addResultFromChild (string const& res) {
-    potential () += res;
-}
-
-void DeclPaste_RParan::addResultFromChild (string const& res) {
+void State<'#'>::addResultFromChild (string const& res) {
     throw runtime_error ("oops");
 }
 
-void DeclPaste_LBracket::addResultFromChild (string const& res) {
+void State<'$', '('>::addResultFromChild (string const& res) {
+    potential () += res;
+}
+
+void State<'$', '(', ')'>::addResultFromChild (string const& res) {
+    throw runtime_error ("oops");
+}
+
+void State<'$', '(', ')', '{'>::addResultFromChild (string const& res) {
     value () += res;
 }
 
@@ -345,7 +346,7 @@ void Paste_LBracket::_process (iter i) {
     }
 }
 
-void Hashtag::_process (iter i) {
+void State<'#'>::_process (iter i) {
     potential () += *i ;
     
     if (*i == '{')
@@ -418,7 +419,7 @@ void Begin::_process (iter i) {
             
         case '#':
             potential () += '#';
-            transition <Hashtag> ();
+            transition <State <'#'>> ();
             break;
             
         case '@':
@@ -437,7 +438,7 @@ void State<'$'>::_process (iter i) {
     if (*i == '(')
     {
         potential () += *i;
-        transition <DeclPaste_LParan> ();
+        transition <State <'$', '('>> ();
         
     } else if (*i == '{')
     {
@@ -502,13 +503,13 @@ void PasteLBracket::_process (iter i) {
 //        potential() += *i;
     }
 }
-void DeclPaste_LParan::_process (iter i) {
+void State <'$', '('>::_process (iter i) {
     
     if (*i == ')')
     {
         variable() = string (potential().begin() + 2, potential().end());
         potential () += ')';
-        transition <DeclPaste_RParan> ();
+        transition <State<'$', '(', ')'>> ();
         
     } else if (*i == '$')
     {
@@ -522,7 +523,7 @@ void DeclPaste_LParan::_process (iter i) {
     
 }
 
-void DeclPaste_RParan::_process (iter i) {
+void State<'$', '(', ')'>::_process (iter i) {
     
     
     if (*i == '{')
@@ -530,7 +531,7 @@ void DeclPaste_RParan::_process (iter i) {
 
         context -> bracketStack.push ('{');
 
-        transition <DeclPaste_LBracket> ();
+        transition <State<'$', '(', ')', '{'>> ();
         
     } else
     {
@@ -556,7 +557,7 @@ void DeclPaste_RParan::_process (iter i) {
     }
 }
 
-void DeclPaste_LBracket::_process (iter i) {
+void State<'$', '(', ')', '{'>::_process (iter i) {
     
     switch (*i)
     {
