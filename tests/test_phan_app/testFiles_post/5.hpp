@@ -1,2 +1,2 @@
 kuk
-@(snopp){hej}
+@

@@ -179,7 +179,7 @@ struct Paste : State
 };
 
 
-struct LParan : State
+struct DeclPaste_LParan : State
 {
     using State::State;
     virtual void _process (iter i);
@@ -189,7 +189,7 @@ struct LParan : State
 
 
 
-struct RParan : State
+struct DeclPaste_RParan : State
 {
     using State::State;
     virtual void _process (iter i);
@@ -199,7 +199,7 @@ struct RParan : State
 
 
 
-struct LBracket : State
+struct DeclPaste_LBracket : State
 {
     using State::State;
     virtual void _process (iter i);
@@ -225,7 +225,7 @@ struct PasteLBracket : State
  
 };
 
-struct HashtagBegin : State
+struct Hashtag : State
 {
 //    using State::State;
     virtual void _process (iter i);
@@ -233,7 +233,7 @@ struct HashtagBegin : State
  
 };
 
-struct HashtagDone: Done
+struct Paste_Done: Done
 {
 //    using State::State;
     virtual void _process (iter i);
@@ -241,7 +241,15 @@ struct HashtagDone: Done
  
 };
 
-struct HashtagLBracket : State
+struct Paste_LBracket : State
+{
+//    using State::State;
+    virtual void _process (iter i);
+    bool done () {return true;}
+ 
+};
+
+struct At : State
 {
 //    using State::State;
     virtual void _process (iter i);
@@ -274,20 +282,21 @@ void Dollar::addResultFromChild (string const& res) {
     throw runtime_error ("oops");
 }
 
-void LParan::addResultFromChild (string const& res) {
+void DeclPaste_LParan::addResultFromChild (string const& res) {
     potential () += res;
 }
 
-void RParan::addResultFromChild (string const& res) {
+void DeclPaste_RParan::addResultFromChild (string const& res) {
     throw runtime_error ("oops");
 }
 
-void LBracket::addResultFromChild (string const& res) {
+void DeclPaste_LBracket::addResultFromChild (string const& res) {
     value () += res;
 }
 
 
-void HashtagDone::_process (iter i) {
+
+void Paste_Done::_process (iter i) {
     if (*i == '\n')
     {
         
@@ -297,7 +306,7 @@ void HashtagDone::_process (iter i) {
     }
 }
 
-void HashtagLBracket::_process (iter i) {
+void Paste_LBracket::_process (iter i) {
     potential() += *i;
     if (*i == '}') {
         if (hasParent()) {
@@ -305,17 +314,17 @@ void HashtagLBracket::_process (iter i) {
         } else
         {
             potential().clear();
-            transition<HashtagDone>();
+            transition<Paste_Done>();
         }
     }
 }
 
-void HashtagBegin::_process (iter i) {
+void Hashtag::_process (iter i) {
     potential () += *i ;
     
     if (*i == '{')
     {
-        transition <HashtagLBracket> ();
+        transition <Paste_LBracket> ();
         
     } else
     {
@@ -332,29 +341,40 @@ void HashtagBegin::_process (iter i) {
     }
 }
 
+void At::_process (iter i) {
+    
+}
 
 void Begin::_process (iter i) {
-    
-    if (*i == '$')
+    switch (*i)
     {
-        potential () += '$';
-        transition <Dollar> ();
-        
-    } else if (*i == '#')
-    {
-        potential () += '#';
-        transition <HashtagBegin> ();
-    } else
-    {
-        result () += *i;
+        case '$':
+            potential () += '$';
+            transition <Dollar> ();
+            break;
+            
+        case '#':
+            potential () += '#';
+            transition <Hashtag> ();
+            break;
+            
+        case '@':
+            potential () += '@';
+            transition <At> ();
+            break;
+            
+        default:
+            result () += *i;
+            break;
     }
+
 }
 void Dollar::_process (iter i) {
     
     if (*i == '(')
     {
         potential () += *i;
-        transition <LParan> ();
+        transition <DeclPaste_LParan> ();
         
     } else if (*i == '{')
     {
@@ -419,13 +439,13 @@ void PasteLBracket::_process (iter i) {
 //        potential() += *i;
     }
 }
-void LParan::_process (iter i) {
+void DeclPaste_LParan::_process (iter i) {
     
     if (*i == ')')
     {
         variable() = string (potential().begin() + 2, potential().end());
         potential () += ')';
-        transition <RParan> ();
+        transition <DeclPaste_RParan> ();
         
     } else if (*i == '$')
     {
@@ -439,7 +459,7 @@ void LParan::_process (iter i) {
     
 }
 
-void RParan::_process (iter i) {
+void DeclPaste_RParan::_process (iter i) {
     
     
     if (*i == '{')
@@ -447,7 +467,7 @@ void RParan::_process (iter i) {
 
         context -> bracketStack.push ('{');
 
-        transition <LBracket> ();
+        transition <DeclPaste_LBracket> ();
         
     } else
     {
@@ -473,187 +493,107 @@ void RParan::_process (iter i) {
     }
 }
 
-void LBracket::_process (iter i) {
-    if (*i == '}')
+void DeclPaste_LBracket::_process (iter i) {
+    
+    switch (*i)
     {
-        context -> bracketStack.pop ();
-        
-        if (context -> bracketStack.empty ())
-        {
-            declare (variable (), value ());
-                
-            if (hasParent ())
-            {
-                parent () -> addResultFromChild (value ());
-                removeFromParent ();
-            }
+        case '}':
+            context -> bracketStack.pop ();
             
-//        }
-            else
+            if (context -> bracketStack.empty ())
             {
-                result () += value ();
-                potential().clear();
-                value().clear();
-                variable().clear();
-                transition <Begin> ();
-    //            value() += *i;
+                declare (variable (), value ());
+                    
+                if (hasParent ())
+                {
+                    parent () -> addResultFromChild (value ());
+                    removeFromParent ();
+                }
+                
+    //        }
+                else
+                {
+                    result () += value ();
+                    potential().clear();
+                    value().clear();
+                    variable().clear();
+                    transition <Begin> ();
+        //            value() += *i;
+                }
+            } else
+            {
+                value () += '}';
             }
-        } else
-        {
-            value () += '}';
-        }
+            break;
+            
+        case '{':
+            context -> bracketStack.push ('{');
+            value() += *i;
+            break;
+            
+        case '$':
+            addChildContext <Dollar> ().potential += '$';
+            break;
+            
+        default:
+            potential () += *i;
+            value () += *i;
+            break;
+    }
+//    if (*i == '}')
+//    {
+//        context -> bracketStack.pop ();
+//
+//        if (context -> bracketStack.empty ())
+//        {
+//            declare (variable (), value ());
+//
+//            if (hasParent ())
+//            {
+//                parent () -> addResultFromChild (value ());
+//                removeFromParent ();
+//            }
+//
+////        }
+//            else
+//            {
+//                result () += value ();
+//                potential().clear();
+//                value().clear();
+//                variable().clear();
+//                transition <Begin> ();
+//    //            value() += *i;
+//            }
+//        } else
+//        {
+//            value () += '}';
+//        }
+//
+//    }
         
-    }
-        
 
-    else if (*i == '{')
-    {
-        context -> bracketStack.push ('{');
-        value() += *i;
-    }
+//    else if (*i == '{')
+//    {
+//        context -> bracketStack.push ('{');
+//        value() += *i;
+//    }
 
 
-    else if (*i == '$')
-    {
-        addChildContext <Dollar> ().potential += '$';
-    }
-    else
-    {
-//        result () += *i;
-        potential () += *i;
-        value () += *i;
-    }
+//    else if (*i == '$')
+//    {
+//        addChildContext <Dollar> ().potential += '$';
+//    }
+//    else
+//    {
+////        result () += *i;
+//        potential () += *i;
+//        value () += *i;
+//    }
 }
 
 void Done::_process (iter i) {
     Begin::_process (i);
 }
 
-//  context -> transition (Dollar);
-        
-//        context -> process (i);
 }
 
-
-//namespace paste {
-//
-//
-//
-//
-//
-//struct Begin : State {
-//    virtual void _process (iter i);
-//};
-//
-//struct Dollar : State {
-//    using State::context;
-//    virtual void _process (iter i);
-//};
-//
-//struct LBracket : State {
-//    virtual void _process (iter i);
-//};
-//struct PotentialNest : State {
-//    virtual void _process (iter i);
-//};
-//struct Done : Begin {
-//    virtual void _process (iter i);
-//};
-//
-//
-//
-//
-//
-//
-//
-//void Done::_process (iter i) {
-//    Begin::_process(i);
-//}
-//void Begin::_process (iter i) {
-//
-//    if (*i == '$'){
-//        potential ().push_back ('$');
-//        transition <Dollar> ();
-//    }
-//    else {
-//        result () += *i;
-//    }
-//}
-//void Dollar::_process (iter i) {
-//
-//    potential () += *i;
-//
-//    if (*i == '{') {
-//        transition <LBracket> ();
-//    }
-//    else {
-//        if (hasParent ()) {
-//            addResultFromChild (potential ());
-//            removeFromParent ();
-//        } else {
-//            result () += potential ();
-//            potential ().clear ();
-//            transition <Begin> ();
-//        }
-//    }
-//}
-//void LBracket::_process (iter i) {
-//    /**
-//     if never an ending bracket, must set res += variable and res += parent.potential
-//     */
-//
-//    if (*i == '}') {
-//
-//        optional <string> declared = State::declared();
-//
-//        if (declared)
-//        {
-////            variable () += declared.value ();
-//
-//
-//        } else
-//        {
-//            string warning = "variable \"" + variable () + "\" pasted but it has not yet been declared!";
-//            cout << result () << endl;
-//            throw runtime_error (warning);
-//        }
-//
-//        if ( not hasParent ())
-//        {
-//            result () += declared.value();
-//            potential ().clear ();
-//            variable ().clear ();
-//            transition <Done> ();
-//
-//        } else
-//        {
-////            cout << *i << endl;
-//            addResultFromChild (variable ());
-//
-//            removeFromParent ();
-////            cout << *i << endl;
-//
-//        }
-//
-//    }
-//    else if (*i == '$') {
-//        addChildContext <Dollar> ().potential.push_back ('$');
-//    }
-//    else {
-//        variable () += *i;
-//    }
-//}
-//void PotentialNest::_process (iter i) {
-//    switch (*i) {
-//        case '{':
-//            potential ().clear ();
-////            context -> begin_it = i;
-//            transition <LBracket> ();
-//            break;
-//
-//        default:
-//            break;
-//    }
-//}
-//
-//}

@@ -284,6 +284,7 @@ auto main(int argc,  char** argv) -> int
 #if defined (Debug)
     removeFolderContent (TEST_FOLDERS_POST_PATH);
 #endif
+//    ASSERT_FILE (1.hpp, LOUD (0))
     ASSERT_FILE (5.hpp, LOUD (1))
     return 0;
     ASSERT_FOLDER ($(root){philip}, LOUD(1))
