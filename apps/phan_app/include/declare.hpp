@@ -257,6 +257,30 @@ struct At : State
  
 };
 
+struct Declare_LParan : State
+{
+//    using State::State;
+    virtual void _process (iter i);
+    bool done () {return true;}
+ 
+};
+
+struct Declare_RParan : State
+{
+//    using State::State;
+    virtual void _process (iter i);
+    bool done () {return true;}
+ 
+};
+
+struct Declare_LBracket : State
+{
+//    using State::State;
+    virtual void _process (iter i);
+    bool done () {return true;}
+ 
+};
+
 
 
 
@@ -341,7 +365,44 @@ void Hashtag::_process (iter i) {
     }
 }
 
+
+
+
+
+
 void At::_process (iter i) {
+    potential() += *i;
+    
+    switch (*i)
+    {
+        case '{':
+            
+            break;
+            
+        default:
+            if (hasParent())
+            {
+                addResultFromChild (potential ());
+                removeFromParent ();
+            } else
+            {
+                result () += potential ();
+                potential ().clear ();
+                transition <Begin> ();
+            }
+            break;
+    }
+}
+
+void Declare_LParan::_process (iter i) {
+    
+}
+
+void Declare_RParan::_process (iter i) {
+    
+}
+
+void Declare_LBracket::_process (iter i) {
     
 }
 
