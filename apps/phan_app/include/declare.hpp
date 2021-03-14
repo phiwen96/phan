@@ -612,15 +612,12 @@ struct STATE ("@()") : BASE_STATE
     virtual void _process (iter i){
         potential() += *i;
         
-        switch (*i)
+        if (*i == '{')
         {
-            case '{':
-                TRANSITION ("@(){")
-                break;
-                
-            default:
-                reset ();
-                break;
+            TRANSITION ("@(){")
+        } else
+        {
+            reset ();
         }
     }
     
@@ -647,7 +644,7 @@ struct STATE ("@(){") : BASE_STATE
         {
             declare (variable (), value ());
             reset ();
-            TRANSITION ("@(){} done")
+            
         } else
         {
             value () += *i;
@@ -662,6 +659,7 @@ struct STATE ("@(){") : BASE_STATE
         potential().clear();
         variable().clear();
         value().clear();
+        TRANSITION ("@(){} done")
     }
     virtual void reset_hasParent (){
         removeFromParent ();
