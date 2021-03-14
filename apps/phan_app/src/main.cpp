@@ -147,22 +147,51 @@ void fileApp (Process& p, filesystem::path const& inputPath, filesystem::path co
 }
 
 
-void folderApp (Process& p, filesystem::path const& inputPath, filesystem::path outputPath)
+void folderApp (Process& p, filesystem::path inputPath)
 {
-   for (auto& i : filesystem::directory_iterator (inputPath))
-   {
-       if (filesystem::is_directory(i.path()))
-       {
+//    cout << inputPath << endl;
+    filesystem::rename (inputPath, filesystem::path{inputPath}.replace_filename (p.process (inputPath.filename ())));
+    inputPath = filesystem::path{inputPath}.replace_filename (p.process (inputPath.filename ()));
+//    filesystem::rename (inputPath, filesystem::path{inputPath}.replace_filename (p.process (inputPath.filename ())));
+//    return;
+//    cout << inputPath << endl;
+//    return;
+//    inputPath.replace_filename (p.process (inputPath.filename ()));
+//    cout << outputPath << endl;
+//    outputPath += p.process (inputPath.filename ());
+//    cout << outputPath << endl;
+//    return;
+//    filesystem::copy (inputPath, outputPath, std::filesystem::copy_options::recursive);
+//    filesystem::create_directory (outputPath);
+    set <filesystem::path> subdirs;
+    for (auto& i : filesystem::directory_iterator (inputPath))
+    {
+        if (filesystem::is_directory(i.path()))
+        {
+            
+            subdirs.insert (i.path ());
+            
+        } else if (filesystem::is_regular_file (i.path()))
+        {
            
-       } else if (filesystem::is_regular_file (i.path()))
-       {
-           
-       }
-           
-   }
+        }
+    }
+    
+    for (auto& filename : subdirs)
+    {
+//        filesystem::rename (<#const path &__from#>, <#const path &__to#>)
+        folderApp (p, filename);
+        cout << filename << endl;
+    }
+//    while (!subdirs.empty ())
+//    {
+//        auto* i = subdirs.back ();
+//        folderApp (p, *i);
+//        subdirs.pop ();
+//    }
        
-    outputPath.replace_filename(Process{}.process({inputPath.stem()}));
-    cout << outputPath << endl;
+//    outputPath.replace_filename(Process{}.process({inputPath.stem()}));
+//    cout << outputPath << endl;
     
 //    filesystem::create_directory (outputPath);
 //    filesystem::rename (<#const path &__from#>, <#const path &__to#>)
@@ -186,13 +215,27 @@ void app (filesystem::path const& inputPath, filesystem::path outputPath) {
     }
     
     Process p;
-    outputPath += p.process (inputPath.stem());
     
-    if (filesystem::is_directory(inputPath)) {
-        folderApp (p, inputPath, outputPath);
-    } else if (filesystem::is_regular_file(inputPath)) {
+//    outputPath.replace_filename (p.process (inputPath.filename ()));
+//    outputPath += p.process (inputPath.stem());
+    
+    if (filesystem::is_directory (inputPath))
+    {
+//        cout << outputPath << endl;
+        outputPath/=inputPath.filename ();
+        outputPath = filesystem::path{outputPath}.replace_filename (p.process (outputPath.filename ()));
+//        cout << outputPath << endl;
+//        return;
+        filesystem::copy (inputPath, outputPath, std::filesystem::copy_options::recursive);
+        folderApp (p, outputPath);
+
+        
+    } else if (filesystem::is_regular_file (inputPath))
+    {
         fileApp (p, inputPath, outputPath);
-    } else {
+        
+    } else
+    {
         throw runtime_error ("");
     }
     
@@ -231,8 +274,8 @@ void assert_file(string const& inputPath, string const& outputPath, string const
 
 auto main(int argc,  char** argv) -> int
 {
-//    ASSERT_FILE(folder1, LOUD(1))
-//    return 0;
+    ASSERT_FILE(folder1, LOUD(1))
+    return 0;
     ASSERT_FILE (1.hpp, LOUD (0))
     ASSERT_FILE (declare.hpp, LOUD (0))
     ASSERT_FILE (4.hpp, LOUD (0))
