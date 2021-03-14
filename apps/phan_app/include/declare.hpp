@@ -266,6 +266,29 @@ template <>
 struct STATE ("begin") : BASE_STATE
 {
     void _process (iter i, Context& ctx){
+        if (*i == '$')
+        {
+            potential (ctx) += '$';
+            TRANSITION ("$")
+            
+        } else if (*i == '#')
+        {
+            potential (ctx) += '#';
+            TRANSITION ("#")
+            
+        } else if (*i == '@')
+        {
+            potential (ctx) += '@';
+            TRANSITION ("@")
+            
+        } else if (isnumber(*i))
+        {
+            cout << "number!!" << endl;
+            result (ctx) += *i;
+        } else
+        {
+            result (ctx) += *i;
+        }
         switch (*i)
         {
             case '$':
@@ -351,39 +374,7 @@ struct STATE ("$") : BASE_STATE
     }
 };
 
-template <>
-struct STATE ("#") : BASE_STATE
-{
-    virtual void _process (iter i, Context& ctx){
-        potential (ctx) += *i ;
-        if (*i == '{')
-        {
-            TRANSITION ("#{")
 
-        } else
-        {
-            reset (ctx);
-
-        }
-        
-    }
-    virtual void addResultFromChild (string const& res){
-        throw runtime_error ("oops");
-    }
-    
-    virtual void reset_hasNoParent (Context& ctx){
-        result (ctx) += potential (ctx);
-        potential (ctx).clear ();
-        TRANSITION ("begin")
-    }
-    virtual void reset_hasParent (Context& ctx){
-        BASE_STATE::addResultFromChild (potential (ctx), ctx);
-        removeFromParent (ctx);
-    }
-    virtual string trans (){
-        return "#";
-    }
-};
 
 
 template <>
@@ -716,13 +707,61 @@ struct STATE ("${} done"): STATE ("done")
  
 };
 
+
+template <>
+struct STATE ("#") : BASE_STATE
+{
+    virtual void _process (iter i, Context& ctx){
+        
+        potential (ctx) += *i ;
+        
+        if (*i == '{')
+        {
+            ctx.bracketStack.push ('{');
+            TRANSITION ("#{")
+
+        } else
+        {
+            reset (ctx);
+
+        }
+        
+    }
+    virtual void addResultFromChild (string const& res){
+        throw runtime_error ("oops");
+    }
+    
+    virtual void reset_hasNoParent (Context& ctx){
+        result (ctx) += potential (ctx);
+        potential (ctx).clear ();
+        TRANSITION ("begin")
+    }
+    virtual void reset_hasParent (Context& ctx){
+        BASE_STATE::addResultFromChild (potential (ctx), ctx);
+        removeFromParent (ctx);
+    }
+    virtual string trans (){
+        return "#";
+    }
+};
+
+
+
 template <>
 struct STATE ("#{") : BASE_STATE
 {
     virtual void _process (iter i, Context& ctx){
         potential(ctx) += *i;
         if (*i == '}') {
-            reset (ctx);
+            ctx.bracketStack.pop ();
+            if (ctx.bracketStack.empty ())
+            {
+                reset (ctx);
+            }
+
+        } else if (*i == '{')
+        {
+            ctx.bracketStack.push ('{');
         }
     }
     
