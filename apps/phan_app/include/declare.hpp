@@ -293,7 +293,8 @@ struct STATE ("#{") : State <>
  
 };
 
-struct At : State <>
+template <>
+struct STATE ("@") : State <>
 {
 //    using State<>::State;
     virtual void _process (iter i);
@@ -422,13 +423,13 @@ void STATE ("#")::_process (iter i) {
 
 
 
-void At::_process (iter i) {
+void STATE ("@")::_process (iter i) {
     potential() += *i;
     
     switch (*i)
     {
-        case '{':
-            
+        case '(':
+            transition<STATE ("@(")>();
             break;
             
         default:
@@ -447,7 +448,27 @@ void At::_process (iter i) {
 }
 
 void STATE ("@(")::_process (iter i) {
+    potential() += *i;
     
+    switch (*i)
+    {
+        case ')':
+            transition<STATE ("@()")>();
+            break;
+            
+        default:
+            if (hasParent())
+            {
+                addResultFromChild (potential ());
+                removeFromParent ();
+            } else
+            {
+                result () += potential ();
+                potential ().clear ();
+                transition <Begin> ();
+            }
+            break;
+    }
 }
 
 void STATE ("@()")::_process (iter i) {
@@ -473,7 +494,7 @@ void Begin::_process (iter i) {
             
         case '@':
             potential () += '@';
-            transition <At> ();
+            transition <STATE ("@")> ();
             break;
             
         default:
