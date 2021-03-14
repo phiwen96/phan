@@ -100,7 +100,7 @@ struct Context
 
 
 void BASE_STATE::declare (string const& var, string const& val, Context& ctx) {
-    throw runtime_error ("");
+//    throw runtime_error ("");
     auto declared = ctx.declaredVariables.begin ();
     for (; declared < ctx.declaredVariables.end (); ++declared) {
         if (declared -> first == var) {
@@ -232,7 +232,35 @@ string BASE_STATE::transi (Context& ctx) {
     }
 }
 
+template <>
+struct STATE ("x") : BASE_STATE
+{
+    void _process (iter i, Context& ctx){}
+};
 
+template <>
+struct STATE ("x ") : BASE_STATE
+{
+    void _process (iter i, Context& ctx){}
+};
+
+template <>
+struct STATE ("x var") : BASE_STATE
+{
+    void _process (iter i, Context& ctx){}
+};
+
+template <>
+struct STATE ("x var ") : BASE_STATE
+{
+    void _process (iter i, Context& ctx){}
+};
+
+template <>
+struct STATE ("x var y") : BASE_STATE
+{
+    void _process (iter i, Context& ctx){}
+};
 
 template <>
 struct STATE ("begin") : BASE_STATE
@@ -446,6 +474,7 @@ struct STATE ("$()") : BASE_STATE
         return "$()";
     }
 };
+
 
 
 template <>

@@ -1,3 +1,5 @@
+@(hej){då}
+${hej}
 $(fornamn){Philip}
 ${fornamn}
 $(kiss){bajs}
