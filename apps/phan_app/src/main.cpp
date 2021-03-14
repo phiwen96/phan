@@ -271,7 +271,7 @@ void assert_file(string const& inputPath, string const& outputPath, string const
     }
 }
 #define LOUD(x) x
-#define ASSERT_FILE(file, DO_LOUD) assert_file <DO_LOUD> (string (TEST_FILES_PRE_PATH) + string (BOOST_PP_STRINGIZE (file)), string (TEST_FILES_POST_PATH), string (TEST_FILES_FACIT_PATH), warning);
+#define ASSERT_FILE(file, DO_LOUD) assert_file <DO_LOUD> (string (TEST_FILES_PRE_PATH) + string (BOOST_PP_STRINGIZE (file)), string (TEST_FILES_POST_PATH) + string (BOOST_PP_STRINGIZE (file)), string (TEST_FILES_FACIT_PATH) + string (BOOST_PP_STRINGIZE (file)), warning);
 
 #define ASSERT_FOLDER(folder, DO_LOUD) assert_folder (string (TEST_FOLDERS_PRE_PATH) + string (BOOST_PP_STRINGIZE (folder)), string (TEST_FOLDERS_POST_PATH), warning);
 
@@ -284,8 +284,9 @@ auto main(int argc,  char** argv) -> int
 #if defined (Debug)
     removeFolderContent (TEST_FOLDERS_POST_PATH);
 #endif
-    ASSERT_FOLDER ($(root){philip}, LOUD(1))
+    ASSERT_FILE (5.hpp, LOUD (1))
     return 0;
+    ASSERT_FOLDER ($(root){philip}, LOUD(1))
     ASSERT_FILE (1.hpp, LOUD (0))
     ASSERT_FILE (declare.hpp, LOUD (0))
     ASSERT_FILE (4.hpp, LOUD (0))
