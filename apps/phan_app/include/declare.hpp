@@ -234,7 +234,7 @@ string BASE_STATE::transi (Context& ctx) {
 
 
 template <>
-struct STATE ("") : BASE_STATE
+struct STATE ("begin") : BASE_STATE
 {
     void _process (iter i, Context& ctx){
         switch (*i)
@@ -311,7 +311,7 @@ struct STATE ("$") : BASE_STATE
         potential(ctx).clear ();
         variable (ctx).clear ();
         value (ctx).clear ();
-        TRANSITION ("done")
+        TRANSITION ("begin")
     }
     virtual void reset_hasParent (Context& ctx){
         BASE_STATE::addResultFromChild (potential (ctx), ctx);
@@ -345,7 +345,7 @@ struct STATE ("#") : BASE_STATE
     virtual void reset_hasNoParent (Context& ctx){
         result (ctx) += potential (ctx);
         potential (ctx).clear ();
-        TRANSITION ("")
+        TRANSITION ("begin")
     }
     virtual void reset_hasParent (Context& ctx){
         BASE_STATE::addResultFromChild (potential (ctx), ctx);
@@ -420,7 +420,7 @@ struct STATE ("$()") : BASE_STATE
         } else
         {
             potential (ctx) += *i;
-//            reset (ctx);
+            reset (ctx);
 
         }
     }
@@ -433,7 +433,7 @@ struct STATE ("$()") : BASE_STATE
         potential (ctx).clear ();
         variable (ctx).clear ();
         value (ctx).clear ();
-        TRANSITION ("")
+        TRANSITION ("begin")
         
         
     }
@@ -536,7 +536,7 @@ struct STATE ("$(){") : BASE_STATE
         potential(ctx).clear();
         value(ctx).clear();
         variable(ctx).clear();
-        TRANSITION ("")
+        TRANSITION ("begin")
         throw runtime_error ("oops");
     }
     virtual void reset_hasParent (Context& ctx){
@@ -560,10 +560,10 @@ struct STATE ("$(){") : BASE_STATE
 
 
 template <>
-struct STATE ("done") : STATE ("")
+struct STATE ("done") : STATE ("begin")
 {
     virtual void _process (iter i, Context& ctx){
-        STATE ("")::_process (i, ctx);
+        STATE ("begin")::_process (i, ctx);
     }
     
     virtual void reset_hasNoParent (Context& ctx){
@@ -597,7 +597,7 @@ struct STATE ("${") : BASE_STATE
                     {
 //                        cout << "kuk::${" << endl;
                         ctx.parent->state->addResultFromChild (d.second, *ctx.parent);
-                        cout << "adding result \"" << d.second << "\" from ${ to parent" << endl;
+//                        cout << "adding result \"" << d.second << "\" from ${ to parent" << endl;
                         removeFromParent (ctx);
                     } else {
                         result(ctx) += d.second;
@@ -638,7 +638,7 @@ struct STATE ("${") : BASE_STATE
     }
     
     virtual void addResultFromChild (string const& res, Context& ctx){
-        cout << "getting result \"" << res << "\" to ${" << endl;
+//        cout << "getting result \"" << res << "\" to ${" << endl;
         variable (ctx) += res;
         potential (ctx) += res;
     }
@@ -753,7 +753,7 @@ struct STATE ("@") : BASE_STATE
     virtual void reset_hasNoParent(Context& ctx){
         result (ctx) += potential (ctx);
         potential (ctx).clear ();
-        TRANSITION ("")
+        TRANSITION ("begin")
     }
     virtual void reset_hasParent(Context& ctx){
         BASE_STATE::addResultFromChild (potential (ctx), ctx);
@@ -814,7 +814,7 @@ struct STATE ("@()") : BASE_STATE
     virtual void reset_hasNoParent (Context& ctx){
         result(ctx) += potential(ctx);
         potential(ctx).clear();
-        TRANSITION ("")
+        TRANSITION ("begin")
     }
     virtual void reset_hasParent (Context& ctx){
         BASE_STATE::addResultFromChild (potential (ctx), ctx);
@@ -886,21 +886,22 @@ struct STATE ("@(){} done") : STATE ("done")
 
 
 
-//STATE ("") a0;
-//STATE ("#") a1;
-//STATE ("#{") a2;
-//STATE ("$") a3;
-//STATE ("${") a4;
-//STATE ("${} done") a5;
-//STATE ("done") a6;
-//STATE ("@(){} done") a7;
-//STATE ("@") a8;
-//STATE ("@(") a9;
-//STATE ("@()") a10;
-//STATE ("@(){") a11;
-//STATE ("$(") a12;
-//STATE ("$()") a13;
-//STATE ("$(){") a14;
+inline static BASE_STATE* a0{new STATE ("begin")};
+inline static BASE_STATE* a1{new STATE ("#")};
+inline static BASE_STATE* a2{new STATE ("#{")};
+inline static BASE_STATE* a3{new STATE ("$")};
+inline static BASE_STATE* a4{new STATE ("${")};
+inline static BASE_STATE* a5{new STATE ("${} done")};
+inline static BASE_STATE* a6{new STATE ("done")};
+inline static BASE_STATE* a7{new STATE ("@(){} done")};
+inline static BASE_STATE* a8{new STATE ("@")};
+inline static BASE_STATE* a9{new STATE ("@(")};
+inline static BASE_STATE* a10{new STATE ("@()")};
+inline static BASE_STATE* a11{new STATE ("@(){")};
+inline static BASE_STATE* a12{new STATE ("$(")};
+inline static BASE_STATE* a13{new STATE ("$()")};
+inline static BASE_STATE* a14{new STATE ("$(){")};
+inline static BASE_STATE* a15{new STATE ("#{} done")};
 
 
 
@@ -908,49 +909,56 @@ struct STATE ("@(){} done") : STATE ("done")
 
 template <class T>
 void BASE_STATE::transition (Context& ctx) {
+    
 //    T* newstate = new T;
 //    newstate -> context = context;
     
-    cout << transi(ctx) << " -> ";
+//    cout << transi(ctx) << " -> ";
 //    auto a = get<T>(states);
-    if constexpr (is_same_v<T, STATE ("")>)
-        cout << "kamskdmaskmd" << endl;
-//        ctx.state = &a0;
-//    if constexpr (is_same_v<T, decltype (a1)>)
-//        ctx.state = &a1;
-//    if constexpr (is_same_v<T, decltype (a2)>)
-//        ctx.state = &a2;
-//    if constexpr (is_same_v<T, decltype (a3)>)
-//        ctx.state = &a3;
-//    if constexpr (is_same_v<T, decltype (a4)>)
-//        ctx.state = &a4;
-//    if constexpr (is_same_v<T, decltype (a5)>)
-//        ctx.state = &a5;
-//    if constexpr (is_same_v<T, decltype (a6)>)
-//        ctx.state = &a6;
-//    if constexpr (is_same_v<T, decltype (a7)>)
-//        ctx.state = &a7;
-//    if constexpr (is_same_v<T, decltype (a8)>)
-//        ctx.state = &a8;
-//    if constexpr (is_same_v<T, decltype (a9)>)
-//        ctx.state = &a9;
-//    if constexpr (is_same_v<T, decltype (a10)>)
-//        ctx.state = &a10;
-//    if constexpr (is_same_v<T, decltype (a11)>)
-//        ctx.state = &a11;
-//    if constexpr (is_same_v<T, decltype (a12)>)
-//        ctx.state = &a11;
-//    if constexpr (is_same_v<T, decltype (a13)>)
-//        ctx.state = &a13;
-//    if constexpr (is_same_v<T, decltype (a14)>)
-//        ctx.state = &a14;
+  
+//    if constexpr (is_same_v<T, decltype (a0)>)
+//        cout << "kamskdmaskmd" << endl;
+//        ctx.state = a0;
+    if constexpr (is_same_v<T*, decltype (a1)>)
+        ctx.state = a1;
+    if constexpr (is_same_v<T*, decltype (a2)>)
+        ctx.state = a2;
+    if constexpr (is_same_v<T*, decltype (a3)>)
+        ctx.state = a3;
+    if constexpr (is_same_v<T*, decltype (a4)>)
+        ctx.state = a4;
+    if constexpr (is_same_v<T*, decltype (a5)>)
+        ctx.state = a5;
+    if constexpr (is_same_v<T*, decltype (a6)>)
+        ctx.state = a6;
+    if constexpr (is_same_v<T*, decltype (a7)>)
+        ctx.state = a7;
+    if constexpr (is_same_v<T*, decltype (a8)>)
+        ctx.state = a8;
+    if constexpr (is_same_v<T*, decltype (a9)>)
+        ctx.state = a9;
+    if constexpr (is_same_v<T*, decltype (a10)>)
+        ctx.state = a10;
+    if constexpr (is_same_v<T*, decltype (a11)>)
+        ctx.state = a11;
+    if constexpr (is_same_v<T*, decltype (a12)>)
+        ctx.state = a11;
+    if constexpr (is_same_v<T*, decltype (a13)>)
+        ctx.state = a13;
+    if constexpr (is_same_v<T*, decltype (a14)>)
+        ctx.state = a14;
+    if constexpr (is_same_v<T*, decltype (a15)>)
+        ctx.state = a15;
+    else {
+        ctx.state = a0;
+    }
     
     ctx.state = new T;
     
 //    ctx.state -> context = context;
     
-    cout << ctx.state->transi(ctx) << endl;
-    cout << ctx.result << endl;
+//    cout << ctx.state->transi(ctx) << endl;
+//    cout << ctx.result << endl;
 }
 
 

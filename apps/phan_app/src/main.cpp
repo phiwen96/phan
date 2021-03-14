@@ -32,7 +32,7 @@ struct Process
 //    comment::Context commentVal;
 //    string str;
     
-    Process () : declVar {nullptr, declaredVariables, new STATE ("")}
+    Process () : declVar {nullptr, declaredVariables, new STATE ("begin")}
     {
 //        declVar.state -> context = &declVar;
 //        pasteVar.state -> context = &pasteVar;
