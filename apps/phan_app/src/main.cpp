@@ -279,11 +279,31 @@ void assert_file(string const& inputPath, string const& outputPath, string const
 #define ASSERT_FILES_2(seqFiles) BOOST_PP_SEQ_FOR_EACH(ASSERT_FILE_SEQ, -, seqFiles);
 #define ASSERT_FILES(...) ASSERT_FILES_2 (BOOST_PP_TUPLE_TO_SEQ (__VA_ARGS__));
 
+
+template <size_t N, char const[N]>
+struct str {};
+
+template <auto...>
+struct Test
+{
+    
+};
+
+
+
+template <>
+struct Test <STR("nonsense")>
+{
+
+};
+
 auto main(int argc,  char** argv) -> int
 {
+    
 #if defined (Debug)
     removeFolderContent (TEST_FOLDERS_POST_PATH);
 #endif
+    return 0;
     ASSERT_FILE (declare.hpp, LOUD (0))
     ASSERT_FILE (4.hpp, LOUD (0))
     ASSERT_FILE (paste.hpp, LOUD (0))

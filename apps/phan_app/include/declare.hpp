@@ -1,5 +1,48 @@
 #pragma once
+
+
+#include <boost/preprocessor/repetition/repeat.hpp>
+#include <boost/preprocessor/punctuation/comma_if.hpp>
+
+template <unsigned int N>
+constexpr char get_ch (char const (&s) [N], unsigned int i)
+{
+    return i >= N ? '\0' : s[i];
+}
+
+
+auto len = [] <size_t N> (char const (&s) [N]) constexpr {
+    return N;
+};
+
+#define LEN(s) len(s) \
+[] <size_t N> (char const (&s) [N]) constexpr { \
+return N; \
+}(s)
+
+#define STRING_TO_CHARS_EXTRACT(z, n, data) \
+        BOOST_PP_COMMA_IF(n) get_ch(data, n)
+
+#define STRING_TO_CHARS(STRLEN, STR)  \
+        BOOST_PP_REPEAT(STRLEN, STRING_TO_CHARS_EXTRACT, STR)
+
+
+#define STR(s) \
+        STRING_TO_CHARS(100, s)
+
+//#define S(s) STR (s)//STR (BOOST_PP_STRINGIZE (s))
+
+#define S(s) <STR (s)>
+
+#define STATE(x) State S(x)
+
+
+
 using iter = string::iterator;
+
+
+
+
 
 
 struct Context;
@@ -163,7 +206,7 @@ struct Begin : State <>
 
 
 template <>
-struct State <'$'> : State <>
+struct STATE ("$") : State <>
 {
     using State<>::State;
     virtual void _process (iter i);
@@ -172,28 +215,7 @@ struct State <'$'> : State <>
 };
 
 template <>
-struct State <'#'> : State <>
-{
-    using State<>::State;
-    virtual void _process (iter i);
-    bool done () {return false;}
-    void addResultFromChild (string const& res);
-};
-
-
-template <>
-struct State <'$', '('> : State <>
-{
-    using State<>::State;
-    virtual void _process (iter i);
-    bool done () {return false;}
-    void addResultFromChild (string const& res);
-};
-
-
-
-template <>
-struct State <'$', '(', ')'> : State <>
+struct STATE ("#") : State <>
 {
     using State<>::State;
     virtual void _process (iter i);
@@ -203,7 +225,29 @@ struct State <'$', '(', ')'> : State <>
 
 
 template <>
-struct State <'$', '(', ')', '{'> : State <>
+struct State S("$(") : State <>
+{
+    using State<>::State;
+    virtual void _process (iter i);
+    bool done () {return false;}
+    void addResultFromChild (string const& res);
+};
+
+
+
+
+template <>
+struct State  S("$()") : State <>
+{
+    using State<>::State;
+    virtual void _process (iter i);
+    bool done () {return false;}
+    void addResultFromChild (string const& res);
+};
+
+
+template <>
+struct State S("$(){") : State <>
 {
     using State<>::State;
     virtual void _process (iter i);
@@ -300,24 +344,24 @@ void Begin::addResultFromChild (string const& res) {
 }
 
 
-void State<'$'>::addResultFromChild (string const& res) {
+void STATE ("$")::addResultFromChild (string const& res) {
     potential() += res;
     throw runtime_error ("oops");
 }
 
-void State<'#'>::addResultFromChild (string const& res) {
+void STATE ("#")::addResultFromChild (string const& res) {
     throw runtime_error ("oops");
 }
 
-void State<'$', '('>::addResultFromChild (string const& res) {
+void State S("$(")::addResultFromChild (string const& res) {
     potential () += res;
 }
 
-void State<'$', '(', ')'>::addResultFromChild (string const& res) {
+void State S("$()")::addResultFromChild (string const& res) {
     throw runtime_error ("oops");
 }
 
-void State<'$', '(', ')', '{'>::addResultFromChild (string const& res) {
+void State S("$(){")::addResultFromChild (string const& res) {
     value () += res;
 }
 
@@ -346,7 +390,7 @@ void Paste_LBracket::_process (iter i) {
     }
 }
 
-void State<'#'>::_process (iter i) {
+void STATE ("#")::_process (iter i) {
     potential () += *i ;
     
     if (*i == '{')
@@ -414,12 +458,12 @@ void Begin::_process (iter i) {
     {
         case '$':
             potential () += '$';
-            transition <State <'$'>> ();
+            transition <STATE ("$")> ();
             break;
             
         case '#':
             potential () += '#';
-            transition <State <'#'>> ();
+            transition <STATE ("#")> ();
             break;
             
         case '@':
@@ -433,12 +477,12 @@ void Begin::_process (iter i) {
     }
 
 }
-void State<'$'>::_process (iter i) {
+void STATE ("$")::_process (iter i) {
     
     if (*i == '(')
     {
         potential () += *i;
-        transition <State <'$', '('>> ();
+        transition <State S("$(")> ();
         
     } else if (*i == '{')
     {
@@ -503,17 +547,17 @@ void PasteLBracket::_process (iter i) {
 //        potential() += *i;
     }
 }
-void State <'$', '('>::_process (iter i) {
+void State S("$(")::_process (iter i) {
     
     if (*i == ')')
     {
         variable() = string (potential().begin() + 2, potential().end());
         potential () += ')';
-        transition <State<'$', '(', ')'>> ();
+        transition <State S("$()")> ();
         
     } else if (*i == '$')
     {
-        addChildContext <State <'$'>> ().potential += '$';
+        addChildContext <STATE ("$")> ().potential += '$';
 
     } else
     {
@@ -523,7 +567,7 @@ void State <'$', '('>::_process (iter i) {
     
 }
 
-void State<'$', '(', ')'>::_process (iter i) {
+void State S("$()")::_process (iter i) {
     
     
     if (*i == '{')
@@ -531,7 +575,7 @@ void State<'$', '(', ')'>::_process (iter i) {
 
         context -> bracketStack.push ('{');
 
-        transition <State<'$', '(', ')', '{'>> ();
+        transition <State S("$(){")> ();
         
     } else
     {
@@ -557,7 +601,7 @@ void State<'$', '(', ')'>::_process (iter i) {
     }
 }
 
-void State<'$', '(', ')', '{'>::_process (iter i) {
+void State S("$(){")::_process (iter i) {
     
     switch (*i)
     {
@@ -596,7 +640,7 @@ void State<'$', '(', ')', '{'>::_process (iter i) {
             break;
             
         case '$':
-            addChildContext <State <'$'>> ().potential += '$';
+            addChildContext <STATE ("$")> ().potential += '$';
             break;
             
         default:
