@@ -82,6 +82,7 @@ struct BASE_STATE
         return "";
     }
     string transi (Context& ctx);
+    void chainChildren (iter i, Context& ctx);
 };
 
 struct Context
@@ -235,6 +236,12 @@ string BASE_STATE::transi (Context& ctx) {
     } else
     {
         return trans();
+    }
+}
+void BASE_STATE::chainChildren (iter i, Context& ctx) {
+    for (auto& c : ctx.children)
+    {
+        c->process(i);
     }
 }
 
@@ -486,16 +493,18 @@ struct STATE ("$(x var y){") : BASE_STATE
                     declare (ctx.intvariable, to_string (i), ctx);
                     cout << ctx.intvariable << to_string (i) << endl;
                     cout << "bajs::" << ctx.value << endl;
-                    auto* childstate = new BASE_STATE;
-                    Context* childctx = new Context {&ctx, ctx.declaredVariables, childstate};
-                    childstate -> transition <STATE ("begin")> (*childctx);
-                    ctx.children.push_back (childctx);
+                    addChildContext <STATE ("begin")> (ctx);
+//                    auto* childstate = new BASE_STATE;
+//                    Context* childctx = new Context {&ctx, ctx.declaredVariables, childstate};
+//                    childstate -> transition <STATE ("begin")> (*childctx);
+//                    ctx.children.push_back (childctx);
     //                addChildContext <STATE ("begin")> (ctx);
                     for (iter j = ctx.value.begin (); j < ctx.value.end (); ++j)
                     {
-                        childctx -> process (j);
+//                        childctx -> process (j);
+                        chainChildren (j, ctx);
                     }
-                    cout << "kuk" << endl;
+//                    cout << "kuk" << endl;
 //                    delete childctx;
                 }
                 
