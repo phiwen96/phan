@@ -57,13 +57,16 @@ My name is ${name} and I am interested in $(job){coding} at your company ${compa
 On my spare time, i love ${job}! #{this is just a comment}
 
 Yours sincerely, ${name}
-```c++
+```
 
 This will result in the following output:
 
 ```c++
+My name is Philip Wenkel and I am interested in coding at your company Google.
+On my spare time, i love coding!
 
-```c++
+Yours sincerely, Philip Wenkel
+```
 
 
 
