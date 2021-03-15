@@ -668,13 +668,16 @@ struct STATE ("begin") : BASE_STATE
             potential (ctx) += '@';
             TRANSITION ("@")
             
-        } else if (isnumber(*i))
-        {
-            cout << "number!!" << endl;
-            result (ctx) += *i;
         } else
         {
-            result (ctx) += *i;
+            if (hasParent (ctx))
+            {
+                BASE_STATE::addResultFromChild (string {*i}, ctx);
+                
+            } else
+            {
+                result (ctx) += *i;
+            }
         }
        
 
