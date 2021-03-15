@@ -233,33 +233,98 @@ string BASE_STATE::transi (Context& ctx) {
 }
 
 template <>
-struct STATE ("x") : BASE_STATE
+struct STATE ("$(x") : BASE_STATE
 {
     void _process (iter i, Context& ctx){}
+    void addResultFromChild (string const& res){
+        throw runtime_error ("oops");
+    }
+    
+    virtual void reset_hasNoParent (Context& ctx){
+        throw runtime_error ("");
+    }
+    virtual void reset_hasParent (Context& ctx){
+        throw runtime_error ("");
+    }
+    virtual string trans (){
+        return "$(x";
+    }
 };
 
 template <>
-struct STATE ("x ") : BASE_STATE
+struct STATE ("$(x ") : BASE_STATE
 {
     void _process (iter i, Context& ctx){}
+    void addResultFromChild (string const& res){
+        throw runtime_error ("oops");
+    }
+    
+    virtual void reset_hasNoParent (Context& ctx){
+        throw runtime_error ("");
+    }
+    virtual void reset_hasParent (Context& ctx){
+        throw runtime_error ("");
+    }
+    virtual string trans (){
+        return "$(x ";
+    }
 };
 
 template <>
-struct STATE ("x var") : BASE_STATE
+struct STATE ("$(x var") : BASE_STATE
 {
     void _process (iter i, Context& ctx){}
+    void addResultFromChild (string const& res){
+        throw runtime_error ("oops");
+    }
+    
+    virtual void reset_hasNoParent (Context& ctx){
+        throw runtime_error ("");
+    }
+    virtual void reset_hasParent (Context& ctx){
+        throw runtime_error ("");
+    }
+    virtual string trans (){
+        return "$(x var";
+    }
 };
 
 template <>
-struct STATE ("x var ") : BASE_STATE
+struct STATE ("$(x var y") : BASE_STATE
 {
     void _process (iter i, Context& ctx){}
+    void addResultFromChild (string const& res){
+        throw runtime_error ("oops");
+    }
+    
+    virtual void reset_hasNoParent (Context& ctx){
+        throw runtime_error ("");
+    }
+    virtual void reset_hasParent (Context& ctx){
+        throw runtime_error ("");
+    }
+    virtual string trans (){
+        return "$(x var y";
+    }
 };
 
 template <>
-struct STATE ("x var y") : BASE_STATE
+struct STATE ("$(x var y)") : BASE_STATE
 {
     void _process (iter i, Context& ctx){}
+    void addResultFromChild (string const& res){
+        throw runtime_error ("oops");
+    }
+    
+    virtual void reset_hasNoParent (Context& ctx){
+        throw runtime_error ("");
+    }
+    virtual void reset_hasParent (Context& ctx){
+        throw runtime_error ("");
+    }
+    virtual string trans (){
+        return "$(x var y)";
+    }
 };
 
 template <>
@@ -289,27 +354,7 @@ struct STATE ("begin") : BASE_STATE
         {
             result (ctx) += *i;
         }
-        switch (*i)
-        {
-            case '$':
-                potential (ctx) += '$';
-                TRANSITION ("$")
-                break;
-                
-            case '#':
-                potential (ctx) += '#';
-                TRANSITION ("#")
-                break;
-                
-            case '@':
-                potential (ctx) += '@';
-                TRANSITION ("@")
-                break;
-                
-            default:
-                result (ctx) += *i;
-                break;
-        }
+       
 
     }
     void addResultFromChild (string const& res){
@@ -394,6 +439,10 @@ struct STATE ("$(") : BASE_STATE
         {
             addChildContext <STATE ("$")> (ctx).potential = '$';
 
+        } else if (isnumber (*i))
+        {
+            TRANSITION ("$(x")
+            
         } else
         {
             variable (ctx) += *i;
@@ -988,39 +1037,39 @@ void BASE_STATE::transition (Context& ctx) {
 //    if constexpr (is_same_v<T, decltype (a0)>)
 //        cout << "kamskdmaskmd" << endl;
 //        ctx.state = a0;
-    if constexpr (is_same_v<T*, decltype (a1)>)
-        ctx.state = a1;
-    if constexpr (is_same_v<T*, decltype (a2)>)
-        ctx.state = a2;
-    if constexpr (is_same_v<T*, decltype (a3)>)
-        ctx.state = a3;
-    if constexpr (is_same_v<T*, decltype (a4)>)
-        ctx.state = a4;
-    if constexpr (is_same_v<T*, decltype (a5)>)
-        ctx.state = a5;
-    if constexpr (is_same_v<T*, decltype (a6)>)
-        ctx.state = a6;
-    if constexpr (is_same_v<T*, decltype (a7)>)
-        ctx.state = a7;
-    if constexpr (is_same_v<T*, decltype (a8)>)
-        ctx.state = a8;
-    if constexpr (is_same_v<T*, decltype (a9)>)
-        ctx.state = a9;
-    if constexpr (is_same_v<T*, decltype (a10)>)
-        ctx.state = a10;
-    if constexpr (is_same_v<T*, decltype (a11)>)
-        ctx.state = a11;
-    if constexpr (is_same_v<T*, decltype (a12)>)
-        ctx.state = a11;
-    if constexpr (is_same_v<T*, decltype (a13)>)
-        ctx.state = a13;
-    if constexpr (is_same_v<T*, decltype (a14)>)
-        ctx.state = a14;
-    if constexpr (is_same_v<T*, decltype (a15)>)
-        ctx.state = a15;
-    else {
-        ctx.state = a0;
-    }
+//    if constexpr (is_same_v<T*, decltype (a1)>)
+//        ctx.state = a1;
+//    if constexpr (is_same_v<T*, decltype (a2)>)
+//        ctx.state = a2;
+//    if constexpr (is_same_v<T*, decltype (a3)>)
+//        ctx.state = a3;
+//    if constexpr (is_same_v<T*, decltype (a4)>)
+//        ctx.state = a4;
+//    if constexpr (is_same_v<T*, decltype (a5)>)
+//        ctx.state = a5;
+//    if constexpr (is_same_v<T*, decltype (a6)>)
+//        ctx.state = a6;
+//    if constexpr (is_same_v<T*, decltype (a7)>)
+//        ctx.state = a7;
+//    if constexpr (is_same_v<T*, decltype (a8)>)
+//        ctx.state = a8;
+//    if constexpr (is_same_v<T*, decltype (a9)>)
+//        ctx.state = a9;
+//    if constexpr (is_same_v<T*, decltype (a10)>)
+//        ctx.state = a10;
+//    if constexpr (is_same_v<T*, decltype (a11)>)
+//        ctx.state = a11;
+//    if constexpr (is_same_v<T*, decltype (a12)>)
+//        ctx.state = a11;
+//    if constexpr (is_same_v<T*, decltype (a13)>)
+//        ctx.state = a13;
+//    if constexpr (is_same_v<T*, decltype (a14)>)
+//        ctx.state = a14;
+//    if constexpr (is_same_v<T*, decltype (a15)>)
+//        ctx.state = a15;
+//    else {
+//        ctx.state = a0;
+//    }
     
     ctx.state = new T;
     
