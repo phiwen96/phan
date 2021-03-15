@@ -5,7 +5,7 @@ $(0 x 3){
     template <>
     struct graph <${x}>
     {
-        ${y} = 10;
+        ${y} = 10 + ${x};
     };
 }
 
