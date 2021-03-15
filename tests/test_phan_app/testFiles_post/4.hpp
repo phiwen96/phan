@@ -1,4 +1,6 @@
-int a3 k 3int a4 k 4int a5 k 5int a6 k 6
+bajs
+hor
+int a3k 3int a4k 4int a5k 5int a6k 6
 
 
 

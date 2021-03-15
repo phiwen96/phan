@@ -1248,7 +1248,16 @@ struct STATE ("@(){} done") : STATE ("done")
 {
     virtual void _process (iter i, Context& ctx) {
         if (*i != '\n')
+        {
             STATE ("done")::_process (i, ctx);
+            TRANSITION ("done")
+        }
+        else
+        {
+            TRANSITION ("done")
+        }
+            
+        
     }
     virtual string trans (){
         return "@(){} done";
