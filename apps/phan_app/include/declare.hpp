@@ -1187,7 +1187,9 @@ struct STATE ("@") : BASE_STATE
     }
     virtual void reset_hasParent(Context& ctx){
         BASE_STATE::addResultFromChild (potential (ctx), ctx);
-        removeFromParent (ctx);
+        potential (ctx).clear ();
+        TRANSITION ("begin")
+//        removeFromParent (ctx);
     }
     virtual string trans (){
         return "@";
@@ -1248,7 +1250,9 @@ struct STATE ("@()") : BASE_STATE
     }
     virtual void reset_hasParent (Context& ctx){
         BASE_STATE::addResultFromChild (potential (ctx), ctx);
-        removeFromParent (ctx);
+        potential (ctx).clear ();
+        TRANSITION ("begin")
+//        removeFromParent (ctx);
     }
     virtual string trans (){
         return "@()";
@@ -1288,10 +1292,14 @@ struct STATE ("@(){") : BASE_STATE
         potential(ctx).clear();
         variable(ctx).clear();
         value(ctx).clear();
-        TRANSITION ("@(){} done")
+        TRANSITION ("done")
     }
     virtual void reset_hasParent (Context& ctx){
-        removeFromParent (ctx);
+        potential (ctx).clear ();
+        variable(ctx).clear();
+        value(ctx).clear();
+        TRANSITION ("done")
+//        removeFromParent (ctx);
     }
     virtual string trans (){
         return "@(){";
@@ -1320,27 +1328,6 @@ struct STATE ("@(){} done") : STATE ("done")
 };
 
 
-
-
-
-
-
-inline static BASE_STATE* a0{new STATE ("begin")};
-inline static BASE_STATE* a1{new STATE ("#")};
-inline static BASE_STATE* a2{new STATE ("#{")};
-inline static BASE_STATE* a3{new STATE ("$")};
-inline static BASE_STATE* a4{new STATE ("${")};
-inline static BASE_STATE* a5{new STATE ("${} done")};
-inline static BASE_STATE* a6{new STATE ("done")};
-inline static BASE_STATE* a7{new STATE ("@(){} done")};
-inline static BASE_STATE* a8{new STATE ("@")};
-inline static BASE_STATE* a9{new STATE ("@(")};
-inline static BASE_STATE* a10{new STATE ("@()")};
-inline static BASE_STATE* a11{new STATE ("@(){")};
-inline static BASE_STATE* a12{new STATE ("$(")};
-inline static BASE_STATE* a13{new STATE ("$()")};
-inline static BASE_STATE* a14{new STATE ("$(){")};
-inline static BASE_STATE* a15{new STATE ("#{} done")};
 
 
 

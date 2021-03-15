@@ -1,8 +1,11 @@
 $(0 x 3){
+    
+    @(y){inline static constexpr int}
+    
     template <>
     struct graph <${x}>
     {
-        
+        ${y} = 10;
     };
 }
 
