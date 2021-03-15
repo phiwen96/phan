@@ -251,7 +251,7 @@ struct STATE ("$(x") : BASE_STATE
         {
             if (hasParent (ctx))
             {
-                addResultFromChild (potential (ctx));
+                BASE_STATE::addResultFromChild (potential (ctx), ctx);
                 removeFromParent (ctx);
             } else
             {
@@ -350,7 +350,7 @@ struct STATE ("$(x var ") : BASE_STATE
         {
             if (hasParent (ctx))
             {
-                addResultFromChild (potential (ctx));
+                BASE_STATE::addResultFromChild (potential (ctx), ctx);
                 removeFromParent (ctx);
             } else
             {
@@ -393,7 +393,7 @@ struct STATE ("$(x var y") : BASE_STATE
         {
             if (hasParent (ctx))
             {
-                addResultFromChild (potential (ctx));
+                BASE_STATE::addResultFromChild (potential (ctx), ctx);
                 removeFromParent (ctx);
             } else
             {
@@ -433,7 +433,7 @@ struct STATE ("$(x var y)") : BASE_STATE
         {
             if (hasParent (ctx))
             {
-                addResultFromChild (potential (ctx));
+                BASE_STATE::addResultFromChild (potential (ctx), ctx);
                 removeFromParent (ctx);
             } else
             {
@@ -466,14 +466,24 @@ struct STATE ("$(x var y){") : BASE_STATE
 {
     void _process (iter i, Context& ctx){
         ctx.potential += *i;
-        if (*i == '{')
+        if (*i == '}')
         {
-            TRANSITION ("$(x var y){")
+            int i = stoi (ctx.firstint);
+            int end = stoi (ctx.secondint);
+            for (; i < end; ++i)
+            {
+                cout << "hej" << endl;
+            }
+            
+//            cout << ctx.firstint << endl;
+//            cout << ctx.intvariable << endl;
+//            cout << ctx.secondint << endl;
+            TRANSITION ("done")
         } else
         {
             if (hasParent (ctx))
             {
-                addResultFromChild (potential (ctx));
+                BASE_STATE::addResultFromChild (potential (ctx), ctx);
                 removeFromParent (ctx);
             } else
             {
@@ -486,8 +496,10 @@ struct STATE ("$(x var y){") : BASE_STATE
             }
         }
     }
-    void addResultFromChild (string const& res){
-        throw runtime_error ("oops");
+    void addResultFromChild (string const& res, Context& ctx){
+        
+        ctx.value += res;
+//        throw runtime_error ("oops");
     }
     
     virtual void reset_hasNoParent (Context& ctx){
@@ -497,7 +509,7 @@ struct STATE ("$(x var y){") : BASE_STATE
         throw runtime_error ("");
     }
     virtual string trans (){
-        return "$(x var y)";
+        return "$(x var y){";
     }
 };
 
