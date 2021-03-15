@@ -163,19 +163,7 @@ ph_precompile (TARGET ${self} PRIVATE ${boost_pch} ${std_pch})
 
 
 
-set_target_properties(${self} PROPERTIES
-      MACOSX_BUNDLE_BUNDLE_VERSION       "${PROJECT_VERSION}${BUILD_SUFFIX}"
-      MACOSX_BUNDLE_SHORT_VERSION_STRING "${PROJECT_VERSION}"
-  )
 
-#   set(CMAKE_XCODE_ATTRIBUTE_DEVELOPMENT_TEAM   "ABC12345DE"    CACHE STRING "")
-#   set(CMAKE_XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "Philip Wenkel" CACHE STRING "")
-
-  # Apps must have install step enabled
-  set_target_properties(${self} PROPERTIES
-      XCODE_ATTRIBUTE_SKIP_INSTALL  NO
-      XCODE_ATTRIBUTE_INSTALL_PATH  "$(LOCAL_APPS_DIR)"
-)
 
 
 # if(APPLE)
