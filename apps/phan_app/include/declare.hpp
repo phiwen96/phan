@@ -94,6 +94,9 @@ struct Context
     string value;
     string potential;
     string paste;
+    string firstint{""};
+    string secondint{""};
+    string intvariable{""};
     
     void process (iter);
 };
@@ -235,7 +238,31 @@ string BASE_STATE::transi (Context& ctx) {
 template <>
 struct STATE ("$(x") : BASE_STATE
 {
-    void _process (iter i, Context& ctx){}
+    void _process (iter i, Context& ctx){
+        potential (ctx) += *i;
+        if (isnumber (*i))
+        {
+            ctx.firstint += *i;
+//            TRANSITION ("")
+        } else if (*i == ' ')
+        {
+            TRANSITION ("$(x ");
+        } else
+        {
+            if (hasParent (ctx))
+            {
+                addResultFromChild (potential (ctx));
+                removeFromParent (ctx);
+            } else
+            {
+                result (ctx) += potential (ctx);
+                potential (ctx).clear ();
+                ctx.firstint.clear ();
+                ctx.secondint.clear ();
+                TRANSITION ("begin");
+            }
+        }
+    }
     void addResultFromChild (string const& res){
         throw runtime_error ("oops");
     }
@@ -1031,7 +1058,7 @@ void BASE_STATE::transition (Context& ctx) {
 //    T* newstate = new T;
 //    newstate -> context = context;
     
-//    cout << transi(ctx) << " -> ";
+    cout << transi(ctx) << " -> ";
 //    auto a = get<T>(states);
   
 //    if constexpr (is_same_v<T, decltype (a0)>)
@@ -1075,8 +1102,8 @@ void BASE_STATE::transition (Context& ctx) {
     
 //    ctx.state -> context = context;
     
-//    cout << ctx.state->transi(ctx) << endl;
-//    cout << ctx.result << endl;
+    cout << ctx.state->transi(ctx) << endl;
+    cout << ctx.result << endl;
 }
 
 
