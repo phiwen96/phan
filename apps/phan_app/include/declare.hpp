@@ -472,7 +472,11 @@ struct STATE ("$(x var y){") : BASE_STATE
             int end = stoi (ctx.secondint);
             for (; i < end; ++i)
             {
-                cout << "hej" << endl;
+                declare (ctx.intvariable, to_string (i), ctx);
+                for (iter j = ctx.value.begin (); j < ctx.value.end (); ++j)
+                {
+                    cout << *j << endl;
+                }
             }
             
 //            cout << ctx.firstint << endl;
@@ -1275,3 +1279,19 @@ void BASE_STATE::transition (Context& ctx) {
  
  
  */
+
+
+
+//try
+//   {
+//       int i = std::stoi(s);
+//       std::cout << i << '\n';
+//   }
+//   catch (std::invalid_argument const &e)
+//   {
+//       std::cout << "Bad input: std::invalid_argument thrown" << '\n';
+//   }
+//   catch (std::out_of_range const &e)
+//   {
+//       std::cout << "Integer overflow: std::out_of_range thrown" << '\n';
+//   }
