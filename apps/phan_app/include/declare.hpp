@@ -494,19 +494,21 @@ struct STATE ("$(x var y){") : BASE_STATE
                     declare (ctx.intvariable, to_string (i), ctx);
                     cout << ctx.intvariable << to_string (i) << endl;
                     cout << "bajs::" << ctx.value << endl;
-                    addChildContext <STATE ("begin")> (ctx);
+//                    addChildContext <STATE ("begin")> (ctx);
 //                    string temp = ctx.value;
 //                    ctx.value.clear ();
-//                    auto* childstate = new BASE_STATE;
-//                    Context* childctx = new Context {&ctx, ctx.declaredVariables, childstate};
-//                    childstate -> transition <STATE ("begin")> (*childctx);
+                    auto* childstate = new BASE_STATE;
+                    Context* childctx = new Context {&ctx, ctx.declaredVariables, childstate};
+                    childstate -> transition <STATE ("begin")> (*childctx);
 //                    ctx.children.push_back (childctx);
     //                addChildContext <STATE ("begin")> (ctx);
                     for (iter j = ctx.value.begin (); j < ctx.value.end (); ++j)
                     {
-//                        childctx -> process (j);
-                        chainChildren (j, ctx);
+                        
+                        childctx -> process (j);
+//                        chainChildren (j, ctx);
                     }
+                    
 //                    cout << "kuk" << endl;
 //                    delete childctx;
                 }
