@@ -45,6 +45,26 @@ $(0 i 3){
 
 That's it!
 
+Lets write a cv for our new job application!
+
+```c++
+@(first name){Philip}
+@(last name){Wenkel}
+@(name){${first name} ${last name}}
+@(company name){Google}
+
+My name is ${name} and I am interested in $(job){coding} at your company ${company name}.
+On my spare time, i love ${job}! #{this is just a comment}
+
+Yours sincerely, ${name}
+```c++
+
+This will result in the following output:
+
+```c++
+
+```c++
+
 
 
 
