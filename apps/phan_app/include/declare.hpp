@@ -589,7 +589,12 @@ struct STATE ("${") : BASE_STATE
                         cout << "kuk::${" << endl;
                         BASE_STATE::addResultFromChild (d.second, ctx);
                         cout << "adding result \"" << d.second << "\" from ${ to parent" << endl;
-                        removeFromParent (ctx);
+                        potential(ctx).clear();
+                        value(ctx).clear();
+                        variable(ctx).clear();
+                        paste(ctx).clear();
+//                        removeFromParent (ctx);
+                        TRANSITION ("begin")
                     } else {
                         
                         result(ctx) += d.second;
@@ -660,6 +665,7 @@ template <>
 struct STATE ("begin") : BASE_STATE
 {
     void _process (iter i, Context& ctx){
+        
         if (*i == '$')
         {
             potential (ctx) += '$';
