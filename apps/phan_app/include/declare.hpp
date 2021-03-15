@@ -468,11 +468,14 @@ struct STATE ("$(x var y)") : BASE_STATE
 template <>
 struct STATE ("$(x var y){") : BASE_STATE
 {
-    void _process (iter i, Context& ctx){
+    void _process (iter i, Context& ctx)
+    {
         ctx.potential += *i;
+        
         if (*i == '}')
         {
             ctx.bracketStack.pop ();
+            
             if (ctx.bracketStack.empty ())
             {
                 int i = stoi (ctx.firstint);
@@ -486,11 +489,14 @@ struct STATE ("$(x var y){") : BASE_STATE
                     auto* childstate = new BASE_STATE;
                     Context* childctx = new Context {&ctx, ctx.declaredVariables, childstate};
                     childstate -> transition <STATE ("begin")> (*childctx);
+                    ctx.children.push_back (childctx);
     //                addChildContext <STATE ("begin")> (ctx);
                     for (iter j = ctx.value.begin (); j < ctx.value.end (); ++j)
                     {
                         childctx -> process (j);
                     }
+                    cout << "kuk" << endl;
+//                    delete childctx;
                 }
                 
                 if (hasParent (ctx))
@@ -549,24 +555,87 @@ struct STATE ("$(x var y){") : BASE_STATE
 };
 
 template <>
-struct STATE ("$(x var y){$") : BASE_STATE
+struct STATE ("${") : BASE_STATE
 {
-    void _process (iter i, Context& ctx){
-        
+    virtual void _process (iter i, Context& ctx){
+        cout << *i << endl;
+        if (*i == '}')
+        {
+            
+//            optional <string> decl = declared (variable (ctx), ctx);
+            for (auto& d : ctx.declaredVariables)
+            {
+                if (d.first == variable (ctx)) {
+//                    return d->second;
+//                    cout << "::" << d->second << endl;
+                    if (hasParent(ctx))
+                    {
+                        cout << "kuk::${" << endl;
+                        BASE_STATE::addResultFromChild (d.second, ctx);
+                        cout << "adding result \"" << d.second << "\" from ${ to parent" << endl;
+                        removeFromParent (ctx);
+                    } else {
+                        
+                        result(ctx) += d.second;
+//                        cout << "adding result \"" << d.second << "\" from ${ to parent" << endl;
+
+//                        cout << result(ctx) << endl;
+                        potential(ctx).clear();
+                        value(ctx).clear();
+                        variable(ctx).clear();
+                        paste(ctx).clear();
+                        TRANSITION ("done")
+                    }
+                    return;
+                }
+            }
+           
+                string warning = "variable \"" + variable (ctx) + "\" pasted but it has not yet been declared!";
+                //            cout << result (ctx) << endl;
+                throw runtime_error (warning);
+            
+        } else if (*i == '$')
+        {
+            addChildContext<STATE ("$")>(ctx).potential = '$';
+            
+        } else if (*i == '@')
+        {
+            addChildContext<STATE ("@")>(ctx).potential = '@';
+            
+        } else if (*i == '#')
+        {
+            addChildContext<STATE ("#")>(ctx).potential = '#';
+            
+        } else
+        {
+            variable (ctx) += *i;
+            potential(ctx) += *i;
+//            cout << *i << endl;
+        }
     }
-    void addResultFromChild (string const& res){
-        throw runtime_error ("oops");
+    
+    virtual void addResultFromChild (string const& res, Context& ctx){
+//        cout << "getting result \"" << res << "\" to ${" << endl;
+        variable (ctx) += res;
+        potential (ctx) += res;
     }
     
     virtual void reset_hasNoParent (Context& ctx){
-        throw runtime_error ("");
+        result(ctx) += value (ctx);
+        potential(ctx).clear();
+        value(ctx).clear();
+        variable(ctx).clear();
+        paste(ctx).clear();
+        TRANSITION ("${} done")
     }
     virtual void reset_hasParent (Context& ctx){
-        throw runtime_error ("");
+        BASE_STATE::addResultFromChild (value (ctx), ctx);
+        removeFromParent (ctx);
     }
     virtual string trans (){
-        return "\"\"";
+        return "${";
     }
+ 
 };
 
 
@@ -892,89 +961,7 @@ struct STATE ("done") : STATE ("begin")
     }
 };
 
-template <>
-struct STATE ("${") : BASE_STATE
-{
-    virtual void _process (iter i, Context& ctx){
-        
-        if (*i == '}')
-        {
-            
-//            optional <string> decl = declared (variable (ctx), ctx);
-            for (auto& d : ctx.declaredVariables)
-            {
-                if (d.first == variable (ctx)) {
-//                    return d->second;
-//                    cout << "::" << d->second << endl;
-                    if (hasParent(ctx))
-                    {
-                        cout << "kuk::${" << endl;
-                        BASE_STATE::addResultFromChild (d.second, ctx);
-                        cout << "adding result \"" << d.second << "\" from ${ to parent" << endl;
-                        removeFromParent (ctx);
-                    } else {
-                        
-                        result(ctx) += d.second;
-//                        cout << "adding result \"" << d.second << "\" from ${ to parent" << endl;
 
-//                        cout << result(ctx) << endl;
-                        potential(ctx).clear();
-                        value(ctx).clear();
-                        variable(ctx).clear();
-                        paste(ctx).clear();
-                        TRANSITION ("done")
-                    }
-                    return;
-                }
-            }
-           
-                string warning = "variable \"" + variable (ctx) + "\" pasted but it has not yet been declared!";
-                //            cout << result (ctx) << endl;
-                throw runtime_error (warning);
-            
-        } else if (*i == '$')
-        {
-            addChildContext<STATE ("$")>(ctx).potential = '$';
-            
-        } else if (*i == '@')
-        {
-            addChildContext<STATE ("@")>(ctx).potential = '@';
-            
-        } else if (*i == '#')
-        {
-            addChildContext<STATE ("#")>(ctx).potential = '#';
-            
-        } else
-        {
-            variable (ctx) += *i;
-            potential(ctx) += *i;
-//            cout << *i << endl;
-        }
-    }
-    
-    virtual void addResultFromChild (string const& res, Context& ctx){
-//        cout << "getting result \"" << res << "\" to ${" << endl;
-        variable (ctx) += res;
-        potential (ctx) += res;
-    }
-    
-    virtual void reset_hasNoParent (Context& ctx){
-        result(ctx) += value (ctx);
-        potential(ctx).clear();
-        value(ctx).clear();
-        variable(ctx).clear();
-        paste(ctx).clear();
-        TRANSITION ("${} done")
-    }
-    virtual void reset_hasParent (Context& ctx){
-        BASE_STATE::addResultFromChild (value (ctx), ctx);
-        removeFromParent (ctx);
-    }
-    virtual string trans (){
-        return "${";
-    }
- 
-};
 
 
 template <>
