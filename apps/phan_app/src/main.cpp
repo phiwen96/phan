@@ -219,6 +219,8 @@ void assert_file(string const& inputPath, string const& outputPath, string const
 #define ASSERT_FILES(...) ASSERT_FILES_2 (BOOST_PP_TUPLE_TO_SEQ (__VA_ARGS__));
 
 
+
+
 template <size_t N, char const[N]>
 struct str {};
 
@@ -238,8 +240,8 @@ struct Test <STR("nonsense")>
 
 auto main(int argc,  char** argv) -> int
 {
-    string ss;
-    getline(cin, ss);
+//    string ss;
+//    getline(cin, ss);
     
 #if defined (Debug)
     removeFolderContent (TEST_FOLDERS_POST_PATH);
@@ -252,7 +254,7 @@ auto main(int argc,  char** argv) -> int
 //    ASSERT_FILE (comment.hpp, LOUD (0))
 //    ASSERT_FILE (5.hpp, LOUD (0))
 //    ASSERT_FILE (decl.hpp, LOUD (1))
-    
+    ASSERT_FOLDER ($(root){project}, LOUD(1))
     return 0;
     ASSERT_FOLDER ($(root){philip}, LOUD(1))
     ASSERT_FILE (1.hpp, LOUD (0))

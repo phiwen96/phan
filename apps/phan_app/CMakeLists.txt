@@ -53,7 +53,7 @@ file (GLOB_RECURSE SOURCE_LIST ${CMAKE_CURRENT_LIST_DIR}/src/*.cpp)
 
 source_group("sources" FILES SOURCE_LIST)
 
-add_executable(${self} MACOSX_BUNDLE ${SOURCE_LIST} ${HEADER_LIST})
+add_executable(${self} ${SOURCE_LIST} ${HEADER_LIST})
 
 # set_target_properties(${self} PROPERTIES OUTPUT_NAME "files")
 
