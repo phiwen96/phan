@@ -101,6 +101,7 @@ struct Context
     string firstint{""};
     string secondint{""};
     string intvariable{""};
+    string loop{""};
     
     void process (iter);
 };
@@ -494,6 +495,8 @@ struct STATE ("$(x var y){") : BASE_STATE
                     cout << ctx.intvariable << to_string (i) << endl;
                     cout << "bajs::" << ctx.value << endl;
                     addChildContext <STATE ("begin")> (ctx);
+//                    string temp = ctx.value;
+//                    ctx.value.clear ();
 //                    auto* childstate = new BASE_STATE;
 //                    Context* childctx = new Context {&ctx, ctx.declaredVariables, childstate};
 //                    childstate -> transition <STATE ("begin")> (*childctx);
@@ -510,15 +513,16 @@ struct STATE ("$(x var y){") : BASE_STATE
                 
                 if (hasParent (ctx))
                 {
-                    BASE_STATE::addResultFromChild (value (ctx), ctx);
+                    BASE_STATE::addResultFromChild (ctx.loop, ctx);
                     removeFromParent (ctx);
                 } else
                 {
-                    result (ctx) += value (ctx);
+                    result (ctx) += ctx.loop;
                     potential (ctx).clear ();
                     ctx.firstint.clear ();
                     ctx.secondint.clear ();
                     ctx.intvariable.clear ();
+                    ctx.loop.clear ();
                     TRANSITION ("begin");
                 }
             }
@@ -546,9 +550,10 @@ struct STATE ("$(x var y){") : BASE_STATE
         }
             
     }
-    void addResultFromChild (string const& res, Context& ctx){
-        
-        ctx.value += res;
+    
+    void addResultFromChild (string const& res, Context& ctx) {
+        ctx.loop += res;
+//        ctx.value += res;
 //        throw runtime_error ("oops");
     }
     
