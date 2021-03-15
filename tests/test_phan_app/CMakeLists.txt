@@ -138,7 +138,7 @@ target_compile_features(${self} PRIVATE cxx_std_20)
 target_link_libraries (${self} 
 PRIVATE 
     # ${root_name} 
-    Catch2::Catch2 
+    # Catch2::Catch2 
     const_str
     # ${Catch2_LIBRARIES}
     # ${Boost_LIBRARIES}
@@ -148,7 +148,7 @@ target_include_directories (${self}
 PRIVATE 
     # ${root_name} 
     # ${CMAKE_CURRENT_BINARY_DIR}
-    Catch2::Catch2
+    # Catch2::Catch2
     const_str
     # ${Catch2_INCLUDE_DIRS}
     ${Boost_INCLUDE_DIRS}

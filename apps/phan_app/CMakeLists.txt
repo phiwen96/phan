@@ -53,7 +53,7 @@ file (GLOB_RECURSE SOURCE_LIST ${CMAKE_CURRENT_LIST_DIR}/src/*.cpp)
 
 source_group("sources" FILES SOURCE_LIST)
 
-add_executable(${self} ${SOURCE_LIST} ${HEADER_LIST})
+add_executable(${self} MACOSX_BUNDLE ${SOURCE_LIST} ${HEADER_LIST})
 
 # set_target_properties(${self} PROPERTIES OUTPUT_NAME "files")
 
@@ -93,7 +93,7 @@ target_include_directories (${self} PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
 
 
 target_compile_features(${self} PRIVATE cxx_std_20)
-set(APP_NAME ${self})
+
 
 
 set_target_properties(${self} PROPERTIES CXX_STANDARD 20)
@@ -156,3 +156,36 @@ ph_precompile (TARGET ${self} PRIVATE ${boost_pch} ${std_pch})
 # 		PRE_BUILD
 # 		COMMAND $<TARGET_FILE:gpu_gen_definitions> ${instance_file} ${gpu_file})
 # endfunction()
+
+
+
+
+
+
+
+set_target_properties(${self} PROPERTIES
+      MACOSX_BUNDLE_BUNDLE_VERSION       "${PROJECT_VERSION}${BUILD_SUFFIX}"
+      MACOSX_BUNDLE_SHORT_VERSION_STRING "${PROJECT_VERSION}"
+  )
+
+#   set(CMAKE_XCODE_ATTRIBUTE_DEVELOPMENT_TEAM   "ABC12345DE"    CACHE STRING "")
+#   set(CMAKE_XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "Philip Wenkel" CACHE STRING "")
+
+  # Apps must have install step enabled
+  set_target_properties(${self} PROPERTIES
+      XCODE_ATTRIBUTE_SKIP_INSTALL  NO
+      XCODE_ATTRIBUTE_INSTALL_PATH  "$(LOCAL_APPS_DIR)"
+)
+
+
+# if(APPLE)
+#       set(basePoint @loader_path)
+#   else()
+#       set(basePoint $ORIGIN)
+#   endif()
+#   include(GNUInstallDirs)
+#   file(RELATIVE_PATH relDir
+#        ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}
+#        ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR}
+#   )
+#   set(CMAKE_INSTALL_RPATH ${basePoint} ${basePoint}/${relDir})

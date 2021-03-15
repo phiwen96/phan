@@ -143,9 +143,70 @@ if (CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
 	# find_package(glfw3 REQUIRED)
 	# find_package(glm REQUIRED)
 
+    set(CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS_SKIP TRUE)
+  include(InstallRequiredSystemLibraries)
+  include(GNUInstallDirs)
+    if(WIN32)
+        install(FILES ${CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS}
+            DESTINATION ${CMAKE_INSTALL_BINDIR}
+    ) 
+    else()
+        install(FILES ${CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS}
+          DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        ) 
+    endif()
+
+    set(CPACK_PACKAGE_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
+     set(CPACK_PACKAGE_VERSION_MINOR ${PROJECT_VERSION_MINOR})
+     set(CPACK_PACKAGE_VERSION_PATCH ${PROJECT_VERSION_PATCH})
+
+     if(WIN32)
+      set(CPACK_GENERATOR ZIP WIX)
+    elseif(APPLE)
+      set(CPACK_GENERATOR TGZ productbuild)
+    elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+      set(CPACK_GENERATOR TGZ RPM)
+    else()
+      set(CPACK_GENERATOR TGZ)
+endif()
+include(InstallRequiredSystemLibraries)
+
+set(CPACK_PACKAGE_NAME                Phan)
+  set(CPACK_PACKAGE_VENDOR              Philip)
+  set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "CPack example project")
+ set(CPACK_PACKAGE_INSTALL_DIRECTORY ${CPACK_PACKAGE_NAME})
+set(CPACK_PACKAGE_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
+set(CPACK_PACKAGE_VERSION_MINOR ${PROJECT_VERSION_MINOR})
+set(CPACK_PACKAGE_VERSION_PATCH ${PROJECT_VERSION_PATCH})
+set(CPACK_VERBATIM_VARIABLES YES)
+# set(CPACK_PACKAGE_DESCRIPTION_FILE ${CMAKE_CURRENT_LIST_DIR}/Description.txt)
+# set(CPACK_RESOURCE_FILE_WELCOME ${CMAKE_CURRENT_LIST_DIR}/Welcome.txt)
+set(CPACK_RESOURCE_FILE_LICENSE ${CMAKE_CURRENT_LIST_DIR}/LICENSE)
+set(CPACK_RESOURCE_FILE_README ${CMAKE_CURRENT_LIST_DIR}/README.md)
+
+set(CPACK_VERBATIM_VARIABLES YES)
+  set(CPACK_SOURCE_IGNORE_FILES
+      /\\.git/
+      \\.swp
+      \\.orig
+      /CMakeLists\\.txt\\.user
+      /privateDir/
+)
+include(CPack)
+
+
+
+
+
+
+
+
+
+
 	include (CTest)
 	
 endif()
+
 
 
 add_subdirectory (src)
@@ -188,3 +249,7 @@ endif()
 # # Set The License Information
 # set(CPACK_RPM_PACKAGE_LICENSE "Apache 2.0 + Common Clause 1.0")
 # include(CPack)
+
+
+
+
