@@ -77,7 +77,10 @@ struct BASE_STATE
     void reset (Context& ctx);
     virtual void reset_hasNoParent (Context& ctx){}
     virtual void reset_hasParent (Context& ctx){}
-    virtual string trans(){throw runtime_error ("");}
+    virtual string trans(){
+//        throw runtime_error ("");
+        return "";
+    }
     string transi (Context& ctx);
 };
 
@@ -473,32 +476,38 @@ struct STATE ("$(x var y){") : BASE_STATE
             for (; i < end; ++i)
             {
                 declare (ctx.intvariable, to_string (i), ctx);
+                auto* childstate = new BASE_STATE;
+                Context* childctx = new Context {&ctx, ctx.declaredVariables, childstate};
+                childstate -> transition <STATE ("begin")> (*childctx);
+//                addChildContext <STATE ("begin")> (ctx);
                 for (iter j = ctx.value.begin (); j < ctx.value.end (); ++j)
                 {
-                    cout << *j << endl;
+                    childctx -> process (j);
                 }
             }
             
 //            cout << ctx.firstint << endl;
 //            cout << ctx.intvariable << endl;
 //            cout << ctx.secondint << endl;
-            TRANSITION ("done")
-        } else
-        {
             if (hasParent (ctx))
             {
-                BASE_STATE::addResultFromChild (potential (ctx), ctx);
+                BASE_STATE::addResultFromChild (value (ctx), ctx);
                 removeFromParent (ctx);
             } else
             {
-                result (ctx) += potential (ctx);
+                result (ctx) += value (ctx);
                 potential (ctx).clear ();
                 ctx.firstint.clear ();
                 ctx.secondint.clear ();
                 ctx.intvariable.clear ();
                 TRANSITION ("begin");
             }
+        
+        } else
+        {
+            ctx.value += *i;
         }
+            
     }
     void addResultFromChild (string const& res, Context& ctx){
         
