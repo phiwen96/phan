@@ -431,6 +431,7 @@ struct STATE ("$(x var y)") : BASE_STATE
         ctx.potential += *i;
         if (*i == '{')
         {
+            ctx.bracketStack.push ('{');
             TRANSITION ("$(x var y){")
         } else
         {
@@ -471,39 +472,60 @@ struct STATE ("$(x var y){") : BASE_STATE
         ctx.potential += *i;
         if (*i == '}')
         {
-            int i = stoi (ctx.firstint);
-            int end = stoi (ctx.secondint);
-            for (; i < end; ++i)
+            ctx.bracketStack.pop ();
+            if (ctx.bracketStack.empty ())
             {
-                declare (ctx.intvariable, to_string (i), ctx);
-                auto* childstate = new BASE_STATE;
-                Context* childctx = new Context {&ctx, ctx.declaredVariables, childstate};
-                childstate -> transition <STATE ("begin")> (*childctx);
-//                addChildContext <STATE ("begin")> (ctx);
-                for (iter j = ctx.value.begin (); j < ctx.value.end (); ++j)
+                int i = stoi (ctx.firstint);
+                int end = stoi (ctx.secondint);
+                
+                for (; i < end; ++i)
                 {
-                    childctx -> process (j);
+                    declare (ctx.intvariable, to_string (i), ctx);
+                    cout << ctx.intvariable << to_string (i) << endl;
+                    cout << "bajs::" << ctx.value << endl;
+                    auto* childstate = new BASE_STATE;
+                    Context* childctx = new Context {&ctx, ctx.declaredVariables, childstate};
+                    childstate -> transition <STATE ("begin")> (*childctx);
+    //                addChildContext <STATE ("begin")> (ctx);
+                    for (iter j = ctx.value.begin (); j < ctx.value.end (); ++j)
+                    {
+                        childctx -> process (j);
+                    }
+                }
+                
+                if (hasParent (ctx))
+                {
+                    BASE_STATE::addResultFromChild (value (ctx), ctx);
+                    removeFromParent (ctx);
+                } else
+                {
+                    result (ctx) += value (ctx);
+                    potential (ctx).clear ();
+                    ctx.firstint.clear ();
+                    ctx.secondint.clear ();
+                    ctx.intvariable.clear ();
+                    TRANSITION ("begin");
                 }
             }
-            
-//            cout << ctx.firstint << endl;
-//            cout << ctx.intvariable << endl;
-//            cout << ctx.secondint << endl;
-            if (hasParent (ctx))
+            else
             {
-                BASE_STATE::addResultFromChild (value (ctx), ctx);
-                removeFromParent (ctx);
-            } else
-            {
-                result (ctx) += value (ctx);
-                potential (ctx).clear ();
-                ctx.firstint.clear ();
-                ctx.secondint.clear ();
-                ctx.intvariable.clear ();
-                TRANSITION ("begin");
+                ctx.value += *i;
             }
-        
-        } else
+            
+            
+
+        }
+        else if (*i == '{')
+        {
+            ctx.value += *i;
+            ctx.bracketStack.push ('{');
+        }
+//        else if (*i == '$')
+//        {
+//
+//
+//        }
+        else
         {
             ctx.value += *i;
         }
@@ -525,6 +547,29 @@ struct STATE ("$(x var y){") : BASE_STATE
         return "$(x var y){";
     }
 };
+
+template <>
+struct STATE ("$(x var y){$") : BASE_STATE
+{
+    void _process (iter i, Context& ctx){
+        
+    }
+    void addResultFromChild (string const& res){
+        throw runtime_error ("oops");
+    }
+    
+    virtual void reset_hasNoParent (Context& ctx){
+        throw runtime_error ("");
+    }
+    virtual void reset_hasParent (Context& ctx){
+        throw runtime_error ("");
+    }
+    virtual string trans (){
+        return "\"\"";
+    }
+};
+
+
 
 template <>
 struct STATE ("begin") : BASE_STATE
@@ -852,25 +897,26 @@ struct STATE ("${") : BASE_STATE
 {
     virtual void _process (iter i, Context& ctx){
         
-        
-        
-        
-        
         if (*i == '}')
         {
+            
 //            optional <string> decl = declared (variable (ctx), ctx);
-            for (auto& d : ctx.declaredVariables) {
-                if (d.first == variable(ctx)) {
+            for (auto& d : ctx.declaredVariables)
+            {
+                if (d.first == variable (ctx)) {
 //                    return d->second;
 //                    cout << "::" << d->second << endl;
                     if (hasParent(ctx))
                     {
-//                        cout << "kuk::${" << endl;
+                        cout << "kuk::${" << endl;
                         BASE_STATE::addResultFromChild (d.second, ctx);
-//                        cout << "adding result \"" << d.second << "\" from ${ to parent" << endl;
+                        cout << "adding result \"" << d.second << "\" from ${ to parent" << endl;
                         removeFromParent (ctx);
                     } else {
+                        
                         result(ctx) += d.second;
+//                        cout << "adding result \"" << d.second << "\" from ${ to parent" << endl;
+
 //                        cout << result(ctx) << endl;
                         potential(ctx).clear();
                         value(ctx).clear();
@@ -879,7 +925,6 @@ struct STATE ("${") : BASE_STATE
                         TRANSITION ("done")
                     }
                     return;
-                    
                 }
             }
            
@@ -1287,20 +1332,34 @@ void BASE_STATE::transition (Context& ctx) {
  ${fornamn${fornamn}}
  
  
- */
 
 
 
-//try
-//   {
-//       int i = std::stoi(s);
-//       std::cout << i << '\n';
-//   }
-//   catch (std::invalid_argument const &e)
-//   {
-//       std::cout << "Bad input: std::invalid_argument thrown" << '\n';
-//   }
-//   catch (std::out_of_range const &e)
-//   {
-//       std::cout << "Integer overflow: std::out_of_range thrown" << '\n';
-//   }
+
+try
+   {
+       int i = std::stoi(s);
+       std::cout << i << '\n';
+   }
+   catch (std::invalid_argument const &e)
+   {
+       std::cout << "Bad input: std::invalid_argument thrown" << '\n';
+   }
+   catch (std::out_of_range const &e)
+   {
+       std::cout << "Integer overflow: std::out_of_range thrown" << '\n';
+   }
+
+
+
+
+${hej}
+$(fornamn){Philip}
+${fornamn}
+$(kiss){bajs}
+$(snopp){${fornamn}}
+$(namn){${fornamn}$(efternamn){Wenkel}}
+
+
+
+*/
