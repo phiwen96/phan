@@ -94,6 +94,7 @@ struct Context
     stack <char> bracketStack;
     
     inline static string result = "";
+    string spaces {""};
     string variable;
     string value;
     string potential;
@@ -494,6 +495,8 @@ struct STATE ("$(x var y)") : BASE_STATE
     }
 };
 
+
+
 template <>
 struct STATE ("$(x var y){") : BASE_STATE
 {
@@ -513,8 +516,8 @@ struct STATE ("$(x var y){") : BASE_STATE
                 for (; i < end; ++i)
                 {
                     declare (ctx.intvariable, to_string (i), ctx);
-                    cout << ctx.intvariable << to_string (i) << endl;
-                    cout << "bajs::" << ctx.value << endl;
+//                    cout << ctx.intvariable << to_string (i) << endl;
+//                    cout << "bajs::" << ctx.value << endl;
 //                    addChildContext <STATE ("begin")> (ctx);
 //                    string temp = ctx.value;
 //                    ctx.value.clear ();
@@ -568,13 +571,18 @@ struct STATE ("$(x var y){") : BASE_STATE
             }
             
             
-            cout << "DONE" << endl;
+//            cout << "DONE" << endl;
         }
         else if (*i == '{')
         {
             ctx.value += *i;
             ctx.bracketStack.push ('{');
         }
+//        else if (*i == ' ')
+//        {
+////            ctx.spaces += ' ';
+//            cout << "tab" << endl;
+//        }
 //        else if (*i == '$')
 //        {
 //
@@ -608,7 +616,7 @@ template <>
 struct STATE ("${") : BASE_STATE
 {
     virtual void _process (iter i, Context& ctx){
-        cout << *i << endl;
+//        cout << *i << endl;
         if (*i == '}')
         {
             
@@ -620,9 +628,9 @@ struct STATE ("${") : BASE_STATE
 //                    cout << "::" << d->second << endl;
                     if (hasParent(ctx))
                     {
-                        cout << "kuk::${" << endl;
+//                        cout << "kuk::${" << endl;
                         BASE_STATE::addResultFromChild (d.second, ctx);
-                        cout << "adding result \"" << d.second << "\" from ${ to parent" << endl;
+//                        cout << "adding result \"" << d.second << "\" from ${ to parent" << endl;
                         potential(ctx).clear();
                         value(ctx).clear();
                         variable(ctx).clear();
@@ -1341,55 +1349,14 @@ inline static BASE_STATE* a15{new STATE ("#{} done")};
 template <class T>
 void BASE_STATE::transition (Context& ctx) {
     
-//    T* newstate = new T;
-//    newstate -> context = context;
-    
-    cout << transi(ctx) << " -> ";
-//    auto a = get<T>(states);
-  
-//    if constexpr (is_same_v<T, decltype (a0)>)
-//        cout << "kamskdmaskmd" << endl;
-//        ctx.state = a0;
-//    if constexpr (is_same_v<T*, decltype (a1)>)
-//        ctx.state = a1;
-//    if constexpr (is_same_v<T*, decltype (a2)>)
-//        ctx.state = a2;
-//    if constexpr (is_same_v<T*, decltype (a3)>)
-//        ctx.state = a3;
-//    if constexpr (is_same_v<T*, decltype (a4)>)
-//        ctx.state = a4;
-//    if constexpr (is_same_v<T*, decltype (a5)>)
-//        ctx.state = a5;
-//    if constexpr (is_same_v<T*, decltype (a6)>)
-//        ctx.state = a6;
-//    if constexpr (is_same_v<T*, decltype (a7)>)
-//        ctx.state = a7;
-//    if constexpr (is_same_v<T*, decltype (a8)>)
-//        ctx.state = a8;
-//    if constexpr (is_same_v<T*, decltype (a9)>)
-//        ctx.state = a9;
-//    if constexpr (is_same_v<T*, decltype (a10)>)
-//        ctx.state = a10;
-//    if constexpr (is_same_v<T*, decltype (a11)>)
-//        ctx.state = a11;
-//    if constexpr (is_same_v<T*, decltype (a12)>)
-//        ctx.state = a11;
-//    if constexpr (is_same_v<T*, decltype (a13)>)
-//        ctx.state = a13;
-//    if constexpr (is_same_v<T*, decltype (a14)>)
-//        ctx.state = a14;
-//    if constexpr (is_same_v<T*, decltype (a15)>)
-//        ctx.state = a15;
-//    else {
-//        ctx.state = a0;
-//    }
+//    cout << transi(ctx) << " -> ";
+
     
     ctx.state = new T;
     
-//    ctx.state -> context = context;
     
-    cout << ctx.state->transi(ctx) << endl;
-    cout << ctx.result << endl;
+//    cout << ctx.state->transi(ctx) << endl;
+//    cout << ctx.result << endl;
 }
 
 

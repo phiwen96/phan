@@ -41,8 +41,7 @@ struct Process
     
     string process (string str)
     {
-//        if constexpr (DO_LOUD)
-                cout << endl << "input: " << endl << str << endl;
+//        cout << endl << "input: " << endl << str << endl;
         
         for (auto i = str.begin(); i < str.end(); ++i)
         {
@@ -55,86 +54,26 @@ struct Process
         {
            
         } else {
-//            cout << "not Done" << endl;
-//            cout << commentVal.potential << endl;
+
             str += declVar.potential;
         }
         
-//        if constexpr (DO_LOUD)
-//        {
-            cout << endl << "declare: " << endl << str << endl;
-            cout << endl << "variables: " << endl;
-            for (auto& i : declaredVariables)
-            {
-                cout << i.first << " = " << i.second << endl;
-            }
-                
-//        }
+
+//            cout << endl << "declare: " << endl << str << endl;
+//            cout << endl << "variables: " << endl;
+//            for (auto& i : declaredVariables)
+//            {
+//                cout << i.first << " = " << i.second << endl;
+//            }
+
         
         declVar.result.clear ();
         
         return str;
-
-//        for (auto j = str.begin(); j < str.end(); ++j)
-//        {
-//            pasteVar.process (j);
-//        }
-//
-//        str = pasteVar.result;
-//
-//        if(paste::Done* d = dynamic_cast<paste::Done*>(pasteVar.state))
-//        {
-//
-//        } else {
-////            cout << "not Done" << endl;
-////            cout << commentVal.potential << endl;
-//            str += pasteVar.potential;
-//        }
-//
-//        if constexpr (DO_LOUD)
-//            cout << endl << "paste: " << endl << str << endl;
-//
-//
-//
-//        for (auto j = str.begin(); j < str.end(); ++j)
-//        {
-//            commentVal.process (j);
-//        }
-//
-//        str = commentVal.res;
-//
-//
-//        if(comment::Done* d = dynamic_cast<comment::Done*>(commentVal.state))
-//        {
-//
-//        } else {
-////            cout << "not Done" << endl;
-////            cout << commentVal.potential << endl;
-//            str += commentVal.potential;
-//        }
-//
-//        if constexpr (DO_LOUD)
-//            cout << endl << "comment: " << endl << str << endl;
-//
-//        declVar.result.clear ();
-//        pasteVar.result.clear ();
-//        commentVal.res.clear ();
-//
-//
-//        return str;
     }
 };
 
 
-
-//$(beckis familj){Gustaf Beck-Friis}
-//
-//Gabriels familj består av $(familj){Gustaf} och hans mamma
-//$(familj){${familj} Anneli}
-//
-//dejn $(p){prejudikatinstans}
-//
-//${p}
 
 void fileApp (Process& p, filesystem::path const& inputPath, filesystem::path const& outputPath) {
     string input = readFileIntoString (inputPath);
