@@ -145,57 +145,7 @@ if (CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
 	# find_package(glfw3 REQUIRED)
 	# find_package(glm REQUIRED)
 
-    set(CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS_SKIP TRUE)
-  include(InstallRequiredSystemLibraries)
-  include(GNUInstallDirs)
-    if(WIN32)
-        install(FILES ${CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS}
-            DESTINATION ${CMAKE_INSTALL_BINDIR}
-    ) 
-    else()
-        install(FILES ${CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS}
-          DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        ) 
-    endif()
-
-    set(CPACK_PACKAGE_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
-     set(CPACK_PACKAGE_VERSION_MINOR ${PROJECT_VERSION_MINOR})
-     set(CPACK_PACKAGE_VERSION_PATCH ${PROJECT_VERSION_PATCH})
-
-     if(WIN32)
-      set(CPACK_GENERATOR ZIP WIX)
-    elseif(APPLE)
-      set(CPACK_GENERATOR TGZ productbuild)
-    elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
-      set(CPACK_GENERATOR TGZ RPM)
-    else()
-      set(CPACK_GENERATOR TGZ)
-endif()
-include(InstallRequiredSystemLibraries)
-
-set(CPACK_PACKAGE_NAME                Phan)
-  set(CPACK_PACKAGE_VENDOR              Philip)
-  set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "CPack example project")
- set(CPACK_PACKAGE_INSTALL_DIRECTORY ${CPACK_PACKAGE_NAME})
-set(CPACK_PACKAGE_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
-set(CPACK_PACKAGE_VERSION_MINOR ${PROJECT_VERSION_MINOR})
-set(CPACK_PACKAGE_VERSION_PATCH ${PROJECT_VERSION_PATCH})
-set(CPACK_VERBATIM_VARIABLES YES)
-# set(CPACK_PACKAGE_DESCRIPTION_FILE ${CMAKE_CURRENT_LIST_DIR}/Description.txt)
-# set(CPACK_RESOURCE_FILE_WELCOME ${CMAKE_CURRENT_LIST_DIR}/Welcome.txt)
-# set(CPACK_RESOURCE_FILE_LICENSE ${CMAKE_CURRENT_LIST_DIR}/LICENSE)
-# set(CPACK_RESOURCE_FILE_README ${CMAKE_CURRENT_LIST_DIR}/README.md)
-
-set(CPACK_VERBATIM_VARIABLES YES)
-  set(CPACK_SOURCE_IGNORE_FILES
-      /\\.git/
-      \\.swp
-      \\.orig
-      /CMakeLists\\.txt\\.user
-      /privateDir/
-)
-
-
+    
 
 
 
@@ -225,12 +175,6 @@ endif()
 
 
 
-if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
-  include(CPack)
-endif()
-
-
-
 
 
 
@@ -257,3 +201,111 @@ endif()
 
 
 
+
+
+# cmake --build . --target package_source
+
+# cpack -C Release
+
+# cpack -G productbuild -V
+
+
+set(CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS_SKIP TRUE)
+include(InstallRequiredSystemLibraries)
+include(GNUInstallDirs)
+  if(WIN32)
+      install(FILES ${CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS}
+          DESTINATION ${CMAKE_INSTALL_BINDIR}
+  ) 
+  else()
+      install(FILES ${CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS}
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}
+      ) 
+  endif()
+
+  set(CPACK_PACKAGE_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
+   set(CPACK_PACKAGE_VERSION_MINOR ${PROJECT_VERSION_MINOR})
+   set(CPACK_PACKAGE_VERSION_PATCH ${PROJECT_VERSION_PATCH})
+
+   if(WIN32)
+    set(CPACK_GENERATOR ZIP WIX)
+  elseif(APPLE)
+    set(CPACK_GENERATOR TGZ productbuild)
+  elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+    set(CPACK_GENERATOR TGZ RPM)
+  else()
+    set(CPACK_GENERATOR TGZ)
+endif()
+include(InstallRequiredSystemLibraries)
+
+set(CPACK_PACKAGE_NAME                Phan)
+set(CPACK_PACKAGE_VENDOR              Philip)
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "CPack example project")
+set(CPACK_PACKAGE_INSTALL_DIRECTORY ${CPACK_PACKAGE_NAME})
+set(CPACK_PACKAGE_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
+set(CPACK_PACKAGE_VERSION_MINOR ${PROJECT_VERSION_MINOR})
+set(CPACK_PACKAGE_VERSION_PATCH ${PROJECT_VERSION_PATCH})
+set(CPACK_VERBATIM_VARIABLES YES)
+# set(CPACK_PACKAGE_DESCRIPTION_FILE ${CMAKE_CURRENT_LIST_DIR}/Description.txt)
+# set(CPACK_RESOURCE_FILE_WELCOME ${CMAKE_CURRENT_LIST_DIR}/Welcome.txt)
+# set(CPACK_RESOURCE_FILE_LICENSE ${CMAKE_CURRENT_LIST_DIR}/LICENSE)
+# set(CPACK_RESOURCE_FILE_README ${CMAKE_CURRENT_LIST_DIR}/README.md)
+
+set(CPACK_VERBATIM_VARIABLES YES)
+set(CPACK_SOURCE_IGNORE_FILES
+    /\\.git/
+    \\.swp
+    \\.orig
+    /CMakeLists\\.txt\\.user
+    /privateDir/
+)
+# set(CPACK_PRODUCTBUILD_IDENTITY_NAME "Developer ID Installer")
+
+
+
+
+
+
+
+install(TARGETS app
+    BUNDLE DESTINATION . COMPONENT Runtime
+    RUNTIME DESTINATION bin COMPONENT Runtime
+)
+
+
+
+
+
+
+
+include(InstallRequiredSystemLibraries)
+
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "My funky project")
+set(CPACK_PACKAGE_VENDOR "Me, myself, and I")
+# set(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/ReadMe.txt")
+# set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/Copyright.txt")
+set(CPACK_PACKAGE_VERSION_MAJOR "1")
+set(CPACK_PACKAGE_VERSION_MINOR "3")
+set(CPACK_PACKAGE_VERSION_PATCH "2")
+set(CPACK_PACKAGE_INSTALL_DIRECTORY "CMake ${CMake_VERSION_MAJOR}.${CMake_VERSION_MINOR}")
+if(WIN32 AND NOT UNIX)
+  # There is a bug in NSI that does not handle full UNIX paths properly.
+  # Make sure there is at least one set of four backlashes.
+  set(CPACK_PACKAGE_ICON "${CMake_SOURCE_DIR}/Utilities/Release\\\\InstallIcon.bmp")
+  set(CPACK_NSIS_INSTALLED_ICON_NAME "bin\\\\MyExecutable.exe")
+  set(CPACK_NSIS_DISPLAY_NAME "${CPACK_PACKAGE_INSTALL_DIRECTORY} My Famous Project")
+  set(CPACK_NSIS_HELP_LINK "http:\\\\\\\\www.my-project-home-page.org")
+  set(CPACK_NSIS_URL_INFO_ABOUT "http:\\\\\\\\www.my-personal-home-page.com")
+  set(CPACK_NSIS_CONTACT "me@my-personal-home-page.com")
+  set(CPACK_NSIS_MODIFY_PATH ON)
+else()
+  set(CPACK_STRIP_FILES "bin/MyExecutable")
+  set(CPACK_SOURCE_STRIP_FILES "")
+endif()
+set(CPACK_PACKAGE_EXECUTABLES "MyExecutable" "My Executable")
+set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
+SET ( APP_LOCATION "$<TARGET_FILE:app>" )
+SET ( CPACK_BUNDLE_STARTUP_COMMAND "bin/phan")
+message(${CMAKE_INSTALL_BINDIR})
+include(CPack)
+include(CPackIFW)

@@ -238,6 +238,8 @@ struct Test <STR("nonsense")>
 
 auto main(int argc,  char** argv) -> int
 {
+    string ss;
+    getline(cin, ss);
     
 #if defined (Debug)
     removeFolderContent (TEST_FOLDERS_POST_PATH);
