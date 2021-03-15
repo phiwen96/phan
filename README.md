@@ -34,11 +34,13 @@ As you can see, every template specialization of Foo is pretty much the same, ex
 template <int>
 struct Foo;
 
+@(type){inline static constexpr int}
+
 $(0 i 3){
     template <>
     struct Foo <${i}>
     {
-        inline static constexpr int i = ${i};  
+        ${type} i = ${i};  
     };
 }
 ```
