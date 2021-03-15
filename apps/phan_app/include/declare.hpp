@@ -259,6 +259,7 @@ struct STATE ("$(x") : BASE_STATE
                 potential (ctx).clear ();
                 ctx.firstint.clear ();
                 ctx.secondint.clear ();
+                ctx.intvariable.clear ();
                 TRANSITION ("begin");
             }
         }
@@ -281,7 +282,17 @@ struct STATE ("$(x") : BASE_STATE
 template <>
 struct STATE ("$(x ") : BASE_STATE
 {
-    void _process (iter i, Context& ctx){}
+    void _process (iter i, Context& ctx){
+        ctx.potential += *i;
+        if (isnumber (*i))
+        {
+            throw runtime_error ("");
+        } else
+        {
+            ctx.intvariable += *i;
+            TRANSITION ("$(x var");
+        }
+    }
     void addResultFromChild (string const& res){
         throw runtime_error ("oops");
     }
@@ -300,7 +311,17 @@ struct STATE ("$(x ") : BASE_STATE
 template <>
 struct STATE ("$(x var") : BASE_STATE
 {
-    void _process (iter i, Context& ctx){}
+    void _process (iter i, Context& ctx){
+        ctx.potential += *i;
+        if (*i == ' ')
+        {
+            TRANSITION ("$(x var ");
+            
+        } else
+        {
+            ctx.intvariable += *i;
+        }
+    }
     void addResultFromChild (string const& res){
         throw runtime_error ("oops");
     }
@@ -317,9 +338,74 @@ struct STATE ("$(x var") : BASE_STATE
 };
 
 template <>
+struct STATE ("$(x var ") : BASE_STATE
+{
+    void _process (iter i, Context& ctx){
+        ctx.potential += *i;
+        if (isnumber (*i))
+        {
+            ctx.secondint += *i;
+            TRANSITION ("$(x var y")
+        } else
+        {
+            if (hasParent (ctx))
+            {
+                addResultFromChild (potential (ctx));
+                removeFromParent (ctx);
+            } else
+            {
+                result (ctx) += potential (ctx);
+                potential (ctx).clear ();
+                ctx.firstint.clear ();
+                ctx.secondint.clear ();
+                ctx.intvariable.clear ();
+                TRANSITION ("begin");
+            }
+        }
+    }
+    void addResultFromChild (string const& res){
+        throw runtime_error ("oops");
+    }
+    
+    virtual void reset_hasNoParent (Context& ctx){
+        throw runtime_error ("");
+    }
+    virtual void reset_hasParent (Context& ctx){
+        throw runtime_error ("");
+    }
+    virtual string trans (){
+        return "$(x var y";
+    }
+};
+
+template <>
 struct STATE ("$(x var y") : BASE_STATE
 {
-    void _process (iter i, Context& ctx){}
+    void _process (iter i, Context& ctx){
+        ctx.potential += *i;
+        if (isnumber (*i))
+        {
+            ctx.secondint += *i;
+        } else if (*i == ')')
+        {
+            TRANSITION ("$(x var y)")
+        } else
+        {
+            if (hasParent (ctx))
+            {
+                addResultFromChild (potential (ctx));
+                removeFromParent (ctx);
+            } else
+            {
+                result (ctx) += potential (ctx);
+                potential (ctx).clear ();
+                ctx.firstint.clear ();
+                ctx.secondint.clear ();
+                ctx.intvariable.clear ();
+                TRANSITION ("begin");
+            }
+        }
+    }
     void addResultFromChild (string const& res){
         throw runtime_error ("oops");
     }
@@ -338,7 +424,68 @@ struct STATE ("$(x var y") : BASE_STATE
 template <>
 struct STATE ("$(x var y)") : BASE_STATE
 {
-    void _process (iter i, Context& ctx){}
+    void _process (iter i, Context& ctx){
+        ctx.potential += *i;
+        if (*i == '{')
+        {
+            TRANSITION ("$(x var y){")
+        } else
+        {
+            if (hasParent (ctx))
+            {
+                addResultFromChild (potential (ctx));
+                removeFromParent (ctx);
+            } else
+            {
+                result (ctx) += potential (ctx);
+                potential (ctx).clear ();
+                ctx.firstint.clear ();
+                ctx.secondint.clear ();
+                ctx.intvariable.clear ();
+                TRANSITION ("begin");
+            }
+        }
+    }
+    void addResultFromChild (string const& res){
+        throw runtime_error ("oops");
+    }
+    
+    virtual void reset_hasNoParent (Context& ctx){
+        throw runtime_error ("");
+    }
+    virtual void reset_hasParent (Context& ctx){
+        throw runtime_error ("");
+    }
+    virtual string trans (){
+        return "$(x var y)";
+    }
+};
+
+template <>
+struct STATE ("$(x var y){") : BASE_STATE
+{
+    void _process (iter i, Context& ctx){
+        ctx.potential += *i;
+        if (*i == '{')
+        {
+            TRANSITION ("$(x var y){")
+        } else
+        {
+            if (hasParent (ctx))
+            {
+                addResultFromChild (potential (ctx));
+                removeFromParent (ctx);
+            } else
+            {
+                result (ctx) += potential (ctx);
+                potential (ctx).clear ();
+                ctx.firstint.clear ();
+                ctx.secondint.clear ();
+                ctx.intvariable.clear ();
+                TRANSITION ("begin");
+            }
+        }
+    }
     void addResultFromChild (string const& res){
         throw runtime_error ("oops");
     }
@@ -468,6 +615,7 @@ struct STATE ("$(") : BASE_STATE
 
         } else if (isnumber (*i))
         {
+            ctx.firstint = *i;
             TRANSITION ("$(x")
             
         } else
