@@ -54,7 +54,7 @@ Lets write a cv for our new job application!
 @(company name){Google}
 
 My name is ${name} and I am interested in $(job){coding} at your company ${company name}.
-On my spare time, i love ${job}! #{this is just a comment}
+On my spare time, i love ${job}! #{elaborate on this one...}
 
 Yours sincerely, ${name}
 ```
