@@ -539,6 +539,8 @@ struct STATE ("$(x var y){") : BASE_STATE
                 {
                     BASE_STATE::addResultFromChild (ctx.loop, ctx);
                     potential (ctx).clear ();
+                    ctx.variable.clear ();
+                    ctx.value.clear ();
                     ctx.firstint.clear ();
                     ctx.secondint.clear ();
                     ctx.intvariable.clear ();
@@ -550,6 +552,8 @@ struct STATE ("$(x var y){") : BASE_STATE
                 {
                     result (ctx) += ctx.loop;
                     potential (ctx).clear ();
+                    ctx.variable.clear ();
+                    ctx.value.clear ();
                     ctx.firstint.clear ();
                     ctx.secondint.clear ();
                     ctx.intvariable.clear ();
@@ -564,7 +568,7 @@ struct STATE ("$(x var y){") : BASE_STATE
             }
             
             
-
+            cout << "DONE" << endl;
         }
         else if (*i == '{')
         {
@@ -932,6 +936,7 @@ struct STATE ("$(){") : BASE_STATE
                 variable (ctx).clear();
                 value (ctx).clear();
                 potential (ctx).clear();
+                ctx.bracketStack = stack <char> {};
 //                removeFromParent(ctx);
 //                TRANSITION ("begin")
             } else {
@@ -939,6 +944,7 @@ struct STATE ("$(){") : BASE_STATE
                 variable (ctx).clear();
                 value (ctx).clear();
                 potential (ctx).clear();
+                ctx.bracketStack = stack <char> {};
 //                TRANSITION ("done")
             }
             TRANSITION ("done")
