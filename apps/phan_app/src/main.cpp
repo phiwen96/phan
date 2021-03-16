@@ -244,6 +244,7 @@ auto main(int argc,  char** argv) -> int
 //    getline(cin, ss);
     
 #if defined (Debug)
+    cout << "kuk" << endl;
     removeFolderContent (TEST_FOLDERS_POST_PATH);
     ASSERT_FILE (4.hpp, LOUD (1))
 
@@ -255,6 +256,7 @@ auto main(int argc,  char** argv) -> int
     ASSERT_FILE (4.hpp, LOUD (0))
     ASSERT_FILE (paste.hpp, LOUD (0))
 #else
+    cout << "kiss" << endl;
     app (argv [1], argv [2]);
 #endif
 

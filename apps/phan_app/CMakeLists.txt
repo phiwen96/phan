@@ -189,3 +189,17 @@ set_target_properties(${self} PROPERTIES
 #        ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR}
 #   )
 #   set(CMAKE_INSTALL_RPATH ${basePoint} ${basePoint}/${relDir})
+
+include(InstallRequiredSystemLibraries)
+include(GNUInstallDirs)
+
+install(TARGETS ${self} 
+CONFIGURATIONS Release
+RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+)
+
+install(TARGETS ${self} 
+CONFIGURATIONS Debug
+RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+)
+

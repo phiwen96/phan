@@ -1,3 +1,3 @@
-philip wenkel
-philip wenkel
-bror philip wenkel
+$(namn){philip wenkel}
+${namn}
+$(a){bror ${namn}}

@@ -1,4 +1,4 @@
-Philip
-Philip
-Philip Wenkel
-Philip Wenkel
+$(förnamn){Philip}
+${förnamn}
+$(namn){${förnamn} $(efternamn){Wenkel}}
+${namn}

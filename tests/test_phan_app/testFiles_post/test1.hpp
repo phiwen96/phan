@@ -1,60 +1,20 @@
-nämn tre prejudikatinstanser
-sa jag!prejudikatinstans kukens fitta
+nämn tre $(p){prejudikatinstans}er
+$(nej$(ja){sa jag}$(kuk){!}){${p} kukens fitta}
 
-kukens fitta
+$(hej){kukens fitta}
 kk
-he
-kukens fitta
-högsta domstolen är en prejudikatinstans
-hej jag heter Philip Wenkel
-Han heter Matilda Wenkel
-Min syster heter Matilda Wenkel
-Hans syster heter Matilda Wenkel
-Matilda Wenkel kukens fitta du där
-horan ett två
+$(he){he}
+${${he}j}
+högsta domstolen är en ${p}
+hej jag heter $(mitt namn){Philip Wenkel}
+Han heter ${mitt namn}
+Min syster heter $(mitt namn){Matilda Wenkel}
+Hans syster heter ${mitt namn}
+$(snopp){${mitt namn} ${hej} du där}
+$(kuk){horan ett två}
 
-jag har en brorsa som heter William Wenkel
-jag har också en som heter Oscar wenkel
-mina brorsor heter Oscar wenkel
-
-
-nämn tre prejudikatinstanser
-sa jag!prejudikatinstans kukens fitta
-
-kukens fitta
-kk
-he
-kukens fitta
-högsta domstolen är en prejudikatinstans
-hej jag heter Philip Wenkel
-Han heter Matilda Wenkel
-Min syster heter Matilda Wenkel
-Hans syster heter Matilda Wenkel
-Matilda Wenkel kukens fitta du där
-horan ett två
-
-jag har en brorsa som heter William Wenkel
-jag har också en som heter Oscar wenkel
-mina brorsor heter Oscar wenkel
-
-
-nämn tre prejudikatinstanser
-sa jag!prejudikatinstans kukens fitta
-
-kukens fitta
-kk
-he
-kukens fitta
-högsta domstolen är en prejudikatinstans
-hej jag heter Philip Wenkel
-Han heter Matilda Wenkel
-Min syster heter Matilda Wenkel
-Hans syster heter Matilda Wenkel
-Matilda Wenkel kukens fitta du där
-horan ett två
-
-jag har en brorsa som heter William Wenkel
-jag har också en som heter Oscar wenkel
-mina brorsor heter Oscar wenkel
+jag har en brorsa som heter $(mina syskon){William Wenkel}
+jag har också en som heter $(mina syskon){Oscar wenkel}
+mina brorsor heter ${mina syskon}
 
 
