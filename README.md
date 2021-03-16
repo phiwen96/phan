@@ -73,17 +73,19 @@ Yours sincerely, Philip Wenkel
 
 
 
-<!--## Installation
+## Installation
 
-Dillinger requires [Node.js](https://nodejs.org/) v10+ to run.
+Phan requires [CMake](https://cmake.org) 3.19.4 to run.
 
-Install the dependencies and devDependencies and start the server.
+
 
 ```sh
-cd dillinger
-npm i
-node app
-```-->
+cd phan
+mkdir build && cd build
+cmake -DCMAKE_BUILD_TYPE=Release ..
+cmake --build . --config Release  
+cmake --install . --config Release  
+```
 
 
 ## Development
