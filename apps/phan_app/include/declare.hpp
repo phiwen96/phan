@@ -42,6 +42,11 @@ return N; \
 
 #define BASE_STATE State <>
 
+#define DECLPASTE '&'
+
+#define DECL '@'
+
+
 
 using iter = string::iterator;
 
@@ -497,6 +502,7 @@ struct STATE ("$(x var y)") : BASE_STATE
 
 
 
+
 template <>
 struct STATE ("$(x var y){") : BASE_STATE
 {
@@ -657,9 +663,9 @@ struct STATE ("${") : BASE_STATE
                 //            cout << result (ctx) << endl;
                 throw runtime_error (warning);
             
-        } else if (*i == '$')
+        } else if (*i == DECLPASTE)
         {
-            addChildContext<STATE ("$")>(ctx).potential = '$';
+            addChildContext<STATE ("$")>(ctx).potential = *i;
             
         } else if (*i == '@')
         {
@@ -708,9 +714,9 @@ struct STATE ("begin") : BASE_STATE
 {
     void _process (iter i, Context& ctx){
         
-        if (*i == '$')
+        if (*i == DECLPASTE)
         {
-            potential (ctx) += '$';
+            potential (ctx) += *i;
             TRANSITION ("$")
             
         } else if (*i == '#')
@@ -816,9 +822,9 @@ struct STATE ("$(") : BASE_STATE
 //            potential (ctx) += ')';
             TRANSITION ("$()")
             
-        } else if (*i == '$')
+        } else if (*i == DECLPASTE)
         {
-            addChildContext <STATE ("$")> (ctx).potential = '$';
+            addChildContext <STATE ("$")> (ctx).potential = *i;
 
         } else if (isnumber (*i))
         {
@@ -865,9 +871,9 @@ struct STATE ("$()") : BASE_STATE
             ctx.bracketStack.push ('{');
             TRANSITION ("$(){")
             
-        } else if (*i == '$')
+        } else if (*i == DECLPASTE)
         {
-            addChildContext <STATE ("$")> (ctx).potential = '$';
+            addChildContext <STATE ("$")> (ctx).potential = *i;
             
         } else
         {
@@ -970,9 +976,9 @@ struct STATE ("$(){") : BASE_STATE
 //            value(ctx) += *i;
 //
 //        }
-        else if (*i == '$')
+        else if (*i == DECLPASTE)
         {
-            addChildContext <STATE ("$")> (ctx).potential = '$';
+            addChildContext <STATE ("$")> (ctx).potential = *i;
 
         } else if (*i == '@')
         {
@@ -1208,9 +1214,9 @@ struct STATE ("@(") : BASE_STATE
         {
             TRANSITION ("@()")
             
-        } else if (*i == '$')
+        } else if (*i == DECLPASTE)
         {
-            addChildContext<STATE ("$")>(ctx).potential = '$';
+            addChildContext<STATE ("$")>(ctx).potential = DECLPASTE;
 
         } else
         {
@@ -1271,9 +1277,9 @@ struct STATE ("@(){") : BASE_STATE
             declare (variable (ctx), value (ctx), ctx);
             reset (ctx);
             
-        } else if (*i == '$')
+        } else if (*i == DECLPASTE)
         {
-            addChildContext <STATE ("$")>(ctx).potential = '$';
+            addChildContext <STATE ("$")>(ctx).potential = *i;
         } else
         {
             value (ctx) += *i;

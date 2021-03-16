@@ -1,11 +1,11 @@
-$(0 x 3){
+&(0 x 3){
     
     @(y){inline static constexpr int}
     
     template <>
-    struct graph <${x}>
+    struct graph <&{x}>
     {
-        ${y} = 10 + ${x};
+        &{y} = 10 + &{x};
     };
 }
 

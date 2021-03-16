@@ -3,7 +3,7 @@ set (self with_files)
 
 # message (${self})
 
-ph_fetch (catch2)
+# ph_fetch (catch2)
 
 add_executable(${self} ${CMAKE_CURRENT_LIST_DIR}/src/${self}.cpp)
 

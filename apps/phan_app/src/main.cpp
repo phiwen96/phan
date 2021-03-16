@@ -245,30 +245,19 @@ auto main(int argc,  char** argv) -> int
     
 #if defined (Debug)
     removeFolderContent (TEST_FOLDERS_POST_PATH);
-#endif
-//    return 0;
-//    ASSERT_FILE (declpaste.hpp, LOUD (0))
     ASSERT_FILE (4.hpp, LOUD (1))
-//    ASSERT_FILE (paste.hpp, LOUD (0))
-//    ASSERT_FILE (1.hpp, LOUD (0))
-//    ASSERT_FILE (comment.hpp, LOUD (0))
-//    ASSERT_FILE (5.hpp, LOUD (0))
-//    ASSERT_FILE (decl.hpp, LOUD (1))
-    ASSERT_FOLDER ($(root){project}, LOUD(1))
+
+    ASSERT_FOLDER (&(root){philips bibliotek}, LOUD(1))
     return 0;
     ASSERT_FOLDER ($(root){philip}, LOUD(1))
     ASSERT_FILE (1.hpp, LOUD (0))
     ASSERT_FILE (declare.hpp, LOUD (0))
     ASSERT_FILE (4.hpp, LOUD (0))
     ASSERT_FILE (paste.hpp, LOUD (0))
-//    ASSERT_FILE (comment.hpp, LOUD (0))
-    
-    
-//    ASSERT_FILES (pastedecl);
-    
-//    ASSERT_FILE (declare.hpp, LOUD (0))
-//    ASSERT_FILE (paste.hpp, LOUD (1))
-//    ASSERT_FILE (4.hpp, LOUD (0))
+#else
+    app (argv [1], argv [2]);
+#endif
+
 
     
 #ifdef Debug
@@ -370,104 +359,7 @@ auto main(int argc,  char** argv) -> int
     vector <pair <string, string>> declaredVariables;
     
     
-    [&outtext]{
-        vector <pair <string, string>> declaredVariables;
-        auto* stringVariableDeclerationExtractor = new extractor {"$((", "))"};
-        auto* stringValueDeclerationExtractor = new extractor {"{{", "}}"};
-        auto* stringVariablePasterExtractor = new extractor {"${{", "}}"};
-        for (auto it = outtext.begin(); it != outtext.end(); ++it) {
-            auto declVar = stringVariableDeclerationExtractor -> found (*it);
-            
-            if (declVar) {
-                auto [var0, var1, var2, var3] = declVar.value();
 
-                auto [_begin, _end] = pair {it - (var3 - var0 - 1), it + 1};
-                auto varstring = string (_begin + (var1-var0), _end - (var3 - var2) - 1);
-
-                for (auto it2 = it + 1; it2 != outtext.end(); ++it2)
-                {
-                    auto declVal = stringValueDeclerationExtractor -> found (*it2);
-                    if (declVal) {
-                        auto [val0, val1, val2, val3] = declVal.value();
-                        auto [_begin2, _end2] = pair {it2 - (val3 - val0 - 1), it2 + 1};
-
-                        auto valstring = string (_begin2 + (val1-val0), _end2 - (val3 - val2) - 1);
-                        
-                        auto declared = declaredVariables.begin();
-                        for (; declared != declaredVariables.end(); ++declared)
-                        {
-                            if (declared -> first == varstring) {
-                                break;
-                            }
-                        }
-                        
-                        if (declared == declaredVariables.end())
-                        {
-                            declaredVariables.emplace_back (varstring, valstring);
-                        } else
-                        {
-                            declared -> second = valstring;
-                        }
-                        
-                        cout << varstring << " = " << valstring << endl;
-                        
-                        delete stringVariableDeclerationExtractor;
-                        stringVariableDeclerationExtractor = new extractor {"$((", "))"};
-                        
-                        delete stringValueDeclerationExtractor;
-                        stringValueDeclerationExtractor = new extractor {"{{", "}}"};
-                        
-                        delete stringVariablePasterExtractor;
-                        stringVariablePasterExtractor = new extractor {"${{", "}}"};
-                        
-    //                    cout << *it2 << endl;
-                        outtext.replace (it - (var3 - var0) + 1, it2 + 1, valstring);
-    //                    cout << valstring << endl;
-    //                    cout << (var3 - var2) + (var1 - var0) << endl;
-    //                    cout << *(it - (var3 - var2) - (var1 - var0) - 1) << endl;
-                        it = it - (var3 - var2) - (var1 - var0) - 1;
-                        
-                        break;
-                    }
-                }
-                
-                continue;
-            }
-            
-            auto pasteVar = stringVariablePasterExtractor -> found (*it);
-            if (pasteVar)
-            {
-                auto [var0, var1, var2, var3] = pasteVar.value();
-                auto [_begin2, _end2] = pair {it - (var3 - var0 - 1), it + 1};
-                auto varstring = string (_begin2 + (var1-var0), _end2 - (var3 - var2) - 1);
-    //            cout << varstring << endl;
-                
-                auto declared = declaredVariables.begin();
-                for (; declared != declaredVariables.end(); ++declared)
-                {
-                    if (declared -> first == varstring) {
-                        break;
-                    }
-                }
-                
-                if (declared == declaredVariables.end())
-                {
-                    throw runtime_error ("variable pasted but not yet declared");
-                } else
-                {
-    //                cout << *it << endl;
-                    outtext.replace (_begin2, _end2, declared -> second);
-                    it = it - (var3 - var2) - (var1 - var0) - 1;
-    //                cout << *(it) << endl;
-                }
-                
-                delete stringVariablePasterExtractor;
-                stringVariablePasterExtractor = new extractor {"${{", "}}"};
-            }
-            
-        }
-    };
-    
         
     
     
@@ -477,23 +369,6 @@ auto main(int argc,  char** argv) -> int
     }
     
 
-    
-    
-    
-    
-
-    
-    for(auto& i : declaredVariables)
-    {
-//        cout << i.first << endl << i.second << endl;
-    }
-//    if (found) {
-//        outfile << "YES\n";
-//    }
-//    else {
-//        outfile << "NO\n";
-//    }
-//    outtext = first_signature ("${", "}", outtext, first_parser);
     outfile << outtext;
     
     

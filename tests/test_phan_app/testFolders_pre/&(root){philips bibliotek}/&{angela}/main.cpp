@@ -1,5 +1,7 @@
 int main ()
 {
-    cout << ${angela} << endl;
+    cout << &{angela} << endl;
 }
+
+
 
