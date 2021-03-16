@@ -87,6 +87,11 @@ cmake --build . --config Release
 cmake --install . --config Release  
 ```
 
+## Usage
+```sh
+phan input_file.txt output_file.txt
+```
+
 
 ## Development
 
