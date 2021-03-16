@@ -66,6 +66,8 @@ project (phan
     DESCRIPTION "Very nice project"
 )
 
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+
 
 
 # add_subdirectory (dependencies/const_str)
@@ -320,16 +322,6 @@ endif()
 
 
 
-#cmake --build .
-#cmake --install . --config Release
-
-
-
-# cmake -S . -B build
-# cmake -DCMAKE_BUILD_TYPE=Release --build build 
-# cmake --install build --config Release
-
-# cmake --build . --target install --config Debug
 
 
 # cmake -G Ninja -DCMAKE_BUILD_TYPE=Release ..
