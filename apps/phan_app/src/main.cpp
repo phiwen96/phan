@@ -366,39 +366,102 @@ struct State;
 template <>
 struct State <>
 {
-    
+    template <class NewState>
+    void transition (auto&& context);
 };
 
+template <class... Containers>
 struct Context
 {
-    
+    tuple <Containers...> containers;
+    State <>* state;
 };
 
-template <class Str, class Cont>
-struct State <Str, Cont>
+template <class NewState>
+void State<>::transition (auto&& context)
 {
-    char const* str = Str::str;
-    Cont cont;
-};
-
-template <class... States>
-struct Begin
-{
-    tuple <States...> states;
     
-    void process (char const* arg)
+}
+
+
+
+template <class Tup_states>
+struct Begin : State <>
+{
+    Tup_states states;
+    
+    
+    
+    void process (char const* arg, auto&& ctx)
     {
-        for (auto& state : states)
+        std::apply ([&arg] (auto&&... state)
         {
-            if (strcmp (state.str, arg) == 0)
+            auto fun = [&arg] <class Sta> (Sta s)
             {
-                cout << "yay" << endl;
-            }
-        }
+                if (strcmp (arg, s.str))
+                {
+                    cout << "yaaay:" << endl;
+                }
+            };
+            ( (fun (state)), ...);
+        }, states);
     }
 };
 
+
+template <class Str>
+struct State <Str> : State <>
+{
+//    using Container = Cont;
+    inline static constexpr char const* str = Str::str;
+//    Cont cont;
+};
+
 }
+
+//template <class>
+//struct ContainersHelper
+//{
+//    using containers_type = int;
+//};
+
+//template <class Es>
+//struct ContainersHelper //<tuple <Es...>>
+//{
+//    using type = tuple <typename Es::Container...>;
+//    using containers_type = tuple <typename ContainersHelper <Es>::type...>;
+//    using type = int;
+//};
+
+
+template <class Tup, class... Tups>
+struct GetStrings
+{
+    using type = tuple_element_t <0, Tup>;
+};
+
+template <class... Pairs>
+struct Helper
+{
+    using strings = tuple <tuple_element_t <0, Pairs>...>;
+    using containers = tuple <tuple_element_t <1, Pairs>...>;
+//    using states = tuple <p::State <tuple<tuple_element_t<0, Pair>, tuple_element_t<1, Pair>>, p::State <tuple <tuple_element_t<0, Rest>, tuple_element_t<0, Rest>>>...>>;
+    using states = tuple <p::State <tuple_element_t <0, Pairs>>...>;
+    using context = p::Context <containers>;
+//    using containers_type = tuple <typename tuple_element<0, Pair>::type, ContainersHelper <Rest...>::container_type>;
+//    using strings_type = tuple <typename tuple_element<1, Pair>::type, typename ContainersHelper <Rest...>::strings_type>;
+
+};
+
+
+//template <class Pair>
+//struct ContainersHelper <Pair>
+//{
+//    using containers_type = typename tuple_element<0, Pair>::type;
+//    using strings_type = typename tuple_element<1, Pair>::type;
+//};
+
+
 
 
 template <class... Pairs>
@@ -407,12 +470,19 @@ auto parseArgs (tuple <Pairs...>& tup, int argc, char** argv)
     using Tup = tuple <Pairs...>;
     using E_0_0 = tuple_element_t<0, tuple_element_t<0, Tup>>;
     using E_0_1 = tuple_element_t<1, tuple_element_t<1, Tup>>;
-    p::State <E_0_0, E_0_1> s;
-    p::Begin <p::State <E_0_0, E_0_1>> begin;
     
-    cout << get <0> (get <0> (tup)) << endl;
+    using tup_strings = typename Helper <Pairs...>::strings;
+    using tup_containers = typename Helper <Pairs...>::containers;
+    
+    using tup_states = typename Helper <Pairs...>::states;
+    using context = typename Helper <Pairs...>::context;
+    p::Begin <tup_states> begin;
+    
+   
+//    cout << get <0> (get <0> (tup)) << endl;
     for (char** it = argv; it < argv + argc; ++it)
     {
+//        begin.process (*it);
 //        cout << *it << endl;
     }
 }
@@ -422,11 +492,11 @@ auto main (int argc,  char** argv) -> int
 #if defined (Release)
 //    str<'-', '-', 'i', 'n', 'p', 'u', 't'> ss;
     STR("hej") jhj;
-    Test <STR ("hej")> k;
-    cout << jhj << endl;
+//    Test <STR ("hej")> k;
+//    cout << jhj << endl;
     
-    tuple <pair <STR ("--input"), string>,
-           pair <STR ("--output"), vector <string>>
+    tuple <tuple <STR ("--input"), string>,
+           tuple <STR ("--output"), vector <string>>
     > ss;
     
     
