@@ -1,5 +1,6 @@
 #include "main.hpp"
-#include <filesystem>
+
+
 
 
 
@@ -219,27 +220,243 @@ void assert_file(string const& inputPath, string const& outputPath, string const
 #define ASSERT_FILES(...) ASSERT_FILES_2 (BOOST_PP_TUPLE_TO_SEQ (__VA_ARGS__));
 
 
+#define PSTR(x) decltype (const_str {x})
+
+template <class T0, class T1>
+concept same = std::is_same_v<T0, T1>;
 
 
-template <size_t N, char const[N]>
-struct str {};
 
-template <auto...>
+template <class T0, class T1>
+concept convertible = std::is_convertible_v<T0, T1>;
+
+template <class T>
+concept Str = requires (T s, char const* s2) {
+    {s == s2} -> convertible <bool>;
+};
+
+#define MAX_INPUT_ARG 255
+
+
+
+struct ParsedArgs
+{
+    optional <string> input;
+    optional <string> output;
+    
+    static ParsedArgs parse (ParsedArgs& fill, int argc, char** argv)
+    {
+        
+        for (char** i = argv; i < argv + argc - 1; ++i)
+        {
+            if (strcmp (*i, "--input") == 0)
+            {
+                fill.input = *(i + 1);
+                
+            } else if (strcmp (*i, "--output") == 0)
+            {
+                fill.output = *(i + 1);
+            }
+        }
+        
+        return fill;
+    }
+    
+    friend ostream& operator<< (ostream& os, ParsedArgs const& s)
+    {
+        if (s.input)
+            os << "--input " << s.input.value() << endl;
+
+        if (s.output)
+            os << "--output " << s.output.value() << endl;
+
+        return os;
+    }
+};
+
+
+
+struct VerifyArgsExists
+{
+    VerifyArgsExists (ParsedArgs const& args)
+    {
+        if (not args.input.has_value ())
+        {
+            cout << "please provide an input file, such as: \"phan --input /dir1/file.txt --input /dir2/file.txt\"" << endl;
+            exit (-1);
+        } else if (not args.output.has_value ())
+        {
+            cout << "please provide an output file, such as: \"phan --input /dir1/file.txt --input /dir2/file.txt\"" << endl;
+            exit (-1);
+        }
+    }
+};
+
+
+struct FillArgsInfo
+{
+    FillArgsInfo (ParsedArgs const& args)
+    {
+        
+    }
+};
+
+
+struct Argument
+{
+     char const *str;
+    
+  
+    Argument (auto&& s) : str{(char*&&)s}
+    {
+//        strcpy (str, s);
+    }
+};
+
+#define MAX_OUTPUT_FILES 10
+#define MAX_INPUT_FILES 1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+template <class Str>
 struct Test
+{
+    Test ()
+    {
+        cout << Str::str << endl;
+    }
+};
+
+
+template <class>
+struct Args
 {
     
 };
 
-
-
-template <>
-struct Test <STR("nonsense")>
+template <class... Args>
+struct type_list
 {
-
+//    template <size_t N, bool is_tuple>
+//    using type = type_list <
+    
+   template <size_t N>
+   using type = typename tuple_element<N, tuple<Args...>>::type;
 };
 
-auto main(int argc,  char** argv) -> int
+
+namespace p{
+
+template <class...>
+struct State;
+
+template <>
+struct State <>
 {
+    
+};
+
+struct Context
+{
+    
+};
+
+template <class Str, class Cont>
+struct State <Str, Cont>
+{
+    char const* str = Str::str;
+    Cont cont;
+};
+
+template <class... States>
+struct Begin
+{
+    tuple <States...> states;
+    
+    void process (char const* arg)
+    {
+        for (auto& state : states)
+        {
+            if (strcmp (state.str, arg) == 0)
+            {
+                cout << "yay" << endl;
+            }
+        }
+    }
+};
+
+}
+
+
+template <class... Pairs>
+auto parseArgs (tuple <Pairs...>& tup, int argc, char** argv)
+{
+    using Tup = tuple <Pairs...>;
+    using E_0_0 = tuple_element_t<0, tuple_element_t<0, Tup>>;
+    using E_0_1 = tuple_element_t<1, tuple_element_t<1, Tup>>;
+    p::State <E_0_0, E_0_1> s;
+    p::Begin <p::State <E_0_0, E_0_1>> begin;
+    
+    cout << get <0> (get <0> (tup)) << endl;
+    for (char** it = argv; it < argv + argc; ++it)
+    {
+//        cout << *it << endl;
+    }
+}
+
+auto main (int argc,  char** argv) -> int
+{
+#if defined (Release)
+//    str<'-', '-', 'i', 'n', 'p', 'u', 't'> ss;
+    STR("hej") jhj;
+    Test <STR ("hej")> k;
+    cout << jhj << endl;
+    
+    tuple <pair <STR ("--input"), string>,
+           pair <STR ("--output"), vector <string>>
+    > ss;
+    
+    
+    
+    parseArgs (ss, argc, argv);
+    
+    
+//    str <BOOST_PP_REPEAT(3, MACRO, 'k')> ss;
+//    cout << ss << endl;
+    
+    
+    
+    // Value of type 'const char *const' is not implicitly convertible to 'const char *&'
+   
+    ParsedArgs args {};
+    ParsedArgs::parse (args, argc, argv + 1);
+    VerifyArgsExists {args};
+    
+    
+    
+    
+        
+    
+    
+    return 0;
+#endif
+    
+    
+    
+    
 //    string ss;
 //    getline(cin, ss);
     

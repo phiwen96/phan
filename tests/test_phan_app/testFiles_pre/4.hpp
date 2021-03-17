@@ -1,3 +1,4 @@
+bajs
 &(0 x 3){
     
     @(y){inline static constexpr int}

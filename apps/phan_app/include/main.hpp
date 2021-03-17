@@ -5,7 +5,7 @@
 #include "paste.hpp"
 #include "comment.hpp"
 #include "extractor.hpp"
-
+#include "phime.hpp"
 
 
 #define PROCC2(str, max, var) var = []()->string\
@@ -58,5 +58,58 @@ void removeFolderContent (filesystem::path const& p) {
 }
 
 
+auto allocated = size_t{0};
+// Overload operator new and delete to track allocations
+void* operator new (size_t size) {
+  void* p = std::malloc(size);
+  allocated += size;
+  return p;
+}
+void operator delete(void* p) noexcept {
+  return std::free(p);
+}
 
+
+template <size_t number_of_bytes, size_t alignment = alignof (max_align_t)>
+struct storage_in_bytes
+{
+      alignas (alignment) byte m_bytes [number_of_bytes];
+      
+      operator byte * ()
+      {
+            return m_bytes;
+      }
+      
+      
+      
+      /**
+       @brief number of bytes in storage
+       */
+      static consteval auto bytes () -> size_t
+      {
+            return number_of_bytes;
+      }
+};
+
+
+
+
+#define PH_REFLECT_(...) constexpr auto reflect () const -> decltype (std::tie (__VA_ARGS__)) {return std::tie (__VA_ARGS__);}  //auto reflect2 () -> decltype (std::tie (__VA_ARGS__)) {return std::tie (__VA_ARGS__);}
+
+//return BOOST_PP_STRINGIZE(elem);
+#define PH_REFLECT(...) \
+\
+template <int = -1> \
+auto reflect_const () const;\
+\
+template <> \
+auto reflect_const<-1>() const\
+{\
+return std::tie (__VA_ARGS__);  \
+}  \
+\
+template <> \
+auto& reflect ();\
+\
+BOOST_PP_SEQ_FOR_EACH (__BAJS2, +, BOOST_PP_VARIADIC_TO_SEQ (__VA_ARGS__))
 

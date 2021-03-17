@@ -3,6 +3,7 @@
 
 #include <boost/preprocessor/repetition/repeat.hpp>
 #include <boost/preprocessor/punctuation/comma_if.hpp>
+#include <const_str/const_str.hpp>
 
 template <unsigned int N>
 constexpr char get_ch (char const (&s) [N], unsigned int i)
@@ -27,14 +28,14 @@ return N; \
         BOOST_PP_REPEAT(STRLEN, STRING_TO_CHARS_EXTRACT, STR)
 
 
-#define STR(s) \
-        STRING_TO_CHARS(100, s)
+//#define STR(s) \
+//        STRING_TO_CHARS(100, s)
 
 //#define S(s) STR (s)//STR (BOOST_PP_STRINGIZE (s))
 
 #define S(s) <STR (s)>
 
-#define STATE(x) State S(x)
+#define STATE(x) State <STR (x)>//S(x)
 
 
 
@@ -56,7 +57,7 @@ using iter = string::iterator;
 
 
 struct Context;
-template <char...>
+template <class...>
 struct State;
 
 template <>
