@@ -6,6 +6,7 @@
 #include "comment.hpp"
 #include "extractor.hpp"
 #include "phime.hpp"
+#include "compiletime.hpp"
 
 
 #define PROCC2(str, max, var) var = []()->string\
