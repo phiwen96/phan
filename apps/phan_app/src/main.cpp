@@ -607,11 +607,33 @@ auto main (int,  char**) -> int
 
     
     int argc = 3;
-    char argv[NUMBER_OF_STRING][MAX_STRING_SIZE] = {
-        {"hej"},
-        {"hej"},
-        {"hej"}
-    };
+//    char argv[NUMBER_OF_STRING][MAX_STRING_SIZE] = {
+//        {"hej"},
+//        {"hej"},
+//        {"hej"}
+//    };
+    int max = 1000000;
+    {
+        Timer<true> t {"fast??"};
+        for (int i = 0; i < max; ++i)
+        {
+            char** argv;
+            argv = ()malloc (sizeof *argv * NUMBER_OF_STRING);
+            *argv = malloc (sizeof **argv * MAX_STRING_SIZE);
+//            argv = (char**) __builtin_alloca (sizeof *argv * NUMBER_OF_STRING);
+//            *argv = (char*) __builtin_alloca (sizeof  **argv * MAX_STRING_SIZE);
+            strcpy (argv[0], "hej");
+            strcpy (argv[1], "hej");
+            strcpy (argv[2], "hej");
+        }
+    }
+    char** argv = (char**) __builtin_alloca (8 * argc);
+    
+    
+    cout << argv[0] << endl;
+    
+    char const* aaa = "j";
+    cout << sizeof (aaa) << endl;
     return 0;
 //    int argc = 2;
 //    auto** argv = new char*[argc]{new char*{"bajs"}, new char*{"--input"}, new char*{"då"}, new char*{"--output"}, new char*{"ssss"}};
