@@ -59,16 +59,7 @@ void removeFolderContent (filesystem::path const& p) {
 }
 
 
-auto allocated = size_t{0};
-// Overload operator new and delete to track allocations
-void* operator new (size_t size) {
-  void* p = std::malloc(size);
-  allocated += size;
-  return p;
-}
-void operator delete(void* p) noexcept {
-  return std::free(p);
-}
+
 
 
 template <size_t number_of_bytes, size_t alignment = alignof (max_align_t)>

@@ -435,7 +435,7 @@ struct State <0, Ctx, tuple <States...>> : State <-1, Ctx>
     struct Yes
     {
         template <class Statee>
-        inline static constexpr bool visit (char const* str)
+        inline static bool visit (char const* str)
         {
             return strcmp (Statee::str, str) == 0;
         }
@@ -444,13 +444,13 @@ struct State <0, Ctx, tuple <States...>> : State <-1, Ctx>
     virtual void process (char const* arg, Ctx& ctx)
     {
         using loop = For <tuple_size_v <tuple <States...>>, States...>;
-        bool found = false;
         if (int found = loop::Do ([&] (auto a)
         {
             
             if (strcmp (arg, a.str) == 0)
             {
                 ctx.state = new decltype (a);
+                cout << arg << endl;
                 return true;
                 
             } else
@@ -599,64 +599,119 @@ struct E
     
 };
 
-
-
-
-auto main (int,  char**) -> int
+template <class T>
+auto allocate (size_t bytes) -> void*
 {
+    return malloc (bytes);
+}
+
+template <class T, class... Args>
+auto construct (void* mem, Args&&... args) -> T*
+{
+    return ::new (mem) T (forward <Args> (args)...);
+}
+
+
+//byte
+
+
+void add (int& i)
+{
+    ++i;
+}
+
+auto allocated = size_t{0};
+// Overload operator new and delete to track allocations
+void * operator new (size_t size) {
+  void * p = std::malloc(size);
+  allocated += size;
+  return p;
+}
+void operator delete(void* p) noexcept {
+  return std::free(p);
+}
+
+template <size_t N, size_t M>
+consteval bool same_strings (char const(&lhs)[N], char const(&rhs)[M])
+{
+    if (N != M)
+        return false;
+    for (int i = 0; i < N; ++i)
+    {
+        if (lhs[i] != rhs[i])
+            return false;
+    }
+    return true;
+        
+}
+
+consteval auto my_function_name (char const* s = __builtin_FUNCTION ())
+{
+    return s;
+}
+
+
+#define MY_FUNCTION_NAME my_function_name ()
+
+
+void fun ()
+{
+    cout << MY_FUNCTION_NAME << endl;
+    
+}
+
+
+#define SAME_TOKEN(x, y) __builtin_choose_expr (same_strings (BOOST_PP_STRINGIZE (x), BOOST_PP_STRINGIZE (y)), 1, 0)
+
+
+
+struct K
+{
+    template <class T>
+    static consteval bool accept ()
+    {
+        return is_same_v <T, E>;
+//        return true;
+    }
+};
+
+auto main (int argc,  char** argv) -> int
+{
+    
+    
+    cout << Find <K, E, A>::value << endl;
+    
+    
+    
+    
+    return 0;
+    cout << K::accept<E>() << endl;
+//    fun ();
+//    __builtin_constant_p (tal) ? tal++ : tal++;
+#define kuk "hora"
+#define macro(x) __builtin_choose_expr (SAME_TOKEN (x, hej), kuk, "jo")
+//    cout << macro (he) << endl;
+
 
     
-    int argc = 3;
 //    char argv[NUMBER_OF_STRING][MAX_STRING_SIZE] = {
 //        {"hej"},
 //        {"hej"},
 //        {"hej"}
 //    };
-    int max = 1000000;
-    {
-        Timer<true> t {"fast??"};
-        for (int i = 0; i < max; ++i)
-        {
-            char** argv;
-            argv = ()malloc (sizeof *argv * NUMBER_OF_STRING);
-            *argv = malloc (sizeof **argv * MAX_STRING_SIZE);
-//            argv = (char**) __builtin_alloca (sizeof *argv * NUMBER_OF_STRING);
-//            *argv = (char*) __builtin_alloca (sizeof  **argv * MAX_STRING_SIZE);
-            strcpy (argv[0], "hej");
-            strcpy (argv[1], "hej");
-            strcpy (argv[2], "hej");
-        }
-    }
-    char** argv = (char**) __builtin_alloca (8 * argc);
     
     
-    cout << argv[0] << endl;
+   
     
-    char const* aaa = "j";
-    cout << sizeof (aaa) << endl;
-    return 0;
+    
 //    int argc = 2;
 //    auto** argv = new char*[argc]{new char*{"bajs"}, new char*{"--input"}, new char*{"då"}, new char*{"--output"}, new char*{"ssss"}};
 
     
 #if defined (Release)
-    If <0, int, bool> f;
-    
-//    constexpr B b;
-    
-    For_each <TE, A, B, C>::type aa;
-    aa.print();
-    
-    
-    
-    
-    
-//    return 0;
-//    str<'-', '-', 'i', 'n', 'p', 'u', 't'> ss;
-//    STR("hej") jhj;
-//    Test <STR ("hej")> k;
-//    cout << jhj << endl;
-    
+ 
+//    for (int i = 0; i < argc; ++i)
+//        cout << argv[i] << endl;
     
     using state_0_str = Str <'-', '-', 'i', 'n', 'p', 'u', 't'>;
     using state_0_container = string;
@@ -678,19 +733,16 @@ auto main (int,  char**) -> int
     begin_state b;
     ctx.state = &b;
     
-//    for (char** it = argv + 1; it < argv + argc; ++it)
-//    {
+    for (char** it = argv + 1; it < argv + argc; ++it)
+    {
+        ctx.process (*it);
 //        ctx.process (*it);
-////        ctx.process (*it);
-////        cout << *it << endl;
-//    }
+//        cout << *it << endl;
+    }
     
     return 0;
     
-    
-    tuple <tuple <Str <'-', '-', 'i', 'n', 'p', 'u', 't'>, string>,
-           tuple <Str <'-', '-', 'o', 'u', 't', 'p', 'u', 't'>, vector <string>>
-    > ss;
+  
     
     
     
