@@ -5,3 +5,6 @@
 [submodule "dependencies/const_str"]
 	path = dependencies/const_str
 	url = https://github.com/phiwen96/const_str
+[submodule "dependencies/ph_type_list"]
+	path = dependencies/ph_type_list
+	url = https://github.com/phiwen96/ph_type_list
