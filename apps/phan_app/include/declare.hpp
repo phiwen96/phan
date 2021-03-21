@@ -43,7 +43,7 @@ return N; \
 
 #define BASE_STATE State <>
 
-#define DECLPASTE '&'
+#define DECLPASTE '$'
 
 #define DECL '@'
 

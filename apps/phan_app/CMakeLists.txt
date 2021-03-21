@@ -98,7 +98,7 @@ target_compile_features(${self} PRIVATE cxx_std_20)
 
 set_target_properties(${self} PROPERTIES CXX_STANDARD 20)
 
-target_link_libraries(${self} PRIVATE ${root_name} const_str ${Boost_LIBRARIES})
+target_link_libraries(${self} PRIVATE ${root_name} ph_type_list const_str ${Boost_LIBRARIES})
 target_include_directories (${self} PRIVATE ${root_name} const_str ${Boost_INCLUDE_DIRS})
 ph_precompile (TARGET ${self} PRIVATE ${boost_pch} ${std_pch})
 

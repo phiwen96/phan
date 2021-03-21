@@ -1,4 +1,4 @@
-$(förnamn){Philip}
-${förnamn}
-$(namn){${förnamn} $(efternamn){Wenkel}}
-${namn}
+Philip
+Philip
+$(namn){
+horans

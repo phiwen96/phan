@@ -72,6 +72,21 @@ struct _Find <Fun, T, Rest...>
 
 template <class Fun, class T, class... Rest>
 using Find = typename _Find <Fun, T, Rest...>::type;
+/**
+ example
+ 
+ struct K
+ {
+     template <class T>
+     static consteval bool accept ()
+     {
+         return is_same_v <T, E>;
+ //        return true;
+     }
+ };
+ 
+ cout << Find <K, E, A>::value << endl;
+ */
 
 
 
@@ -82,33 +97,63 @@ struct _Find <Fun>
 };
 
 
-template <int N, class T, class... Rest>
-struct For
+template <int, int, class...>
+struct _For;
+
+
+template <int I, int N, class T, class... Rest>
+struct _For <I, N, T, Rest...>
 {
     
-    static int Do (auto a)
+    static constexpr int Do (auto a)
     {
         if (a (T{}))
             return N;
-        return For <N - 1, Rest...>::Do (a);
+        return _For <I + 1, N, Rest...>::Do (a);
         cout << "hi" << endl;
     }
 };
 
-template <int N, class T>
-struct For <N, T>
+template <int I, int N>
+struct _For <I, N>
 {
     
-    static int Do (auto a)
+    static constexpr int Do (auto a)
     {
-        if (a (T{}))
-            return N;
         return -1;
     }
     
     
 };
 
+template <int N, class... Rest>
+using For = _For <0, N, Rest...>;
 
 
 
+
+
+
+
+
+
+namespace {
+template <size_t N, size_t M> consteval bool same_strings (char const(&lhs)[N], char const(&rhs)[M]){
+    if (N != M)
+        return false;
+    for (int i = 0; i < N; ++i)
+    {
+        if (lhs[i] != rhs[i])
+            return false;
+    }
+    return true;
+}
+#define SAME_TOKEN(x, y) __builtin_choose_expr (same_strings (BOOST_PP_STRINGIZE (x), BOOST_PP_STRINGIZE (y)), 1, 0)
+#define macro(x) __builtin_choose_expr (SAME_TOKEN (x, hej), kuk, "jo")
+}
+namespace {
+consteval auto my_function_name (char const* s = __builtin_FUNCTION ()) {
+    return s;
+}
+#define MY_FUNCTION_NAME my_function_name ()
+}

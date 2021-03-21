@@ -7,6 +7,7 @@
 #include "extractor.hpp"
 #include "phime.hpp"
 #include "compiletime.hpp"
+#include <ph_type_list/type_list.hpp>
 
 
 #define PROCC2(str, max, var) var = []()->string\
@@ -105,3 +106,35 @@ auto& reflect ();\
 \
 BOOST_PP_SEQ_FOR_EACH (__BAJS2, +, BOOST_PP_VARIADIC_TO_SEQ (__VA_ARGS__))
 
+
+
+
+
+auto allocated = size_t{0};
+// Overload operator new and delete to track allocations
+void * operator new (size_t size) {
+  void * p = std::malloc(size);
+  allocated += size;
+  return p;
+}
+void operator delete(void* p) noexcept {
+  return std::free(p);
+}
+
+
+
+
+
+
+
+template <class T>
+auto allocate (size_t bytes) -> void*
+{
+    return malloc (bytes);
+}
+
+template <class T, class... Args>
+auto construct (void* mem, Args&&... args) -> T*
+{
+    return ::new (mem) T (forward <Args> (args)...);
+}

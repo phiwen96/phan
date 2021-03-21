@@ -227,105 +227,22 @@ concept same = std::is_same_v<T0, T1>;
 
 
 
-template <class T0, class T1>
-concept convertible = std::is_convertible_v<T0, T1>;
 
-template <class T>
-concept Sstr = requires (T s, char const* s2) {
-    {s == s2} -> convertible <bool>;
-};
 
-#define MAX_INPUT_ARG 255
 
 
 
-struct ParsedArgs
-{
-    optional <string> input;
-    optional <string> output;
-    
-    static ParsedArgs parse (ParsedArgs& fill, int argc, char** argv)
-    {
-        
-        for (char** i = argv; i < argv + argc - 1; ++i)
-        {
-            if (strcmp (*i, "--input") == 0)
-            {
-                fill.input = *(i + 1);
-                
-            } else if (strcmp (*i, "--output") == 0)
-            {
-                fill.output = *(i + 1);
-            }
-        }
-        
-        return fill;
-    }
-    
-    friend ostream& operator<< (ostream& os, ParsedArgs const& s)
-    {
-        if (s.input)
-            os << "--input " << s.input.value() << endl;
 
-        if (s.output)
-            os << "--output " << s.output.value() << endl;
 
-        return os;
-    }
-};
 
 
 
-struct VerifyArgsExists
-{
-    VerifyArgsExists (ParsedArgs const& args)
-    {
-        if (not args.input.has_value ())
-        {
-            cout << "please provide an input file, such as: \"phan --input /dir1/file.txt --input /dir2/file.txt\"" << endl;
-            exit (-1);
-        } else if (not args.output.has_value ())
-        {
-            cout << "please provide an output file, such as: \"phan --input /dir1/file.txt --input /dir2/file.txt\"" << endl;
-            exit (-1);
-        }
-    }
-};
 
 
-struct FillArgsInfo
-{
-    FillArgsInfo (ParsedArgs const& args)
-    {
-        
-    }
-};
 
 
-struct Argument
-{
-     char const *str;
-    
-  
-    Argument (auto&& s) : str{(char*&&)s}
-    {
-//        strcpy (str, s);
-    }
-};
 
-#define MAX_OUTPUT_FILES 10
-#define MAX_INPUT_FILES 1
 
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -334,374 +251,130 @@ struct Argument
 
 
 
-template <class>
-struct Args
-{
-    
-};
-
-template <class... Args>
-struct type_list
-{
-//    template <size_t N, bool is_tuple>
-//    using type = type_list <
-    
-   template <size_t N>
-   using type = typename tuple_element<N, tuple<Args...>>::type;
-};
-
-template <char... c>
-struct Str
-{
-    inline static constexpr char str [sizeof...(c)] {c...};
-};
-
-namespace p{
-
-template <int, class...>
-struct State;
-
-template <class... containers>
-struct Context
-{
-    using Containers = tuple <containers...>;
-    
-    State <-1, Context> * state;
-    
-    virtual void process (char const* arg)
-    {
-        state -> process (arg, *this);
-    }
-};
-
-
-
-template <class Ctx>
-struct State <-1, Ctx>
-{
-//    template <class NewState>
-//    void transition (auto&& context);
-    virtual void process (char const* arg, Ctx& ctx){
-        
-    }
-};
-
-
-
-//template <class NewState>
-//void State<>::transition (auto&& context)
-//{
-//
-//}
-
-
-/**
- Begin
- */
-//template <class Tup_state, class... Tup_states>
-//struct State <tuple <Tup_state, Tup_states...>>// : State <typename tuple_element_t <0, Tup_state>::Context>
-//{
-////    tuple <>
-//    using Context = typename tuple_element_t <0, Tup_state>::Context;
-//
-//
-////    virtual void process (char const* arg, Context& ctx)
-////    {
-////        auto& ctx = static_cast <Ctx&> (ct);
-////        std::apply ([&arg, &ctx] (auto&&... state)
-////        {
-////            auto fun = [&arg, &ctx] <class Sta> (Sta& s)
-////            {
-////                if (strcmp (arg, s.str))
-////                {
-////                    cout << "yaaay:" << endl;
-////                    ctx.state = &s;
-////                    return;
-////                }
-////            };
-////            ( (fun (state)), ...);
-////        }, states);
-////    }
-//};
-
-
-
-
-template <class Ctx, class... States>
-struct State <0, Ctx, tuple <States...>> : State <-1, Ctx>
-{
-    tuple <States...> states;
-    
-    struct Yes
-    {
-        template <class Statee>
-        inline static bool visit (char const* str)
-        {
-            return strcmp (Statee::str, str) == 0;
-        }
-    };
-    
-    virtual void process (char const* arg, Ctx& ctx)
-    {
-        using loop = For <tuple_size_v <tuple <States...>>, States...>;
-        if (int found = loop::Do ([&] (auto a)
-        {
-            
-            if (strcmp (arg, a.str) == 0)
-            {
-                ctx.state = new decltype (a);
-                cout << arg << endl;
-                return true;
-                
-            } else
-            {
-                return false;
-            }
-            
-        }); found != -1)
-        {
-            
-        }
-        
-        
-    }
-};
-
-
-
-
-
-
-
-template <int I, class Ctx, class Str, class... NextState>
-struct State <I, Ctx, Str, NextState...> : State <-1, Ctx>
-{
-    using Context = Ctx;
-//    using Container = Cont;
-    inline static constexpr char const* str = Str::str;
-    
-    virtual void process (char const* arg, Ctx& ct)
-    {
-        cout << str << "::" << arg << endl;
-        
-        
-//        auto& ctx = static_cast <Ctx&> (ct);
-//        std::apply ([&arg, &ctx] (auto&&... state)
-//        {
-//            auto fun = [&arg, &ctx] <class Sta> (Sta& s)
-//            {
-//                if (strcmp (arg, s.str))
-//                {
-//                    cout << "yaaay:" << endl;
-//                    ctx.state = &s;
-//                    return;
-//                }
-//            };
-//            ( (fun (state)), ...);
-//        }, ctx.states);
-    }
-    
-//    Cont cont;
-};
-
-}
-
-
-
-template <class... Pairs>
-struct Helper
-{
-    using strings = tuple <tuple_element_t <0, Pairs>...>;
-    using containers = tuple <tuple_element_t <1, Pairs>...>;
-//    using states = tuple <p::State <tuple<tuple_element_t<0, Pair>, tuple_element_t<1, Pair>>, p::State <tuple <tuple_element_t<0, Rest>, tuple_element_t<0, Rest>>>...>>;
-    using context = p::Context <containers>;
-//    using states = tuple <p::State <context, tuple_element_t <0, Pairs>>...>;
-//    using begin_state = State <states>;
-//    using containers_type = tuple <typename tuple_element<0, Pair>::type, ContainersHelper <Rest...>::container_type>;
-//    using strings_type = tuple <typename tuple_element<1, Pair>::type, typename ContainersHelper <Rest...>::strings_type>;
-
-};
-
-
-template <class... Pairs>
-auto parseArgs (tuple <Pairs...>& tup, int argc, char** argv)
-{
-    using Tup = tuple <Pairs...>;
-    
-    using tup_strings = typename Helper <Pairs...>::strings;
-    using tup_containers = typename Helper <Pairs...>::containers;
-    
-//    using tup_states = typename Helper <Pairs...>::states;
-//    using context = typename Helper <Pairs...>::context;
-//    using begin = typename Helper <Pairs...>::begin_state;
-//    begin b;
-//    context ctx;
-//    ctx.state = &b;
-    
-    
-   
-//    cout << get <0> (get <0> (tup)) << endl;
-    for (char** it = argv; it < argv + argc; ++it)
-    {
-//        ctx.process (*it);
-//        cout << *it << endl;
-    }
-}
-
-
-
-struct A
-{
-    void print ()
-    {
-        cout << "A" << endl;
-    }
-};
-
-struct B
-{
-    void print ()
-    {
-        cout << "B" << endl;
-    }
-};
-
-struct C
-{
-    void print ()
-    {
-        cout << "C" << endl;
-    }
-};
-
-struct TE
-{
-    template <class T>
-    static constexpr bool visit ()
-    {
-        if (is_same_v<T, B>)
-            
-        return true;
-        return false;
-    }
-};
-
-
-
-tuple <TE, B, B, B> tup;
-
-
-#define NUMBER_OF_STRING 3
-#define MAX_STRING_SIZE 40
-
-struct E
-{
-    
-};
-
-template <class T>
-auto allocate (size_t bytes) -> void*
-{
-    return malloc (bytes);
-}
-
-template <class T, class... Args>
-auto construct (void* mem, Args&&... args) -> T*
-{
-    return ::new (mem) T (forward <Args> (args)...);
-}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 //byte
 
 
-void add (int& i)
+namespace input{
+struct Context;
+struct State
 {
-    ++i;
-}
+    virtual void process (char const* str, Context& ctx) {}
+};
 
-auto allocated = size_t{0};
-// Overload operator new and delete to track allocations
-void * operator new (size_t size) {
-  void * p = std::malloc(size);
-  allocated += size;
-  return p;
-}
-void operator delete(void* p) noexcept {
-  return std::free(p);
-}
-
-template <size_t N, size_t M>
-consteval bool same_strings (char const(&lhs)[N], char const(&rhs)[M])
+struct Context
 {
-    if (N != M)
-        return false;
-    for (int i = 0; i < N; ++i)
+    State* state {nullptr};
+    string input;
+    vector <string> outputs;
+    void process (char const* str);
+};
+
+struct Begin : State
+{
+    virtual void process (char const* str, Context& ctx);
+};
+struct Input : State
+{
+    virtual void process (char const* str, Context& ctx)
     {
-        if (lhs[i] != rhs[i])
-            return false;
+//        cout << "Input::process" << endl;
+        ctx.input = str;
+        ctx.state = new Begin;
+//        delete this;
     }
-    return true;
-        
-}
-
-consteval auto my_function_name (char const* s = __builtin_FUNCTION ())
+};
+struct Output : State
 {
-    return s;
-}
-
-
-#define MY_FUNCTION_NAME my_function_name ()
-
-
-void fun ()
-{
-    cout << MY_FUNCTION_NAME << endl;
-    
-}
-
-
-#define SAME_TOKEN(x, y) __builtin_choose_expr (same_strings (BOOST_PP_STRINGIZE (x), BOOST_PP_STRINGIZE (y)), 1, 0)
-
-
-
-struct K
-{
-    template <class T>
-    static consteval bool accept ()
+    virtual void process (char const* str, Context& ctx)
     {
-        return is_same_v <T, E>;
-//        return true;
+//        cout << "Output::process" << endl;
+        if (strcmp (str, "--input") == 0)
+        {
+            ctx.state = new Input;
+//            delete this;
+        } else
+        {
+            ctx.outputs.push_back (string {str});
+        }
     }
 };
 
+void Context::process (char const* str)
+{
+//    cout << "Context::process" << endl;
+    state -> process (str, *this);
+}
+
+void Begin::process (char const* str, Context& ctx)
+{
+//    cout << "Begin::process" << endl;
+    if (strcmp (str, "--input") == 0)
+    {
+        cout << "--input" << endl;
+        ctx.state = new Input;
+//        ctx.state = static_cast <Input*> (ctx.state);
+//        delete this;
+    } else if (strcmp (str, "--output") == 0)
+    {
+        ctx.state = new Output;
+    } else
+    {
+        throw runtime_error ("");
+    }
+}
+}
+
+
+
+
+
+#if defined (Debug)
+auto main (int,  char**) -> int
+{
+    int argc = 5;
+    char** argv = new char*[argc]{new char[]{}, new char[]{"--input"}, new char[]{"/Users/philipwenkel/GitHub/phan/tests/test_phan_app/testFiles_pre/1.hpp"}, new char[]{"--output"}, new char[]{"/Users/philipwenkel/GitHub/phan/tests/test_phan_app/testFiles_post/1.hpp"}};
+    input::Context ctx {new input::Begin};
+    
+#elif defined (Release)
 auto main (int argc,  char** argv) -> int
 {
+#endif
+    
+    for (char** it = argv + 1; it < argv + argc; ++it)
+    {
+        ctx.process (*it);
+    }
+    
+    if (ctx.input.empty ())
+    {
+        throw runtime_error ("must provide an input file");
+    } else if (ctx.outputs.empty ())
+    {
+        throw runtime_error ("must provide one or more output file");
+    }
     
     
-    cout << Find <K, E, A>::value << endl;
-    
-    
-    
+    app (ctx.input, ctx.outputs.front ());
     
     return 0;
-    cout << K::accept<E>() << endl;
-//    fun ();
-//    __builtin_constant_p (tal) ? tal++ : tal++;
-#define kuk "hora"
-#define macro(x) __builtin_choose_expr (SAME_TOKEN (x, hej), kuk, "jo")
-//    cout << macro (he) << endl;
-
+    
+    
 
     
-//    char argv[NUMBER_OF_STRING][MAX_STRING_SIZE] = {
-//        {"hej"},
-//        {"hej"},
-//        {"hej"}
-//    };
-    
-    
-   
     
     
 //    int argc = 2;
@@ -709,65 +382,12 @@ auto main (int argc,  char** argv) -> int
 
     
 #if defined (Release)
- 
-//    for (int i = 0; i < argc; ++i)
-//        cout << argv[i] << endl;
-    
-    using state_0_str = Str <'-', '-', 'i', 'n', 'p', 'u', 't'>;
-    using state_0_container = string;
-    
-    using state_1_str = Str <'-', '-', 'o', 'u', 't', 'p', 'u', 't'>;
-    using state_1_container = vector <string>;
-    
-    using context = p::Context <state_0_container, state_1_container>;
-    
-    using state_1 = p::State <2, context, state_1_str>;
-    
-    using state_0 = p::State <1, context, state_0_str, state_1>;
-    
-    using states = tuple <state_0, state_1>;
-    
-    using begin_state = p::State <0, context, states>;
-    
-    context ctx;
-    begin_state b;
-    ctx.state = &b;
-    
-    for (char** it = argv + 1; it < argv + argc; ++it)
-    {
-        ctx.process (*it);
-//        ctx.process (*it);
-//        cout << *it << endl;
-    }
-    
-    return 0;
-    
-  
-    
-    
-    
-//    parseArgs (ss, argc, argv);
-    
-    return 0;
-    
-//    str <BOOST_PP_REPEAT(3, MACRO, 'k')> ss;
-//    cout << ss << endl;
-    
-    
-    
-    // Value of type 'const char *const' is not implicitly convertible to 'const char *&'
-   
-//    ParsedArgs args {};
-//    ParsedArgs::parse (args, argc, argv + 1);
-//    VerifyArgsExists {args};
-    
-    
+
+
     
     
         
-    
-    
-    return 0;
+
 #endif
     
     

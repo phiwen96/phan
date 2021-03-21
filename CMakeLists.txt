@@ -75,6 +75,7 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
 add_subdirectory (cmake/phake)
 add_subdirectory (dependencies/const_str)
+add_subdirectory (dependencies/ph_type_list)
 
 # ph_subdirs (TARGET ${CMAKE_CURRENT_LIST_DIR} RESULT deps)
 # foreach (dep ${deps})
