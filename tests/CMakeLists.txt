@@ -25,3 +25,8 @@ endforeach ()
 
 
 
+
+
+add_executable (testlib test.cpp)
+target_link_libraries (testlib PRIVATE ${root_name} Catch2::Catch2 ${Boost_LIBRARIES})
+ph_precompile (TARGET testlib PRIVATE PCH ${std_pch} ${catch_pch} ${boost_pch})

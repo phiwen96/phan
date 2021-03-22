@@ -172,6 +172,7 @@ add_subdirectory (apps)
 
 if((CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME OR MODERN_CMAKE_BUILD_TESTING)
    AND BUILD_TESTING)
+   ph_fetch (catch2)
   add_subdirectory(tests)
 endif()
 
